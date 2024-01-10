@@ -1,0 +1,14 @@
+{
+  "extends": "@acme/tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "ES2022"],
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/*": ["./src/*", "../../packages/ui/src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

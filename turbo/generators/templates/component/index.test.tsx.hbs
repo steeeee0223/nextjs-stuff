@@ -1,0 +1,10 @@
+import { render } from "@testing-library/react";
+
+import { {{pascalCase name}} } from ".";
+
+describe("<{{pascalCase name}} />", () => {
+    it('should render the default text', () => {
+        const { getByText } = render(<{{pascalCase name}} />);
+        expect(getByText("{{titleCase name}}")).toBeDefined();
+    })
+})

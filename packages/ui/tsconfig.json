@@ -2,8 +2,9 @@
   "extends": "@acme/tsconfig/base.json",
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "types": ["vitest/globals"],
     "paths": { "@/*": ["./src/*"] }
   },
-  "include": ["*.ts", "src"],
+  "include": ["*.ts", "src", "__test__"],
   "exclude": ["node_modules"]
 }
