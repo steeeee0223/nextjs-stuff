@@ -4,9 +4,8 @@ import { headers } from "next/headers";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
-import { cn } from "@acme/ui";
-import { ThemeProvider, ThemeToggle } from "@acme/ui/theme";
-import { Toaster } from "@acme/ui/toast";
+import { ThemeProvider, ThemeToggle, Toaster } from "@acme/ui/components";
+import { cn } from "@acme/ui/lib";
 
 import { env } from "~/env";
 import { TRPCReactProvider } from "~/trpc/react";
