@@ -5,3 +5,4 @@ export * from "./spinner";
 
 export * from "./hint";
 export * from "./crud-item";
+export * from "./icon-picker";

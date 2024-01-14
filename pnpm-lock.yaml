@@ -449,6 +449,9 @@ importers:
       date-fns:
         specifier: ^3.2.0
         version: 3.2.0
+      emoji-picker-react:
+        specifier: ^4.6.9
+        version: 4.6.9(react@18.2.0)
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -9601,6 +9604,16 @@ packages:
       minimalistic-crypto-utils: 1.0.1
     dev: true
 
+  /emoji-picker-react@4.6.9(react@18.2.0):
+    resolution: {integrity: sha512-rXGqo+mQINZmK7GZfh4EWYXYIHQndPcu3xXLEM3gEpbctethEGW/ghR5sRSVOukK38ZrySFS1YxNG8SQcpZeKQ==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
+    dependencies:
+      flairup: 0.0.28
+      react: 18.2.0
+    dev: false
+
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
     dev: true
@@ -10551,6 +10564,10 @@ packages:
       locate-path: 7.2.0
       path-exists: 5.0.0
     dev: true
+
+  /flairup@0.0.28:
+    resolution: {integrity: sha512-NuMhxKgsVW4HAqLi8NRqemTTKLkbLaVu2HUkHUAvFneDPTPJgMsuZlDcFdjuRhgAKZd00TXslaIWlyZ8BtADQw==}
+    dev: false
 
   /flat-cache@3.0.4:
     resolution: {integrity: sha512-dm9s5Pw7Jc0GvMYbshN6zchCA9RgQlzzEZX3vylR9IqFfS8XciblUXOKfW6SiuJ0e13eDYZoZV5wdrev7P3Nwg==}
