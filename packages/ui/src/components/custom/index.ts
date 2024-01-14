@@ -4,3 +4,4 @@ export * from "./cover-picker";
 export * from "./spinner";
 
 export * from "./hint";
+export * from "./crud-item";
