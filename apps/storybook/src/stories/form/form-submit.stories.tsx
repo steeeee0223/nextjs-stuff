@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Draggable } from "../draggable";
+import { FormSubmit } from "@acme/ui/components";
 
 const meta = {
-  title: "dnd/Draggable",
-  component: Draggable,
+  title: "form/Form Submit",
+  component: FormSubmit,
   parameters: { layout: "centered" },
   tags: ["autodocs"],
-} satisfies Meta<typeof Draggable>;
+} satisfies Meta<typeof FormSubmit>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: { children: "Submit" },
 };
