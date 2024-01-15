@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { FolderIcon } from "lucide-react";
 
-import { TreeItem, TreeProvider } from "@acme/ui/components";
+import type { TreeItem } from "@acme/ui/components";
+import { TreeProvider } from "@acme/ui/components";
 
 import { AddItem, TreeItems } from "./_components";
 import { createItem, delay } from "./utils";

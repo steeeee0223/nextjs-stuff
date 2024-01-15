@@ -12,7 +12,7 @@ const CrudIcon = () => {
 
   return (
     <div className="group relative pl-[54px]">
-      {!!icon ? (
+      {icon ? (
         <div className="group/icon flex items-center gap-x-2 pt-6">
           <IconPicker onChange={onUpdateIcon}>
             <p className="text-6xl transition hover:opacity-75">{icon}</p>
