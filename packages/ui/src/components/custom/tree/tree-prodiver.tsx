@@ -1,6 +1,6 @@
 "use client";
 
-import type { ActionState } from "@/hooks";
+import type { ActionState } from "@/lib";
 import type { PropsWithChildren } from "react";
 import { useReducer } from "react";
 import { useFetch } from "@/hooks";

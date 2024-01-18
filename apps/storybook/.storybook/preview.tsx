@@ -1,5 +1,7 @@
 import type { Preview, ReactRenderer } from "@storybook/react";
+import React from "react";
 import { withThemeByClassName } from "@storybook/addon-themes";
+import { Toaster } from "sonner";
 
 import "../src/app/globals.css";
 
@@ -22,6 +24,12 @@ const preview: Preview = {
       },
       defaultTheme: "light",
     }),
+    (Story) => (
+      <>
+        <Toaster />
+        <Story />
+      </>
+    ),
   ],
 };
 

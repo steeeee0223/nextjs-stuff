@@ -1,14 +1,8 @@
 "use client";
 
+import type { ActionState } from "@/lib";
 import type { DependencyList } from "react";
 import { useEffect, useState } from "react";
-
-export type FieldErrors<T> = Record<keyof T, string[]>;
-export interface ActionState<TInput, TOutput> {
-  fieldErrors?: FieldErrors<TInput>;
-  error?: string | null;
-  data?: TOutput;
-}
 
 interface UseFetchOptions<T> {
   onSuccess?: (data: T) => void;
