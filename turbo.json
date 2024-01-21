@@ -11,7 +11,8 @@
     },
     "build": {
       "dependsOn": [
-        "^build"
+        "^build",
+        "^db:generate"
       ],
       "outputs": [
         ".next/**",
@@ -24,9 +25,18 @@
         "storybook-static/**"
       ]
     },
+    "db:generate": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
+    },
     "dev": {
       "persistent": true,
-      "cache": false
+      "cache": false,
+      "dependsOn": [
+        "^db:generate"
+      ]
     },
     "format": {
       "outputs": [
