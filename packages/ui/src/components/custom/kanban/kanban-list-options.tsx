@@ -1,7 +1,9 @@
 "use client";
 
-import type { ButtonProps } from "@/components/ui";
 import { useRef } from "react";
+import { MoreHorizontal, X } from "lucide-react";
+
+import type { ButtonProps } from "@/components/ui";
 import {
   Button,
   Popover,
@@ -11,7 +13,6 @@ import {
   Separator,
 } from "@/components/ui";
 import { cn } from "@/lib/utils";
-import { MoreHorizontal, X } from "lucide-react";
 
 interface KanbanListOptionsProps {
   listId: string;

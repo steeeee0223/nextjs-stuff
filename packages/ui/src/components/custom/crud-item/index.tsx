@@ -1,7 +1,16 @@
 "use client";
 
-import type { LucideIcon } from "lucide-react";
 import type { MouseEvent } from "react";
+import type { LucideIcon } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  FileIcon,
+  MoreHorizontal,
+  Plus,
+  Trash,
+} from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,14 +21,6 @@ import {
 } from "@/components/ui";
 import { SPECIAL_KEYS } from "@/constants/keyboard";
 import { cn } from "@/lib";
-import {
-  ChevronDown,
-  ChevronRight,
-  FileIcon,
-  MoreHorizontal,
-  Plus,
-  Trash,
-} from "lucide-react";
 
 /** Styles */
 const bgHover = "hover:bg-neutral-300 dark:hover:bg-neutral-600";

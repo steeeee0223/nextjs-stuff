@@ -1,7 +1,8 @@
 "use client";
 
-import type { ButtonProps } from "@/components/ui";
 import type { ReactNode } from "react";
+
+import type { ButtonProps } from "@/components/ui";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
 

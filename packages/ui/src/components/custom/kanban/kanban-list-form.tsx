@@ -1,8 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
-import type * as z from "zod";
 import { useImperativeHandle, useRef, useState, useTransition } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus, X } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useEventListener, useOnClickOutside } from "usehooks-ts";
+import { v4 as uuidv4 } from "uuid";
+import type * as z from "zod";
+
 import {
   Button,
   Form,
@@ -12,12 +18,6 @@ import {
   Input,
 } from "@/components/ui";
 import { cn } from "@/lib/utils";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, X } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { useEventListener, useOnClickOutside } from "usehooks-ts";
-import { v4 as uuidv4 } from "uuid";
-
 import type { KanbanList } from "./index.types";
 import { useKanbanAction } from "./kanban-action-context";
 import { useKanban } from "./kanban-context";

@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui";
 import { render } from "@testing-library/react";
 
+import { Button } from "@/components/ui";
 import { CoverPicker } from ".";
 
 describe("<CoverPicker />", () => {

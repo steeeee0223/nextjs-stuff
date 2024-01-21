@@ -4,10 +4,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Check, Loader2 } from "lucide-react";
+
 import { FormErrors } from "@/components/form";
 import { defaultImages } from "@/constants/images";
 import { cn } from "@/lib/utils";
-import { Check, Loader2 } from "lucide-react";
 
 export interface UnsplashProps {
   id: string;

@@ -1,11 +1,12 @@
 "use client";
 
-import type { ButtonProps } from "@/components/ui";
 import Image from "next/image";
+import { ImageIcon, X } from "lucide-react";
+
 import { CoverPicker } from "@/components/custom";
+import type { ButtonProps } from "@/components/ui";
 import { Button, Skeleton } from "@/components/ui";
 import { cn } from "@/lib";
-import { ImageIcon, X } from "lucide-react";
 
 interface CoverImageProps {
   url: string | null;

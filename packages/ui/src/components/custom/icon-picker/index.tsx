@@ -1,9 +1,10 @@
 "use client";
 
 import type { PropsWithChildren } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 import { useTheme } from "next-themes";
+
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui";
 
 const THEME_MAP = {
   dark: Theme.DARK,

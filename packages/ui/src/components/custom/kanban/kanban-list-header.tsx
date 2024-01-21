@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
-import type * as z from "zod";
 import { useImperativeHandle, useRef, useState, useTransition } from "react";
-import { Form, FormControl, FormField, FormItem, Input } from "@/components/ui";
-import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useEventListener } from "usehooks-ts";
+import type * as z from "zod";
 
+import { Form, FormControl, FormField, FormItem, Input } from "@/components/ui";
+import { cn } from "@/lib/utils";
 import type { KanbanList } from "./index.types";
 import { TitleSchema } from "./utils";
 

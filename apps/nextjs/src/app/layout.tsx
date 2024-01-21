@@ -1,5 +1,5 @@
-import type { Metadata, Viewport } from "next";
 import { cache } from "react";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";

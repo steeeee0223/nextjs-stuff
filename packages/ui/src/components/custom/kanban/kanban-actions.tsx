@@ -1,6 +1,6 @@
-import type { Entity } from "@/lib";
 import type { Reducer } from "react";
 
+import type { Entity } from "@/lib";
 import type { KanbanItem, KanbanList } from "./index.types";
 
 export type KanbanAction =

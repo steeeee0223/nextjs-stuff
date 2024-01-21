@@ -6,7 +6,7 @@ import { Dialog, DialogContent, useKanban } from "@acme/ui/components";
 export const CardModal = () => {
   const { activeItem, setActiveItem } = useKanban();
   const ref = useRef<HTMLDivElement>(null);
-  const onClose = () => setActiveItem(null)
+  const onClose = () => setActiveItem(null);
   useOnClickOutside(ref, onClose);
 
   if (!activeItem) return null;

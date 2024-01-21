@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import { cn } from "@/lib";
 import { Draggable } from "@hello-pangea/dnd";
 
+import { cn } from "@/lib";
 import type { KanbanItem as Item } from "./index.types";
 import { KanbanItemOptions } from "./kanban-item-options";
 

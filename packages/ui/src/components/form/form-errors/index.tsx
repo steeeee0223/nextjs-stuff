@@ -1,5 +1,6 @@
-import { cn } from "@/lib/utils";
 import { XCircle } from "lucide-react";
+
+import { cn } from "@/lib/utils";
 
 export interface FormErrorProps {
   id: string;

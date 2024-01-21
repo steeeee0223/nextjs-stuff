@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 
-import type { Log } from "./index.utils";
 import { ActivityItem } from ".";
+import type { Log } from "./index.utils";
 
 const mockData: Log = {
   username: "John Doe",

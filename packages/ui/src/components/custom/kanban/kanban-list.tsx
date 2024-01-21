@@ -2,10 +2,10 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { cn } from "@/lib/utils";
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { v4 as uuidv4 } from "uuid";
 
+import { cn } from "@/lib/utils";
 import type { KanbanItem as Item, KanbanList as List } from "./index.types";
 import { useKanbanAction } from "./kanban-action-context";
 import { useKanban } from "./kanban-context";

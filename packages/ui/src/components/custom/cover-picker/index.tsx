@@ -1,7 +1,7 @@
 "use client";
 
-import type { PropsWithChildren } from "react";
-import { useState } from "react";
+import { useState, type PropsWithChildren } from "react";
+
 import { SingleImageDropzone } from "@/components/dnd";
 import { FormSubmit } from "@/components/form";
 import {
@@ -15,7 +15,6 @@ import {
   TabsTrigger,
 } from "@/components/ui";
 import { cn } from "@/lib";
-
 import { Unsplash } from "./unsplash";
 
 /** Styles */

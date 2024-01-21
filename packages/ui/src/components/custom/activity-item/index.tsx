@@ -1,8 +1,7 @@
-import { Avatar, AvatarImage } from "@/components/ui";
 import { format } from "date-fns";
 
-import type { Log } from "./index.utils";
-import { generateLogMessage } from "./index.utils";
+import { Avatar, AvatarImage } from "@/components/ui";
+import { generateLogMessage, type Log } from "./index.utils";
 
 interface ActivityItemProps {
   data: Log;

@@ -2,8 +2,13 @@
 "use client";
 
 import type { KeyboardEventHandler } from "react";
-import type * as z from "zod";
 import { forwardRef, useRef, useTransition } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus, X } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useEventListener, useOnClickOutside } from "usehooks-ts";
+import type * as z from "zod";
+
 import {
   Button,
   Form,
@@ -12,11 +17,6 @@ import {
   FormItem,
   Textarea,
 } from "@/components/ui";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Plus, X } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { useEventListener, useOnClickOutside } from "usehooks-ts";
-
 import { TitleSchema } from "./utils";
 
 interface KanbanItemFormProps {

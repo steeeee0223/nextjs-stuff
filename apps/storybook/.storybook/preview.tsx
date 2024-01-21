@@ -1,6 +1,6 @@
-import type { Preview, ReactRenderer } from "@storybook/react";
 import React from "react";
 import { withThemeByClassName } from "@storybook/addon-themes";
+import type { Preview, ReactRenderer } from "@storybook/react";
 import { Toaster } from "sonner";
 
 import "../src/app/globals.css";

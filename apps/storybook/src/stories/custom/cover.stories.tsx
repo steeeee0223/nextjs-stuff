@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import image from "@/stories/assets/addon-library.png";
 
 import { Cover } from "@acme/ui/components";
+
+import image from "@/stories/assets/addon-library.png";
 
 const meta = {
   title: "custom/Cover",
