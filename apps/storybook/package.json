@@ -4,12 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "storybook build",
+    "build": "storybook build -s public",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "storybook dev -p 6006",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "next lint",
-    "start": "next start",
+    "start": "serve storybook-static",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
