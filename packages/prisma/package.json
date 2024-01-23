@@ -8,8 +8,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "pnpm db:format && pnpm db:generate && pnpm db:push",
     "clean": "rm -rf .turbo node_modules",
+    "db:build": "pnpm db:format && pnpm db:generate && pnpm db:push",
     "db:format": "bash ./scripts/prisma.sh format",
     "db:generate": "bash ./scripts/prisma.sh generate",
     "db:push": "bash ./scripts/prisma.sh db push --skip-generate",
