@@ -279,6 +279,73 @@ importers:
         specifier: ^5.3.3
         version: 5.3.3
 
+  apps/worxpace:
+    dependencies:
+      '@acme/prisma':
+        specifier: workspace:*
+        version: link:../../packages/prisma
+      '@acme/ui':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/ui
+      '@acme/validators':
+        specifier: workspace:^0.1.0
+        version: link:../../packages/validators
+      '@t3-oss/env-nextjs':
+        specifier: ^0.7.1
+        version: 0.7.1(typescript@5.3.3)(zod@3.22.4)
+      next:
+        specifier: ^14.0.4
+        version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: 18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: 18.2.0
+        version: 18.2.0(react@18.2.0)
+      superjson:
+        specifier: 2.2.1
+        version: 2.2.1
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
+    devDependencies:
+      '@acme/eslint-config':
+        specifier: workspace:^0.2.0
+        version: link:../../tooling/eslint
+      '@acme/prettier-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/prettier
+      '@acme/tailwind-config':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/tailwind
+      '@acme/tsconfig':
+        specifier: workspace:^0.1.0
+        version: link:../../tooling/typescript
+      '@types/node':
+        specifier: ^20.10.6
+        version: 20.10.6
+      '@types/react':
+        specifier: ^18.2.46
+        version: 18.2.46
+      '@types/react-dom':
+        specifier: ^18.2.18
+        version: 18.2.18
+      dotenv-cli:
+        specifier: ^7.3.0
+        version: 7.3.0
+      eslint:
+        specifier: ^8.56.0
+        version: 8.56.0
+      prettier:
+        specifier: ^3.1.1
+        version: 3.1.1
+      tailwindcss:
+        specifier: ^3.4.0
+        version: 3.4.0
+      typescript:
+        specifier: ^5.3.3
+        version: 5.3.3
+
   packages/api:
     dependencies:
       '@acme/auth':
