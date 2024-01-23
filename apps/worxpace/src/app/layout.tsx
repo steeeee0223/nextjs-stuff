@@ -1,29 +1,35 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 
-import { cn } from "@acme/ui/lib";
+import { ThemeProvider } from "@acme/ui/components";
 
 import { env } from "~/env";
 
 import "~/app/globals.css";
 
+const inter = Inter({ subsets: ["latin"] });
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     env.VERCEL_ENV === "production"
-      ? "https://turbo.t3.gg"
-      : "http://localhost:3000",
+      ? "https://worxpace.steeeee0223.vercel.app"
+      : `http://localhost:${env.PORT}`,
   ),
-  title: "Create T3 Turbo",
-  description: "Simple monorepo with shared backend for web & mobile apps",
-  openGraph: {
-    title: "Create T3 Turbo",
-    description: "Simple monorepo with shared backend for web & mobile apps",
-    url: "https://create-t3-turbo.vercel.app",
-    siteName: "Create T3 Turbo",
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@jullerino",
-    creator: "@jullerino",
+  title: "Steeeee WorXpace",
+  description: "The all-in-1 workspace where better, faster work happens",
+  icons: {
+    icon: [
+      {
+        media: "(prefers-color-scheme: light)",
+        url: "/notion.svg",
+        href: "/notion.svg",
+      },
+      {
+        media: "(prefers-color-scheme: dark)",
+        url: "/notion-dark.svg",
+        href: "/notion-dark.svg",
+      },
+    ],
   },
 };
 
@@ -34,15 +40,23 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout(props: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans text-foreground antialiased",
-        )}
-      >
-        {props.children}
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+          storageKey="notion-key-2"
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
