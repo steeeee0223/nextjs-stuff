@@ -8,9 +8,11 @@
   },
   "license": "MIT",
   "scripts": {
+    "build": "pnpm db:format && pnpm db:generate && pnpm db:push",
     "clean": "rm -rf .turbo node_modules",
-    "db:generate": "prisma generate",
-    "db:push": "prisma format && prisma db push --skip-generate",
+    "db:format": "bash ./scripts/prisma.sh format",
+    "db:generate": "bash ./scripts/prisma.sh generate",
+    "db:push": "bash ./scripts/prisma.sh db push --skip-generate",
     "dev": "prisma studio",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",

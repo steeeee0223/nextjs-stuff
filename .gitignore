@@ -51,3 +51,6 @@ yarn-error.log*
 
 # storybook
 storybook-static/
+
+# generated
+.generated
