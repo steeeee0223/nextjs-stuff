@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 
 export default function PlatformLayout({ children }: PropsWithChildren) {
