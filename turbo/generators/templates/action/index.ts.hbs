@@ -1,0 +1,26 @@
+"use server"
+
+import { worxpace } from "@acme/prisma";
+import { type ActionHandler, createSafeAction } from "@acme/ui/lib";
+import { {{pascalCase name}}, type {{pascalCase name}}Input } from "@acme/validators";
+
+import { UnauthorizedError, fetchClient } from "~/lib";
+
+const handler: ActionHandler<{{pascalCase name}}Input, any> = async (data) => {
+    let result;
+    const {} = data;
+
+    try {
+        const { clientId } = fetchClient();
+    } catch (error) {
+        if (error instanceof UnauthorizedError)
+            return { error: "Unauthorized" };
+        console.log(`ERROR`, error);
+        return { error: "Failed to {{lowerCase name}}." };
+    }
+
+    return { data: result };
+};
+
+export const {{camelCase name}} = createSafeAction({{pascalCase name}}, handler);
+

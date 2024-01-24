@@ -12,6 +12,7 @@
     "db:push": "pnpm -F db push",
     "db:studio": "pnpm -F db studio",
     "dev": "turbo dev --parallel",
+    "gen:action": "turbo gen next-action",
     "gen:package": "turbo gen init",
     "gen:story": "turbo gen story",
     "gen:ui": "turbo gen component",
