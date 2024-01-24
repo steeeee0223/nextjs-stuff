@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
 import { useImperativeHandle, useRef, useState, useTransition } from "react";

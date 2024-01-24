@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
 import type { KeyboardEventHandler } from "react";
