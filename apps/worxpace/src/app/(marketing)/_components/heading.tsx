@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@acme/ui/components";
@@ -17,10 +18,11 @@ const Heading = () => {
         Steeeee WorXpace is the connected workspace where <br />
         better, faster work happens.
       </h3>
-
-      <Button>
-        Get Started <ArrowRight className={`${theme.size.icon} ml-2`} />
-      </Button>
+      <Link href="/select-role">
+        <Button className="mt-4">
+          Get Started <ArrowRight className={`${theme.size.icon} ml-2`} />
+        </Button>
+      </Link>
     </div>
   );
 };
