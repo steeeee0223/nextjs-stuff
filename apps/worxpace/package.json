@@ -17,6 +17,7 @@
     "@acme/prisma": "workspace:*",
     "@acme/ui": "workspace:^0.1.0",
     "@acme/validators": "workspace:^0.1.0",
+    "@clerk/nextjs": "^4.29.4",
     "@t3-oss/env-nextjs": "^0.7.1",
     "next": "^14.0.4",
     "react": "18.2.0",
