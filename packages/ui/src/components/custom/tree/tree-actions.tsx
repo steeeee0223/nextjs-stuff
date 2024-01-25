@@ -24,13 +24,15 @@ export function treeReducer(
   { ids, entities }: Entity<TreeItem>,
   { type, payload }: TreeAction<TreeItem>,
 ): Entity<TreeItem> {
+  let e;
   switch (type) {
     case "add":
       payload.forEach((item) => (entities[item.id] = item));
       return { ids: Object.keys(entities), entities };
     case "set":
-      payload.forEach((item) => (entities[item.id] = item));
-      return { ids: Object.keys(entities), entities };
+      e = payload.reduce((acc, item) => ({ ...acc, [item.id]: item }), {});
+      // payload.forEach((item) => (entities[item.id] = item));
+      return { ids: Object.keys(e), entities: e };
     case "update":
       entities[payload.id] = payload;
       return { ids, entities };
