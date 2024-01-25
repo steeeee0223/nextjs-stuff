@@ -17,3 +17,17 @@ if (process.env.NODE_ENV !== "production") {
   globalThis.authClient = auth;
   globalThis.worxpaceClient = worxpace;
 }
+
+export type {
+  Document,
+  AuditLog,
+  Entity,
+  Board,
+  Card,
+  Image,
+  Limitation,
+  List,
+  Subscription,
+  User,
+} from "../.generated/worxpace";
+export { ROLE, ACTION, ENTITY_TYPE } from "../.generated/worxpace";

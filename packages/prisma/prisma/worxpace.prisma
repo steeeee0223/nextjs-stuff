@@ -20,16 +20,17 @@ type Image {
 }
 
 model Board {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  clientId String
-  title    String
-  image    Image?
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+  orgId  String?
+  title  String
+  image  Image?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   List      List[]
 
-  @@index([clientId])
+  @@index([userId, orgId])
 }
 
 model List {
@@ -73,8 +74,10 @@ enum ENTITY_TYPE {
 
 type User {
   userId String
-  name   String @db.String
+  name   String  @db.String
   image  String
+  orgId  String?
+  role   ROLE
 }
 
 type Entity {
@@ -86,18 +89,17 @@ type Entity {
 model AuditLog {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   user      User
-  orgId     String?
-  role      ROLE
   action    ACTION
   entity    Entity
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([role, user.userId], map: "role_user_id")
+  @@index([user.role, user.userId], map: "role_user_id")
   @@index([entity.entityId])
 }
 
 enum ROLE {
+  ADMIN
   USER
   ORG
 }
@@ -124,7 +126,8 @@ model Subscription {
 model Document {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   title       String
-  clientId    String
+  userId      String
+  orgId       String?
   isArchived  Boolean
   parentId    String?    @db.ObjectId
   content     String?
@@ -136,6 +139,6 @@ model Document {
   parent      Document?  @relation("DocumentParent", onUpdate: NoAction, onDelete: NoAction, fields: [parentId], references: [id])
   children    Document[] @relation("DocumentParent")
 
-  @@index([clientId], name: "byClient")
-  @@index([clientId, parentId], name: "byClientParent")
+  @@index([userId, orgId], name: "byUser")
+  @@index([userId, orgId, parentId], name: "byUserParent")
 }
