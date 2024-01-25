@@ -11,6 +11,7 @@ import { useNavControl } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { theme } from "~/constants/theme";
+import DocList from "./doc-list";
 
 export const Sidebar = () => {
   const pathname = usePathname();
@@ -54,6 +55,7 @@ export const Sidebar = () => {
         >
           <ChevronsLeft className="h-6 w-6" />
         </div>
+        <DocList isMobile={isMobile} />
         <div
           onMouseDown={handleMouseDown}
           onClick={resetWidth}

@@ -11,7 +11,7 @@ const handler: ActionHandler<{{pascalCase name}}Input, any> = async (data) => {
     const {} = data;
 
     try {
-        const { clientId } = fetchClient();
+        const { userId } = fetchClient();
     } catch (error) {
         if (error instanceof UnauthorizedError)
             return { error: "Unauthorized" };
