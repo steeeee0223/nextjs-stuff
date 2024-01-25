@@ -21,12 +21,12 @@ export const nextAction = {
   actions: [
     {
       type: "add",
-      path: "apps/{{app}}/actions/index.ts",
+      path: "apps/{{app}}/src/actions/index.ts",
       skipIfExists: true,
     },
     {
       type: "add",
-      path: "apps/{{app}}/actions/{{dashCase name}}.ts",
+      path: "apps/{{app}}/src/actions/{{dashCase name}}.ts",
       templateFile: "templates/action/index.ts.hbs",
       abortOnFail: true,
     },
