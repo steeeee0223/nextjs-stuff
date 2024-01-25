@@ -15,7 +15,7 @@ import { TreeContext } from "./tree-context";
 
 interface TreeProviderProps extends PropsWithChildren {
   className?: string;
-  fetchItems: () => Promise<ActionState<never, TreeItem[]>>;
+  fetchItems?: () => Promise<ActionState<never, TreeItem[]>>;
   isItemActive?: (id: string) => boolean;
   onClickItem?: (id: string) => void;
 }
@@ -29,10 +29,14 @@ export function TreeProvider({
 }: TreeProviderProps) {
   const $initialItems = { ids: [], entities: {} };
   const [state, dispatch] = useReducer<TreeReducer>(treeReducer, $initialItems);
-  const { data, isLoading } = useFetch<TreeItem[]>(fetchItems, {
-    onSuccess: (data) => dispatch({ type: "set", payload: data }),
-    onError: (e) => toast.error(e),
-  });
+  const { data, isLoading } = useFetch<TreeItem[]>(
+    fetchItems!,
+    {
+      onSuccess: (data) => dispatch({ type: "set", payload: data }),
+      onError: (e) => toast.error(e),
+    },
+    [fetchItems],
+  );
 
   const treeItems = Object.values(state.entities);
   console.log(`treeItems:`, treeItems);
