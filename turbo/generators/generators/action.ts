@@ -33,7 +33,7 @@ export const nextAction = {
     {
       type: "append",
       path: "apps/{{app}}/src/actions/index.ts",
-      template: 'export * from "./{{dashCase name}};"',
+      template: 'export * from "./{{dashCase name}}";',
     },
     {
       type: "add",
@@ -44,7 +44,7 @@ export const nextAction = {
     {
       type: "append",
       path: "packages/validators/src/actions/index.ts",
-      template: 'export * from "./{{dashCase name}};"',
+      template: 'export * from "./{{dashCase name}}";',
     },
   ],
 } satisfies PlopTypes.PlopGeneratorConfig;
