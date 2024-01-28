@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useOrganization, useUser } from "@clerk/nextjs";
 import { PlusCircle } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button, useTreeAction } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
@@ -23,11 +24,14 @@ const Client = ({ params: { role } }: Params) => {
   const { dispatch } = useTreeAction();
   const { execute } = useAction(createDocument, {
     onSuccess: (data) => {
-      const { id, title, isArchived, parentId } = data;
-      console.log(`Document created: ${title}`);
-      dispatch({ type: "add", payload: [{ id, title, isArchived, parentId }] });
+      const { id, title, isArchived, parentId, icon } = data;
+      toast.success(`Document created: ${title}`);
+      dispatch({
+        type: "add",
+        payload: [{ id, title, isArchived, parentId, icon }],
+      });
     },
-    onError: (e) => console.log(e),
+    onError: (e) => toast.error(e),
   });
   const onSubmit = () => {
     execute({ title: "Untitled", parentId: undefined })

@@ -13,7 +13,7 @@ const ToolsLayout = ({ children }: PropsWithChildren) => {
     "use server";
     try {
       const { userId, orgId } = fetchClient();
-      const documents = await fetchDocuments(userId, orgId, false);
+      const documents = await fetchDocuments(userId, orgId);
       console.log(`docs:`, documents);
       const data = documents.map(({ id, title, parentId, isArchived }) => ({
         id,
