@@ -1,17 +1,19 @@
 "use client";
 
-import type { PropsWithChildren } from "react";
-import { useReducer } from "react";
+import {
+  useCallback,
+  useMemo,
+  useReducer,
+  type PropsWithChildren,
+} from "react";
 import { toast } from "sonner";
 
 import { useFetch } from "@/hooks";
 import type { ActionState } from "@/lib";
 import type { TreeItem } from "./index.types";
 import { TreeActionContext } from "./tree-action-context";
-import type { TreeReducer } from "./tree-actions";
-import { treeReducer } from "./tree-actions";
-import type { TreeContextInterface } from "./tree-context";
-import { TreeContext } from "./tree-context";
+import { treeReducer, type TreeReducer } from "./tree-actions";
+import { TreeContext, type TreeContextInterface } from "./tree-context";
 
 interface TreeProviderProps extends PropsWithChildren {
   className?: string;
@@ -38,17 +40,20 @@ export function TreeProvider({
     [fetchItems],
   );
 
-  const treeItems = Object.values(state.entities);
-  console.log(`treeItems:`, treeItems);
-  const treeContextValues: TreeContextInterface = {
-    isLoading: isLoading || !data,
-    treeItems,
-    archivedItems: treeItems.filter(({ isArchived }) => isArchived),
-    getChildren: ($isArchived, $parentId) =>
+  const treeItems = useMemo(() => Object.values(state.entities), [state]);
+  const getChildren = useCallback(
+    ($isArchived: boolean, $parentId: string | null) =>
       treeItems.filter(
         ({ parentId, isArchived }) =>
           $parentId === parentId && isArchived === $isArchived,
       ),
+    [treeItems],
+  );
+  const treeContextValues: TreeContextInterface = {
+    isLoading: isLoading || !data,
+    treeItems,
+    archivedItems: treeItems.filter(({ isArchived }) => isArchived),
+    getChildren,
     isItemActive,
     onClickItem,
   };
