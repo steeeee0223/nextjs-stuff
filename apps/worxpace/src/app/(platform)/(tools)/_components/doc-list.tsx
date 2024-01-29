@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { OrganizationSwitcher } from "@clerk/nextjs";
-import { PlusCircle, Trash } from "lucide-react";
+import { PlusCircle, Search, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -15,6 +15,7 @@ import {
 import { useAction } from "@acme/ui/hooks";
 
 import { archiveDocument, createDocument } from "~/actions";
+import { useSearch } from "~/hooks";
 import TrashBox from "./trash-box";
 
 interface DocListProps {
@@ -23,6 +24,8 @@ interface DocListProps {
 
 const DocList = ({ isMobile }: DocListProps) => {
   const router = useRouter();
+  /** Search */
+  const search = useSearch();
   /** Docs */
   const { isLoading } = useTree();
   const { dispatch } = useTreeAction();
@@ -78,6 +81,12 @@ const DocList = ({ isMobile }: DocListProps) => {
               },
             },
           }}
+        />
+        <Item
+          label="Search"
+          icon={Search}
+          onClick={search.onOpen}
+          shortcut="⌘K"
         />
         <Item
           label="New page"

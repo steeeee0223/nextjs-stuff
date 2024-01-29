@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { TreeProvider } from "@acme/ui/components";
 
 import { fetchClient, fetchDocuments, isAuthenticated } from "~/lib";
+import SearchCommand from "./_components/search-command";
 import { Sidebar } from "./_components/sidebar";
 
 const ToolsLayout = ({ children }: PropsWithChildren) => {
@@ -33,7 +34,10 @@ const ToolsLayout = ({ children }: PropsWithChildren) => {
       fetchItems={fetchItems}
     >
       <Sidebar />
-      <main className="h-full flex-1 overflow-y-auto">{children}</main>
+      <main className="h-full flex-1 overflow-y-auto">
+        <SearchCommand />
+        {children}
+      </main>
     </TreeProvider>
   );
 };

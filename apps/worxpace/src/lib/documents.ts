@@ -8,6 +8,8 @@ import type {
   UpdateDocumentInput,
 } from "@acme/validators";
 
+import type { Client } from "./types";
+
 interface User {
   userId: string;
   orgId: string | null;
@@ -33,6 +35,18 @@ export const fetchDocuments = async (
 ): Promise<Document[]> =>
   await db.document.findMany({
     where: { userId, orgId, parentId, isArchived },
+    orderBy: { createdAt: "desc" },
+  });
+
+export const fetchDocumentsByRole = async (
+  { role, userId, orgId }: Client,
+  isArchived?: boolean,
+): Promise<Document[]> =>
+  await db.document.findMany({
+    where:
+      role === "organization"
+        ? { orgId, isArchived }
+        : { userId, orgId: null, isArchived },
     orderBy: { createdAt: "desc" },
   });
 
