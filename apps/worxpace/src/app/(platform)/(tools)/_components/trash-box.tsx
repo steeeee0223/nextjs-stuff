@@ -14,10 +14,12 @@ import { cn } from "@acme/ui/lib";
 import { deleteDocument, restoreDocument } from "~/actions";
 import { ConfirmModal } from "~/components";
 import { theme } from "~/constants/theme";
+import { useClient } from "~/hooks";
 
 const TrashBox = () => {
   const router = useRouter();
   const params = useParams();
+  const { path } = useClient();
   /** Tree */
   const { archivedItems: archivedDocs } = useTree();
   const [search, setSearch] = useState("");
@@ -48,9 +50,7 @@ const TrashBox = () => {
     onSuccess: (data) => {
       dispatch({ type: "delete", payload: data.ids });
       toast.success(`Deleted document "${data.item.title}"`);
-      if (params.documentId === data.item.id)
-        console.log(`redirect to user/org page`);
-      //    router.push(`/documents`);
+      if (params.documentId === data.item.id) router.push(path);
     },
     onError,
   });

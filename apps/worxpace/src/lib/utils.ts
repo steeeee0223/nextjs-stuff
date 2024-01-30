@@ -12,9 +12,8 @@ export function isAuthenticated(): boolean {
  * Utility for authorization
  */
 export function fetchClient(): Client {
-  const { userId, orgId } = auth();
-
-  if (!userId && !orgId) throw new UnauthorizedError();
+  const { userId, orgId, user, organization } = auth();
+  if (!userId) throw new UnauthorizedError();
 
   if (!orgId) {
     /** @todo Admin role */
@@ -23,14 +22,18 @@ export function fetchClient(): Client {
       role: "personal",
       userId,
       orgId: null,
-      path: `personal/${userId}`,
+      path: `/personal/${userId}`,
+      username: `${user?.firstName} ${user?.lastName}`,
+      workspace: `${user?.firstName} ${user?.lastName}`,
     };
   } else {
     return {
       role: "organization",
       userId,
       orgId,
-      path: `organization/${orgId}`,
+      path: `/organization/${orgId}`,
+      username: `${user?.firstName} ${user?.lastName}`,
+      workspace: organization?.name ?? "Organization",
     };
   }
 }

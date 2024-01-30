@@ -7,6 +7,8 @@ import { useTree } from "@acme/ui/components";
 import { cn } from "@acme/ui/lib";
 
 import { theme } from "~/constants/theme";
+import Banner from "./banner";
+import Menu from "./menu";
 import Title from "./title";
 
 interface NavbarProps {
@@ -47,8 +49,12 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
         )}
         <div className={cn(theme.flex.center, "w-full justify-between")}>
           <Title initialData={document} />
+          <div className={theme.flex.gap2}>
+            <Menu documentId={document.id} />
+          </div>
         </div>
       </nav>
+      {document.isArchived && <Banner documentId={document.id} />}
     </>
   );
 };

@@ -3,4 +3,6 @@ export interface Client {
   userId: string;
   orgId: string | null;
   path: string;
+  username: string;
+  workspace: string;
 }

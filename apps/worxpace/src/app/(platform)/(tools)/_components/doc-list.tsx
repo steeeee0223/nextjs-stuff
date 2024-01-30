@@ -15,7 +15,7 @@ import {
 import { useAction } from "@acme/ui/hooks";
 
 import { archiveDocument, createDocument } from "~/actions";
-import { useSearch, useSettings } from "~/hooks";
+import { useClient, useSearch, useSettings } from "~/hooks";
 import TrashBox from "./trash-box";
 
 interface DocListProps {
@@ -24,6 +24,7 @@ interface DocListProps {
 
 const DocList = ({ isMobile }: DocListProps) => {
   const router = useRouter();
+  const {path} = useClient()
   /** Search & Settings */
   const search = useSearch();
   const settings = useSettings();
@@ -50,7 +51,7 @@ const DocList = ({ isMobile }: DocListProps) => {
       console.log(`archived`, data);
       dispatch({ type: "archive", payload: data });
       toast.success(`Document "${data.item.title}" Moved to Trash`);
-      // router.push(`/documents`);
+      router.push(path);
     },
     onError,
   });
