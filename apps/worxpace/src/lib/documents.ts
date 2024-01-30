@@ -36,6 +36,9 @@ export const getAll = async (
     orderBy: { createdAt: "desc" },
   });
 
+export const getById = async (documentId: string): Promise<Document | null> =>
+  await db.document.findUnique({ where: { id: documentId } });
+
 export const getByRole = async (
   { role, userId, orgId }: Client,
   isArchived?: boolean,

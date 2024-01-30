@@ -24,7 +24,7 @@ interface DocListProps {
 
 const DocList = ({ isMobile }: DocListProps) => {
   const router = useRouter();
-  const {path} = useClient()
+  const { path } = useClient();
   /** Search & Settings */
   const search = useSearch();
   const settings = useSettings();
@@ -48,7 +48,6 @@ const DocList = ({ isMobile }: DocListProps) => {
   /** Action: Archive */
   const { execute: archive } = useAction(archiveDocument, {
     onSuccess: (data) => {
-      console.log(`archived`, data);
       dispatch({ type: "archive", payload: data });
       toast.success(`Document "${data.item.title}" Moved to Trash`);
       router.push(path);
