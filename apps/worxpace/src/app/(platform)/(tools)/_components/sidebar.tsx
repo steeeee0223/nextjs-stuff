@@ -4,7 +4,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { ChevronsLeft, MenuIcon } from "lucide-react";
 
 import { useNavControl } from "@acme/ui/hooks";
@@ -12,9 +12,11 @@ import { cn } from "@acme/ui/lib";
 
 import { theme } from "~/constants/theme";
 import DocList from "./doc-list";
+import Navbar from "./navbar";
 
 export const Sidebar = () => {
   const pathname = usePathname();
+  const params = useParams();
   const {
     isMobile,
     sidebarRef,
@@ -70,15 +72,19 @@ export const Sidebar = () => {
           isMobile && "left-0 w-full",
         )}
       >
-        <nav className="w-full bg-transparent px-3 py-2">
-          {isCollapsed && (
-            <MenuIcon
-              onClick={resetWidth}
-              role="button"
-              className="h-6 w-6 text-muted-foreground"
-            />
-          )}
-        </nav>
+        {params.documentId ? (
+          <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+        ) : (
+          <nav className="w-full bg-transparent px-3 py-2">
+            {isCollapsed && (
+              <MenuIcon
+                onClick={resetWidth}
+                role="button"
+                className="h-6 w-6 text-muted-foreground"
+              />
+            )}
+          </nav>
+        )}
       </div>
     </>
   );

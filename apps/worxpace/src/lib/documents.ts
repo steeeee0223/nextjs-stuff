@@ -10,10 +10,7 @@ import type {
 
 import type { Client } from "./types";
 
-interface User {
-  userId: string;
-  orgId: string | null;
-}
+type User = Pick<Client, "userId" | "orgId">;
 type Action = "ARCHIVE" | "RESTORE";
 const UPDATE: Record<Action, Partial<Document>> = {
   ARCHIVE: { isArchived: true },
@@ -27,6 +24,7 @@ export const createDocument = async (
     data: { ...data, isArchived: false, isPublished: false },
   });
 
+/** @deprecated */
 export const fetchDocuments = async (
   userId: string,
   orgId: string | null,
@@ -109,13 +107,13 @@ export const restore = async ({
   return { item, ids: modifiedIds };
 };
 
-export const renameDocument = async ({
+export const updateDocument = async ({
   userId,
   orgId,
   id,
-  title,
-}: UpdateDocumentInput & User): Promise<Document> =>
-  await db.document.update({ where: { userId, orgId, id }, data: { title } });
+  ...updateData
+}: Omit<UpdateDocumentInput, "log"> & User): Promise<Document> =>
+  await db.document.update({ where: { userId, orgId, id }, data: updateData });
 
 export const removeChildren = async (
   data: Pick<Document, "parentId"> & User,

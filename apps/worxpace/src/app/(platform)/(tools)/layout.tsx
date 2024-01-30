@@ -1,45 +1,13 @@
 import { type PropsWithChildren } from "react";
 import { redirect } from "next/navigation";
 
-import { TreeProvider } from "@acme/ui/components";
-
-import { fetchClient, fetchDocuments, isAuthenticated } from "~/lib";
-import SearchCommand from "./_components/search-command";
-import { Sidebar } from "./_components/sidebar";
+import { isAuthenticated } from "~/lib";
+import DocsProvider from "./_components/docs-provider";
 
 const ToolsLayout = ({ children }: PropsWithChildren) => {
   if (!isAuthenticated()) redirect("/select-role");
 
-  const fetchItems = async () => {
-    "use server";
-    try {
-      const { userId, orgId } = fetchClient();
-      const documents = await fetchDocuments(userId, orgId);
-      console.log(`docs:`, documents);
-      const data = documents.map(({ id, title, parentId, isArchived }) => ({
-        id,
-        title,
-        parentId,
-        isArchived,
-      }));
-      return { data };
-    } catch {
-      return { error: `Error occurred while fetching documents` };
-    }
-  };
-
-  return (
-    <TreeProvider
-      className="flex h-full dark:bg-[#1F1F1F]"
-      fetchItems={fetchItems}
-    >
-      <Sidebar />
-      <main className="h-full flex-1 overflow-y-auto">
-        <SearchCommand />
-        {children}
-      </main>
-    </TreeProvider>
-  );
+  return <DocsProvider>{children}</DocsProvider>;
 };
 
 export default ToolsLayout;
