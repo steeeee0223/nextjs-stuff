@@ -1,8 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import {
+  documents as db,
   fetchClient,
-  fetchDocumentsByRole,
   parseBool,
   UnauthorizedError,
 } from "~/lib";
@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   try {
     const client = fetchClient();
     const archived = parseBool(params.get("archived"));
-    const documents = await fetchDocumentsByRole(client, archived);
+    const documents = await db.getByRole(client, archived);
     return NextResponse.json(documents);
   } catch (error) {
     if (error instanceof UnauthorizedError)

@@ -1,14 +1,16 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import type { Document } from "@acme/prisma";
 import { createSafeAction, type ActionHandler } from "@acme/ui/lib";
 import { UpdateDocument, type UpdateDocumentInput } from "@acme/validators";
 
 import {
   createAuditLog,
+  documents,
   fetchClient,
   UnauthorizedError,
-  updateDocument as update,
 } from "~/lib";
 
 const handler: ActionHandler<UpdateDocumentInput, Document> = async (data) => {
@@ -17,7 +19,7 @@ const handler: ActionHandler<UpdateDocumentInput, Document> = async (data) => {
 
   try {
     const { userId, orgId } = fetchClient();
-    result = await update({ userId, orgId, id, ...updateData });
+    result = await documents.update({ userId, orgId, id, ...updateData });
     /** Activity Log */
     if (log)
       await createAuditLog(
@@ -30,6 +32,7 @@ const handler: ActionHandler<UpdateDocumentInput, Document> = async (data) => {
     return { error: "Failed to update document." };
   }
 
+  revalidatePath(`/documents/${data.id}`);
   return { data: result };
 };
 

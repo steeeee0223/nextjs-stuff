@@ -17,7 +17,7 @@ const UPDATE: Record<Action, Partial<Document>> = {
   RESTORE: { isArchived: false },
 };
 
-export const createDocument = async (
+export const create = async (
   data: CreateDocumentInput & User,
 ): Promise<Document> =>
   await db.document.create({
@@ -25,7 +25,7 @@ export const createDocument = async (
   });
 
 /** @deprecated */
-export const fetchDocuments = async (
+export const getAll = async (
   userId: string,
   orgId: string | null,
   isArchived?: boolean,
@@ -36,7 +36,7 @@ export const fetchDocuments = async (
     orderBy: { createdAt: "desc" },
   });
 
-export const fetchDocumentsByRole = async (
+export const getByRole = async (
   { role, userId, orgId }: Client,
   isArchived?: boolean,
 ): Promise<Document[]> =>
@@ -48,7 +48,7 @@ export const fetchDocumentsByRole = async (
     orderBy: { createdAt: "desc" },
   });
 
-export const updateChildrenState = async (
+const updateChildrenState = async (
   action: Action,
   data: Pick<Document, "parentId"> & User,
   onSuccess?: (childrenIds: string[]) => void,
@@ -107,7 +107,7 @@ export const restore = async ({
   return { item, ids: modifiedIds };
 };
 
-export const updateDocument = async ({
+export const update = async ({
   userId,
   orgId,
   id,
@@ -115,7 +115,7 @@ export const updateDocument = async ({
 }: Omit<UpdateDocumentInput, "log"> & User): Promise<Document> =>
   await db.document.update({ where: { userId, orgId, id }, data: updateData });
 
-export const removeChildren = async (
+const removeChildren = async (
   data: Pick<Document, "parentId"> & User,
   onSuccess?: (childrenIds: string[]) => void,
 ) => {

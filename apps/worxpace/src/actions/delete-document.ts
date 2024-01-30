@@ -10,7 +10,12 @@ import {
 } from "@acme/ui/lib";
 import { DeleteDocument, type DeleteDocumentInput } from "@acme/validators";
 
-import { createAuditLog, fetchClient, remove, UnauthorizedError } from "~/lib";
+import {
+  createAuditLog,
+  documents,
+  fetchClient,
+  UnauthorizedError,
+} from "~/lib";
 
 const handler: ActionHandler<DeleteDocumentInput, Modified<Document>> = async (
   data,
@@ -19,7 +24,7 @@ const handler: ActionHandler<DeleteDocumentInput, Modified<Document>> = async (
 
   try {
     const { userId, orgId } = fetchClient();
-    result = await remove({ userId, orgId, ...data });
+    result = await documents.remove({ userId, orgId, ...data });
     /** Activity Log */
     await createAuditLog(
       {
