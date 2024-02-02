@@ -2,7 +2,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 "use client";
 
-import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
+import {
+  useMemo,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type KeyboardEvent,
+} from "react";
+import dynamic from "next/dynamic";
 import { ImageIcon, Smile, X } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
@@ -97,11 +104,21 @@ const Toolbar = ({ document, preview }: ToolbarProps) => {
     await deleteFile(() => update({ id: document.id, coverImage: url }));
   const onRemoveCover = async () =>
     await deleteFile(() => update({ id: document.id, coverImage: null }));
-
+  const onUpdateContent = (content: string) =>
+    update({ id: document.id, content });
+  const onUploadIntoNote = async (file: File) => {
+    const res = await edgestore.publicFiles.upload({ file });
+    return res.url;
+  };
+  /** Block Note Editor */
+  const BlockNoteEditor = useMemo(
+    () => dynamic(() => import("~/components/block-editor"), { ssr: false }),
+    [],
+  );
   /** Props */
   const buttonProps: ButtonProps = {
     className: "text-muted-foreground text-xs",
-    // variant: "gray",
+    variant: "outline",
     size: "sm",
   };
 
@@ -182,6 +199,12 @@ const Toolbar = ({ document, preview }: ToolbarProps) => {
             </div>
           )}
         </div>
+        <BlockNoteEditor
+          editable={!preview}
+          initialContent={document.content}
+          onChange={onUpdateContent}
+          onUpload={onUploadIntoNote}
+        />
       </div>
     </>
   );

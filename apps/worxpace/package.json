@@ -17,6 +17,8 @@
     "@acme/prisma": "workspace:*",
     "@acme/ui": "workspace:^0.1.0",
     "@acme/validators": "workspace:^0.1.0",
+    "@blocknote/core": "^0.10.1",
+    "@blocknote/react": "^0.10.1",
     "@clerk/nextjs": "^4.29.4",
     "@edgestore/react": "^0.1.6",
     "@edgestore/server": "^0.1.6",
