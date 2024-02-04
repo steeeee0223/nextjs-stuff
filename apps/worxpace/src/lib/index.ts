@@ -1,4 +1,4 @@
-export * from "./documents";
+export * as documents from "./documents";
 export * from "./errors";
 export * from "./logs";
 export * from "./types";

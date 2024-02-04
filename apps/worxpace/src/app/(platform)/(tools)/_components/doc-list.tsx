@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { OrganizationSwitcher } from "@clerk/nextjs";
-import { PlusCircle, Trash } from "lucide-react";
+import { PlusCircle, Search, Settings, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -15,6 +15,7 @@ import {
 import { useAction } from "@acme/ui/hooks";
 
 import { archiveDocument, createDocument } from "~/actions";
+import { useClient, useSearch, useSettings } from "~/hooks";
 import TrashBox from "./trash-box";
 
 interface DocListProps {
@@ -23,6 +24,10 @@ interface DocListProps {
 
 const DocList = ({ isMobile }: DocListProps) => {
   const router = useRouter();
+  const { path } = useClient();
+  /** Search & Settings */
+  const search = useSearch();
+  const settings = useSettings();
   /** Docs */
   const { isLoading } = useTree();
   const { dispatch } = useTreeAction();
@@ -43,10 +48,9 @@ const DocList = ({ isMobile }: DocListProps) => {
   /** Action: Archive */
   const { execute: archive } = useAction(archiveDocument, {
     onSuccess: (data) => {
-      console.log(`archived`, data);
       dispatch({ type: "archive", payload: data });
       toast.success(`Document "${data.item.title}" Moved to Trash`);
-      // router.push(`/documents`);
+      router.push(path);
     },
     onError,
   });
@@ -78,6 +82,18 @@ const DocList = ({ isMobile }: DocListProps) => {
               },
             },
           }}
+        />
+        <Item
+          label="Search"
+          icon={Search}
+          onClick={search.onOpen}
+          shortcut="⌘K"
+        />
+        <Item
+          label="Settings"
+          icon={Settings}
+          onClick={settings.onOpen}
+          shortcut="⌘,"
         />
         <Item
           label="New page"

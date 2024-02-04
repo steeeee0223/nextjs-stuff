@@ -10,7 +10,12 @@ import {
 } from "@acme/ui/lib";
 import { DeleteDocument, type DeleteDocumentInput } from "@acme/validators";
 
-import { createAuditLog, fetchClient, remove, UnauthorizedError } from "~/lib";
+import {
+  createAuditLog,
+  documents,
+  fetchClient,
+  UnauthorizedError,
+} from "~/lib";
 
 const handler: ActionHandler<DeleteDocumentInput, Modified<Document>> = async (
   data,
@@ -18,8 +23,8 @@ const handler: ActionHandler<DeleteDocumentInput, Modified<Document>> = async (
   let result;
 
   try {
-    const { userId, orgId } = fetchClient();
-    result = await remove({ userId, orgId, ...data });
+    const { userId, orgId, path } = fetchClient();
+    result = await documents.remove({ userId, orgId, ...data });
     /** Activity Log */
     await createAuditLog(
       {
@@ -29,13 +34,13 @@ const handler: ActionHandler<DeleteDocumentInput, Modified<Document>> = async (
       },
       "DELETE",
     );
+    revalidatePath(path);
   } catch (error) {
     if (error instanceof UnauthorizedError) return { error: "Unauthorized" };
     console.log(`ERROR`, error);
     return { error: "Failed to delete document." };
   }
 
-  revalidatePath(`/documents`);
   return { data: result };
 };
 

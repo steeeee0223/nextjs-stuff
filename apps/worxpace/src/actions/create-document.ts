@@ -7,8 +7,8 @@ import { createSafeAction, type ActionHandler } from "@acme/ui/lib";
 import { CreateDocument, type CreateDocumentInput } from "@acme/validators";
 
 import {
-  createDocument as $create,
   createAuditLog,
+  documents,
   fetchClient,
   UnauthorizedError,
 } from "~/lib";
@@ -18,7 +18,7 @@ const handler: ActionHandler<CreateDocumentInput, Document> = async (data) => {
 
   try {
     const { userId, orgId, path } = fetchClient();
-    result = await $create({ ...data, userId, orgId });
+    result = await documents.create({ ...data, userId, orgId });
     /** Activity Log */
     await createAuditLog(
       { title: result.title, entityId: result.id, type: "DOCUMENT" },

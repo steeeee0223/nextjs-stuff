@@ -17,14 +17,20 @@
     "@acme/prisma": "workspace:*",
     "@acme/ui": "workspace:^0.1.0",
     "@acme/validators": "workspace:^0.1.0",
+    "@blocknote/core": "^0.10.1",
+    "@blocknote/react": "^0.10.1",
     "@clerk/nextjs": "^4.29.4",
+    "@edgestore/react": "^0.1.6",
+    "@edgestore/server": "^0.1.6",
     "@t3-oss/env-nextjs": "^0.7.1",
     "next": "^14.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-textarea-autosize": "^8.5.3",
     "sonner": "^1.3.1",
     "superjson": "2.2.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@acme/eslint-config": "workspace:^0.2.0",

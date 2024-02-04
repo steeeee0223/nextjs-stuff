@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useOrganization, useUser } from "@clerk/nextjs";
 import { PlusCircle } from "lucide-react";
 import { toast } from "sonner";
 
@@ -11,16 +10,11 @@ import { cn } from "@acme/ui/lib";
 
 import { createDocument } from "~/actions";
 import { theme } from "~/constants/theme";
+import { useClient } from "~/hooks";
 
-interface Params {
-  params: { role: string; clientId: string };
-}
-
-const Client = ({ params: { role } }: Params) => {
-  const { user } = useUser();
-  const { organization } = useOrganization();
-  const name = role === "organization" ? organization?.name : user?.firstName;
-
+const Client = () => {
+  const { workspace } = useClient();
+  /** Action */
   const { dispatch } = useTreeAction();
   const { execute } = useAction(createDocument, {
     onSuccess: (data) => {
@@ -33,11 +27,10 @@ const Client = ({ params: { role } }: Params) => {
     },
     onError: (e) => toast.error(e),
   });
-  const onSubmit = () => {
+  const onSubmit = () =>
     execute({ title: "Untitled", parentId: undefined })
       .then(() => console.log(`processing`))
       .catch((e) => console.log(e));
-  };
 
   return (
     <div
@@ -60,7 +53,9 @@ const Client = ({ params: { role } }: Params) => {
         alt="Empty"
         className="hidden dark:block"
       />
-      <h2 className="text-lg font-medium">Welcome to {name}&apos;s WorXpace</h2>
+      <h2 className="text-lg font-medium">
+        Welcome to {workspace}&apos;s WorXpace
+      </h2>
       <form action={onSubmit}>
         <Button type="submit">
           <PlusCircle className={cn(theme.size.icon, "mr-2")} />

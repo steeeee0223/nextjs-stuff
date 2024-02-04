@@ -8,24 +8,24 @@ import type {
   UpdateDocumentInput,
 } from "@acme/validators";
 
-interface User {
-  userId: string;
-  orgId: string | null;
-}
+import type { Client } from "./types";
+
+type User = Pick<Client, "userId" | "orgId">;
 type Action = "ARCHIVE" | "RESTORE";
 const UPDATE: Record<Action, Partial<Document>> = {
   ARCHIVE: { isArchived: true },
   RESTORE: { isArchived: false },
 };
 
-export const createDocument = async (
+export const create = async (
   data: CreateDocumentInput & User,
 ): Promise<Document> =>
   await db.document.create({
     data: { ...data, isArchived: false, isPublished: false },
   });
 
-export const fetchDocuments = async (
+/** @deprecated */
+export const getAll = async (
   userId: string,
   orgId: string | null,
   isArchived?: boolean,
@@ -36,7 +36,22 @@ export const fetchDocuments = async (
     orderBy: { createdAt: "desc" },
   });
 
-export const updateChildrenState = async (
+export const getById = async (documentId: string): Promise<Document | null> =>
+  await db.document.findUnique({ where: { id: documentId } });
+
+export const getByRole = async (
+  { role, userId, orgId }: Client,
+  isArchived?: boolean,
+): Promise<Document[]> =>
+  await db.document.findMany({
+    where:
+      role === "organization"
+        ? { orgId, isArchived }
+        : { userId, orgId: null, isArchived },
+    orderBy: { createdAt: "desc" },
+  });
+
+const updateChildrenState = async (
   action: Action,
   data: Pick<Document, "parentId"> & User,
   onSuccess?: (childrenIds: string[]) => void,
@@ -95,15 +110,15 @@ export const restore = async ({
   return { item, ids: modifiedIds };
 };
 
-export const renameDocument = async ({
+export const update = async ({
   userId,
   orgId,
   id,
-  title,
-}: UpdateDocumentInput & User): Promise<Document> =>
-  await db.document.update({ where: { userId, orgId, id }, data: { title } });
+  ...updateData
+}: Omit<UpdateDocumentInput, "log"> & User): Promise<Document> =>
+  await db.document.update({ where: { userId, orgId, id }, data: updateData });
 
-export const removeChildren = async (
+const removeChildren = async (
   data: Pick<Document, "parentId"> & User,
   onSuccess?: (childrenIds: string[]) => void,
 ) => {
