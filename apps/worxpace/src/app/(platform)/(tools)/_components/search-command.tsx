@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth, useOrganization, useUser } from "@clerk/nextjs";
 import { File } from "lucide-react";
 import { toast } from "sonner";
 
@@ -19,15 +18,12 @@ import { useFetch } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { theme } from "~/constants/theme";
-import { useSearch } from "~/hooks";
+import { useClient, useSearch } from "~/hooks";
 import { fetchUrl } from "~/lib";
 
 const SearchCommand = () => {
   /** Auth */
-  const { user } = useUser();
-  const { organization } = useOrganization();
-  const { userId, orgId } = useAuth();
-  const name = orgId ? organization?.name : user?.fullName;
+  const { workspace: name, orgId, userId } = useClient();
   /** Search */
   const { toggle, isOpen, onClose } = useSearch();
   const fetchDocs = async () => {
