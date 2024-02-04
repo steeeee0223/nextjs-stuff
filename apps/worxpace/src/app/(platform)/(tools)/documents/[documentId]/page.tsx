@@ -1,26 +1,27 @@
 import { Suspense } from "react";
 import { notFound, redirect } from "next/navigation";
 
-import { documents, fetchClient } from "~/lib";
+import { getDocument } from "~/app/(platform)/_functions";
+import Error from "../../error";
 import Toolbar, { ToolbarSkeleton } from "./_component/toolbar";
 
 interface Params {
   params: { documentId: string };
 }
 
-const getDocumentPage = async (documentId: string) => {
-  const document = await documents.getById(documentId);
-  if (document === null) return notFound();
-  if (document.isPublished && !document.isArchived) return document;
-  const { userId, orgId } = fetchClient();
-  if (document.userId !== userId || document.orgId !== orgId)
-    redirect(`/select-role`);
-  return document;
-};
-
 const DocumentPage = async ({ params: { documentId } }: Params) => {
-  const document = await getDocumentPage(documentId);
+  const { data: document, error } = await getDocument(documentId, false);
 
+  if (!document) {
+    switch (error) {
+      case "notFound":
+        return notFound();
+      case "unauthorized":
+        return redirect("/select-role");
+      default:
+        return <Error />;
+    }
+  }
   return (
     <div className="pb-40">
       <Suspense fallback={<ToolbarSkeleton />}>

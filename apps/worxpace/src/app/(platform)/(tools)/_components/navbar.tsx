@@ -9,6 +9,7 @@ import { cn } from "@acme/ui/lib";
 import { theme } from "~/constants/theme";
 import Banner from "./banner";
 import Menu from "./menu";
+import Publish from "./publish";
 import Title from "./title";
 
 interface NavbarProps {
@@ -21,7 +22,7 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
   const { treeItems } = useTree();
   const document = treeItems.find(({ id }) => params.documentId === id);
 
-  if (document === undefined) {
+  if (!document)
     return (
       <nav
         className={cn(theme.bg.navbar, theme.flex.center, "w-full px-3 py-2")}
@@ -29,8 +30,6 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
         <Title.Skeleton />
       </nav>
     );
-  }
-  if (document === null) return null;
   return (
     <>
       <nav
@@ -50,6 +49,7 @@ const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
         <div className={cn(theme.flex.center, "w-full justify-between")}>
           <Title initialData={document} />
           <div className={theme.flex.gap2}>
+            <Publish documentId={document.id} />
             <Menu documentId={document.id} />
           </div>
         </div>
