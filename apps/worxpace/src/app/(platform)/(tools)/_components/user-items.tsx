@@ -76,7 +76,7 @@ export const UserItems = () => {
       >
         <div className="flex flex-col space-y-4 p-2">
           <p className="text-xs font-medium leading-none text-muted-foreground">
-            {user?.emailAddresses[0].emailAddress}
+            {user?.emailAddresses.at(0)?.emailAddress}
           </p>
           <UserItem name={user?.fullName} imageUrl={user?.imageUrl} />
           {userMemberships.data?.map(
