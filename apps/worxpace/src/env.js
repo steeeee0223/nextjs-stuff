@@ -20,6 +20,8 @@ export const env = createEnv({
   server: {
     DB_AUTH: z.string(),
     DB_WORXPACE: z.string(),
+    // LIVEBLOCKS
+    LIVEBLOCKS_SECRET_KEY: z.string()
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -57,7 +59,8 @@ export const env = createEnv({
     // EDGESTORE
     EDGE_STORE_ACCESS_KEY: process.env.EDGE_STORE_ACCESS_KEY,
     EDGE_STORE_SECRET_KEY: process.env.EDGE_STORE_SECRET_KEY,
-
+    // LIVEBLOCKS
+    LIVEBLOCKS_SECRET_KEY: process.env.LIVEBLOCKS_SECRET_KEY
   },
   skipValidation:
     !!process.env.CI ||

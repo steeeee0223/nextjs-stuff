@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs";
 
+import { COLORS } from "~/constants/theme";
 import { UnauthorizedError } from "./errors";
 import { Client } from "./types";
 
@@ -57,4 +58,8 @@ export function parseBool(x?: string | null): boolean | undefined {
     default:
       throw new Error(`Invalid argument: ${x}`);
   }
+}
+
+export function connectionIdToColor(connectionId: number): string {
+  return COLORS[connectionId % COLORS.length]!;
 }
