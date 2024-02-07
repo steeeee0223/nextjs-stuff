@@ -3,43 +3,36 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 "use client";
 
-import { useEffect } from "react";
-import { useParams, usePathname } from "next/navigation";
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { forwardRef, type ForwardedRef, type MouseEventHandler } from "react";
+import { ChevronsLeft } from "lucide-react";
 
-import { useNavControl } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { theme } from "~/constants/theme";
 import DocList from "./doc-list";
-import Navbar from "./navbar";
 
-export const Sidebar = () => {
-  const pathname = usePathname();
-  const params = useParams();
-  const {
-    isMobile,
-    sidebarRef,
-    navbarRef,
+interface SidebarProps {
+  isResetting: boolean;
+  isMobile: boolean;
+  handleMouseDown: MouseEventHandler<HTMLDivElement>;
+  resetWidth: () => void;
+  collapse: () => void;
+}
+
+export const Sidebar = forwardRef(function Sidebar(
+  {
     isResetting,
-    isCollapsed,
+    isMobile,
     handleMouseDown,
-    collapse,
     resetWidth,
-  } = useNavControl();
-
-  useEffect(() => {
-    isMobile ? collapse() : resetWidth();
-  }, [isMobile]);
-
-  useEffect(() => {
-    if (isMobile) collapse();
-  }, [pathname, isMobile]);
-
+    collapse,
+  }: SidebarProps,
+  ref: ForwardedRef<HTMLElement>,
+) {
   return (
     <>
       <aside
-        ref={sidebarRef}
+        ref={ref}
         className={cn(
           "group/sidebar relative z-[99999] flex h-full w-60 flex-col overflow-y-auto bg-secondary",
           isResetting && "transition-all duration-300 ease-in-out",
@@ -64,28 +57,6 @@ export const Sidebar = () => {
           className="absolute right-0 top-0 h-full w-1 cursor-ew-resize bg-primary/10 opacity-0 transition group-hover/sidebar:opacity-100"
         />
       </aside>
-      <div
-        ref={navbarRef}
-        className={cn(
-          "absolute left-60 top-0 z-[99999] w-[calc(100%-240px)]",
-          isResetting && "transition-all duration-300 ease-in-out",
-          isMobile && "left-0 w-full",
-        )}
-      >
-        {params.documentId ? (
-          <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
-        ) : (
-          <nav className="w-full bg-transparent px-3 py-2">
-            {isCollapsed && (
-              <MenuIcon
-                onClick={resetWidth}
-                role="button"
-                className="h-6 w-6 text-muted-foreground"
-              />
-            )}
-          </nav>
-        )}
-      </div>
     </>
   );
-};
+});
