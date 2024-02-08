@@ -655,6 +655,9 @@ importers:
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
+      zustand:
+        specifier: ^4.5.0
+        version: 4.5.0(@types/react@18.2.46)(react@18.2.0)
     devDependencies:
       '@acme/eslint-config':
         specifier: workspace:^0.2.0
