@@ -29,5 +29,5 @@ export type {
   List,
   Subscription,
   User,
-} from "../.generated/worxpace";
-export { ROLE, ACTION, ENTITY_TYPE } from "../.generated/worxpace";
+} from ".prisma/worxpace";
+export { ROLE, ACTION, ENTITY_TYPE } from ".prisma/worxpace";
