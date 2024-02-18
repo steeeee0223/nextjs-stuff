@@ -3,7 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../.generated/worxpace"
+  output   = "../node_modules/.prisma/worxpace"
 }
 
 datasource db {

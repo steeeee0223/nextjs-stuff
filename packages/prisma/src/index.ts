@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
-import { PrismaClient as Auth } from "../.generated/auth";
-import { PrismaClient as Worxpace } from "../.generated/worxpace";
+import { PrismaClient as Auth } from ".prisma/auth";
+import { PrismaClient as Worxpace } from ".prisma/worxpace";
 
 declare global {
   var authClient: Auth | undefined;
