@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
-import { PrismaClient as Auth } from "../.generated/auth";
-import { PrismaClient as Worxpace } from "../.generated/worxpace";
+import { PrismaClient as Auth } from ".prisma/client/auth";
+import { PrismaClient as Worxpace } from ".prisma/client/worxpace";
 
 declare global {
   var authClient: Auth | undefined;
@@ -29,5 +29,5 @@ export type {
   List,
   Subscription,
   User,
-} from "../.generated/worxpace";
-export { ROLE, ACTION, ENTITY_TYPE } from "../.generated/worxpace";
+} from ".prisma/client/worxpace";
+export { ROLE, ACTION, ENTITY_TYPE } from ".prisma/client/worxpace";

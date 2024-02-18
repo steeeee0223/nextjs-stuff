@@ -1,3 +1,5 @@
+import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
+
 // Importing env files here to validate on build
 import "./src/env.js";
 
@@ -15,7 +17,7 @@ const config = {
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
-
+  /**  */
   images: {
     remotePatterns: [
       {
@@ -31,7 +33,16 @@ const config = {
         hostname: "files.edgestore.dev",
       },
     ]
-  }
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      /** To Fix Prisma */
+      /** See https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-monorepo */
+      config.plugins = [...config.plugins, new PrismaPlugin()]
+    }
+
+    return config
+  },
 };
 
 export default config;

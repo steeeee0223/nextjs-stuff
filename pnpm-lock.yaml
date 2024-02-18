@@ -375,6 +375,9 @@ importers:
       '@acme/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
+      '@prisma/nextjs-monorepo-workaround-plugin':
+        specifier: ^5.9.1
+        version: 5.9.1
       '@types/node':
         specifier: ^20.10.6
         version: 20.10.6
@@ -4809,6 +4812,10 @@ packages:
     resolution: {integrity: sha512-wnA+6HTFcY+tkykMokix9GiAkaauPC5W/gg0O5JB0J8tCTNWrqpnQ7AsaGRfkYUbeOIioh6woDjQrGTTRf1Zag==}
     dependencies:
       '@prisma/debug': 5.8.1
+
+  /@prisma/nextjs-monorepo-workaround-plugin@5.9.1:
+    resolution: {integrity: sha512-eyhfdkGUtUyz8BxKocgl953KuC5WWLxL+EC2aJBUSSozh+l/COg1FjvCa4fGeNbiJPdFnBPybv5+M52jc+vV6Q==}
+    dev: true
 
   /@radix-ui/number@1.0.0:
     resolution: {integrity: sha512-Ofwh/1HX69ZfJRiRBMTy7rgjAzHmwe4kW9C9Y99HTRUcYLUuVT0KESFj15rPjRgKJs20GPq8Bm5aEDJ8DuA3vA==}
