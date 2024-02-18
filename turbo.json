@@ -22,7 +22,8 @@
         ".output/**",
         ".vercel/output/**",
         "dist/**",
-        "storybook-static/**"
+        "storybook-static/**",
+        ".generated/**"
       ]
     },
     "db:generate": {
