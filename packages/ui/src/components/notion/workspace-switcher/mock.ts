@@ -14,7 +14,7 @@ export const mockUser: UserState = {
   email: "steve@example.com",
   isDarkMode: false,
   profilePicture: {
-    url: "",
+    url: "https://github.com/shadcn.png",
   },
   workspaces: [
     {
