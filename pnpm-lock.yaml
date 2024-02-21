@@ -157,12 +157,6 @@ importers:
       '@acme/ui':
         specifier: workspace:^0.1.0
         version: link:../../packages/ui
-      '@blocknote/core':
-        specifier: ^0.10.1
-        version: 0.10.1
-      '@blocknote/react':
-        specifier: ^0.10.1
-        version: 0.10.1(@tiptap/pm@2.2.1)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -616,6 +610,15 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.0.7
         version: 1.0.7(@types/react-dom@18.2.18)(@types/react@18.2.46)(react-dom@18.2.0)(react@18.2.0)
+      '@tiptap/pm':
+        specifier: ^2.2.1
+        version: 2.2.1
+      '@tiptap/react':
+        specifier: ^2.2.1
+        version: 2.2.1(@tiptap/core@2.2.1)(@tiptap/pm@2.2.1)(react-dom@18.2.0)(react@18.2.0)
+      '@tiptap/starter-kit':
+        specifier: ^2.2.1
+        version: 2.2.1(@tiptap/pm@2.2.1)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -628,6 +631,9 @@ importers:
       emoji-picker-react:
         specifier: ^4.6.9
         version: 4.6.9(react@18.2.0)
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
@@ -686,6 +692,9 @@ importers:
       '@testing-library/user-event':
         specifier: ^14.5.2
         version: 14.5.2(@testing-library/dom@9.3.4)
+      '@types/lodash':
+        specifier: ^4.14.202
+        version: 4.14.202
       '@types/node':
         specifier: ^20.10.6
         version: 20.10.6
@@ -14546,7 +14555,6 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols@3.0.0:
     resolution: {integrity: sha512-dSkNGuI7iG3mfvDzUuYZyvk5dD9ocYCYzNU6CYDE6+Xqd+gwme6Z00NS3dUh8mq/73HaEtT7m6W+yUPtU6BZnQ==}
