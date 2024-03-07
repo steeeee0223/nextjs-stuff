@@ -9,6 +9,7 @@ import { useNavControl } from "@acme/ui/hooks";
 
 import { Room } from "~/components";
 import { fetchUrl } from "~/lib";
+import { ToolbarSkeleton } from "../documents/[documentId]/_component/toolbar";
 import Navbar from "./navbar";
 import SearchCommand from "./search-command";
 import { Sidebar } from "./sidebar";
@@ -55,15 +56,15 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
       onClickItem={onClickItem}
       isItemActive={isItemActive}
     >
+      <Sidebar
+        ref={sidebarRef}
+        isResetting={isResetting}
+        isMobile={isMobile}
+        handleMouseDown={handleMouseDown}
+        resetWidth={resetWidth}
+        collapse={collapse}
+      />
       <RoomWrapper documentId={params.documentId as string | undefined}>
-        <Sidebar
-          ref={sidebarRef}
-          isResetting={isResetting}
-          isMobile={isMobile}
-          handleMouseDown={handleMouseDown}
-          resetWidth={resetWidth}
-          collapse={collapse}
-        />
         <Navbar
           ref={navbarRef}
           isCollapsed={isCollapsed}
@@ -88,8 +89,19 @@ const RoomWrapper = ({
 }: PropsWithChildren<{ documentId?: string | null }>) => {
   if (!documentId) return <>{children}</>;
   return (
-    <Room roomId={documentId} fallback={null}>
+    <Room roomId={documentId} fallback={<Skeleton />}>
       {children}
     </Room>
+  );
+};
+
+const Skeleton = () => {
+  return (
+    <div className="absolute left-60 top-0 z-[99999] w-full">
+      <div className="w-full bg-background dark:bg-[#1F1F1F]" />
+      <main className="h-full flex-1 overflow-y-auto">
+        <ToolbarSkeleton />
+      </main>
+    </div>
   );
 };
