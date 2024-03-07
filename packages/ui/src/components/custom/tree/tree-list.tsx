@@ -8,38 +8,42 @@ import { cn } from "@/lib";
 import { useTree } from "./tree-context";
 
 interface TreeListProps {
+  group: string | null;
   parentId: string | null;
   level?: number;
+  showEmptyChild?: boolean;
   onAddItem?: (parentId?: string) => void;
   onDeleteItem?: ItemProps["onDelete"];
 }
 
 export function TreeList({
+  group = null,
   parentId = null,
   level = 0,
+  showEmptyChild = true,
   onAddItem,
   onDeleteItem,
 }: TreeListProps) {
   const { getChildren, isItemActive, onClickItem } = useTree();
-  const items = getChildren(false, parentId);
+  const items = getChildren(parentId, group);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const onExpand = (itemId: string) =>
     setExpanded((prev) => ({ ...prev, [itemId]: !prev[itemId] }));
 
   return (
     <>
-      <p
-        style={{
-          paddingLeft: level ? `${level * 12 + 25}px` : undefined,
-        }}
-        className={cn(
-          "hidden text-sm font-medium text-muted-foreground/80",
-          expanded && "last:block",
-          level === 0 && "hidden",
-        )}
-      >
-        No pages inside
-      </p>
+      {showEmptyChild && (
+        <p
+          style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }}
+          className={cn(
+            "hidden text-sm font-medium text-muted-foreground/80",
+            expanded && "last:block",
+            level === 0 && "hidden",
+          )}
+        >
+          No pages inside
+        </p>
+      )}
       {items.map(({ id, title, icon }) => (
         <div key={id}>
           <Item
@@ -56,8 +60,10 @@ export function TreeList({
           />
           {expanded[id] && (
             <TreeList
+              group={group}
               parentId={id}
               level={level + 1}
+              showEmptyChild={showEmptyChild}
               onAddItem={onAddItem}
               onDeleteItem={onDeleteItem}
             />

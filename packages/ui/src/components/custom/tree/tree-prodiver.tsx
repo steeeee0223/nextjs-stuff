@@ -10,13 +10,14 @@ import { toast } from "sonner";
 
 import { useFetch } from "@/hooks";
 import type { ActionState } from "@/lib";
-import type { TreeItem } from "./index.types";
+import type { Groups, TreeItem } from "./index.types";
 import { TreeActionContext } from "./tree-action-context";
 import { treeReducer, type TreeReducer } from "./tree-actions";
 import { TreeContext, type TreeContextInterface } from "./tree-context";
 
 interface TreeProviderProps extends PropsWithChildren {
   className?: string;
+  groups?: Groups;
   fetchItems?: () => Promise<ActionState<never, TreeItem[]>>;
   isItemActive?: (id: string) => boolean;
   onClickItem?: (id: string) => void;
@@ -25,6 +26,7 @@ interface TreeProviderProps extends PropsWithChildren {
 export function TreeProvider({
   className,
   children,
+  groups,
   fetchItems,
   isItemActive,
   onClickItem,
@@ -42,17 +44,22 @@ export function TreeProvider({
 
   const treeItems = useMemo(() => Object.values(state.entities), [state]);
   const getChildren = useCallback(
-    ($isArchived: boolean, $parentId: string | null) =>
+    ($parentId: string | null, $group: Groups[number] | null) =>
       treeItems.filter(
-        ({ parentId, isArchived }) =>
-          $parentId === parentId && isArchived === $isArchived,
+        ({ parentId, group }) => $group === group && $parentId === parentId,
       ),
+    [treeItems],
+  );
+  const getGroup = useCallback(
+    ($group: Groups[number]) =>
+      treeItems.filter(({ group }) => group === $group),
     [treeItems],
   );
   const treeContextValues: TreeContextInterface = {
     isLoading: isLoading || !data,
+    groups,
     treeItems,
-    archivedItems: treeItems.filter(({ isArchived }) => isArchived),
+    getGroup,
     getChildren,
     isItemActive,
     onClickItem,

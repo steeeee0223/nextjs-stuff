@@ -1,6 +1,6 @@
 import type { Reducer } from "react";
 
-import type { TreeItem } from "./index.types";
+import type { Groups, TreeItem } from "./index.types";
 
 export interface Entity<T> {
   ids: string[];
@@ -14,9 +14,10 @@ export interface Modified<T> {
 
 export type TreeAction<T> =
   | { type: "add" | "set"; payload: T[] }
-  | { type: "archive" | "restore"; payload: Modified<T> }
-  | { type: "update"; payload: T }
-  | { type: "delete"; payload: string[] };
+  // | { type: "archive" | "restore"; payload: Modified<T> }
+  | { type: "update:item"; payload: T }
+  | { type: "delete"; payload: string[] }
+  | { type: "update:group"; payload: { group: Groups[number]; ids: string[] } };
 
 export type TreeReducer = Reducer<Entity<TreeItem>, TreeAction<TreeItem>>;
 
@@ -33,17 +34,20 @@ export function treeReducer(
       e = payload.reduce((acc, item) => ({ ...acc, [item.id]: item }), {});
       // payload.forEach((item) => (entities[item.id] = item));
       return { ids: Object.keys(e), entities: e };
-    case "update":
+    case "update:item":
       entities[payload.id] = payload;
       return { ids, entities };
-    case "archive":
-      entities[payload.item.id] = payload.item;
-      payload.ids.forEach((id) => (entities[id]!.isArchived = true));
+    case "update:group":
+      payload.ids.forEach((id) => (entities[id]!.group = payload.group));
       return { ids, entities };
-    case "restore":
-      entities[payload.item.id] = payload.item;
-      payload.ids.forEach((id) => (entities[id]!.isArchived = false));
-      return { ids, entities };
+    // case "archive":
+    //   entities[payload.item.id] = payload.item;
+    //   payload.ids.forEach((id) => (entities[id]!.isArchived = true));
+    //   return { ids, entities };
+    // case "restore":
+    //   entities[payload.item.id] = payload.item;
+    //   payload.ids.forEach((id) => (entities[id]!.isArchived = false));
+    //   return { ids, entities };
     case "delete":
       payload.forEach((id) => delete entities[id]);
       return { ids: Object.keys(entities), entities };

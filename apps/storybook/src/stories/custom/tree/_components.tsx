@@ -8,28 +8,56 @@ import {
   useTreeAction,
 } from "@acme/ui/components";
 
-import { createItem } from "./utils";
-
-export const AddItem = () => {
+export const AddItem = ({ group }: { group?: string }) => {
   const { dispatch } = useTreeAction();
   const handleCreate = () =>
-    dispatch({ type: "add", payload: [createItem(uuidv4(), "Untitled")] });
+    dispatch({
+      type: "add",
+      payload: [
+        {
+          id: uuidv4(),
+          parentId: null,
+          title: "New Page",
+          group: group ?? null,
+        },
+      ],
+    });
 
   return <CRUDItem label="New page" icon={PlusCircle} onClick={handleCreate} />;
 };
 
-export const TreeItems = () => {
+export const TreeItems = ({
+  group,
+  title,
+  showEmptyChild,
+}: {
+  group?: string;
+  title?: string;
+  showEmptyChild: boolean;
+}) => {
   const { isLoading } = useTree();
   const { dispatch } = useTreeAction();
   const onAddItem = (parentId?: string) =>
     dispatch({
       type: "add",
-      payload: [createItem(uuidv4(), "Untitled", parentId)],
+      payload: [
+        {
+          id: uuidv4(),
+          parentId: parentId ?? null,
+          title: "New Page",
+          group: group ?? null,
+        },
+      ],
     });
   const onDeleteItem = (id: string) =>
     dispatch({ type: "delete", payload: [id] });
   return (
     <div className="mt-4">
+      {title && (
+        <span className="ml-4 text-xs font-semibold text-primary/50">
+          {title}
+        </span>
+      )}
       {isLoading ? (
         <>
           <div className="mt-4">
@@ -40,6 +68,8 @@ export const TreeItems = () => {
         </>
       ) : (
         <TreeList
+          showEmptyChild={showEmptyChild}
+          group={group ?? null}
           parentId={null}
           onAddItem={onAddItem}
           onDeleteItem={onDeleteItem}
