@@ -42,7 +42,11 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
   const isItemActive = (id: string) => params.documentId === id;
   const fetchItems = async () => {
     try {
-      const data: Document[] = await fetchUrl(`/api/documents/`);
+      const documents: Document[] = await fetchUrl(`/api/documents/`);
+      const data = documents.map((doc) => ({
+        ...doc,
+        group: doc.isArchived ? "trash" : "document",
+      }));
       return { data };
     } catch {
       return { error: `Error occurred while fetching documents` };
@@ -52,6 +56,7 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
   return (
     <TreeProvider
       className="flex h-full dark:bg-[#1F1F1F]"
+      groups={["document", "kanban", "trash"]}
       fetchItems={fetchItems}
       onClickItem={onClickItem}
       isItemActive={isItemActive}

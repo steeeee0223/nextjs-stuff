@@ -76,7 +76,11 @@ const Toolbar = ({ document, preview }: ToolbarProps) => {
   const { dispatch } = useTreeAction();
   /** Action - update */
   const { execute: update } = useAction(updateDocument, {
-    onSuccess: (data) => dispatch({ type: "update", payload: data }),
+    onSuccess: ({ id, parentId, icon, title }) =>
+      dispatch({
+        type: "update:item",
+        payload: { id, parentId, icon, title, group: "document" },
+      }),
     onError: (e) => toast.error(e),
   });
   const onUpdateTitle = (e: ChangeEvent<HTMLTextAreaElement>) => {

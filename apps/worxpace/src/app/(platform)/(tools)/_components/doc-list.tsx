@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/interactive-supports-focus */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useRouter } from "next/navigation";
 import { OrganizationSwitcher } from "@clerk/nextjs";
-import { PlusCircle, Search, Settings, Trash } from "lucide-react";
+import { Plus, PlusCircle, Search, Settings, Trash } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -13,8 +15,10 @@ import {
   useTreeAction,
 } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
+import { cn } from "@acme/ui/lib";
 
 import { archiveDocument, createDocument } from "~/actions";
+import { theme } from "~/constants/theme";
 import { useClient, useSearch, useSettings } from "~/hooks";
 import TrashBox from "./trash-box";
 
@@ -35,10 +39,10 @@ const DocList = ({ isMobile }: DocListProps) => {
   /** Action: Create */
   const { execute: create } = useAction(createDocument, {
     onSuccess: (data) => {
-      const { id, title, parentId, isArchived, icon } = data;
+      const { id, title, parentId, icon } = data;
       dispatch({
         type: "add",
-        payload: [{ id, title, parentId, isArchived, icon }],
+        payload: [{ id, title, parentId, icon, group: "document" }],
       });
       toast.success(`Document Created: ${title}`);
       router.push(`/documents/${id}`);
@@ -47,9 +51,9 @@ const DocList = ({ isMobile }: DocListProps) => {
   });
   /** Action: Archive */
   const { execute: archive } = useAction(archiveDocument, {
-    onSuccess: (data) => {
-      dispatch({ type: "archive", payload: data });
-      toast.success(`Document "${data.item.title}" Moved to Trash`);
+    onSuccess: ({ item, ids }) => {
+      dispatch({ type: "update:group", payload: { ids, group: "trash" } });
+      toast.success(`Document "${item.title}" Moved to Trash`);
       router.push(path);
     },
     onError,
@@ -102,9 +106,24 @@ const DocList = ({ isMobile }: DocListProps) => {
         />
       </div>
       <div className="mt-4">
+        <div className={cn(theme.flex.center, "px-3 py-1")}>
+          <span className="grow pl-1.5 text-xs font-semibold text-primary/50">
+            Documents
+          </span>
+          <div
+            role="button"
+            onClick={() => create({ title: "Untitled" })}
+            className={cn(
+              theme.bg.hover,
+              "ml-auto h-full grow-0 rounded-sm p-0.5 opacity-0 hover:opacity-100",
+            )}
+          >
+            <Plus className={cn(theme.size.icon, "text-muted-foreground")} />
+          </div>
+        </div>
         {isLoading ? (
           <>
-            <div className="mt-4">
+            <div className="mt-2">
               {Array.from([0, 1, 0, 1, 1]).map((level, i) => (
                 <Item.Skeleton key={i} level={level} />
               ))}
@@ -112,6 +131,7 @@ const DocList = ({ isMobile }: DocListProps) => {
           </>
         ) : (
           <TreeList
+            group="document"
             parentId={null}
             onAddItem={(parentId) => create({ title: "Untitled", parentId })}
             onDeleteItem={(id) => archive({ id })}

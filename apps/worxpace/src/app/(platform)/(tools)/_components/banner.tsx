@@ -26,9 +26,10 @@ const Banner = ({ documentId }: BannerProps) => {
   const onError = (e: string) => toast.error(e);
   /** Action - Restore */
   const { execute: restore } = useAction(restoreDocument, {
-    onSuccess: (data) => {
-      dispatch({ type: "restore", payload: data });
-      toast.success(`Restored document "${data.item.title}"`);
+    onSuccess: ({ ids, item }) => {
+      // dispatch({ type: "restore", payload: data });
+      dispatch({ type: "update:group", payload: { ids, group: "document" } });
+      toast.success(`Restored document "${item.title}"`);
       router.push(path);
     },
     onError,

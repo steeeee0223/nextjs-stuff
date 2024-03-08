@@ -38,7 +38,10 @@ const Title = ({ initialData }: TitleProps) => {
   const { dispatch } = useTreeAction();
   const { execute: update } = useAction(updateDocument, {
     onSuccess: (data) => {
-      dispatch({ type: "update", payload: data });
+      dispatch({
+        type: "update:item",
+        payload: { ...data, group: "document" },
+      });
       toast.success(`Renamed document "${data.title}"`);
     },
   });
