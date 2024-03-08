@@ -7,7 +7,7 @@ import { CRUDItem as Item } from "@/components/custom";
 import { cn } from "@/lib";
 import { useTree } from "./tree-context";
 
-interface TreeListProps {
+export interface TreeListProps {
   group: string | null;
   parentId: string | null;
   level?: number;
