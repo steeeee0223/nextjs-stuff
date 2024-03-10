@@ -1,5 +1,9 @@
-import { Suspense } from "react";
-import { notFound, redirect } from "next/navigation";
+"use client";
+
+import { redirect } from "next/navigation";
+import useSWR from "swr";
+
+import type { Document } from "@acme/prisma";
 
 import { getDocument } from "~/app/(platform)/_functions";
 import Error from "../../error";
@@ -9,14 +13,18 @@ interface Params {
   params: { documentId: string };
 }
 
-const DocumentPage = async ({ params: { documentId } }: Params) => {
-  const { data: document, error } = await getDocument(documentId, false);
+const DocumentPage = ({ params: { documentId } }: Params) => {
+  const {
+    data: document,
+    isLoading,
+    error,
+  } = useSWR<Document, Error>([documentId, false], getDocument, {
+    onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
+  });
 
-  if (!document) {
-    switch (error) {
-      case "notFound":
-        return notFound();
-      case "unauthorized":
+  if (error) {
+    switch (error.message) {
+      case "Unauthorized":
         return redirect("/select-role");
       default:
         return <Error />;
@@ -24,9 +32,11 @@ const DocumentPage = async ({ params: { documentId } }: Params) => {
   }
   return (
     <div className="pb-40">
-      <Suspense fallback={<ToolbarSkeleton />}>
+      {isLoading || !document ? (
+        <ToolbarSkeleton />
+      ) : (
         <Toolbar document={document} />
-      </Suspense>
+      )}
     </div>
   );
 };

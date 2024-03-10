@@ -43,13 +43,12 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
   const fetchItems = async () => {
     try {
       const documents: Document[] = await fetchUrl(`/api/documents/`);
-      const data = documents.map((doc) => ({
+      return documents.map((doc) => ({
         ...doc,
         group: doc.isArchived ? "trash" : "document",
       }));
-      return { data };
     } catch {
-      return { error: `Error occurred while fetching documents` };
+      throw new Error("Error occurred while fetching documents");
     }
   };
 

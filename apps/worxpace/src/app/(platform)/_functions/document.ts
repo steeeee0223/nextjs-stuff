@@ -1,28 +1,25 @@
 "use server";
 
+import type { Fetcher } from "swr";
+
 import type { Document } from "@acme/prisma";
-import type { ActionState } from "@acme/ui/lib";
 
 import { documents, fetchClient } from "~/lib";
 
-export const getDocument = async (
-  documentId: string,
-  preview = false,
-): Promise<ActionState<never, Document>> => {
-  try {
-    const document = await documents.getById(documentId);
-    if (!document) return { error: "notFound" };
-    // Published & not archived
-    if (document.isPublished && !document.isArchived) return { data: document };
-    // Preview, but either archived or not published
-    if (preview) return { error: "notFound" };
-    // Verify user if not preview
-    const { userId, orgId } = fetchClient();
-    if (document.userId !== userId || document.orgId !== orgId)
-      return { error: "unauthorized" };
-    // Return authorized doc
-    return { data: document };
-  } catch {
-    return { error: "internal server error" };
-  }
+export const getDocument: Fetcher<Document, [string, boolean]> = async ([
+  documentId,
+  preview,
+]) => {
+  const document = await documents.getById(documentId);
+  if (!document) throw new Error("Not found");
+  // Published & not archived
+  if (document.isPublished && !document.isArchived) return document;
+  // Preview, but either archived or not published
+  if (preview) throw new Error("Not found");
+  // Verify user if not preview
+  const { userId, orgId } = fetchClient();
+  if (document.userId !== userId || document.orgId !== orgId)
+    throw new Error("Unauthorized");
+  // Return authorized doc
+  return document;
 };

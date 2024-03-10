@@ -3,10 +3,10 @@
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
+import useSWR from "swr";
 
 import type { Document } from "@acme/prisma";
 import { Cover } from "@acme/ui/components";
-import { useFetch } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { getDocument } from "~/app/(platform)/_functions";
@@ -24,14 +24,10 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
     data: document,
     isLoading,
     error,
-  } = useFetch<Document>(
-    async () => await getDocument(documentId, true),
-    {
-      onSuccess: (data) => console.log(`fetched data`, data),
-      onError: (e) => console.log(e),
-    },
-    [documentId],
-  );
+  } = useSWR<Document, Error>([documentId, true], getDocument, {
+    onSuccess: (data) => console.log(`fetched data`, data),
+    onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
+  });
   /** Block Note Editor */
   const BlockNoteEditor = useMemo(
     () => dynamic(() => import("~/components/block-editor"), { ssr: false }),
