@@ -3,9 +3,8 @@
 import type { PropsWithChildren } from "react";
 import { useReducer, useState } from "react";
 import { toast } from "sonner";
+import useSWR, { type Fetcher } from "swr";
 
-import { useFetch } from "@/hooks";
-import type { ActionState } from "@/lib";
 import type { KanbanHandlers, KanbanItem, KanbanList } from "./index.types";
 import { KanbanActionContext } from "./kanban-action-context";
 import type { KanbanReducer } from "./kanban-actions";
@@ -17,29 +16,34 @@ import { findMaxOrder } from "./utils";
 
 interface KanbanProviderProps extends PropsWithChildren, KanbanHandlers {
   className?: string;
-  fetchLists: () => Promise<ActionState<never, KanbanList[]>>;
+  queryKey?: string;
+  fetchLists: Fetcher<KanbanList[]>;
   onOpenItem?: (item: KanbanItem) => void;
 }
 
 export function KanbanProvider({
   className,
   children,
+  queryKey,
   fetchLists,
   ...handlers
 }: KanbanProviderProps) {
   /** Kanban Item */
   const [activeItem, setActiveItem] = useState<KanbanItem | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   /** Kanban Lists */
   const $initialLists = { ids: [], entities: {} };
   const [state, dispatch] = useReducer<KanbanReducer>(
     kanbanReducer,
     $initialLists,
   );
-  const { data, isLoading } = useFetch<KanbanList[]>(fetchLists, {
-    onSuccess: (data) => dispatch({ type: "set", payload: data }),
-    onError: (e) => toast.error(e),
-  });
+  const { data, isLoading } = useSWR<KanbanList[], string>(
+    `ui:kanban:${queryKey}`,
+    fetchLists,
+    {
+      onSuccess: (data) => dispatch({ type: "set", payload: data }),
+      onError: (e) => toast.error(e),
+    },
+  );
 
   const kanbanLists = Object.values(state.entities);
   console.log(`kanbanLists:`, kanbanLists);

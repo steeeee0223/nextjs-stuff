@@ -17,6 +17,7 @@ interface UseFetchResult<T> {
   isLoading: boolean;
 }
 
+/** @deprecated will be replaced by `useSWR` */
 export const useFetch = <T>(
   action: () => Promise<ActionState<never, T>>,
   options: UseFetchOptions<T>,
