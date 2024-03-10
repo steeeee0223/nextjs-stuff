@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Check, Copy, Globe } from "lucide-react";
 import { toast } from "sonner";
+import useSWR from "swr";
 
 import type { Document } from "@acme/prisma";
 import {
@@ -16,21 +17,20 @@ import { cn } from "@acme/ui/lib";
 
 import { updateDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { fetchUrl } from "~/lib";
+import { getDocument } from "../../_functions";
 
 interface PublishProps {
   documentId: string;
 }
 
 const Publish = ({ documentId }: PublishProps) => {
-  const [document, setDocument] = useState<Document | undefined>();
-
-  useEffect(() => {
-    fetchUrl<{ data: Document }>(`/api/documents/${documentId}`)
-      .then(({ data }) => setDocument(data))
-      .catch((e) => console.log(`[navbar] fetch error: ${e}`));
-  }, [documentId]);
-  console.log(`got doc: ${document?.title}`);
+  const { data: document } = useSWR<Document, Error>(
+    [documentId, false],
+    getDocument,
+    {
+      onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
+    },
+  );
 
   /** Url */
   const origin = useOrigin();

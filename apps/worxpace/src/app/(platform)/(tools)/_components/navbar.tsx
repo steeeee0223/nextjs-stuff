@@ -65,7 +65,7 @@ const Navbar = forwardRef(function Navbar(
           </div>
         )}
       </nav>
-      {document?.isArchived && <Banner documentId={document.id} />}
+      {document?.group === "trash" && <Banner documentId={document.id} />}
     </div>
   );
 });

@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 "use client";
 
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Search, Trash, Undo } from "lucide-react";
 import { toast } from "sonner";
@@ -21,8 +21,9 @@ const TrashBox = () => {
   const params = useParams();
   const { path } = useClient();
   /** Tree */
-  const { archivedItems: archivedDocs } = useTree();
+  const { getGroup } = useTree();
   const [search, setSearch] = useState("");
+  const archivedDocs = useMemo(() => getGroup("trash"), [getGroup]);
   const filteredDocuments = archivedDocs.filter(({ title }) =>
     title.toLowerCase().includes(search.toLowerCase()),
   );
@@ -33,9 +34,10 @@ const TrashBox = () => {
   const onError = (e: string) => toast.error(e);
   /** Action: Restore */
   const { execute: restore } = useAction(restoreDocument, {
-    onSuccess: (data) => {
-      dispatch({ type: "restore", payload: data });
-      toast.success(`Restored document "${data.item.title}"`);
+    onSuccess: ({ ids, item }) => {
+      // dispatch({ type: "restore", payload: data });
+      dispatch({ type: "update:group", payload: { ids, group: "trash" } });
+      toast.success(`Restored document "${item.title}"`);
     },
     onError,
   });

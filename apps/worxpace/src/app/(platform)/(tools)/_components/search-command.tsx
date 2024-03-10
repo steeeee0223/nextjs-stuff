@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { File } from "lucide-react";
 import { toast } from "sonner";
+import useSWR from "swr";
 
 import { type Document } from "@acme/prisma";
 import {
@@ -14,7 +15,6 @@ import {
   CommandItem,
   CommandList,
 } from "@acme/ui/components";
-import { useFetch } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { theme } from "~/constants/theme";
@@ -23,23 +23,13 @@ import { fetchUrl } from "~/lib";
 
 const SearchCommand = () => {
   /** Auth */
-  const { workspace: name, orgId, userId } = useClient();
+  const { workspace: name, userId } = useClient();
   /** Search */
   const { toggle, isOpen, onClose } = useSearch();
-  const fetchDocs = async () => {
-    try {
-      const data = await fetchUrl<Document[]>(
-        `/api/documents?archived=${false}`,
-      );
-      return { data };
-    } catch {
-      return { error: `Error occurred while fetching documents` };
-    }
-  };
-  const { data: documents } = useFetch<Document[]>(
-    fetchDocs,
+  const { data: documents } = useSWR<Document[], string>(
+    userId ? `/api/documents?archived=${false}` : null,
+    fetchUrl,
     { onError: (e) => toast.error(e) },
-    [userId, orgId],
   );
   /** Select */
   const router = useRouter();

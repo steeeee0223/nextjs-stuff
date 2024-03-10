@@ -2,13 +2,17 @@
 
 import { createContext, useContext } from "react";
 
-import type { TreeItem } from "./index.types";
+import type { Groups, TreeItem } from "./index.types";
 
 export interface TreeContextInterface {
   isLoading: boolean;
   treeItems: TreeItem[];
-  archivedItems: TreeItem[];
-  getChildren: (isArchived: boolean, parentId: string | null) => TreeItem[];
+  groups?: Groups;
+  getGroup: (group: Groups[number]) => TreeItem[];
+  getChildren: (
+    parentId: string | null,
+    group: Groups[number] | null,
+  ) => TreeItem[];
   isItemActive?: (id: string) => boolean;
   onClickItem?: (id: string) => void;
 }
