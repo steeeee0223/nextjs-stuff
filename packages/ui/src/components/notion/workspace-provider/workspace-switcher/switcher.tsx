@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import { ChevronsUpDown } from "lucide-react";
 
 import {
@@ -12,10 +11,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui";
 import { cn } from "@/lib";
+import { useWorkspace } from "../workspace-context";
 import HeaderDropdown from "./header-dropdown";
-import type { UserState, WorkspaceState } from "./index.types";
-import { useUser } from "./use-user";
-import { useWorkspace } from "./use-workspace";
 import WorkspaceList from "./workspace-list";
 
 const styles = {
@@ -24,29 +21,19 @@ const styles = {
 };
 
 export interface WorkspaceSwitcherProps {
-  initialUser: UserState;
-  initialWorkspace: WorkspaceState;
   onCreateAccount?: () => void;
   onLogout?: () => void;
+  onSelect?: (id: string) => Promise<void>;
 }
 
 export const WorkspaceSwitcher = ({
-  initialUser,
-  initialWorkspace,
   onLogout,
+  onSelect,
 }: WorkspaceSwitcherProps) => {
-  const workspace = useWorkspace();
-  const user = useUser();
-
-  useEffect(() => {
-    user.select(initialUser);
-  }, [initialUser]);
-  useEffect(() => {
-    workspace.select(initialWorkspace);
-  }, [initialWorkspace]);
-
+  const { user, activeWorkspace, select, dispatch } = useWorkspace();
   const handleLogout = () => {
-    user.logout();
+    select();
+    dispatch({ type: "set", payload: [] });
     onLogout?.();
   };
   const handleGetMac = () =>
@@ -64,9 +51,9 @@ export const WorkspaceSwitcher = ({
           )}
         >
           <div className={cn("flex items-center gap-x-2", "max-w-[150px]")}>
-            <p className="text-lg">{workspace.info?.icon}</p>
+            <p className="text-lg">{activeWorkspace?.icon}</p>
             <span className="line-clamp-1 text-start font-medium">
-              {workspace.info?.name}
+              {activeWorkspace?.name}
             </span>
           </div>
           <ChevronsUpDown
@@ -84,11 +71,11 @@ export const WorkspaceSwitcher = ({
           <div className="flex flex-col space-y-2 p-2">
             <div className="flex items-center">
               <p className="flex-1 text-xs font-medium leading-none text-muted-foreground">
-                {user.info?.email}
+                {user.email}
               </p>
               <HeaderDropdown onLogout={handleLogout} />
             </div>
-            <WorkspaceList />
+            <WorkspaceList onSelect={onSelect} />
           </div>
         </DropdownMenuGroup>
         <DropdownMenuSeparator className={styles.seperator} />

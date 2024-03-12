@@ -1,2 +1,2 @@
 export * from "./settings-panel";
-export * from "./workspace-switcher";
+export * from "./workspace-provider";
