@@ -1,18 +1,17 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, type Dispatch } from "react";
 
-import type { Groups, TreeItem } from "./index.types";
+import type { TreeItem } from "./index.types";
+import type { TreeAction } from "./tree-actions";
 
 export interface TreeContextInterface {
   isLoading: boolean;
   treeItems: TreeItem[];
-  groups?: Groups;
-  getGroup: (group: Groups[number]) => TreeItem[];
-  getChildren: (
-    parentId: string | null,
-    group: Groups[number] | null,
-  ) => TreeItem[];
+  groups?: string[];
+  dispatch: Dispatch<TreeAction<TreeItem>>;
+  getGroup: (group: string) => TreeItem[];
+  getChildren: (parentId: string | null, group: string | null) => TreeItem[];
   isItemActive?: (id: string) => boolean;
   onClickItem?: (id: string) => void;
 }

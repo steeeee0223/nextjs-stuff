@@ -1,15 +1,10 @@
 import { PlusCircle } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 
-import {
-  CRUDItem,
-  TreeList,
-  useTree,
-  useTreeAction,
-} from "@acme/ui/components";
+import { CRUDItem, TreeList, useTree } from "@acme/ui/components";
 
 export const AddItem = ({ group }: { group?: string }) => {
-  const { dispatch } = useTreeAction();
+  const { dispatch } = useTree();
   const handleCreate = () =>
     dispatch({
       type: "add",
@@ -35,8 +30,7 @@ export const TreeItems = ({
   title?: string;
   showEmptyChild: boolean;
 }) => {
-  const { isLoading } = useTree();
-  const { dispatch } = useTreeAction();
+  const { isLoading, dispatch } = useTree();
   const onAddItem = (parentId?: string) =>
     dispatch({
       type: "add",
