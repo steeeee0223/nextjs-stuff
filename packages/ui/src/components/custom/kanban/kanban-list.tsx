@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { cn } from "@/lib/utils";
 import type { KanbanItem as Item, KanbanList as List } from "./index.types";
-import { useKanbanAction } from "./kanban-action-context";
 import { useKanban } from "./kanban-context";
 import { KanbanItem } from "./kanban-item";
 import { KanbanItemForm } from "./kanban-item-form";
@@ -20,7 +19,6 @@ interface KanbanListProps {
 
 export const KanbanList = ({ data, index }: KanbanListProps) => {
   const kanban = useKanban();
-  const { dispatch } = useKanbanAction();
   /** Input */
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -43,16 +41,16 @@ export const KanbanList = ({ data, index }: KanbanListProps) => {
         listId: destId,
       })),
     };
-    dispatch({ type: "add:list", payload });
+    kanban.dispatch({ type: "add:list", payload });
     kanban.onCopyList?.(srcId, destId);
   };
   const _onUpdateListTitle = (list: Pick<List, "id" | "title">) => {
     const newList = { ...data, title: list.title };
-    dispatch({ type: "update:list", payload: [newList] });
+    kanban.dispatch({ type: "update:list", payload: [newList] });
     kanban.onUpdateList?.(newList);
   };
   const _onDeleteList = (listId: string) => {
-    dispatch({ type: "delete:list", payload: [listId] });
+    kanban.dispatch({ type: "delete:list", payload: [listId] });
     kanban.onDeleteList?.(listId);
   };
   /** Kanban Item Actions */
@@ -63,7 +61,7 @@ export const KanbanList = ({ data, index }: KanbanListProps) => {
       title,
       order: kanban.getMaxItemOrder(data.id) + 1,
     };
-    dispatch({ type: "add:item", payload });
+    kanban.dispatch({ type: "add:item", payload });
     kanban.onCreateItem?.(payload);
   };
   const _onCopyItem = (itemId: string) => {
@@ -75,13 +73,13 @@ export const KanbanList = ({ data, index }: KanbanListProps) => {
       id: uuidv4(),
       order: kanban.getMaxItemOrder(data.id),
     };
-    dispatch({ type: "add:item", payload: dest });
+    kanban.dispatch({ type: "add:item", payload: dest });
     kanban.onCopyItem?.(src, dest);
   };
   const _onDeleteItem = (itemId: string) => {
     const item = kanban.getKanbanItem(data.id, itemId);
     if (!item) return;
-    dispatch({ type: "delete:item", payload: item });
+    kanban.dispatch({ type: "delete:item", payload: item });
     kanban.onDeleteItem?.(item);
   };
   const _onOpenItem = (item: Item) => {
