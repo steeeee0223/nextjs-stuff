@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-import { Button, useTreeAction } from "@acme/ui/components";
+import { Button, useTree } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
@@ -22,12 +22,11 @@ const Banner = ({ documentId }: BannerProps) => {
   const router = useRouter();
   const { path } = useClient();
   /** Tree */
-  const { dispatch } = useTreeAction();
+  const { dispatch } = useTree();
   const onError = (e: string) => toast.error(e);
   /** Action - Restore */
   const { execute: restore } = useAction(restoreDocument, {
     onSuccess: ({ ids, item }) => {
-      // dispatch({ type: "restore", payload: data });
       dispatch({ type: "update:group", payload: { ids, group: "document" } });
       toast.success(`Restored document "${item.title}"`);
       router.push(path);

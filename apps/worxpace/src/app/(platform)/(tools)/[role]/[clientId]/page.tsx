@@ -4,7 +4,7 @@ import Image from "next/image";
 import { PlusCircle } from "lucide-react";
 import { toast } from "sonner";
 
-import { Button, useTreeAction } from "@acme/ui/components";
+import { Button, useTree } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
@@ -15,14 +15,15 @@ import { useClient } from "~/hooks";
 const Client = () => {
   const { workspace } = useClient();
   /** Action */
-  const { dispatch } = useTreeAction();
+  const { dispatch } = useTree();
   const { execute } = useAction(createDocument, {
     onSuccess: (data) => {
       const { id, title, isArchived, parentId, icon } = data;
+      const group = isArchived ? "trash" : "document";
       toast.success(`Document created: ${title}`);
       dispatch({
         type: "add",
-        payload: [{ id, title, isArchived, parentId, icon }],
+        payload: [{ id, title, group, parentId, icon }],
       });
     },
     onError: (e) => toast.error(e),

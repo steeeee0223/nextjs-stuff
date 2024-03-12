@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   Skeleton,
-  useTreeAction,
+  useTree,
 } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
@@ -28,7 +28,7 @@ interface MenuProps {
 const Menu = ({ documentId }: MenuProps) => {
   const router = useRouter();
   const { username, path } = useClient();
-  const { dispatch } = useTreeAction();
+  const { dispatch } = useTree();
 
   /** Action - Archive */
   const { execute: archive } = useAction(archiveDocument, {

@@ -5,4 +5,5 @@ export interface Client {
   path: string;
   username: string;
   workspace: string;
+  workspaceId: string;
 }

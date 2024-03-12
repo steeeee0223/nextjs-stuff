@@ -20,7 +20,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-  useTreeAction,
+  useTree,
 } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
@@ -56,7 +56,7 @@ export const Sidebar = forwardRef(function Sidebar(
   const search = useSearch();
   const settings = useSettings();
   /** Docs */
-  const { dispatch } = useTreeAction();
+  const { dispatch } = useTree();
   const onError = (e: string) => toast.error(e);
   /** Action: Create */
   const { execute: create } = useAction(createDocument, {
