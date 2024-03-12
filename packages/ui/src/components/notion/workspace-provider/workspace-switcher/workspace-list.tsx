@@ -6,9 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Check, GripVertical } from "lucide-react";
 
 import { DropdownMenuItem } from "@/components/ui";
-import type { Page } from "./index.types";
-import { useUser } from "./use-user";
-import { useWorkspace } from "./use-workspace";
+import { useWorkspace } from "../workspace-context";
 
 const styles = {
   display_container: "select-none",
@@ -23,20 +21,22 @@ const styles = {
 };
 
 interface WorkspaceListProps {
-  onUpdateWorkspace?: (data: { id: string; pages: Page[] }) => Promise<void>;
+  onSelect?: (id: string) => Promise<void>;
 }
 
-const WorkspaceList = ({ onUpdateWorkspace }: WorkspaceListProps) => {
+const WorkspaceList = ({ onSelect }: WorkspaceListProps) => {
   const dragItem = useRef<number | null>(null);
   const dragOverItem = useRef<number | null>(null);
 
-  const user = useUser();
-  const initialWorkspaces = user.info?.workspaces;
-  const currentWorkspace = useWorkspace();
+  const {
+    workspaces: initialWorkspaces,
+    activeWorkspace,
+    select,
+  } = useWorkspace();
   const [workspaces, setWorkspaces] = useState(initialWorkspaces);
 
   const handleSort = () => {
-    const _workspaces = [...workspaces!];
+    const _workspaces = [...workspaces];
     const [dragItemContent] = _workspaces.splice(dragItem.current!, 1);
 
     _workspaces.splice(dragOverItem.current!, 0, dragItemContent!);
@@ -47,14 +47,11 @@ const WorkspaceList = ({ onUpdateWorkspace }: WorkspaceListProps) => {
     setWorkspaces(_workspaces);
   };
 
-  const handleClick = async (workspaceId: string) => {
-    const _workspace = workspaces!.find(({ id }) => id === workspaceId)!;
-    currentWorkspace.select({ ..._workspace, pages: [], members: [] });
-
-    await onUpdateWorkspace?.({
-      id: currentWorkspace.info?.id ?? "",
-      pages: [],
-    });
+  const handleClick = (workspaceId: string) => {
+    select(workspaceId);
+    onSelect?.(workspaceId)
+      .then(() => console.log(`switching workspace`))
+      .catch((e) => console.log(e));
   };
 
   useEffect(() => {
@@ -87,7 +84,7 @@ const WorkspaceList = ({ onUpdateWorkspace }: WorkspaceListProps) => {
               {workspace.name}
             </div>
           </div>
-          {currentWorkspace.info?.id === workspace.id && (
+          {activeWorkspace?.id === workspace.id && (
             <Check className={styles.workspace_check} />
           )}
         </DropdownMenuItem>
