@@ -3,16 +3,19 @@
 import type { OnDragEndResponder } from "@hello-pangea/dnd";
 import { DragDropContext, Droppable } from "@hello-pangea/dnd";
 
-import { useKanbanAction } from "./kanban-action-context";
 import { useKanban } from "./kanban-context";
 import { KanbanList } from "./kanban-list";
 import { KanbanListForm } from "./kanban-list-form";
 import { reorder } from "./utils";
 
 export const KanbanContainer = () => {
-  const { kanbanLists, onUpdateItemOrder, onUpdateListOrder, onCreateList } =
-    useKanban();
-  const { dispatch } = useKanbanAction();
+  const {
+    kanbanLists,
+    dispatch,
+    onUpdateItemOrder,
+    onUpdateListOrder,
+    onCreateList,
+  } = useKanban();
 
   const onDragEnd: OnDragEndResponder = (result) => {
     const { destination: dest, source: src, type } = result;

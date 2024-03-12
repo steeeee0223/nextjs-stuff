@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { useFetch } from "@/hooks";
 import type { ActionState } from "@/lib";
 import type { KanbanHandlers, KanbanItem, KanbanList } from "./index.types";
-import { KanbanActionContext } from "./kanban-action-context";
 import type { KanbanReducer } from "./kanban-actions";
 import { kanbanReducer } from "./kanban-actions";
 import { KanbanContainer } from "./kanban-container";
@@ -29,7 +28,6 @@ export function KanbanProvider({
 }: KanbanProviderProps) {
   /** Kanban Item */
   const [activeItem, setActiveItem] = useState<KanbanItem | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   /** Kanban Lists */
   const $initialLists = { ids: [], entities: {} };
   const [state, dispatch] = useReducer<KanbanReducer>(
@@ -47,6 +45,7 @@ export function KanbanProvider({
     isLoading: isLoading || !data,
     kanbanLists,
     activeItem,
+    dispatch,
     setActiveItem,
     getKanbanItem: (listId, itemId) =>
       state.entities[listId]?.items.find(({ id }) => itemId === id),
@@ -58,12 +57,10 @@ export function KanbanProvider({
 
   return (
     <KanbanContext.Provider value={kanbanContextValues}>
-      <KanbanActionContext.Provider value={{ dispatch }}>
-        <div className={className}>
-          <KanbanContainer />
-        </div>
-        <div>{children}</div>
-      </KanbanActionContext.Provider>
+      <div className={className}>
+        <KanbanContainer />
+      </div>
+      <div>{children}</div>
     </KanbanContext.Provider>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { createContext, useContext } from "react";
+import { createContext, useContext, type Dispatch } from "react";
 
 import type { KanbanHandlers, KanbanItem, KanbanList } from "./index.types";
+import type { KanbanAction } from "./kanban-actions";
 
 export interface KanbanContextInterface extends KanbanHandlers {
   isLoading: boolean;
@@ -13,6 +14,7 @@ export interface KanbanContextInterface extends KanbanHandlers {
   getKanbanList: (listId: string) => KanbanList | undefined;
   getMaxItemOrder: (listId: string) => number;
   getMaxListOrder: () => number;
+  dispatch: Dispatch<KanbanAction>;
 }
 
 export const KanbanContext = createContext<KanbanContextInterface | null>(null);
