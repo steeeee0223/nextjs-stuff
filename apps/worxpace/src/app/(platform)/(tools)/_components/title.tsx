@@ -8,7 +8,7 @@ import {
   CRUDItemIcon as Icon,
   Input,
   Skeleton,
-  useTreeAction,
+  useTree,
   type TreeItem,
 } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
@@ -35,7 +35,7 @@ const Title = ({ initialData }: TitleProps) => {
   };
   const disableInput = () => setIsEditing(false);
   /** Action - Rename */
-  const { dispatch } = useTreeAction();
+  const { dispatch } = useTree();
   const { execute: update } = useAction(updateDocument, {
     onSuccess: (data) => {
       dispatch({

@@ -18,7 +18,6 @@ import {
 } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import type { KanbanList } from "./index.types";
-import { useKanbanAction } from "./kanban-action-context";
 import { useKanban } from "./kanban-context";
 import { TitleSchema } from "./utils";
 
@@ -49,8 +48,7 @@ export const KanbanListForm = ({ onCreateList }: ListFormProps) => {
   });
   useOnClickOutside(formRef, disableEditing);
   /** Action */
-  const { getMaxListOrder } = useKanban();
-  const { dispatch } = useKanbanAction();
+  const { getMaxListOrder, dispatch } = useKanban();
   const onSubmit = (values: z.infer<typeof TitleSchema>) => {
     startTransition(() => {
       const payload: KanbanList = {

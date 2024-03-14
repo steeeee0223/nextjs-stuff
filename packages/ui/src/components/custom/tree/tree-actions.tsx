@@ -1,22 +1,13 @@
 import type { Reducer } from "react";
 
-import type { Groups, TreeItem } from "./index.types";
-
-export interface Entity<T> {
-  ids: string[];
-  entities: Record<string, T>;
-}
-
-export interface Modified<T> {
-  item: T;
-  ids: string[];
-}
+import type { Entity } from "@/lib";
+import type { TreeItem } from "./index.types";
 
 export type TreeAction<T> =
   | { type: "add" | "set"; payload: T[] }
   | { type: "update:item"; payload: T }
   | { type: "delete"; payload: string[] }
-  | { type: "update:group"; payload: { group: Groups[number]; ids: string[] } };
+  | { type: "update:group"; payload: { group: string; ids: string[] } };
 
 export type TreeReducer = Reducer<Entity<TreeItem>, TreeAction<TreeItem>>;
 

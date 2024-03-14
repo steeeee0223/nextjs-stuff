@@ -7,7 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Search, Trash, Undo } from "lucide-react";
 import { toast } from "sonner";
 
-import { Input, Spinner, useTree, useTreeAction } from "@acme/ui/components";
+import { Input, Spinner, useTree } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
@@ -21,22 +21,20 @@ const TrashBox = () => {
   const params = useParams();
   const { path } = useClient();
   /** Tree */
-  const { getGroup } = useTree();
+  const { getGroup, dispatch } = useTree();
   const [search, setSearch] = useState("");
   const archivedDocs = useMemo(() => getGroup("trash"), [getGroup]);
   const filteredDocuments = archivedDocs.filter(({ title }) =>
     title.toLowerCase().includes(search.toLowerCase()),
   );
   /** Action */
-  const { dispatch } = useTreeAction();
   const onClick = (documentId: string) =>
     router.push(`/documents/${documentId}`);
   const onError = (e: string) => toast.error(e);
   /** Action: Restore */
   const { execute: restore } = useAction(restoreDocument, {
     onSuccess: ({ ids, item }) => {
-      // dispatch({ type: "restore", payload: data });
-      dispatch({ type: "update:group", payload: { ids, group: "trash" } });
+      dispatch({ type: "update:group", payload: { ids, group: "document" } });
       toast.success(`Restored document "${item.title}"`);
     },
     onError,

@@ -21,7 +21,7 @@ import {
   CoverPicker,
   IconPicker,
   Skeleton,
-  useTreeAction,
+  useTree,
   type ButtonProps,
 } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
@@ -73,7 +73,7 @@ const Toolbar = ({ document, preview }: ToolbarProps) => {
     await onComplete?.();
   };
   /** Tree Actions */
-  const { dispatch } = useTreeAction();
+  const { dispatch } = useTree();
   /** Action - update */
   const { execute: update } = useAction(updateDocument, {
     onSuccess: ({ id, parentId, icon, title }) =>

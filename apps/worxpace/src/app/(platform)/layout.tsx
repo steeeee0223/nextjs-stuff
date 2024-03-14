@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
-import { ModalProvider } from "~/components/providers";
+import { ModalProvider, WorxpaceProvider } from "~/components/providers";
 import { EdgeStoreProvider } from "~/hooks";
 
 export default function PlatformLayout({ children }: PropsWithChildren) {
@@ -10,8 +10,10 @@ export default function PlatformLayout({ children }: PropsWithChildren) {
     <ClerkProvider>
       <EdgeStoreProvider>
         <Toaster />
-        <ModalProvider />
-        {children}
+        <WorxpaceProvider>
+          <ModalProvider />
+          {children}
+        </WorxpaceProvider>
       </EdgeStoreProvider>
     </ClerkProvider>
   );
