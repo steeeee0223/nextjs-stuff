@@ -3,7 +3,7 @@
 import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib";
-import type { UserState } from "..";
+import type { UserState } from "../workspace-provider";
 
 export interface TabProps {
   name: string;

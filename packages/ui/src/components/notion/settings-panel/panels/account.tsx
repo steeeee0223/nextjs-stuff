@@ -10,7 +10,7 @@ import {
   Label,
   Switch,
 } from "@/components/ui";
-import { mockUser } from "../../workspace-switcher/mock";
+import { mockUser } from "../mock";
 import { Section, SectionItem, SectionSeparator } from "../section";
 import { myAccount } from "./account.data";
 

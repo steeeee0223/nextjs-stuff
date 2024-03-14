@@ -2,7 +2,7 @@
 
 import { useAuth, useOrganization, useUser } from "@clerk/nextjs";
 
-import { Client } from "~/lib";
+import type { Client } from "~/lib";
 
 export const useClient = (): Client => {
   const { userId, orgId } = useAuth();
@@ -16,6 +16,7 @@ export const useClient = (): Client => {
       path: "/",
       username: "User",
       workspace: "Unknown",
+      workspaceId: "unknown",
     };
   if (!orgId || !organization) {
     /** @todo Admin role */
@@ -27,6 +28,7 @@ export const useClient = (): Client => {
       path: `/personal/${userId}`,
       username: user.fullName ?? "User",
       workspace: user.fullName ?? "User",
+      workspaceId: userId,
     };
   } else {
     return {
@@ -36,6 +38,7 @@ export const useClient = (): Client => {
       path: `/organization/${orgId}`,
       username: user.fullName ?? "User",
       workspace: organization.name,
+      workspaceId: orgId,
     };
   }
 };

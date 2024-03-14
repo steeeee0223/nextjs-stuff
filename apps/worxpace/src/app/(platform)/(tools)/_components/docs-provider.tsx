@@ -8,6 +8,7 @@ import { TreeProvider } from "@acme/ui/components";
 import { useNavControl } from "@acme/ui/hooks";
 
 import { Room } from "~/components";
+import { useClient } from "~/hooks";
 import { fetchUrl } from "~/lib";
 import { ToolbarSkeleton } from "../documents/[documentId]/_component/toolbar";
 import Navbar from "./navbar";
@@ -18,6 +19,7 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const params = useParams();
   const pathname = usePathname();
+  const { workspaceId } = useClient();
   /** Sidebar & Navbar */
   const {
     isMobile,
@@ -54,6 +56,7 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <TreeProvider
+      queryKey={workspaceId}
       className="flex h-full dark:bg-[#1F1F1F]"
       groups={["document", "kanban", "trash"]}
       fetchItems={fetchItems}

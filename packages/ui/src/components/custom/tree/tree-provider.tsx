@@ -9,15 +9,14 @@ import {
 import { toast } from "sonner";
 import useSWR, { type Fetcher } from "swr";
 
-import type { Groups, TreeItem } from "./index.types";
-import { TreeActionContext } from "./tree-action-context";
+import type { TreeItem } from "./index.types";
 import { treeReducer, type TreeReducer } from "./tree-actions";
 import { TreeContext, type TreeContextInterface } from "./tree-context";
 
 interface TreeProviderProps extends PropsWithChildren {
   queryKey?: string;
   className?: string;
-  groups?: Groups;
+  groups?: string[];
   fetchItems: Fetcher<TreeItem[]>;
   isItemActive?: (id: string) => boolean;
   onClickItem?: (id: string) => void;
@@ -45,21 +44,21 @@ export function TreeProvider({
 
   const treeItems = useMemo(() => Object.values(state.entities), [state]);
   const getChildren = useCallback(
-    ($parentId: string | null, $group: Groups[number] | null) =>
+    ($parentId: string | null, $group: string | null) =>
       treeItems.filter(
         ({ parentId, group }) => $group === group && $parentId === parentId,
       ),
     [treeItems],
   );
   const getGroup = useCallback(
-    ($group: Groups[number]) =>
-      treeItems.filter(({ group }) => group === $group),
+    ($group: string) => treeItems.filter(({ group }) => group === $group),
     [treeItems],
   );
   const treeContextValues: TreeContextInterface = {
     isLoading: isLoading || !data,
     groups,
     treeItems,
+    dispatch,
     getGroup,
     getChildren,
     isItemActive,
@@ -68,9 +67,7 @@ export function TreeProvider({
 
   return (
     <TreeContext.Provider value={treeContextValues}>
-      <TreeActionContext.Provider value={{ dispatch }}>
-        <div className={className}>{children}</div>
-      </TreeActionContext.Provider>
+      <div className={className}>{children}</div>
     </TreeContext.Provider>
   );
 }
