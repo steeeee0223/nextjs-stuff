@@ -5,7 +5,7 @@
 
 import { forwardRef, type ForwardedRef, type MouseEventHandler } from "react";
 import { useRouter } from "next/navigation";
-import { OrganizationSwitcher } from "@clerk/nextjs";
+import { useAuth, useOrganizationList } from "@clerk/nextjs";
 import {
   ChevronsLeft,
   PlusCircle,
@@ -21,6 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   useTree,
+  WorkspaceSwitcher,
 } from "@acme/ui/components";
 import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
@@ -51,7 +52,19 @@ export const Sidebar = forwardRef(function Sidebar(
 ) {
   /** Route */
   const router = useRouter();
-  const { path } = useClient();
+  const { path, userId } = useClient();
+  /** Workspace */
+  const { signOut } = useAuth();
+  const { setActive } = useOrganizationList();
+  const handleSelect = async (id: string) => {
+    const workspaceId = id === userId ? null : id;
+    await setActive?.({ organization: workspaceId });
+    const newPath =
+      id === userId ? `/personal/${userId}` : `/organization/${id}`;
+    router.push(newPath);
+  };
+  const handleLogout = () =>
+    signOut(() => router.push("/select-role")).catch((e) => console.log(e));
   /** Search & Settings */
   const search = useSearch();
   const settings = useSettings();
@@ -102,31 +115,7 @@ export const Sidebar = forwardRef(function Sidebar(
         <ChevronsLeft className="h-6 w-6" />
       </div>
       <div>
-        <OrganizationSwitcher
-          afterSelectPersonalUrl="/personal/:id"
-          afterCreateOrganizationUrl="/organization/:id"
-          afterSelectOrganizationUrl="/organization/:id"
-          afterLeaveOrganizationUrl="/select-role"
-          appearance={{
-            elements: {
-              rootBox: {
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 6,
-                padding: "14px 8px",
-              },
-              avatarBox: {
-                borderRadius: 9999,
-                height: "20px",
-                width: "20px",
-              },
-              organizationSwitcherPopoverCard: {
-                zIndex: 99999,
-              },
-            },
-          }}
-        />
+        <WorkspaceSwitcher onLogout={handleLogout} onSelect={handleSelect} />
         <Item
           label="Search"
           icon={Search}
