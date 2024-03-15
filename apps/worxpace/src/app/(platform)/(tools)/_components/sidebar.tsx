@@ -69,26 +69,29 @@ export const Sidebar = forwardRef(function Sidebar(
   const search = useSearch();
   const settings = useSettings();
   /** Docs */
-  const { dispatch } = useTree();
+  const { dispatch, onClickItem } = useTree();
   const onError = (e: string) => toast.error(e);
   /** Action: Create */
   const { execute: create } = useAction(createDocument, {
     onSuccess: (data) => {
-      const { id, title, parentId, icon } = data;
+      const { id, title, parentId, icon, type: group } = data;
       dispatch({
         type: "add",
-        payload: [{ id, title, parentId, icon, group: "document" }],
+        payload: [{ id, title, parentId, icon, group }],
       });
-      toast.success(`Document Created: ${title}`);
-      router.push(`/documents/${id}`);
+      toast.success(`Page Created: ${title}`);
+      onClickItem?.(id, group);
     },
     onError,
   });
   /** Action: Archive */
   const { execute: archive } = useAction(archiveDocument, {
     onSuccess: ({ item, ids }) => {
-      dispatch({ type: "update:group", payload: { ids, group: "trash" } });
-      toast.success(`Document "${item.title}" Moved to Trash`);
+      dispatch({
+        type: "update:group",
+        payload: { ids, group: `trash:${item.type}` },
+      });
+      toast.success(`Page "${item.title}" Moved to Trash`);
       router.push(path);
     },
     onError,
@@ -131,14 +134,24 @@ export const Sidebar = forwardRef(function Sidebar(
         <Item
           label="New page"
           icon={PlusCircle}
-          onClick={() => create({ title: "Untitled" })}
+          onClick={() => create({ type: "document", title: "Untitled" })}
         />
       </div>
       <div className="mt-4 flex flex-col gap-y-4">
         <DocList
           group="document"
           title="Document"
-          onCreate={(parentId) => create({ title: "Untitled", parentId })}
+          onCreate={(parentId) =>
+            create({ type: "document", title: "Untitled", parentId })
+          }
+          onArchive={(id) => archive({ id })}
+        />
+        <DocList
+          group="kanban"
+          title="Kanban"
+          onCreate={(parentId) =>
+            create({ type: "kanban", title: "Untitled", parentId })
+          }
           onArchive={(id) => archive({ id })}
         />
         <Popover>

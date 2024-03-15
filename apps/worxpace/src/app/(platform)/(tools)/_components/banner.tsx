@@ -27,7 +27,7 @@ const Banner = ({ documentId }: BannerProps) => {
   /** Action - Restore */
   const { execute: restore } = useAction(restoreDocument, {
     onSuccess: ({ ids, item }) => {
-      dispatch({ type: "update:group", payload: { ids, group: "document" } });
+      dispatch({ type: "update:group", payload: { ids, group: item.type } });
       toast.success(`Restored document "${item.title}"`);
       router.push(path);
     },

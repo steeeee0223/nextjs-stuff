@@ -27,7 +27,11 @@ const Navbar = forwardRef(function Navbar(
 ) {
   const params = useParams();
   const { treeItems, isLoading } = useTree();
-  const document = treeItems.find(({ id }) => params.documentId === id);
+  const document = treeItems.find(({ id, group }) => {
+    if (group?.endsWith("document")) return params.documentId === id;
+    if (group?.endsWith("kanban")) return params.boardId === id;
+    return false;
+  });
 
   return (
     <div
@@ -65,7 +69,9 @@ const Navbar = forwardRef(function Navbar(
           </div>
         )}
       </nav>
-      {document?.group === "trash" && <Banner documentId={document.id} />}
+      {document?.group?.startsWith("trash") && (
+        <Banner documentId={document.id} />
+      )}
     </div>
   );
 });

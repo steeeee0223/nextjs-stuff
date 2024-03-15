@@ -55,21 +55,25 @@ const Publish = ({ documentId }: PublishProps) => {
   });
   const onPublish = () => {
     setIsSubmitting(true);
-    update({ id: documentId, isPublished: true, log: true })
-      .then(() => console.log(`publishing docs`))
-      .catch((e) => console.log(e));
+    update({ id: documentId, isPublished: true, log: true }).catch((e) =>
+      console.log(e),
+    );
   };
   const onUnpublish = () => {
     setIsSubmitting(true);
-    update({ id: documentId, isPublished: false, log: true })
-      .then(() => console.log(`publishing docs`))
-      .catch((e) => console.log(e));
+    update({ id: documentId, isPublished: false, log: true }).catch((e) =>
+      console.log(e),
+    );
   };
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size="sm" variant="ghost">
+        <Button
+          size="sm"
+          variant="ghost"
+          disabled={document?.type !== "document"}
+        >
           Publish
           {document?.isPublished && (
             <Globe className={cn(theme.size.icon, "ml-2 text-sky-500")} />

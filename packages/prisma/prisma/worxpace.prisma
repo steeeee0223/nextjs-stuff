@@ -126,6 +126,7 @@ model Subscription {
 
 model Document {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  type        String
   title       String
   userId      String
   orgId       String?
@@ -142,4 +143,5 @@ model Document {
 
   @@index([userId, orgId], name: "byUser")
   @@index([userId, orgId, parentId], name: "byUserParent")
+  @@index([userId, orgId, type], name: "byUserType")
 }

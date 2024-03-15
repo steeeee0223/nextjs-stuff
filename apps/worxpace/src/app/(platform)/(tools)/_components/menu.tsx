@@ -33,8 +33,10 @@ const Menu = ({ documentId }: MenuProps) => {
   /** Action - Archive */
   const { execute: archive } = useAction(archiveDocument, {
     onSuccess: ({ ids, item }) => {
-      // dispatch({ type: "archive", payload: data });
-      dispatch({ type: "update:group", payload: { ids, group: "trash" } });
+      dispatch({
+        type: "update:group",
+        payload: { ids, group: `trash:${item.type}` },
+      });
       toast.success(`Document "${item.title}" Moved to Trash`);
       router.push(path);
     },

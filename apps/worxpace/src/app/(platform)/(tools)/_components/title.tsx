@@ -40,7 +40,7 @@ const Title = ({ initialData }: TitleProps) => {
     onSuccess: (data) => {
       dispatch({
         type: "update:item",
-        payload: { ...data, group: "document" },
+        payload: { ...data, group: data.type },
       });
       toast.success(`Renamed document "${data.title}"`);
     },
@@ -52,9 +52,9 @@ const Title = ({ initialData }: TitleProps) => {
     if (event.key === "Enter") {
       disableInput();
       if (title !== initialData.title)
-        update({ id: initialData.id, title, log: true })
-          .then(() => console.log(`processing update`))
-          .catch(() => console.log(`error`));
+        update({ id: initialData.id, title, log: true }).catch(() =>
+          console.log(`error`),
+        );
     }
   };
 
