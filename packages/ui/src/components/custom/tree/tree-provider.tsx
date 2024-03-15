@@ -18,8 +18,8 @@ interface TreeProviderProps extends PropsWithChildren {
   className?: string;
   groups?: string[];
   fetchItems: Fetcher<TreeItem[]>;
-  isItemActive?: (id: string) => boolean;
-  onClickItem?: (id: string) => void;
+  isItemActive?: (id: string, group: string | null) => boolean;
+  onClickItem?: (id: string, group: string | null) => void;
 }
 
 export function TreeProvider({
