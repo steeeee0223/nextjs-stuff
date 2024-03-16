@@ -6,8 +6,9 @@ import useSWR from "swr";
 import type { Document } from "@acme/prisma";
 
 import { getDocument } from "~/app/(platform)/_functions";
+import { DocHeader, DocHeaderSkeleton } from "~/components";
 import Error from "../../error";
-import Toolbar, { ToolbarSkeleton } from "./_component/toolbar";
+import KanbanBoard from "./_component/kanban-board";
 
 interface Params {
   params: { boardId: string };
@@ -32,7 +33,14 @@ const KanbanPage = ({ params: { boardId } }: Params) => {
   }
   return (
     <div className="pb-40">
-      {isLoading || !board ? <ToolbarSkeleton /> : <Toolbar board={board} />}
+      {isLoading || !board ? (
+        <DocHeaderSkeleton />
+      ) : (
+        <>
+          <DocHeader document={board} />
+          <KanbanBoard board={board} />
+        </>
+      )}
     </div>
   );
 };

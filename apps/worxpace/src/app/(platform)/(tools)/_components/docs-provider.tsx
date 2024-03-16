@@ -7,15 +7,12 @@ import { Document } from "@acme/prisma";
 import { TreeProvider } from "@acme/ui/components";
 import { useNavControl } from "@acme/ui/hooks";
 
-import { Room } from "~/components";
+import { DocHeaderSkeleton, Room } from "~/components";
 import { useClient } from "~/hooks";
 import { fetchUrl } from "~/lib";
-import { ToolbarSkeleton } from "../documents/[documentId]/_component/toolbar";
 import Navbar from "./navbar";
 import SearchCommand from "./search-command";
 import { Sidebar } from "./sidebar";
-
-
 
 const DocsProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
@@ -117,7 +114,7 @@ const Skeleton = () => {
     <div className="absolute left-60 top-0 z-[99999] w-full">
       <div className="w-full bg-background dark:bg-[#1F1F1F]" />
       <main className="h-full flex-1 overflow-y-auto">
-        <ToolbarSkeleton />
+        <DocHeaderSkeleton />
       </main>
     </div>
   );

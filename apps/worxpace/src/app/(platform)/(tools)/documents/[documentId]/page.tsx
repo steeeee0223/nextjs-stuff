@@ -6,8 +6,9 @@ import useSWR from "swr";
 import type { Document } from "@acme/prisma";
 
 import { getDocument } from "~/app/(platform)/_functions";
+import { DocHeader, DocHeaderSkeleton } from "~/components";
 import Error from "../../error";
-import Toolbar, { ToolbarSkeleton } from "./_component/toolbar";
+import Editor from "./_component/editor";
 
 interface Params {
   params: { documentId: string };
@@ -33,9 +34,12 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
   return (
     <div className="pb-40">
       {isLoading || !document ? (
-        <ToolbarSkeleton />
+        <DocHeaderSkeleton />
       ) : (
-        <Toolbar document={document} />
+        <>
+          <DocHeader document={document} />
+          <Editor document={document} />
+        </>
       )}
     </div>
   );
