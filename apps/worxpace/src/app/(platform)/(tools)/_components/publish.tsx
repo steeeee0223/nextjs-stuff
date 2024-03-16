@@ -31,6 +31,7 @@ const Publish = ({ documentId }: PublishProps) => {
       onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
     },
   );
+  const [isPublished, setIsPublished] = useState(document?.isPublished);
 
   /** Url */
   const origin = useOrigin();
@@ -47,22 +48,17 @@ const Publish = ({ documentId }: PublishProps) => {
   const { execute: update } = useAction(updateDocument, {
     onSuccess: (data) => {
       setIsSubmitting(false);
+      setIsPublished(data.isPublished);
       data.isPublished
         ? toast.success(`Published Document: "${data.title}"`)
         : toast.success(`Unpublished Document: "${data.title}"`);
     },
     onError: (e) => toast.error(e),
   });
-  const onPublish = () => {
+  const handlePublish = () => {
     setIsSubmitting(true);
-    update({ id: documentId, isPublished: true, log: true }).catch((e) =>
-      console.log(e),
-    );
-  };
-  const onUnpublish = () => {
-    setIsSubmitting(true);
-    update({ id: documentId, isPublished: false, log: true }).catch((e) =>
-      console.log(e),
+    update({ id: documentId, isPublished: !isPublished, log: true }).catch(
+      (e) => console.log(e),
     );
   };
 
@@ -75,7 +71,7 @@ const Publish = ({ documentId }: PublishProps) => {
           disabled={document?.type !== "document"}
         >
           Publish
-          {document?.isPublished && (
+          {isPublished && (
             <Globe className={cn(theme.size.icon, "ml-2 text-sky-500")} />
           )}
         </Button>
@@ -86,7 +82,7 @@ const Publish = ({ documentId }: PublishProps) => {
         alignOffset={8}
         forceMount
       >
-        {document?.isPublished ? (
+        {isPublished ? (
           <div className="space-y-4">
             <div className={theme.flex.gap2}>
               <Globe
@@ -118,7 +114,7 @@ const Publish = ({ documentId }: PublishProps) => {
               size="sm"
               className="w-full text-xs"
               disabled={isSubmitting}
-              onClick={onUnpublish}
+              onClick={handlePublish}
             >
               Unpublish
             </Button>
@@ -132,7 +128,7 @@ const Publish = ({ documentId }: PublishProps) => {
             </span>
             <Button
               disabled={isSubmitting || document?.isArchived}
-              onClick={onPublish}
+              onClick={handlePublish}
               className="w-full text-xs"
               size="sm"
             >
