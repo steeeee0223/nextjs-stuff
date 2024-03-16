@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 
-import type { CRUDItemProps as ItemProps } from "@/components/custom";
+import type {
+  CRUDItemIconProps,
+  CRUDItemProps as ItemProps,
+} from "@/components/custom";
 import { CRUDItem as Item } from "@/components/custom";
 import { cn } from "@/lib";
 import { useTree } from "./tree-context";
@@ -11,6 +14,7 @@ export interface TreeListProps {
   group: string | null;
   parentId: string | null;
   level?: number;
+  defaultIcon?: CRUDItemIconProps["icon"];
   showEmptyChild?: boolean;
   onAddItem?: (parentId?: string) => void;
   onDeleteItem?: ItemProps["onDelete"];
@@ -21,6 +25,7 @@ export function TreeList({
   parentId = null,
   level = 0,
   showEmptyChild = true,
+  defaultIcon,
   onAddItem,
   onDeleteItem,
 }: TreeListProps) {
@@ -49,7 +54,7 @@ export function TreeList({
           <Item
             id={id}
             label={title}
-            icon={icon}
+            icon={icon ?? defaultIcon}
             onClick={() => onClickItem?.(id, group)}
             active={isItemActive?.(id, group)}
             level={level}

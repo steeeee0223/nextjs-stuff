@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
+import { Columns3, FileIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -20,8 +21,19 @@ interface TitleProps {
   initialData: TreeItem;
 }
 
+const getIcon = (item: TreeItem): TreeItem["icon"] => {
+  if (item.icon) return item.icon;
+  switch (item.group) {
+    case "kanban":
+      return Columns3;
+    default:
+      return FileIcon;
+  }
+};
+
 const Title = ({ initialData }: TitleProps) => {
-  const [title, setTitle] = useState(initialData.title ?? "Untitled");
+  const [title, setTitle] = useState(initialData.title);
+  const icon = getIcon(initialData);
   /** Input */
   const inputRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -60,7 +72,7 @@ const Title = ({ initialData }: TitleProps) => {
 
   return (
     <div className={theme.flex.gap1}>
-      <Icon icon={initialData.icon} />
+      <Icon icon={icon} />
       {isEditing ? (
         <Input
           ref={inputRef}

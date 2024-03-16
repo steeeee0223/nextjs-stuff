@@ -12,14 +12,22 @@ import { cn } from "@acme/ui/lib";
 
 import { theme } from "~/constants/theme";
 
-interface DocListProps {
+interface DocListProps
+  extends Pick<TreeListProps, "defaultIcon" | "showEmptyChild"> {
   group: string;
   title: string;
   onCreate?: TreeListProps["onAddItem"];
   onArchive?: TreeListProps["onDeleteItem"];
 }
 
-const DocList = ({ group, title, onCreate, onArchive }: DocListProps) => {
+const DocList = ({
+  group,
+  title,
+  defaultIcon,
+  showEmptyChild,
+  onCreate,
+  onArchive,
+}: DocListProps) => {
   const { isLoading } = useTree();
 
   return (
@@ -51,6 +59,8 @@ const DocList = ({ group, title, onCreate, onArchive }: DocListProps) => {
         <TreeList
           group={group}
           parentId={null}
+          defaultIcon={defaultIcon}
+          showEmptyChild={showEmptyChild}
           onAddItem={onCreate}
           onDeleteItem={onArchive}
         />

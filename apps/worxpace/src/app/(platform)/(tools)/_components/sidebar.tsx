@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useAuth, useOrganizationList } from "@clerk/nextjs";
 import {
   ChevronsLeft,
+  Columns3,
   PlusCircle,
   Search,
   Settings,
@@ -149,6 +150,8 @@ export const Sidebar = forwardRef(function Sidebar(
         <DocList
           group="kanban"
           title="Kanban"
+          defaultIcon={Columns3}
+          showEmptyChild={false}
           onCreate={(parentId) =>
             create({ type: "kanban", title: "Untitled", parentId })
           }
