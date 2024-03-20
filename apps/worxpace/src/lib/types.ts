@@ -1,3 +1,5 @@
+import type { MutationFetcher } from "swr/mutation";
+
 export interface Client {
   role: "admin" | "personal" | "organization";
   userId: string;
@@ -7,3 +9,5 @@ export interface Client {
   workspace: string;
   workspaceId: string;
 }
+
+export type Action<Input, Output> = MutationFetcher<Output, string, Input>;

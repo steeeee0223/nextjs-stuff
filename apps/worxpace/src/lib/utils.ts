@@ -1,8 +1,9 @@
 import { auth } from "@clerk/nextjs";
+import type * as z from "zod";
 
 import { COLORS } from "~/constants/theme";
 import { UnauthorizedError } from "./errors";
-import { Client } from "./types";
+import type { Action, Client } from "./types";
 
 export function isAuthenticated(): boolean {
   const { userId } = auth();
@@ -26,6 +27,7 @@ export function fetchClient(): Client {
       path: `/personal/${userId}`,
       username: `${user?.firstName} ${user?.lastName}`,
       workspace: `${user?.firstName} ${user?.lastName}`,
+      workspaceId: userId,
     };
   } else {
     return {
@@ -35,6 +37,7 @@ export function fetchClient(): Client {
       path: `/organization/${orgId}`,
       username: `${user?.firstName} ${user?.lastName}`,
       workspace: organization?.name ?? "Organization",
+      workspaceId: orgId,
     };
   }
 }
@@ -62,4 +65,15 @@ export function parseBool(x?: string | null): boolean | undefined {
 
 export function connectionIdToColor(connectionId: number): string {
   return COLORS[connectionId % COLORS.length]!;
+}
+
+export function createMutationFetcher<Input, Output>(
+  schema: z.Schema<Input>,
+  handler: Action<Input, Output>,
+): Action<Input, Output> {
+  return async (key, { arg }) => {
+    const result = schema.safeParse(arg);
+    if (!result.success) throw result.error;
+    return await handler(key, { arg: result.data });
+  };
 }
