@@ -2,14 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 "use client";
 
-import {
-  useMemo,
-  useRef,
-  useState,
-  type ChangeEvent,
-  type KeyboardEvent,
-} from "react";
-import dynamic from "next/dynamic";
+import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { ImageIcon, Smile, X } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
@@ -31,12 +24,19 @@ import { updateDocument } from "~/actions";
 import { theme } from "~/constants/theme";
 import { useEdgeStore } from "~/hooks";
 
-interface ToolbarProps {
+/** Styles */
+const buttonProps: ButtonProps = {
+  className: "text-muted-foreground text-xs",
+  variant: "outline",
+  size: "sm",
+};
+
+interface DocHeaderProps {
   document: Document;
   preview?: boolean;
 }
 
-const Toolbar = ({ document, preview }: ToolbarProps) => {
+const DocHeader = ({ document, preview }: DocHeaderProps) => {
   /** Input */
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -76,10 +76,10 @@ const Toolbar = ({ document, preview }: ToolbarProps) => {
   const { dispatch } = useTree();
   /** Action - update */
   const { execute: update } = useAction(updateDocument, {
-    onSuccess: ({ id, parentId, icon, title }) =>
+    onSuccess: ({ id, parentId, icon, title, type }) =>
       dispatch({
         type: "update:item",
-        payload: { id, parentId, icon, title, group: "document" },
+        payload: { id, parentId, icon, title, group: type },
       }),
     onError: (e) => toast.error(e),
   });
@@ -88,9 +88,7 @@ const Toolbar = ({ document, preview }: ToolbarProps) => {
     update({
       id: document.id,
       title: e.currentTarget.value || "Untitled",
-    })
-      .then(() => console.log(`updating title`))
-      .catch((e) => console.log(e));
+    }).catch((e) => console.log(e));
   };
   const onIconSelect = (icon: string) => update({ id: document.id, icon });
   const onRemoveIcon = () => update({ id: document.id, icon: null });
@@ -100,31 +98,12 @@ const Toolbar = ({ document, preview }: ToolbarProps) => {
       options: { replaceTargetUrl: document.coverImage ?? undefined },
     });
     console.log(`uploaded to edgestore: ${res.url}`);
-    update({ id: document.id, coverImage: res.url })
-      .then(() => console.log(`updating title`))
-      .catch((e) => console.log(e));
+    await update({ id: document.id, coverImage: res.url });
   };
   const onUnsplashCover = async (url: string) =>
     await deleteFile(() => update({ id: document.id, coverImage: url }));
   const onRemoveCover = async () =>
     await deleteFile(() => update({ id: document.id, coverImage: null }));
-  const onUpdateContent = (content: string) =>
-    update({ id: document.id, content });
-  const onUploadIntoNote = async (file: File) => {
-    const res = await edgestore.publicFiles.upload({ file });
-    return res.url;
-  };
-  /** Block Note Editor */
-  const BlockNoteEditor = useMemo(
-    () => dynamic(() => import("~/components/block-editor"), { ssr: false }),
-    [],
-  );
-  /** Props */
-  const buttonProps: ButtonProps = {
-    className: "text-muted-foreground text-xs",
-    variant: "outline",
-    size: "sm",
-  };
 
   return (
     <>
@@ -203,18 +182,12 @@ const Toolbar = ({ document, preview }: ToolbarProps) => {
             </div>
           )}
         </div>
-        <BlockNoteEditor
-          editable={!preview}
-          initialContent={document.content}
-          onChange={onUpdateContent}
-          onUpload={onUploadIntoNote}
-        />
       </div>
     </>
   );
 };
 
-export function ToolbarSkeleton() {
+export function DocHeaderSkeleton() {
   return (
     <>
       <Cover.Skeleton />
@@ -230,4 +203,4 @@ export function ToolbarSkeleton() {
   );
 }
 
-export default Toolbar;
+export default DocHeader;

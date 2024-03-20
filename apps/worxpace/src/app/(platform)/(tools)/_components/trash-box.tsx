@@ -21,29 +21,34 @@ const TrashBox = () => {
   const params = useParams();
   const { path } = useClient();
   /** Tree */
-  const { getGroup, dispatch } = useTree();
+  const { getGroup, dispatch, onClickItem } = useTree();
   const [search, setSearch] = useState("");
-  const archivedDocs = useMemo(() => getGroup("trash"), [getGroup]);
+  const archivedDocs = useMemo(
+    () => ["trash:document", "trash:kanban"].flatMap(getGroup),
+    [getGroup],
+  );
   const filteredDocuments = archivedDocs.filter(({ title }) =>
     title.toLowerCase().includes(search.toLowerCase()),
   );
   /** Action */
-  const onClick = (documentId: string) =>
-    router.push(`/documents/${documentId}`);
+  const onClick = (id: string, group: string | null) => {
+    if (group) {
+      const [_, grp] = group.split(":");
+      onClickItem?.(id, grp ?? null);
+    }
+  };
   const onError = (e: string) => toast.error(e);
   /** Action: Restore */
   const { execute: restore } = useAction(restoreDocument, {
     onSuccess: ({ ids, item }) => {
-      dispatch({ type: "update:group", payload: { ids, group: "document" } });
+      dispatch({ type: "update:group", payload: { ids, group: item.type } });
       toast.success(`Restored document "${item.title}"`);
     },
     onError,
   });
   const onRestore = (e: MouseEvent<HTMLDivElement>, documentId: string) => {
     e.stopPropagation();
-    restore({ id: documentId })
-      .then(() => console.log(`processing restore`))
-      .catch((e) => console.log(e));
+    restore({ id: documentId }).catch((e) => console.log(e));
   };
   /** Action: Remove */
   const { execute: remove } = useAction(deleteDocument, {
@@ -76,11 +81,11 @@ const TrashBox = () => {
         <p className="hidden pb-2 text-center text-xs text-muted-foreground last:block">
           No documents found.
         </p>
-        {filteredDocuments?.map(({ id, title }) => (
+        {filteredDocuments?.map(({ id, title, group }) => (
           <div
             key={id}
             role="button"
-            onClick={() => onClick(id)}
+            onClick={() => onClick(id, group)}
             className={cn(
               theme.flex.center,
               "w-full justify-between rounded-sm text-sm text-primary hover:bg-primary/5",

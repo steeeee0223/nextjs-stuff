@@ -1,11 +1,10 @@
 "use client";
 
 import type { PropsWithChildren } from "react";
-import { useReducer, useState } from "react";
+import { useMemo, useReducer, useState } from "react";
 import { toast } from "sonner";
+import useSWR, { type Fetcher } from "swr";
 
-import { useFetch } from "@/hooks";
-import type { ActionState } from "@/lib";
 import type { KanbanHandlers, KanbanItem, KanbanList } from "./index.types";
 import type { KanbanReducer } from "./kanban-actions";
 import { kanbanReducer } from "./kanban-actions";
@@ -16,13 +15,15 @@ import { findMaxOrder } from "./utils";
 
 interface KanbanProviderProps extends PropsWithChildren, KanbanHandlers {
   className?: string;
-  fetchLists: () => Promise<ActionState<never, KanbanList[]>>;
+  queryKey?: string;
+  fetchLists: Fetcher<KanbanList[]>;
   onOpenItem?: (item: KanbanItem) => void;
 }
 
 export function KanbanProvider({
   className,
   children,
+  queryKey,
   fetchLists,
   ...handlers
 }: KanbanProviderProps) {
@@ -34,13 +35,16 @@ export function KanbanProvider({
     kanbanReducer,
     $initialLists,
   );
-  const { data, isLoading } = useFetch<KanbanList[]>(fetchLists, {
-    onSuccess: (data) => dispatch({ type: "set", payload: data }),
-    onError: (e) => toast.error(e),
-  });
+  const { data, isLoading } = useSWR<KanbanList[], Error>(
+    queryKey ?? "ui:kanban",
+    fetchLists,
+    {
+      onSuccess: (data) => dispatch({ type: "set", payload: data }),
+      onError: (e) => toast.error(e.message),
+    },
+  );
 
-  const kanbanLists = Object.values(state.entities);
-  console.log(`kanbanLists:`, kanbanLists);
+  const kanbanLists = useMemo(() => Object.values(state.entities), [state]);
   const kanbanContextValues: KanbanContextInterface = {
     isLoading: isLoading || !data,
     kanbanLists,
@@ -51,7 +55,7 @@ export function KanbanProvider({
       state.entities[listId]?.items.find(({ id }) => itemId === id),
     getKanbanList: (listId) => state.entities[listId],
     getMaxItemOrder: (listId) => findMaxOrder(state.entities[listId]!.items),
-    getMaxListOrder: () => findMaxOrder(Object.values(state.entities)),
+    getMaxListOrder: () => findMaxOrder(kanbanLists),
     ...handlers,
   };
 

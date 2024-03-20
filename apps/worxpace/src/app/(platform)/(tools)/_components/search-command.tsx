@@ -33,8 +33,9 @@ const SearchCommand = () => {
   );
   /** Select */
   const router = useRouter();
-  const onSelect = (id: string) => {
-    router.push(`/documents/${id}`);
+  const handleSelect = (id: string, group: string | null) => {
+    if (group === "document") router.push(`/documents/${id}`);
+    if (group === "kanban") router.push(`/kanban/${id}`);
     onClose();
   };
   /** Mount */
@@ -66,12 +67,12 @@ const SearchCommand = () => {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Documents">
-          {documents?.map(({ id, title, icon }) => (
+          {documents?.map(({ id, title, icon, type }) => (
             <CommandItem
               key={id}
-              value={`${id}-${title}`}
+              value={id}
               title={title}
-              onSelect={onSelect}
+              onSelect={() => handleSelect(id, type)}
               className="mb-1"
             >
               {icon ? (

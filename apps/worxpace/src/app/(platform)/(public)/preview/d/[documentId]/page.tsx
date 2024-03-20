@@ -10,7 +10,7 @@ import { Cover } from "@acme/ui/components";
 import { cn } from "@acme/ui/lib";
 
 import { getDocument } from "~/app/(platform)/_functions";
-import { ToolbarSkeleton } from "~/app/(platform)/(tools)/documents/[documentId]/_component/toolbar";
+import { DocHeaderSkeleton } from "~/components";
 import { theme } from "~/constants/theme";
 
 interface Params {
@@ -35,7 +35,7 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
   );
 
   if (error) return notFound();
-  if (!document || isLoading) return <ToolbarSkeleton />;
+  if (!document || isLoading) return <DocHeaderSkeleton />;
   return (
     <div className="pb-40 dark:bg-[#1F1F1F]">
       <Cover preview url={document.coverImage} />

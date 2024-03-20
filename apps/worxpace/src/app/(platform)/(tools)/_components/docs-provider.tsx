@@ -7,10 +7,9 @@ import { Document } from "@acme/prisma";
 import { TreeProvider } from "@acme/ui/components";
 import { useNavControl } from "@acme/ui/hooks";
 
-import { Room } from "~/components";
+import { DocHeaderSkeleton, Room } from "~/components";
 import { useClient } from "~/hooks";
 import { fetchUrl } from "~/lib";
-import { ToolbarSkeleton } from "../documents/[documentId]/_component/toolbar";
 import Navbar from "./navbar";
 import SearchCommand from "./search-command";
 import { Sidebar } from "./sidebar";
@@ -40,14 +39,22 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
     if (isMobile) collapse();
   }, [pathname, isMobile]);
   /** Docs */
-  const onClickItem = (id: string) => router.push(`/documents/${id}`);
-  const isItemActive = (id: string) => params.documentId === id;
+  const groups = ["document", "kanban", "trash:document", "trash:kanban"];
+  const onClickItem = (id: string, group: string | null) => {
+    if (group === "document") router.push(`/documents/${id}`);
+    if (group === "kanban") router.push(`/kanban/${id}`);
+  };
+  const isItemActive = (id: string, group: string | null) => {
+    if (group === "document") return params.documentId === id;
+    if (group === "kanban") return params.boardId === id;
+    return false;
+  };
   const fetchItems = async () => {
     try {
       const documents: Document[] = await fetchUrl(`/api/documents/`);
       return documents.map((doc) => ({
         ...doc,
-        group: doc.isArchived ? "trash" : "document",
+        group: doc.isArchived ? `trash:${doc.type}` : doc.type,
       }));
     } catch {
       throw new Error("Error occurred while fetching documents");
@@ -58,7 +65,7 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
     <TreeProvider
       queryKey={workspaceId}
       className="flex h-full dark:bg-[#1F1F1F]"
-      groups={["document", "kanban", "trash"]}
+      groups={groups}
       fetchItems={fetchItems}
       onClickItem={onClickItem}
       isItemActive={isItemActive}
@@ -71,7 +78,7 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
         resetWidth={resetWidth}
         collapse={collapse}
       />
-      <RoomWrapper documentId={params.documentId as string | undefined}>
+      <RoomWrapper>
         <Navbar
           ref={navbarRef}
           isCollapsed={isCollapsed}
@@ -90,13 +97,13 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
 
 export default DocsProvider;
 
-const RoomWrapper = ({
-  children,
-  documentId,
-}: PropsWithChildren<{ documentId?: string | null }>) => {
-  if (!documentId) return <>{children}</>;
+const RoomWrapper = ({ children }: PropsWithChildren) => {
+  const params = useParams();
+  const roomId =
+    (params.documentId as string) ?? (params.boardId as string) ?? null;
+  if (!roomId) return <>{children}</>;
   return (
-    <Room roomId={documentId} fallback={<Skeleton />}>
+    <Room roomId={roomId} fallback={<Skeleton />}>
       {children}
     </Room>
   );
@@ -107,7 +114,7 @@ const Skeleton = () => {
     <div className="absolute left-60 top-0 z-[99999] w-full">
       <div className="w-full bg-background dark:bg-[#1F1F1F]" />
       <main className="h-full flex-1 overflow-y-auto">
-        <ToolbarSkeleton />
+        <DocHeaderSkeleton />
       </main>
     </div>
   );

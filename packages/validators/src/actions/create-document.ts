@@ -1,6 +1,10 @@
 import { z } from "zod";
 
 export const CreateDocument = z.object({
+  type: z.string({
+    required_error: "Title is required",
+    invalid_type_error: "Title is required",
+  }),
   title: z
     .string({
       required_error: "Title is required",

@@ -12,8 +12,8 @@ export interface TreeContextInterface {
   dispatch: Dispatch<TreeAction<TreeItem>>;
   getGroup: (group: string) => TreeItem[];
   getChildren: (parentId: string | null, group: string | null) => TreeItem[];
-  isItemActive?: (id: string) => boolean;
-  onClickItem?: (id: string) => void;
+  isItemActive?: (id: string, group: string | null) => boolean;
+  onClickItem?: (id: string, group: string | null) => void;
 }
 
 export const TreeContext = createContext<TreeContextInterface | null>(null);

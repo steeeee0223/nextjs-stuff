@@ -20,41 +20,26 @@ type Image {
   linkHTML String
 }
 
-model Board {
-  id     String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId String
-  orgId  String?
-  title  String
-  image  Image?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  List      List[]
-
-  @@index([userId, orgId])
-}
-
 model List {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String   @id @default(uuid()) @map("_id")
   title     String
   order     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   boardId   String   @db.ObjectId
-  board     Board    @relation(fields: [boardId], references: [id], onDelete: Cascade)
   cards     Card[]
 
   @@index([boardId])
 }
 
 model Card {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(uuid()) @map("_id")
   title       String
   order       Int
   description String?  @db.String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  listId      String   @db.ObjectId
+  listId      String
   list        List     @relation(fields: [listId], references: [id], onDelete: Cascade)
 
   @@index([listId])
@@ -82,7 +67,7 @@ type User {
 }
 
 type Entity {
-  entityId String      @db.ObjectId
+  entityId String
   type     ENTITY_TYPE
   title    String
 }
@@ -126,6 +111,7 @@ model Subscription {
 
 model Document {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  type        String
   title       String
   userId      String
   orgId       String?
@@ -142,4 +128,5 @@ model Document {
 
   @@index([userId, orgId], name: "byUser")
   @@index([userId, orgId, parentId], name: "byUserParent")
+  @@index([userId, orgId, type], name: "byUserType")
 }

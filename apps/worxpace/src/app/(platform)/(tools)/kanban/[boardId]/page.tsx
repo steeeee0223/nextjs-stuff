@@ -8,18 +8,18 @@ import type { Document } from "@acme/prisma";
 import { getDocument } from "~/app/(platform)/_functions";
 import { DocHeader, DocHeaderSkeleton } from "~/components";
 import Error from "../../error";
-import Editor from "./_component/editor";
+import KanbanBoard from "./_component/kanban-board";
 
 interface Params {
-  params: { documentId: string };
+  params: { boardId: string };
 }
 
-const DocumentPage = ({ params: { documentId } }: Params) => {
+const KanbanPage = ({ params: { boardId } }: Params) => {
   const {
-    data: document,
+    data: board,
     isLoading,
     error,
-  } = useSWR<Document, Error>([documentId, false], getDocument, {
+  } = useSWR<Document, Error>([boardId, false], getDocument, {
     onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
   });
 
@@ -33,16 +33,16 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
   }
   return (
     <div className="pb-40">
-      {isLoading || !document ? (
+      {isLoading || !board ? (
         <DocHeaderSkeleton />
       ) : (
         <>
-          <DocHeader document={document} />
-          <Editor document={document} />
+          <DocHeader document={board} />
+          <KanbanBoard board={board} />
         </>
       )}
     </div>
   );
 };
 
-export default DocumentPage;
+export default KanbanPage;
