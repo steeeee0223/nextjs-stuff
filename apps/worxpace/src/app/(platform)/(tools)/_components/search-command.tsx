@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { File } from "lucide-react";
 import { toast } from "sonner";
 import useSWR from "swr";
@@ -14,6 +13,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
+  useTree,
 } from "@acme/ui/components";
 import { cn } from "@acme/ui/lib";
 
@@ -32,10 +32,9 @@ const SearchCommand = () => {
     { onError: (e) => toast.error(e) },
   );
   /** Select */
-  const router = useRouter();
+  const {onClickItem} = useTree()
   const handleSelect = (id: string, group: string | null) => {
-    if (group === "document") router.push(`/documents/${id}`);
-    if (group === "kanban") router.push(`/kanban/${id}`);
+    onClickItem?.(id, group)
     onClose();
   };
   /** Mount */

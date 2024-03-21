@@ -24,7 +24,8 @@ const TrashBox = () => {
   const { getGroup, dispatch, onClickItem } = useTree();
   const [search, setSearch] = useState("");
   const archivedDocs = useMemo(
-    () => ["trash:document", "trash:kanban"].flatMap(getGroup),
+    () =>
+      ["trash:document", "trash:kanban", "trash:whiteboard"].flatMap(getGroup),
     [getGroup],
   );
   const filteredDocuments = archivedDocs.filter(({ title }) =>
@@ -33,7 +34,7 @@ const TrashBox = () => {
   /** Action */
   const onClick = (id: string, group: string | null) => {
     if (group) {
-      const [_, grp] = group.split(":");
+      const [, grp] = group.split(":");
       onClickItem?.(id, grp ?? null);
     }
   };
