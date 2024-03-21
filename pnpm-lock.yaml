@@ -302,6 +302,9 @@ importers:
       '@edgestore/server':
         specifier: ^0.1.6
         version: 0.1.6(react-dom@18.2.0)(react@18.2.0)(zod@3.22.4)
+      '@excalidraw/excalidraw':
+        specifier: ^0.17.3
+        version: 0.17.3(react-dom@18.2.0)(react@18.2.0)
       '@liveblocks/client':
         specifier: ^1.9.7
         version: 1.9.7
@@ -4141,6 +4144,16 @@ packages:
   /@eslint/js@8.56.0:
     resolution: {integrity: sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  /@excalidraw/excalidraw@0.17.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-t+0sR30AboKcINt0WUJmSAC1cJy6npO37j/zONvuWvSh6XDOGoL1E0L+WYKJMBzp4wnOQhRIghQJmdfktQlO8w==}
+    peerDependencies:
+      react: ^17.0.2 || ^18.2.0
+      react-dom: ^17.0.2 || ^18.2.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@fal-works/esbuild-plugin-global-externals@2.1.2:
     resolution: {integrity: sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==}

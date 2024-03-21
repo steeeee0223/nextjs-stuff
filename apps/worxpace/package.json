@@ -22,6 +22,7 @@
     "@clerk/nextjs": "^4.29.4",
     "@edgestore/react": "^0.1.6",
     "@edgestore/server": "^0.1.6",
+    "@excalidraw/excalidraw": "^0.17.3",
     "@liveblocks/client": "^1.9.7",
     "@liveblocks/node": "^1.9.7",
     "@liveblocks/react": "^1.9.7",

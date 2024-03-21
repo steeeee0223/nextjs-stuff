@@ -10,6 +10,7 @@ import {
   ChevronsLeft,
   Columns3,
   PlusCircle,
+  Presentation,
   Search,
   Settings,
   Trash,
@@ -154,6 +155,16 @@ export const Sidebar = forwardRef(function Sidebar(
           showEmptyChild={false}
           onCreate={(parentId) =>
             create({ type: "kanban", title: "Untitled", parentId })
+          }
+          onArchive={(id) => archive({ id })}
+        />
+        <DocList
+          group="whiteboard"
+          title="Whiteboard"
+          defaultIcon={Presentation}
+          showEmptyChild={false}
+          onCreate={(parentId) =>
+            create({ type: "whiteboard", title: "Untitled", parentId })
           }
           onArchive={(id) => archive({ id })}
         />

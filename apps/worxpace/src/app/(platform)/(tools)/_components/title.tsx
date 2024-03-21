@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
-import { Columns3, FileIcon } from "lucide-react";
+import { Columns3, FileIcon, Presentation } from "lucide-react";
 import { toast } from "sonner";
 
 import {
@@ -26,6 +26,8 @@ const getIcon = (item: TreeItem): TreeItem["icon"] => {
   switch (item.group) {
     case "kanban":
       return Columns3;
+    case "whiteboard":
+      return Presentation;
     default:
       return FileIcon;
   }

@@ -30,6 +30,7 @@ const Navbar = forwardRef(function Navbar(
   const document = treeItems.find(({ id, group }) => {
     if (group?.endsWith("document")) return params.documentId === id;
     if (group?.endsWith("kanban")) return params.boardId === id;
+    if (group?.endsWith("whiteboard")) return params.whiteboardId === id;
     return false;
   });
 

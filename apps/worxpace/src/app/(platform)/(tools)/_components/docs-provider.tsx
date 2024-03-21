@@ -39,14 +39,23 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
     if (isMobile) collapse();
   }, [pathname, isMobile]);
   /** Docs */
-  const groups = ["document", "kanban", "trash:document", "trash:kanban"];
+  const groups = [
+    "document",
+    "kanban",
+    "whiteboard",
+    "trash:document",
+    "trash:kanban",
+    "trash:whiteboard",
+  ];
   const onClickItem = (id: string, group: string | null) => {
     if (group === "document") router.push(`/documents/${id}`);
     if (group === "kanban") router.push(`/kanban/${id}`);
+    if (group === "whiteboard") router.push(`/whiteboard/${id}`);
   };
   const isItemActive = (id: string, group: string | null) => {
     if (group === "document") return params.documentId === id;
     if (group === "kanban") return params.boardId === id;
+    if (group === "whiteboard") return params.whiteboardId === id;
     return false;
   };
   const fetchItems = async () => {
@@ -100,7 +109,10 @@ export default DocsProvider;
 const RoomWrapper = ({ children }: PropsWithChildren) => {
   const params = useParams();
   const roomId =
-    (params.documentId as string) ?? (params.boardId as string) ?? null;
+    (params.documentId as string) ??
+    (params.boardId as string) ??
+    (params.whiteboardId as string) ??
+    null;
   if (!roomId) return <>{children}</>;
   return (
     <Room roomId={roomId} fallback={<Skeleton />}>
