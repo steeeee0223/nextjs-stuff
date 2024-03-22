@@ -1,9 +1,7 @@
 "use client";
 
 import type { PropsWithChildren } from "react";
-import { useMemo, useReducer, useState } from "react";
-import { toast } from "sonner";
-import useSWR, { type Fetcher } from "swr";
+import { useEffect, useMemo, useReducer, useState } from "react";
 
 import type { KanbanHandlers, KanbanItem, KanbanList } from "./index.types";
 import type { KanbanReducer } from "./kanban-actions";
@@ -15,16 +13,16 @@ import { findMaxOrder } from "./utils";
 
 interface KanbanProviderProps extends PropsWithChildren, KanbanHandlers {
   className?: string;
-  queryKey?: string;
-  fetchLists: Fetcher<KanbanList[]>;
+  isLoading?: boolean;
+  initialLists?: KanbanList[];
   onOpenItem?: (item: KanbanItem) => void;
 }
 
 export function KanbanProvider({
   className,
   children,
-  queryKey,
-  fetchLists,
+  isLoading = false,
+  initialLists = [],
   ...handlers
 }: KanbanProviderProps) {
   /** Kanban Item */
@@ -35,18 +33,14 @@ export function KanbanProvider({
     kanbanReducer,
     $initialLists,
   );
-  const { data, isLoading } = useSWR<KanbanList[], Error>(
-    queryKey ?? "ui:kanban",
-    fetchLists,
-    {
-      onSuccess: (data) => dispatch({ type: "set", payload: data }),
-      onError: (e) => toast.error(e.message),
-    },
-  );
+
+  useEffect(() => {
+    if (initialLists) dispatch({ type: "set", payload: initialLists });
+  }, [initialLists]);
 
   const kanbanLists = useMemo(() => Object.values(state.entities), [state]);
   const kanbanContextValues: KanbanContextInterface = {
-    isLoading: isLoading || !data,
+    isLoading,
     kanbanLists,
     activeItem,
     dispatch,

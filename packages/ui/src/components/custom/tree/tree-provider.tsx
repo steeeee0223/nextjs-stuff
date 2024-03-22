@@ -2,45 +2,40 @@
 
 import {
   useCallback,
+  useEffect,
   useMemo,
   useReducer,
   type PropsWithChildren,
 } from "react";
-import { toast } from "sonner";
-import useSWR, { type Fetcher } from "swr";
 
 import type { TreeItem } from "./index.types";
 import { treeReducer, type TreeReducer } from "./tree-actions";
 import { TreeContext, type TreeContextInterface } from "./tree-context";
 
 interface TreeProviderProps extends PropsWithChildren {
-  queryKey?: string;
   className?: string;
   groups?: string[];
-  fetchItems: Fetcher<TreeItem[]>;
+  isLoading?: boolean;
+  initialItems?: TreeItem[];
   isItemActive?: (id: string, group: string | null) => boolean;
   onClickItem?: (id: string, group: string | null) => void;
 }
 
 export function TreeProvider({
   className,
-  queryKey,
+  isLoading = false,
+  initialItems = [],
   children,
   groups,
-  fetchItems,
   isItemActive,
   onClickItem,
 }: TreeProviderProps) {
   const $initialItems = { ids: [], entities: {} };
   const [state, dispatch] = useReducer<TreeReducer>(treeReducer, $initialItems);
-  const { data, isLoading } = useSWR<TreeItem[], string>(
-    queryKey ?? `ui:tree`,
-    fetchItems,
-    {
-      onSuccess: (data) => dispatch({ type: "set", payload: data }),
-      onError: (e) => toast.error(e),
-    },
-  );
+
+  useEffect(() => {
+    dispatch({ type: "set", payload: initialItems });
+  }, [initialItems]);
 
   const treeItems = useMemo(() => Object.values(state.entities), [state]);
   const getChildren = useCallback(
@@ -55,7 +50,7 @@ export function TreeProvider({
     [treeItems],
   );
   const treeContextValues: TreeContextInterface = {
-    isLoading: isLoading || !data,
+    isLoading,
     groups,
     treeItems,
     dispatch,
