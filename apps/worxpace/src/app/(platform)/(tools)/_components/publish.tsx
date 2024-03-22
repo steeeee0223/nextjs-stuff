@@ -4,18 +4,18 @@ import { useState } from "react";
 import { Check, Copy, Globe } from "lucide-react";
 import { toast } from "sonner";
 import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 
-import type { Document } from "@acme/prisma";
 import {
   Button,
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@acme/ui/components";
-import { useAction, useOrigin } from "@acme/ui/hooks";
+import { useOrigin } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
-import { updateDocument } from "~/actions";
+import { updateInternalDocument } from "~/actions";
 import { theme } from "~/constants/theme";
 import { getDocument } from "../../_functions";
 
@@ -24,13 +24,10 @@ interface PublishProps {
 }
 
 const Publish = ({ documentId }: PublishProps) => {
-  const { data: document } = useSWR<Document, Error>(
-    [documentId, false],
-    getDocument,
-    {
-      onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
-    },
-  );
+  const onError = (e: Error) => toast(e.message);
+  const { data: document } = useSWR([documentId, false], getDocument, {
+    onError,
+  });
   const [isPublished, setIsPublished] = useState(document?.isPublished);
 
   /** Url */
@@ -45,21 +42,23 @@ const Publish = ({ documentId }: PublishProps) => {
   };
   /** Actions - Publish & Unpublish */
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { execute: update } = useAction(updateDocument, {
-    onSuccess: (data) => {
-      setIsSubmitting(false);
-      setIsPublished(data.isPublished);
-      data.isPublished
-        ? toast.success(`Published Document: "${data.title}"`)
-        : toast.success(`Unpublished Document: "${data.title}"`);
+  const { trigger: update } = useSWRMutation(
+    [documentId, false],
+    updateInternalDocument,
+    {
+      onSuccess: (data) => {
+        setIsSubmitting(false);
+        setIsPublished(data.isPublished);
+        data.isPublished
+          ? toast.success(`Published Document: "${data.title}"`)
+          : toast.success(`Unpublished Document: "${data.title}"`);
+      },
+      onError,
     },
-    onError: (e) => toast.error(e),
-  });
+  );
   const handlePublish = () => {
     setIsSubmitting(true);
-    update({ id: documentId, isPublished: !isPublished, log: true }).catch(
-      (e) => console.log(e),
-    );
+    void update({ id: documentId, isPublished: !isPublished, log: true });
   };
 
   return (

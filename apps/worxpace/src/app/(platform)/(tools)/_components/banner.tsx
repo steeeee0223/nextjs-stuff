@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 import { Button, useTree } from "@acme/ui/components";
-import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { deleteDocument, restoreDocument } from "~/actions";
@@ -20,29 +20,37 @@ const $buttonProps =
 
 const Banner = ({ documentId }: BannerProps) => {
   const router = useRouter();
-  const { path } = useClient();
+  const { path, workspaceId } = useClient();
   /** Tree */
   const { dispatch } = useTree();
-  const onError = (e: string) => toast.error(e);
+  const onError = (e: Error) => toast.error(e.message);
   /** Action - Restore */
-  const { execute: restore } = useAction(restoreDocument, {
-    onSuccess: ({ ids, item }) => {
-      dispatch({ type: "update:group", payload: { ids, group: item.type } });
-      toast.success(`Restored document "${item.title}"`);
-      router.push(path);
+  const { trigger: restore } = useSWRMutation(
+    `doc:${workspaceId}`,
+    restoreDocument,
+    {
+      onSuccess: ({ ids, item }) => {
+        dispatch({ type: "update:group", payload: { ids, group: item.type } });
+        toast.success(`Restored document "${item.title}"`);
+        router.push(path);
+      },
+      onError,
     },
-    onError,
-  });
+  );
   const onRestore = () => restore({ id: documentId });
   /** Action - Remove */
-  const { execute: remove } = useAction(deleteDocument, {
-    onSuccess: (data) => {
-      dispatch({ type: "delete", payload: data.ids });
-      toast.success(`Deleted document "${data.item.title}"`);
-      if (documentId === data.item.id) router.push(path);
+  const { trigger: remove } = useSWRMutation(
+    `doc:${workspaceId}`,
+    deleteDocument,
+    {
+      onSuccess: (data) => {
+        dispatch({ type: "delete", payload: data.ids });
+        toast.success(`Deleted document "${data.item.title}"`);
+        if (documentId === data.item.id) router.push(path);
+      },
+      onError,
     },
-    onError,
-  });
+  );
   const onRemove = () => remove({ id: documentId });
 
   return (

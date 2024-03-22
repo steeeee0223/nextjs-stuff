@@ -25,7 +25,7 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
     isLoading,
     error,
   } = useSWR<Document, Error>([documentId, true], getDocument, {
-    onSuccess: (data) => console.log(`fetched data`, data),
+    onSuccess: (_data, key) => console.log(`[swr] ${key} fetched data`),
     onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
   });
   /** Block Note Editor */

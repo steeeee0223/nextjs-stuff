@@ -34,7 +34,7 @@ export function TreeProvider({
   const $initialItems = { ids: [], entities: {} };
   const [state, dispatch] = useReducer<TreeReducer>(treeReducer, $initialItems);
   const { data, isLoading } = useSWR<TreeItem[], string>(
-    `ui:tree:${queryKey}`,
+    queryKey ?? `ui:tree`,
     fetchItems,
     {
       onSuccess: (data) => dispatch({ type: "set", payload: data }),

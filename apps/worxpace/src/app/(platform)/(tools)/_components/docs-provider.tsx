@@ -72,7 +72,7 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <TreeProvider
-      queryKey={workspaceId}
+      queryKey={`doc:${workspaceId}`}
       className="flex h-full dark:bg-[#1F1F1F]"
       groups={groups}
       fetchItems={fetchItems}

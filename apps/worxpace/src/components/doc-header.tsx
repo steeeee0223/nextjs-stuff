@@ -6,6 +6,7 @@ import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { ImageIcon, Smile, X } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
 import {
@@ -17,12 +18,11 @@ import {
   useTree,
   type ButtonProps,
 } from "@acme/ui/components";
-import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { updateDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { useEdgeStore } from "~/hooks";
+import { useClient, useEdgeStore } from "~/hooks";
 
 /** Styles */
 const buttonProps: ButtonProps = {
@@ -37,6 +37,7 @@ interface DocHeaderProps {
 }
 
 const DocHeader = ({ document, preview }: DocHeaderProps) => {
+  const { workspaceId } = useClient();
   /** Input */
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -59,7 +60,7 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
   };
   /** Edgestore */
   const { edgestore } = useEdgeStore();
-  const deleteFile = async (onComplete?: () => Promise<void>) => {
+  const deleteFile = async () => {
     try {
       if (document.coverImage)
         await edgestore.publicFiles.delete({
@@ -70,25 +71,28 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
         `[edgestore] file with url not found: ${document.coverImage}`,
       );
     }
-    await onComplete?.();
   };
   /** Tree Actions */
   const { dispatch } = useTree();
   /** Action - update */
-  const { execute: update } = useAction(updateDocument, {
-    onSuccess: ({ id, parentId, icon, title, type }) =>
-      dispatch({
-        type: "update:item",
-        payload: { id, parentId, icon, title, group: type },
-      }),
-    onError: (e) => toast.error(e),
-  });
+  const { trigger: update } = useSWRMutation(
+    `doc:${workspaceId}`,
+    updateDocument,
+    {
+      onSuccess: ({ id, parentId, icon, title, type }) =>
+        dispatch({
+          type: "update:item",
+          payload: { id, parentId, icon, title, group: type },
+        }),
+      onError: (e: Error) => toast.error(e.message),
+    },
+  );
   const onUpdateTitle = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.currentTarget.value);
-    update({
+    void update({
       id: document.id,
       title: e.currentTarget.value || "Untitled",
-    }).catch((e) => console.log(e));
+    });
   };
   const onIconSelect = (icon: string) => update({ id: document.id, icon });
   const onRemoveIcon = () => update({ id: document.id, icon: null });
@@ -100,10 +104,14 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
     console.log(`uploaded to edgestore: ${res.url}`);
     await update({ id: document.id, coverImage: res.url });
   };
-  const onUnsplashCover = async (url: string) =>
-    await deleteFile(() => update({ id: document.id, coverImage: url }));
-  const onRemoveCover = async () =>
-    await deleteFile(() => update({ id: document.id, coverImage: null }));
+  const onUnsplashCover = async (url: string) => {
+    await deleteFile();
+    await update({ id: document.id, coverImage: url });
+  };
+  const onRemoveCover = async () => {
+    await deleteFile();
+    await update({ id: document.id, coverImage: null });
+  };
 
   return (
     <>

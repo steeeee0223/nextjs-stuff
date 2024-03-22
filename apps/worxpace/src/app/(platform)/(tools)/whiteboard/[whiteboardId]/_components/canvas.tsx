@@ -6,12 +6,13 @@ import type { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/typ
 import { SaveIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
 import { Button, ButtonProps } from "@acme/ui/components";
-import { useAction } from "@acme/ui/hooks";
 
-import { updateDocument } from "~/actions";
+
+import { updateInternalDocument } from "~/actions";
 
 interface CanvasProps {
   board: Document;
@@ -36,9 +37,9 @@ const Canvas = ({ board: { id, content } }: CanvasProps) => {
     readonly ExcalidrawElement[]
   >(content ? (JSON.parse(content) as readonly ExcalidrawElement[]) : []);
 
-  const { execute: update } = useAction(updateDocument, {
+  const { trigger: update } = useSWRMutation([id ,false], updateInternalDocument, {
     onSuccess: ({ title }) => toast.success(`Updated whiteboard "${title}"`),
-    onError: (e) => toast.error(e),
+    onError: (e:Error) => toast.error(e.message),
   });
   const handleSave = () =>
     void update({ id, content: JSON.stringify(whiteBoardData) });

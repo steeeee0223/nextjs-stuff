@@ -3,6 +3,7 @@
 import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { Columns3, FileIcon, Presentation } from "lucide-react";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 import {
   Button,
@@ -12,10 +13,10 @@ import {
   useTree,
   type TreeItem,
 } from "@acme/ui/components";
-import { useAction } from "@acme/ui/hooks";
 
 import { updateDocument } from "~/actions";
 import { theme } from "~/constants/theme";
+import { useClient } from "~/hooks";
 
 interface TitleProps {
   initialData: TreeItem;
@@ -34,6 +35,7 @@ const getIcon = (item: TreeItem): TreeItem["icon"] => {
 };
 
 const Title = ({ initialData }: TitleProps) => {
+  const { workspaceId } = useClient();
   const [title, setTitle] = useState(initialData.title);
   const icon = getIcon(initialData);
   /** Input */
@@ -50,15 +52,19 @@ const Title = ({ initialData }: TitleProps) => {
   const disableInput = () => setIsEditing(false);
   /** Action - Rename */
   const { dispatch } = useTree();
-  const { execute: update } = useAction(updateDocument, {
-    onSuccess: (data) => {
-      dispatch({
-        type: "update:item",
-        payload: { ...data, group: data.type },
-      });
-      toast.success(`Renamed document "${data.title}"`);
+  const { trigger: update } = useSWRMutation(
+    `doc:${workspaceId}`,
+    updateDocument,
+    {
+      onSuccess: (data) => {
+        dispatch({
+          type: "update:item",
+          payload: { ...data, group: data.type },
+        });
+        toast.success(`Renamed document "${data.title}"`);
+      },
     },
-  });
+  );
   const onChange = (event: ChangeEvent<HTMLInputElement>) =>
     setTitle(event.target.value);
 
@@ -66,9 +72,7 @@ const Title = ({ initialData }: TitleProps) => {
     if (event.key === "Enter") {
       disableInput();
       if (title !== initialData.title)
-        update({ id: initialData.id, title, log: true }).catch(() =>
-          console.log(`error`),
-        );
+        void update({ id: initialData.id, title, log: true });
     }
   };
 

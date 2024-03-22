@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 import {
   Button,
@@ -14,7 +15,6 @@ import {
   Skeleton,
   useTree,
 } from "@acme/ui/components";
-import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { archiveDocument } from "~/actions";
@@ -27,21 +27,26 @@ interface MenuProps {
 
 const Menu = ({ documentId }: MenuProps) => {
   const router = useRouter();
-  const { username, path } = useClient();
+  const { username, path, workspaceId } = useClient();
   const { dispatch } = useTree();
 
   /** Action - Archive */
-  const { execute: archive } = useAction(archiveDocument, {
-    onSuccess: ({ ids, item }) => {
-      dispatch({
-        type: "update:group",
-        payload: { ids, group: `trash:${item.type}` },
-      });
-      toast.success(`Document "${item.title}" Moved to Trash`);
-      router.push(path);
+  const onError = (e: Error) => toast.error(e.message);
+  const { trigger: archive } = useSWRMutation(
+    `doc:${workspaceId}`,
+    archiveDocument,
+    {
+      onSuccess: ({ ids, item }) => {
+        dispatch({
+          type: "update:group",
+          payload: { ids, group: `trash:${item.type}` },
+        });
+        toast.success(`Document "${item.title}" Moved to Trash`);
+        router.push(path);
+      },
+      onError,
     },
-    onError: (e) => toast.error(e),
-  });
+  );
 
   return (
     <DropdownMenu>

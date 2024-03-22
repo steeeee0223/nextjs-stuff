@@ -16,6 +16,7 @@ import {
   Trash,
 } from "lucide-react";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 import {
   CRUDItem as Item,
@@ -25,7 +26,6 @@ import {
   useTree,
   WorkspaceSwitcher,
 } from "@acme/ui/components";
-import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { archiveDocument, createDocument } from "~/actions";
@@ -54,7 +54,7 @@ export const Sidebar = forwardRef(function Sidebar(
 ) {
   /** Route */
   const router = useRouter();
-  const { path, userId } = useClient();
+  const { path, userId, workspaceId } = useClient();
   /** Workspace */
   const { signOut } = useAuth();
   const { setActive } = useOrganizationList();
@@ -72,32 +72,40 @@ export const Sidebar = forwardRef(function Sidebar(
   const settings = useSettings();
   /** Docs */
   const { dispatch, onClickItem } = useTree();
-  const onError = (e: string) => toast.error(e);
+  const onError = (e: Error) => toast.error(e.message);
   /** Action: Create */
-  const { execute: create } = useAction(createDocument, {
-    onSuccess: (data) => {
-      const { id, title, parentId, icon, type: group } = data;
-      dispatch({
-        type: "add",
-        payload: [{ id, title, parentId, icon, group }],
-      });
-      toast.success(`Page Created: ${title}`);
-      onClickItem?.(id, group);
+  const { trigger: create } = useSWRMutation(
+    `doc:${workspaceId}`,
+    createDocument,
+    {
+      onSuccess: (data) => {
+        const { id, title, parentId, icon, type: group } = data;
+        dispatch({
+          type: "add",
+          payload: [{ id, title, parentId, icon, group }],
+        });
+        toast.success(`Page Created: ${title}`);
+        onClickItem?.(id, group);
+      },
+      onError,
     },
-    onError,
-  });
+  );
   /** Action: Archive */
-  const { execute: archive } = useAction(archiveDocument, {
-    onSuccess: ({ item, ids }) => {
-      dispatch({
-        type: "update:group",
-        payload: { ids, group: `trash:${item.type}` },
-      });
-      toast.success(`Page "${item.title}" Moved to Trash`);
-      router.push(path);
+  const { trigger: archive } = useSWRMutation(
+    `doc:${workspaceId}`,
+    archiveDocument,
+    {
+      onSuccess: ({ item, ids }) => {
+        dispatch({
+          type: "update:group",
+          payload: { ids, group: `trash:${item.type}` },
+        });
+        toast.success(`Page "${item.title}" Moved to Trash`);
+        router.push(path);
+      },
+      onError,
     },
-    onError,
-  });
+  );
 
   return (
     <aside

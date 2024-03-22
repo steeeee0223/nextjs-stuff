@@ -3,12 +3,12 @@
 "use client";
 
 import { MouseEvent, useMemo, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Search, Trash, Undo } from "lucide-react";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 import { Input, Spinner, useTree } from "@acme/ui/components";
-import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { deleteDocument, restoreDocument } from "~/actions";
@@ -18,8 +18,7 @@ import { useClient } from "~/hooks";
 
 const TrashBox = () => {
   const router = useRouter();
-  const params = useParams();
-  const { path } = useClient();
+  const { path, workspaceId } = useClient();
   /** Tree */
   const { getGroup, dispatch, onClickItem } = useTree();
   const [search, setSearch] = useState("");
@@ -38,28 +37,36 @@ const TrashBox = () => {
       onClickItem?.(id, grp ?? null);
     }
   };
-  const onError = (e: string) => toast.error(e);
+  const onError = (e: Error) => toast.error(e.message);
   /** Action: Restore */
-  const { execute: restore } = useAction(restoreDocument, {
-    onSuccess: ({ ids, item }) => {
-      dispatch({ type: "update:group", payload: { ids, group: item.type } });
-      toast.success(`Restored document "${item.title}"`);
+  const { trigger: restore } = useSWRMutation(
+    `doc:${workspaceId}`,
+    restoreDocument,
+    {
+      onSuccess: ({ ids, item }) => {
+        dispatch({ type: "update:group", payload: { ids, group: item.type } });
+        toast.success(`Restored document "${item.title}"`);
+      },
+      onError,
     },
-    onError,
-  });
+  );
   const onRestore = (e: MouseEvent<HTMLDivElement>, documentId: string) => {
     e.stopPropagation();
-    restore({ id: documentId }).catch((e) => console.log(e));
+    void restore({ id: documentId });
   };
   /** Action: Remove */
-  const { execute: remove } = useAction(deleteDocument, {
-    onSuccess: (data) => {
-      dispatch({ type: "delete", payload: data.ids });
-      toast.success(`Deleted document "${data.item.title}"`);
-      if (params.documentId === data.item.id) router.push(path);
+  const { trigger: remove } = useSWRMutation(
+    `doc:${workspaceId}`,
+    deleteDocument,
+    {
+      onSuccess: (data) => {
+        dispatch({ type: "delete", payload: data.ids });
+        toast.success(`Deleted document "${data.item.title}"`);
+        router.push(path);
+      },
+      onError,
     },
-    onError,
-  });
+  );
 
   if (archivedDocs === undefined)
     return (
