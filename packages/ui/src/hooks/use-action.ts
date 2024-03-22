@@ -18,6 +18,7 @@ interface UseActionResult<TInput, TOutput> {
   isLoading: boolean;
 }
 
+/** @deprecated  will be replaced by `useSWRMutation` */
 export const useAction = <TInput, TOutput>(
   action: ActionHandler<TInput, TOutput>,
   options: UseActionOptions<TOutput>,

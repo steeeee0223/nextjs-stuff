@@ -1,39 +1,45 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import type { MutationFetcher } from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
-import { createSafeAction, type ActionHandler } from "@acme/ui/lib";
 import { UpdateDocument, type UpdateDocumentInput } from "@acme/validators";
 
 import {
   createAuditLog,
+  createMutationFetcher,
   documents,
   fetchClient,
   UnauthorizedError,
+  type Action,
 } from "~/lib";
 
-const handler: ActionHandler<UpdateDocumentInput, Document> = async (data) => {
-  let result;
-  const { log, id, ...updateData } = data;
-
+const handler: Action<UpdateDocumentInput, Document> = async (
+  _key,
+  { arg },
+) => {
+  const { log, id, ...updateData } = arg;
   try {
     const { userId, orgId } = fetchClient();
-    result = await documents.update({ userId, orgId, id, ...updateData });
+    const result = await documents.update({ userId, orgId, id, ...updateData });
     /** Activity Log */
     if (log)
       await createAuditLog(
         { type: "DOCUMENT", entityId: id, title: result.title },
         "UPDATE",
       );
+    revalidatePath(`/documents/${arg.id}`);
+    return result;
   } catch (error) {
-    if (error instanceof UnauthorizedError) return { error: "Unauthorized" };
-    console.log(`ERROR`, error);
-    return { error: "Failed to update document." };
+    if (error instanceof UnauthorizedError) throw error;
+    throw new Error("Failed to archive document.");
   }
-
-  revalidatePath(`/documents/${data.id}`);
-  return { data: result };
 };
 
-export const updateDocument = createSafeAction(UpdateDocument, handler);
+export const updateDocument = createMutationFetcher(UpdateDocument, handler);
+export const updateInternalDocument: MutationFetcher<
+  Document,
+  [string, boolean],
+  UpdateDocumentInput
+> = ([key], data) => updateDocument(key, data);

@@ -10,6 +10,7 @@ export const getDocument: Fetcher<Document, [string, boolean]> = async ([
   documentId,
   preview,
 ]) => {
+  console.log(`[swr] [docId, isArchived]: start fetching`);
   const document = await documents.getById(documentId);
   if (!document) throw new Error("Not found");
   // Published & not archived

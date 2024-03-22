@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { PlusCircle } from "lucide-react";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 import { Button, useTree } from "@acme/ui/components";
-import { useAction } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 
 import { createDocument } from "~/actions";
@@ -13,25 +13,22 @@ import { theme } from "~/constants/theme";
 import { useClient } from "~/hooks";
 
 const Client = () => {
-  const { workspace } = useClient();
+  const { workspace, workspaceId } = useClient();
   /** Action */
   const { dispatch } = useTree();
-  const { execute } = useAction(createDocument, {
+  const { trigger } = useSWRMutation(`doc:${workspaceId}`, createDocument, {
     onSuccess: (data) => {
-      const { id, title, isArchived, parentId, icon } = data;
-      const group = isArchived ? "trash" : "document";
+      const { id, title, parentId, icon, type: group } = data;
       toast.success(`Document created: ${title}`);
       dispatch({
         type: "add",
         payload: [{ id, title, group, parentId, icon }],
       });
     },
-    onError: (e) => toast.error(e),
+    onError: (e: Error) => toast.error(e.message),
   });
   const onSubmit = () =>
-    execute({ title: "Untitled", parentId: undefined })
-      .then(() => console.log(`processing`))
-      .catch((e) => console.log(e));
+    void trigger({ title: "Untitled", parentId: undefined, type: "document" });
 
   return (
     <div

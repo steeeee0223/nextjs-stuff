@@ -23,22 +23,22 @@ import { fetchUrl } from "~/lib";
 
 const SearchCommand = () => {
   /** Auth */
-  const { workspace: name, userId } = useClient();
+  const { workspace: name, userId, workspaceId } = useClient();
   /** Search */
   const { toggle, isOpen, onClose } = useSearch();
-  const { data: documents } = useSWR<Document[], string>(
-    userId ? `/api/documents?archived=${false}` : null,
-    fetchUrl,
-    { onError: (e) => toast.error(e) },
-  );
   /** Select */
-  const {onClickItem} = useTree()
+  const { onClickItem } = useTree();
   const handleSelect = (id: string, group: string | null) => {
-    onClickItem?.(id, group)
+    onClickItem?.(id, group);
     onClose();
   };
   /** Mount */
   const [isMounted, setIsMounted] = useState(false);
+  const { data: documents } = useSWR<Document[], Error>(
+    userId && isMounted ? `doc:${workspaceId}:search` : null,
+    (_key) => fetchUrl(`/api/documents?archived=${false}`),
+    { onError: (e) => toast.error(e.message) },
+  );
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -65,11 +65,11 @@ const SearchCommand = () => {
       <CommandInput placeholder={`Search ${name}'s WorXpace...`} />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Documents">
+        <CommandGroup heading="Pages">
           {documents?.map(({ id, title, icon, type }) => (
             <CommandItem
               key={id}
-              value={id}
+              value={title}
               title={title}
               onSelect={() => handleSelect(id, type)}
               className="mb-1"

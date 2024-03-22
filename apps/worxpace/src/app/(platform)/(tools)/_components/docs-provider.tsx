@@ -2,9 +2,10 @@
 
 import { useEffect, type PropsWithChildren } from "react";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import useSWR from "swr";
 
 import { Document } from "@acme/prisma";
-import { TreeProvider } from "@acme/ui/components";
+import { TreeItem, TreeProvider } from "@acme/ui/components";
 import { useNavControl } from "@acme/ui/hooks";
 
 import { DocHeaderSkeleton, Room } from "~/components";
@@ -58,7 +59,7 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
     if (group === "whiteboard") return params.whiteboardId === id;
     return false;
   };
-  const fetchItems = async () => {
+  const fetchItems = async (): Promise<TreeItem[]> => {
     try {
       const documents: Document[] = await fetchUrl(`/api/documents/`);
       return documents.map((doc) => ({
@@ -69,13 +70,14 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
       throw new Error("Error occurred while fetching documents");
     }
   };
+  const { data, isLoading } = useSWR(`doc:${workspaceId}`, fetchItems);
 
   return (
     <TreeProvider
-      queryKey={workspaceId}
       className="flex h-full dark:bg-[#1F1F1F]"
+      isLoading={isLoading}
+      initialItems={data}
       groups={groups}
-      fetchItems={fetchItems}
       onClickItem={onClickItem}
       isItemActive={isItemActive}
     >

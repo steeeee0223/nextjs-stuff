@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { KanbanProvider } from "@acme/ui/components";
 
-import { delay } from "../tree/utils";
 import { CardModal } from "./_components";
 import { defaultHandlers } from "./utils";
 
@@ -19,10 +18,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     className: "w-[400px]",
-    fetchLists: async () => {
-      await delay(2000);
-      return [];
-    },
+    initialLists: [],
     children: <CardModal />,
     ...defaultHandlers,
   },

@@ -3,45 +3,40 @@
 import { revalidatePath } from "next/cache";
 
 import type { Document } from "@acme/prisma";
-import {
-  createSafeAction,
-  type ActionHandler,
-  type Modified,
-} from "@acme/ui/lib";
+import { type Modified } from "@acme/ui/lib";
 import { DeleteDocument, type DeleteDocumentInput } from "@acme/validators";
 
 import {
   createAuditLog,
+  createMutationFetcher,
   documents,
   fetchClient,
   UnauthorizedError,
+  type Action,
 } from "~/lib";
 
-const handler: ActionHandler<DeleteDocumentInput, Modified<Document>> = async (
-  data,
+const handler: Action<DeleteDocumentInput, Modified<Document>> = async (
+  _key,
+  { arg },
 ) => {
-  let result;
-
   try {
     const { userId, orgId } = fetchClient();
-    result = await documents.restore({ ...data, userId, orgId });
+    const result = await documents.restore({ ...arg, userId, orgId });
     /** Activity Log */
     await createAuditLog(
       {
         title: result.item.title,
-        entityId: data.id,
+        entityId: arg.id,
         type: "DOCUMENT",
       },
       "UPDATE",
     );
+    revalidatePath(`/documents/${arg.id}`);
+    return result;
   } catch (error) {
-    if (error instanceof UnauthorizedError) return { error: "Unauthorized" };
-    console.log(`ERROR`, error);
-    return { error: "Failed to restore document." };
+    if (error instanceof UnauthorizedError) throw error;
+    throw new Error("Failed to archive document.");
   }
-
-  revalidatePath(`/documents/${data.id}`);
-  return { data: result };
 };
 
-export const restoreDocument = createSafeAction(DeleteDocument, handler);
+export const restoreDocument = createMutationFetcher(DeleteDocument, handler);

@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import type { ActionHandler, FieldErrors } from "./types";
 
+/** @deprecated will be replaced by `createMutationFetcher` */
 export const createSafeAction =
   <TInput, TOutput>(
     schema: z.Schema<TInput>,
