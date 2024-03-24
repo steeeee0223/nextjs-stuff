@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { BlockNoteEditor } from "@blocknote/core";
+import type { BlockNoteEditor, PartialBlock } from "@blocknote/core";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import LiveblocksProvider from "@liveblocks/yjs";
 import { useTheme } from "next-themes";
@@ -10,10 +10,18 @@ import * as Y from "yjs";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 
+import { connectionIdToColor } from "~/lib";
 import { useRoom, useSelf } from "~/liveblocks.config";
 
+interface EditorProps {
+  initialContent?: string | null;
+  editable?: boolean;
+  onChange?: (value: string) => void;
+  onUpload?: (file: File) => Promise<string>;
+}
+
 // Collaborative text editor with simple rich text, live cursors, and live avatars
-export default function CollaborativeEditor() {
+export default function CollaborativeEditor(props: EditorProps) {
   const room = useRoom();
   const [doc, setDoc] = useState<Y.Doc>();
   const [provider, setProvider] =
@@ -32,33 +40,39 @@ export default function CollaborativeEditor() {
     };
   }, [room]);
 
-  if (!doc || !provider) {
-    return null;
-  }
-
-  return <BlockNote doc={doc} provider={provider} />;
+  if (!doc || !provider) return null;
+  return <BlockNote doc={doc} provider={provider} {...props} />;
 }
 
-interface EditorProps {
+interface BlockNoteProps extends EditorProps {
   doc: Y.Doc;
   provider: LiveblocksProvider<never, never, never, never>;
 }
 
-function BlockNote({ doc, provider }: EditorProps) {
+function BlockNote({
+  doc,
+  provider,
+  initialContent,
+  editable,
+  onChange,
+  onUpload,
+}: BlockNoteProps) {
   // Get user info from Liveblocks authentication endpoint
-  const userInfo = useSelf((me) => me.info);
+  const userInfo = useSelf();
 
   const editor: BlockNoteEditor = useCreateBlockNote({
+    initialContent: initialContent
+      ? (JSON.parse(initialContent) as PartialBlock[])
+      : undefined,
+    uploadFile: onUpload,
     collaboration: {
       provider,
-
       // Where to store BlockNote data in the Y.Doc:
       fragment: doc.getXmlFragment("document-store"),
-
       // Information for this user:
       user: {
-        name: userInfo?.name ?? "User",
-        color: userInfo?.picture ?? "",
+        name: userInfo.info?.name ?? "User",
+        color: connectionIdToColor(userInfo.connectionId),
       },
     },
   });
@@ -69,6 +83,8 @@ function BlockNote({ doc, provider }: EditorProps) {
     <div>
       <BlockNoteView
         editor={editor}
+        editable={editable}
+        onChange={() => onChange?.(JSON.stringify(editor.document))}
         theme={resolvedTheme === "dark" ? "dark" : "light"}
       />
     </div>
