@@ -43,7 +43,7 @@ const Editor = ({ document, preview }: EditorProps) => {
   };
   /** Block Note Editor */
   const BlockNoteEditor = useMemo(
-    () => dynamic(() => import("~/components/block-editor"), { ssr: false }),
+    () => dynamic(() => import("~/components/collab-editor"), { ssr: false }),
     [],
   );
 
