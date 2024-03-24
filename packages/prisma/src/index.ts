@@ -7,8 +7,6 @@ declare global {
   var worxpaceClient: Worxpace | undefined;
 }
 
-export * from "@prisma/client";
-
 /** Schemas */
 export const auth = globalThis.authClient ?? new Auth();
 export const worxpace = globalThis.worxpaceClient ?? new Worxpace();
@@ -22,9 +20,7 @@ export type {
   Document,
   AuditLog,
   Entity,
-  Board,
   Card,
-  Image,
   Limitation,
   List,
   Subscription,
