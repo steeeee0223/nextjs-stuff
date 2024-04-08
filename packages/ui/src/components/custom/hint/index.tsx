@@ -5,9 +5,11 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui";
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib";
 
 export interface HintProps {
+  className?: string;
   children: ReactNode;
   description: string;
   asChild?: boolean;
@@ -19,6 +21,7 @@ export interface HintProps {
 
 export const Hint = ({
   children,
+  className,
   description,
   asChild,
   side = "bottom",
@@ -35,7 +38,7 @@ export const Hint = ({
           side={side}
           align={align}
           alignOffset={alignOffset}
-          className="max-w-[220px] break-words text-xs"
+          className={cn("max-w-[220px] break-words text-xs", className)}
         >
           {description}
         </TooltipContent>

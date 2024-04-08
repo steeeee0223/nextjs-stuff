@@ -4,6 +4,7 @@ export * from "./cover-picker";
 export * from "./crud-item";
 export * from "./kanban";
 export * from "./hint";
+export * from "./icon-block";
 export * from "./icon-picker";
 export * from "./spinner";
 export * from "./tree";
