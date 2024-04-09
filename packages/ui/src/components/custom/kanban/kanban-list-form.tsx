@@ -8,14 +8,9 @@ import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { v4 as uuidv4 } from "uuid";
 import type * as z from "zod";
 
-import {
-  Button,
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  Input,
-} from "@/components/ui";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import type { KanbanList } from "./index.types";
 import { useKanban } from "./kanban-context";

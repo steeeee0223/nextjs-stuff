@@ -10,7 +10,7 @@ import {
   TreeProvider,
   useTree,
   type TreeProviderProps,
-} from "@acme/ui/components";
+} from "@acme/ui/custom";
 
 import { delay } from "./utils";
 

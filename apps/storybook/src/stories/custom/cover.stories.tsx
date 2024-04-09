@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Cover } from "@acme/ui/components";
+import { Cover } from "@acme/ui/custom";
 
 import image from "@/stories/assets/addon-library.png";
 

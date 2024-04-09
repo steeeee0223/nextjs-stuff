@@ -27,7 +27,7 @@ export function toIconInfo(icon?: Icon | null, defaultIcon?: string): IconInfo {
   }
 }
 
-export function toIcon(info: IconInfo): Omit<Icon, "id"> {
+export function toIcon(info: IconInfo): Icon {
   switch (info.type) {
     case "emoji":
       return { type: info.type, src: info.emoji, color: null };

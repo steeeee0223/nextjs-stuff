@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import dynamicIconImports from "lucide-react/dynamicIconImports";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 import type { IconInfo } from "./index.types";
 
 export interface IconDisplayProps {

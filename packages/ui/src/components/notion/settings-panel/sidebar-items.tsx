@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import type { LucideIcon } from "lucide-react";
 
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 import type { UserState } from "../workspace-provider";
 
 export interface TabProps {

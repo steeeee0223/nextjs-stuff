@@ -9,6 +9,7 @@ export const UpdateDocument = z.object({
       src: z.string(),
       color: z.string().nullable().optional(),
     })
+    .nullable()
     .optional(),
   coverImage: z.string().nullable().optional(),
   title: z.string().optional(),

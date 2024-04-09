@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import { useEventListener } from "usehooks-ts";
 import type * as z from "zod";
 
-import { Form, FormControl, FormField, FormItem, Input } from "@/components/ui";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import type { KanbanList } from "./index.types";
 import { TitleSchema } from "./utils";

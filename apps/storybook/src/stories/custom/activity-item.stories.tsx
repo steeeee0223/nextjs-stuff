@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { ActivityItem } from "@acme/ui/components";
+import { ActivityItem } from "@acme/ui/custom";
 
 const meta = {
   title: "custom/Activity Item",

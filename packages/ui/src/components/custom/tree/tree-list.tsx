@@ -7,7 +7,7 @@ import {
   type CRUDItemProps,
 } from "@/components/custom/crud-item";
 import { type IconInfo } from "@/components/custom/icon-block";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 import { useTree } from "./tree-context";
 
 export interface TreeListProps {

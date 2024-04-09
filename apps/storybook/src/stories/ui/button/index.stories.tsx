@@ -2,7 +2,7 @@ import NextLink from "next/link";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ChevronRight, MailOpen, RefreshCw } from "lucide-react";
 
-import { Button } from "@acme/ui/components";
+import { Button } from "@acme/ui/shadcn";
 
 const meta = {
   title: "Shadcn/Button",

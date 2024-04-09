@@ -12,7 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@acme/ui/components";
+} from "@acme/ui/shadcn";
 
 interface ConfirmModalProps {
   children: ReactNode;

@@ -4,9 +4,9 @@ import Image from "next/image";
 import { ImageIcon, X } from "lucide-react";
 
 import { CoverPicker } from "@/components/custom";
-import type { ButtonProps } from "@/components/ui";
-import { Button, Skeleton } from "@/components/ui";
-import { cn } from "@/lib";
+import { Button, type ButtonProps } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 interface CoverImageProps {
   url: string | null;

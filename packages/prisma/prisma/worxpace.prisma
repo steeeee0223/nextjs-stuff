@@ -108,7 +108,6 @@ enum ICON_TYPE {
 }
 
 type Icon {
-  id    String    @default(uuid())
   type  ICON_TYPE
   src   String
   color String?

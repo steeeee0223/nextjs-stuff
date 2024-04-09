@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Dialog, DialogContent } from "@/components/ui";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { mockUser } from "./mock";
 import SettingsBody from "./settings-body";
 import { account, workspace, type TabType } from "./sidebar-data";

@@ -4,7 +4,11 @@ import type { PropsWithChildren } from "react";
 import EmojiPicker, { Theme } from "emoji-picker-react";
 import { useTheme } from "next-themes";
 
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const THEME_MAP = {
   dark: Theme.DARK,

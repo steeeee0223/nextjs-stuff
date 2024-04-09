@@ -11,7 +11,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@acme/ui/components";
+} from "@acme/ui/shadcn";
 
 export function DropdownMenuRadioGroupDemo() {
   const [position, setPosition] = React.useState("bottom");

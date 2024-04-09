@@ -1,5 +1,6 @@
-import { Avatar, AvatarFallback, AvatarImage, Hint } from "@acme/ui/components";
+import { Hint } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
+import { Avatar, AvatarFallback, AvatarImage } from "@acme/ui/shadcn";
 
 interface UserAvatarProps {
   src?: string;

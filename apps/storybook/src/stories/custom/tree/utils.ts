@@ -1,4 +1,4 @@
-import type { TreeItem } from "@acme/ui/components";
+import type { TreeItem } from "@acme/ui/custom";
 
 export const delay = async (timeout: number) =>
   await new Promise((resolve) => setTimeout(resolve, timeout));

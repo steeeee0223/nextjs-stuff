@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "@acme/ui/components";
+import { Button } from "@acme/ui/shadcn";
 
 import { useClient } from "~/hooks";
 

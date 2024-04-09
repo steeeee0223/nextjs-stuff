@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
-import { Button, ButtonProps } from "@acme/ui/components";
+import { Button, type ButtonProps } from "@acme/ui/shadcn";
 
 import { updateInternalDocument } from "~/actions";
 

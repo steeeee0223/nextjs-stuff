@@ -6,14 +6,14 @@ import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
+import { useOrigin } from "@acme/ui/hooks";
+import { cn } from "@acme/ui/lib";
 import {
   Button,
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@acme/ui/components";
-import { useOrigin } from "@acme/ui/hooks";
-import { cn } from "@acme/ui/lib";
+} from "@acme/ui/shadcn";
 
 import { updateInternalDocument } from "~/actions";
 import { theme } from "~/constants/theme";

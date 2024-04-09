@@ -1,4 +1,4 @@
-import type { UserState, Workspace } from "@acme/ui/components";
+import type { UserState, Workspace } from "@acme/ui/notion";
 
 const createWorkspaceData = (
   name: string,

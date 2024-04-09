@@ -1,6 +1,6 @@
 import type { Reducer } from "react";
 
-import type { Entity } from "@/lib";
+import type { Entity } from "@/lib/types";
 import type { TreeItem } from "./index.types";
 
 export type TreeAction<T> =

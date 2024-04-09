@@ -3,6 +3,7 @@
 import { SignOutButton, useOrganizationList, useUser } from "@clerk/nextjs";
 import { ChevronsLeftRight } from "lucide-react";
 
+import { cn } from "@acme/ui/lib";
 import {
   Avatar,
   AvatarImage,
@@ -11,8 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@acme/ui/components";
-import { cn } from "@acme/ui/lib";
+} from "@acme/ui/shadcn";
 
 import { theme } from "~/constants/theme";
 

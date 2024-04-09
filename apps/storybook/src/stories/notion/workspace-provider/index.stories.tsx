@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { WorkspaceProvider, WorkspaceSwitcher } from "@acme/ui/components";
+import { WorkspaceProvider, WorkspaceSwitcher } from "@acme/ui/notion";
 
 import { user, workspaces } from "./utils";
 

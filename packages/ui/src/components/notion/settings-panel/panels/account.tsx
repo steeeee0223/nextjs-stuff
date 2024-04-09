@@ -1,15 +1,11 @@
 import { ChangeEvent } from "react";
 import { ChevronRight } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Button,
-  Input,
-  Label,
-  Switch,
-} from "@/components/ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { mockUser } from "../mock";
 import { Section, SectionItem, SectionSeparator } from "../section";
 import { myAccount } from "./account.data";

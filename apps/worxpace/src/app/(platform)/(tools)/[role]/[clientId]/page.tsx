@@ -5,9 +5,9 @@ import { PlusCircle } from "lucide-react";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
-import {  useTree } from "@acme/ui/custom";
-import { Button,  } from "@acme/ui/shadcn";
+import { useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
+import { Button } from "@acme/ui/shadcn";
 
 import { createDocument } from "~/actions";
 import { theme } from "~/constants/theme";

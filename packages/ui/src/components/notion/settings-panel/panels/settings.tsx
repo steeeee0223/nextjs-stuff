@@ -1,4 +1,4 @@
-import { Switch } from "@/components/ui";
+import { Switch } from "@/components/ui/switch";
 import { Section, SectionItem, SectionSeparator, Select } from "../section";
 import {
   appearanceOptions,

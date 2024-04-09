@@ -1,4 +1,4 @@
-import type { UserState, Workspace } from "@acme/ui/components";
+import type { UserState, Workspace } from "./workspace-provider";
 
 export const createWorkspaceData = (
   name: string,

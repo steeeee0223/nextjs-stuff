@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { CRUDItem } from "@acme/ui/components";
+import { CRUDItem } from "@acme/ui/custom";
 
 const meta = {
   title: "custom/Crud Item",

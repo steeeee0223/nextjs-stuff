@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { SettingsIcon } from "lucide-react";
 
-import { Button, SettingsPanel, useSettings } from "@acme/ui/components";
+import { SettingsPanel, useSettings } from "@acme/ui/notion";
+import { Button } from "@acme/ui/shadcn";
 
 export const Settings = () => {
   const settings = useSettings();

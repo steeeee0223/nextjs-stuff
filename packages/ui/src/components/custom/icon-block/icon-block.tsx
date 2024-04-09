@@ -15,7 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 import IconDisplay from "./display";
 import { useIconBlock } from "./icon-block-context";
 import type { LucideName } from "./index.types";

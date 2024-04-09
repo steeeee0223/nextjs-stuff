@@ -12,7 +12,7 @@ import { Spinner } from "@/components/custom/spinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { COLOR } from "@/constants/colors";
-import { randomItem } from "@/lib";
+import { randomItem } from "@/lib/utils";
 import ColorPicker from "./color-picker";
 import type { IconTag, LucideName } from "./index.types";
 import { styles } from "./styles";

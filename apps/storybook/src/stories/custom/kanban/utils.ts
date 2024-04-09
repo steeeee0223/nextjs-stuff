@@ -1,6 +1,6 @@
 import { toast } from "sonner";
 
-import type { KanbanHandlers } from "@acme/ui/components";
+import type { KanbanHandlers } from "@acme/ui/custom";
 
 export const defaultHandlers: KanbanHandlers = {
   /** List */
