@@ -12,14 +12,6 @@ datasource db {
   url      = env("DB_WORXPACE")
 }
 
-type Image {
-  imageId  String
-  thumbUrl String
-  fullUrl  String
-  username String
-  linkHTML String
-}
-
 model List {
   id        String   @id @default(uuid()) @map("_id")
   title     String
@@ -109,6 +101,19 @@ model Subscription {
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 }
 
+enum ICON_TYPE {
+  emoji
+  lucide
+  file
+}
+
+type Icon {
+  id    String    @default(uuid())
+  type  ICON_TYPE
+  src   String
+  color String?
+}
+
 model Document {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   type        String
@@ -119,7 +124,7 @@ model Document {
   parentId    String?    @db.ObjectId
   content     String?
   coverImage  String?
-  icon        String?
+  icon        Icon?
   isPublished Boolean
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt

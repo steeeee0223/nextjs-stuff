@@ -3,26 +3,27 @@
 "use client";
 
 import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
-import { ImageIcon, Smile, X } from "lucide-react";
+import { ImageIcon } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
+import { stableHash } from "swr/_internal";
 import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
 import {
-  Button,
   Cover,
   CoverPicker,
-  IconPicker,
-  Skeleton,
+  IconBlock,
   useTree,
-  type ButtonProps,
-} from "@acme/ui/components";
+  type IconInfo,
+} from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
+import { Button, Skeleton, type ButtonProps } from "@acme/ui/shadcn";
 
-import { updateDocument } from "~/actions";
+import { updateInternalDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { useClient, useEdgeStore } from "~/hooks";
+import { useEdgeStore } from "~/hooks";
+import { toIcon, toIconInfo } from "~/lib";
 
 /** Styles */
 const buttonProps: ButtonProps = {
@@ -37,7 +38,6 @@ interface DocHeaderProps {
 }
 
 const DocHeader = ({ document, preview }: DocHeaderProps) => {
-  const { workspaceId } = useClient();
   /** Input */
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -60,56 +60,56 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
   };
   /** Edgestore */
   const { edgestore } = useEdgeStore();
-  const deleteFile = async () => {
+  const deleteFile = async (url: string) => {
     try {
-      if (document.coverImage)
-        await edgestore.publicFiles.delete({
-          url: document.coverImage,
-        });
+      await edgestore.publicFiles.delete({ url });
     } catch {
-      console.log(
-        `[edgestore] file with url not found: ${document.coverImage}`,
-      );
+      console.log(`[edgestore] file with url not found: ${url}`);
     }
   };
   /** Tree Actions */
   const { dispatch } = useTree();
   /** Action - update */
   const { trigger: update } = useSWRMutation(
-    `doc:${workspaceId}`,
-    updateDocument,
+    [document.id, false],
+    updateInternalDocument,
     {
-      onSuccess: ({ id, parentId, icon, title, type }) =>
+      onSuccess: ({ id, parentId, icon, title, type }) => {
+        console.log(`updating icon to tree ->`, icon);
         dispatch({
           type: "update:item",
-          payload: { id, parentId, icon, title, group: type },
-        }),
+          payload: { id, parentId, icon: toIconInfo(icon), title, group: type },
+        });
+      },
       onError: (e: Error) => toast.error(e.message),
+      revalidate: true,
+      populateCache: true,
     },
   );
   const onUpdateTitle = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.currentTarget.value);
     void update({
       id: document.id,
-      title: e.currentTarget.value || "Untitled",
+      title: e.currentTarget.value ?? value,
     });
   };
-  const onIconSelect = (icon: string) => update({ id: document.id, icon });
+  const onIconSelect = (iconInfo: IconInfo) =>
+    void update({ id: document.id, icon: toIcon(iconInfo) });
   const onRemoveIcon = () => update({ id: document.id, icon: null });
   const onUploadCover = async (file: File) => {
     const res = await edgestore.publicFiles.upload({
       file,
       options: { replaceTargetUrl: document.coverImage ?? undefined },
     });
-    console.log(`uploaded to edgestore: ${res.url}`);
     await update({ id: document.id, coverImage: res.url });
+    console.log(`uploaded to edgestore: ${res.url}`);
   };
   const onUnsplashCover = async (url: string) => {
-    await deleteFile();
+    if (document.coverImage) await deleteFile(document.coverImage);
     await update({ id: document.id, coverImage: url });
   };
   const onRemoveCover = async () => {
-    await deleteFile();
+    if (document.coverImage) await deleteFile(document.coverImage);
     await update({ id: document.id, coverImage: null });
   };
 
@@ -124,40 +124,21 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
       />
       <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
         <div className="group relative pl-[54px]">
-          {!!document.icon && !preview && (
-            <div className={cn(theme.flex.gap2, "group/icon pt-6")}>
-              <IconPicker onChange={onIconSelect}>
-                <p className="text-6xl transition hover:opacity-75">
-                  {document.icon}
-                </p>
-              </IconPicker>
-              <Button
-                onClick={onRemoveIcon}
-                className="rounded-full text-xs text-muted-foreground opacity-0 transition group-hover/icon:opacity-100"
-                variant="outline"
-                size="icon"
-              >
-                <X className={theme.size.icon} />
-              </Button>
-            </div>
-          )}
-          {!!document.icon && preview && (
-            <p className="pt-6 text-6xl">{document.icon}</p>
-          )}
+          <IconBlock
+            key={stableHash(document.icon)}
+            defaultIcon={toIconInfo(document.icon)}
+            editable={!preview}
+            size="lg"
+            onRemove={onRemoveIcon}
+            onSelect={onIconSelect}
+            // onUpload={}
+          />
           <div
             className={cn(
               theme.flex.gap1,
               "py-4 opacity-0 group-hover:opacity-100",
             )}
           >
-            {!document.icon && !preview && (
-              <IconPicker asChild onChange={onIconSelect}>
-                <Button {...buttonProps}>
-                  <Smile className={cn(theme.size.icon, "mr-2")} />
-                  Add icon
-                </Button>
-              </IconPicker>
-            )}
             {!document.coverImage && !preview && (
               <CoverPicker
                 asChild

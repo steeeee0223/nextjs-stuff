@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { Check, Copy, Globe } from "lucide-react";
 import { toast } from "sonner";
-import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
+import type { Document } from "@acme/prisma";
 import {
   Button,
   Popover,
@@ -17,22 +17,17 @@ import { cn } from "@acme/ui/lib";
 
 import { updateInternalDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { getDocument } from "../../_functions";
 
 interface PublishProps {
-  documentId: string;
+  page: Document;
 }
 
-const Publish = ({ documentId }: PublishProps) => {
-  const onError = (e: Error) => toast(e.message);
-  const { data: document } = useSWR([documentId, false], getDocument, {
-    onError,
-  });
-  const [isPublished, setIsPublished] = useState(document?.isPublished);
+const Publish = ({ page }: PublishProps) => {
+  const [isPublished, setIsPublished] = useState(page.isPublished);
 
   /** Url */
   const origin = useOrigin();
-  const url = `${origin}/preview/d/${documentId}`;
+  const url = `${origin}/preview/d/${page.id}`;
   /** Copy */
   const [copied, setCopied] = useState(false);
   const onCopy = async () => {
@@ -43,7 +38,7 @@ const Publish = ({ documentId }: PublishProps) => {
   /** Actions - Publish & Unpublish */
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { trigger: update } = useSWRMutation(
-    [documentId, false],
+    [page.id, false],
     updateInternalDocument,
     {
       onSuccess: (data) => {
@@ -53,22 +48,18 @@ const Publish = ({ documentId }: PublishProps) => {
           ? toast.success(`Published Document: "${data.title}"`)
           : toast.success(`Unpublished Document: "${data.title}"`);
       },
-      onError,
+      onError: (e: Error) => toast(e.message),
     },
   );
   const handlePublish = () => {
     setIsSubmitting(true);
-    void update({ id: documentId, isPublished: !isPublished, log: true });
+    void update({ id: page.id, isPublished: !isPublished, log: true });
   };
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          size="sm"
-          variant="ghost"
-          disabled={document?.type !== "document"}
-        >
+        <Button size="sm" variant="ghost" disabled={page.type !== "document"}>
           Publish
           {isPublished && (
             <Globe className={cn(theme.size.icon, "ml-2 text-sky-500")} />
@@ -126,7 +117,7 @@ const Publish = ({ documentId }: PublishProps) => {
               Share your work with others.
             </span>
             <Button
-              disabled={isSubmitting || document?.isArchived}
+              disabled={isSubmitting || page.isArchived}
               onClick={handlePublish}
               className="w-full text-xs"
               size="sm"

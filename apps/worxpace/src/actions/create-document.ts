@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { v4 as uuidv4 } from "uuid";
 
 import { type Document } from "@acme/prisma";
 import { CreateDocument, type CreateDocumentInput } from "@acme/validators";
@@ -10,6 +11,8 @@ import {
   createMutationFetcher,
   documents,
   fetchClient,
+  generateDefaultIcon,
+  toIcon,
   UnauthorizedError,
   type Action,
 } from "~/lib";
@@ -20,7 +23,8 @@ const handler: Action<CreateDocumentInput, Document> = async (
 ) => {
   try {
     const { userId, orgId, path } = fetchClient();
-    const result = await documents.create({ ...arg, userId, orgId });
+    const icon = { id: uuidv4(), ...toIcon(generateDefaultIcon(arg.type)) };
+    const result = await documents.create({ ...arg, icon, userId, orgId });
     /** Activity Log */
     await createAuditLog(
       { title: result.title, entityId: result.id, type: "DOCUMENT" },

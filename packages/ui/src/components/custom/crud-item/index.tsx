@@ -10,6 +10,7 @@ import {
   Plus,
   Trash,
 } from "lucide-react";
+import stableHash from "stable-hash";
 
 import { IconBlock, type IconInfo } from "@/components/custom/icon-block";
 import {
@@ -18,10 +19,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  Skeleton,
-} from "@/components/ui";
+} from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { SPECIAL_KEYS } from "@/constants/keyboard";
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 
 /** Styles */
 const bgHover = "hover:bg-neutral-300 dark:hover:bg-neutral-600";
@@ -93,7 +94,7 @@ export const CRUDItem = ({
           />
         </div>
       )}
-      <IconBlock key={id} defaultIcon={icon} size="sm" editable={false} />
+      <IconBlock key={stableHash(icon)} defaultIcon={icon} editable={false} />
       <span className="ml-1 truncate">{label}</span>
       {shortcut && (
         <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">

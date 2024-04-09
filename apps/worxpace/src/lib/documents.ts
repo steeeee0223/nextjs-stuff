@@ -18,7 +18,7 @@ const UPDATE: Record<Action, Partial<Document>> = {
 };
 
 export const create = async (
-  data: CreateDocumentInput & User,
+  data: CreateDocumentInput & User & Pick<Document, "icon">,
 ): Promise<Document> =>
   await db.document.create({
     data: { ...data, isArchived: false, isPublished: false },

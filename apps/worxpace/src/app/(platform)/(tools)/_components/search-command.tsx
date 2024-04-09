@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { File } from "lucide-react";
 import { toast } from "sonner";
 import useSWR from "swr";
+import { stableHash } from "swr/_internal";
 
 import { type Document } from "@acme/prisma";
+import { IconBlock, useTree } from "@acme/ui/custom";
 import {
   CommandDialog,
   CommandEmpty,
@@ -13,13 +14,10 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  useTree,
-} from "@acme/ui/components";
-import { cn } from "@acme/ui/lib";
+} from "@acme/ui/shadcn";
 
-import { theme } from "~/constants/theme";
 import { useClient, useSearch } from "~/hooks";
-import { fetchUrl } from "~/lib";
+import { fetchUrl, toIconInfo } from "~/lib";
 
 const SearchCommand = () => {
   /** Auth */
@@ -74,12 +72,12 @@ const SearchCommand = () => {
               onSelect={() => handleSelect(id, type)}
               className="mb-1"
             >
-              {icon ? (
-                <p className="mr-2 text-[18px]">{icon}</p>
-              ) : (
-                <File className={cn(theme.size.icon, "mr-2")} />
-              )}
-              <span>{title}</span>
+              <IconBlock
+                key={stableHash(icon)}
+                defaultIcon={toIconInfo(icon, type)}
+                editable={false}
+              />
+              <span className="ml-2">{title}</span>
             </CommandItem>
           ))}
         </CommandGroup>

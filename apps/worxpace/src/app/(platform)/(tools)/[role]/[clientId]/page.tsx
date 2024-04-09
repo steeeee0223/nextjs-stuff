@@ -5,12 +5,14 @@ import { PlusCircle } from "lucide-react";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
-import { Button, useTree } from "@acme/ui/components";
+import {  useTree } from "@acme/ui/custom";
+import { Button,  } from "@acme/ui/shadcn";
 import { cn } from "@acme/ui/lib";
 
 import { createDocument } from "~/actions";
 import { theme } from "~/constants/theme";
 import { useClient } from "~/hooks";
+import { toIconInfo } from "~/lib";
 
 const Client = () => {
   const { workspace, workspaceId } = useClient();
@@ -22,7 +24,7 @@ const Client = () => {
       toast.success(`Document created: ${title}`);
       dispatch({
         type: "add",
-        payload: [{ id, title, group, parentId, icon }],
+        payload: [{ id, title, group, parentId, icon: toIconInfo(icon) }],
       });
     },
     onError: (e: Error) => toast.error(e.message),

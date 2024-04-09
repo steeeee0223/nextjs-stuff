@@ -11,7 +11,6 @@ import useSWRMutation from "swr/mutation";
 import type { Document } from "@acme/prisma";
 import { Button, ButtonProps } from "@acme/ui/components";
 
-
 import { updateInternalDocument } from "~/actions";
 
 interface CanvasProps {
@@ -37,10 +36,14 @@ const Canvas = ({ board: { id, content } }: CanvasProps) => {
     readonly ExcalidrawElement[]
   >(content ? (JSON.parse(content) as readonly ExcalidrawElement[]) : []);
 
-  const { trigger: update } = useSWRMutation([id ,false], updateInternalDocument, {
-    onSuccess: ({ title }) => toast.success(`Updated whiteboard "${title}"`),
-    onError: (e:Error) => toast.error(e.message),
-  });
+  const { trigger: update } = useSWRMutation(
+    [id, false],
+    updateInternalDocument,
+    {
+      onSuccess: ({ title }) => toast.success(`Updated whiteboard "${title}"`),
+      onError: (e: Error) => toast.error(e.message),
+    },
+  );
   const handleSave = () =>
     void update({ id, content: JSON.stringify(whiteBoardData) });
 

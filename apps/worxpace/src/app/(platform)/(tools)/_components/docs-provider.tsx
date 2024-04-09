@@ -2,24 +2,23 @@
 
 import { useEffect, type PropsWithChildren } from "react";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import useSWR from "swr";
 
-import { Document } from "@acme/prisma";
-import { TreeItem, TreeProvider } from "@acme/ui/components";
+import { TreeProvider } from "@acme/ui/custom";
 import { useNavControl } from "@acme/ui/hooks";
 
 import { DocHeaderSkeleton, Room } from "~/components";
-import { useClient } from "~/hooks";
-import { fetchUrl } from "~/lib";
-import Navbar from "./navbar";
+import Navbar, { NavbarSkeleton } from "./navbar";
 import SearchCommand from "./search-command";
 import { Sidebar } from "./sidebar";
 
 const DocsProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter();
-  const params = useParams();
   const pathname = usePathname();
-  const { workspaceId } = useClient();
+  const params = useParams<{
+    documentId?: string;
+    boardId?: string;
+    whiteboardId?: string;
+  }>();
   /** Sidebar & Navbar */
   const {
     isMobile,
@@ -40,6 +39,8 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
     if (isMobile) collapse();
   }, [pathname, isMobile]);
   /** Docs */
+  const pageId =
+    params.documentId ?? params.boardId ?? params.whiteboardId ?? null;
   const groups = [
     "document",
     "kanban",
@@ -59,24 +60,10 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
     if (group === "whiteboard") return params.whiteboardId === id;
     return false;
   };
-  const fetchItems = async (): Promise<TreeItem[]> => {
-    try {
-      const documents: Document[] = await fetchUrl(`/api/documents/`);
-      return documents.map((doc) => ({
-        ...doc,
-        group: doc.isArchived ? `trash:${doc.type}` : doc.type,
-      }));
-    } catch {
-      throw new Error("Error occurred while fetching documents");
-    }
-  };
-  const { data, isLoading } = useSWR(`doc:${workspaceId}`, fetchItems);
 
   return (
     <TreeProvider
       className="flex h-full dark:bg-[#1F1F1F]"
-      isLoading={isLoading}
-      initialItems={data}
       groups={groups}
       onClickItem={onClickItem}
       isItemActive={isItemActive}
@@ -89,8 +76,9 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
         resetWidth={resetWidth}
         collapse={collapse}
       />
-      <RoomWrapper>
+      <Room roomId={pageId} fallback={<Skeleton />}>
         <Navbar
+          pageId={pageId}
           ref={navbarRef}
           isCollapsed={isCollapsed}
           isResetting={isResetting}
@@ -101,32 +89,18 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
           <SearchCommand />
           {children}
         </main>
-      </RoomWrapper>
+      </Room>
     </TreeProvider>
   );
 };
 
 export default DocsProvider;
 
-const RoomWrapper = ({ children }: PropsWithChildren) => {
-  const params = useParams();
-  const roomId =
-    (params.documentId as string) ??
-    (params.boardId as string) ??
-    (params.whiteboardId as string) ??
-    null;
-  if (!roomId) return <>{children}</>;
-  return (
-    <Room roomId={roomId} fallback={<Skeleton />}>
-      {children}
-    </Room>
-  );
-};
-
 const Skeleton = () => {
   return (
     <div className="absolute left-60 top-0 z-[99999] w-full">
       <div className="w-full bg-background dark:bg-[#1F1F1F]" />
+      <NavbarSkeleton />
       <main className="h-full flex-1 overflow-y-auto">
         <DocHeaderSkeleton />
       </main>
