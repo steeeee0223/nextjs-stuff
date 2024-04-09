@@ -1,7 +1,7 @@
 import { type PropsWithChildren } from "react";
 
-import { Separator } from "@/components/ui";
-import { cn } from "@/lib";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 interface SectionProps extends PropsWithChildren {
   title: string;

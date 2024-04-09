@@ -9,7 +9,7 @@ import {
   KanbanProvider,
   type KanbanHandlers,
   type KanbanList,
-} from "@acme/ui/components";
+} from "@acme/ui/custom";
 
 import {
   copyCard,

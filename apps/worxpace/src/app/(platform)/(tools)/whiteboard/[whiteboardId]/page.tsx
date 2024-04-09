@@ -1,12 +1,9 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import useSWR from "swr";
 
-import type { Document } from "@acme/prisma";
-
-import { getDocument } from "~/app/(platform)/_functions";
 import { DocHeaderSkeleton } from "~/components";
+import { usePage } from "~/hooks";
 import Error from "../../error";
 import Canvas from "./_components/canvas";
 
@@ -15,13 +12,7 @@ interface Params {
 }
 
 const WhiteboardPage = ({ params: { whiteboardId } }: Params) => {
-  const {
-    data: board,
-    isLoading,
-    error,
-  } = useSWR<Document, Error>([whiteboardId, false], getDocument, {
-    onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
-  });
+  const { page: board, isLoading, error } = usePage(whiteboardId, false);
 
   if (error) {
     switch (error.message) {

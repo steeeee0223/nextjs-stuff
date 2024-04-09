@@ -6,7 +6,7 @@ import {
   DialogHeader,
   Label,
   ThemeToggle,
-} from "@acme/ui/components";
+} from "@acme/ui/shadcn";
 
 import { useSettings } from "~/hooks";
 

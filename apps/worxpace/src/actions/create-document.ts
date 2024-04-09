@@ -10,6 +10,8 @@ import {
   createMutationFetcher,
   documents,
   fetchClient,
+  generateDefaultIcon,
+  toIcon,
   UnauthorizedError,
   type Action,
 } from "~/lib";
@@ -20,7 +22,8 @@ const handler: Action<CreateDocumentInput, Document> = async (
 ) => {
   try {
     const { userId, orgId, path } = fetchClient();
-    const result = await documents.create({ ...arg, userId, orgId });
+    const icon = toIcon(generateDefaultIcon(arg.type));
+    const result = await documents.create({ ...arg, icon, userId, orgId });
     /** Activity Log */
     await createAuditLog(
       { title: result.title, entityId: result.id, type: "DOCUMENT" },

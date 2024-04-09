@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { SettingsPanel } from "@acme/ui/components";
+import { SettingsPanel } from "@acme/ui/notion";
 
 import { Settings } from "./settings";
 

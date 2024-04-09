@@ -4,7 +4,7 @@ import { useEffect, useMemo, type PropsWithChildren } from "react";
 import { useParams } from "next/navigation";
 import { useOrganizationList, useUser } from "@clerk/nextjs";
 
-import { Workspace, WorkspaceProvider } from "@acme/ui/components";
+import { Workspace, WorkspaceProvider } from "@acme/ui/notion";
 
 import { useClient } from "~/hooks";
 

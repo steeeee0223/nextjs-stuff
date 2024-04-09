@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
   type SelectContentProps,
-} from "@/components/ui";
+} from "@/components/ui/select";
 
 export interface Option {
   label: string;

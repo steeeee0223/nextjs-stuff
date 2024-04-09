@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { SingleImageDropzone } from "@acme/ui/components";
+import { SingleImageDropzone } from "@acme/ui/dnd";
 
 const meta = {
   title: "dnd/Single Image Dropzone",

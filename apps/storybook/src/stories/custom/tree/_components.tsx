@@ -1,7 +1,18 @@
-import { PlusCircle } from "lucide-react";
+"use client";
+
+import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 import { v4 as uuidv4 } from "uuid";
 
-import { CRUDItem, TreeList, useTree } from "@acme/ui/components";
+import {
+  CRUDItem,
+  TreeList,
+  TreeProvider,
+  useTree,
+  type TreeProviderProps,
+} from "@acme/ui/custom";
+
+import { delay } from "./utils";
 
 export const AddItem = ({ group }: { group?: string }) => {
   const { dispatch } = useTree();
@@ -18,7 +29,13 @@ export const AddItem = ({ group }: { group?: string }) => {
       ],
     });
 
-  return <CRUDItem label="New page" icon={PlusCircle} onClick={handleCreate} />;
+  return (
+    <CRUDItem
+      label="New page"
+      icon={{ type: "lucide", name: "circle-plus" }}
+      onClick={handleCreate}
+    />
+  );
 };
 
 export const TreeItems = ({
@@ -70,5 +87,40 @@ export const TreeItems = ({
         />
       )}
     </div>
+  );
+};
+
+const AddWithSWR = () => {
+  const { dispatch } = useTree();
+  const { trigger } = useSWRMutation(
+    `ui:tree`,
+    async () => {
+      await delay(1000);
+      return { id: uuidv4(), title: "Untitled", group: null, parentId: null };
+    },
+    {
+      onSuccess: (data) => dispatch({ type: "add", payload: [data] }),
+    },
+  );
+  return (
+    <CRUDItem
+      label="New page"
+      icon={{ type: "lucide", name: "circle-plus" }}
+      onClick={trigger}
+    />
+  );
+};
+
+export const Provider = ({ children, className }: TreeProviderProps) => {
+  const { data, isLoading } = useSWR(`ui:tree`, () => []);
+  return (
+    <TreeProvider
+      className={className}
+      isLoading={isLoading}
+      initialItems={data}
+    >
+      <AddWithSWR />
+      {children}
+    </TreeProvider>
   );
 };

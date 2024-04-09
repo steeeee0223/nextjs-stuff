@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
-import { Button, useTree } from "@acme/ui/components";
+import { useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
+import { Button } from "@acme/ui/shadcn";
 
 import { deleteDocument, restoreDocument } from "~/actions";
 import { ConfirmModal } from "~/components/modal";
@@ -44,7 +45,6 @@ const Banner = ({ documentId }: BannerProps) => {
     deleteDocument,
     {
       onSuccess: (data) => {
-        dispatch({ type: "delete", payload: data.ids });
         toast.success(`Deleted document "${data.item.title}"`);
         if (documentId === data.item.id) router.push(path);
       },

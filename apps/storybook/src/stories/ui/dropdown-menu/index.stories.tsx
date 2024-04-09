@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { DropdownMenu } from "@acme/ui/components";
+import { DropdownMenu } from "@acme/ui/shadcn";
 
 import { DropdownMenuCheckboxes } from "./checkboxes";
 import { DropdownMenuDemo } from "./default";

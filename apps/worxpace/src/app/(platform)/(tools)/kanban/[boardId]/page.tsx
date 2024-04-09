@@ -1,12 +1,9 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import useSWR from "swr";
 
-import type { Document } from "@acme/prisma";
-
-import { getDocument } from "~/app/(platform)/_functions";
 import { DocHeader, DocHeaderSkeleton } from "~/components";
+import { usePage } from "~/hooks";
 import Error from "../../error";
 import KanbanBoard from "./_component/kanban-board";
 
@@ -15,13 +12,7 @@ interface Params {
 }
 
 const KanbanPage = ({ params: { boardId } }: Params) => {
-  const {
-    data: board,
-    isLoading,
-    error,
-  } = useSWR<Document, Error>([boardId, false], getDocument, {
-    onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
-  });
+  const { page: board, isLoading, error } = usePage(boardId, false);
 
   if (error) {
     switch (error.message) {

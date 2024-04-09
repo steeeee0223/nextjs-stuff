@@ -1,12 +1,9 @@
 "use client";
 
 import { redirect } from "next/navigation";
-import useSWR from "swr";
 
-import type { Document } from "@acme/prisma";
-
-import { getDocument } from "~/app/(platform)/_functions";
 import { DocHeader, DocHeaderSkeleton } from "~/components";
+import { usePage } from "~/hooks";
 import Error from "../../error";
 import Editor from "./_component/editor";
 
@@ -15,13 +12,7 @@ interface Params {
 }
 
 const DocumentPage = ({ params: { documentId } }: Params) => {
-  const {
-    data: document,
-    isLoading,
-    error,
-  } = useSWR<Document, Error>([documentId, false], getDocument, {
-    onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
-  });
+  const { page: document, isLoading, error } = usePage(documentId, false);
 
   if (error) {
     switch (error.message) {

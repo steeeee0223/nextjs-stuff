@@ -21,6 +21,7 @@ export type {
   AuditLog,
   Entity,
   Card,
+  Icon,
   Limitation,
   List,
   Subscription,

@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
-import { useTree } from "@acme/ui/components";
 
 import { updateInternalDocument } from "~/actions";
 import { useEdgeStore } from "~/hooks";
@@ -19,18 +18,11 @@ interface EditorProps {
 const Editor = ({ document, preview }: EditorProps) => {
   /** Edgestore */
   const { edgestore } = useEdgeStore();
-  /** Tree Actions */
-  const { dispatch } = useTree();
   /** Action - update */
   const { trigger: update } = useSWRMutation(
     [document.id, false],
     updateInternalDocument,
     {
-      onSuccess: ({ id, parentId, icon, title }) =>
-        dispatch({
-          type: "update:item",
-          payload: { id, parentId, icon, title, group: "document" },
-        }),
       onError: (e: Error) => toast.error(e.message),
     },
   );

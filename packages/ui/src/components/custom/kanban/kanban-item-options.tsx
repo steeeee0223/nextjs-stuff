@@ -3,15 +3,14 @@
 import { useRef } from "react";
 import { MoreHorizontal, X } from "lucide-react";
 
-import type { ButtonProps } from "@/components/ui";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import {
-  Button,
   Popover,
   PopoverClose,
   PopoverContent,
   PopoverTrigger,
-  Separator,
-} from "@/components/ui";
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
 interface KanbanItemOptionsProps {

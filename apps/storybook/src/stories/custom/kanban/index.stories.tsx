@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { KanbanProvider } from "@acme/ui/components";
+import { KanbanProvider } from "@acme/ui/custom";
 
 import { CardModal } from "./_components";
 import { defaultHandlers } from "./utils";

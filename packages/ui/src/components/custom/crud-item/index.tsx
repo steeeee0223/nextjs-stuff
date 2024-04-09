@@ -3,7 +3,6 @@
 "use client";
 
 import type { MouseEvent } from "react";
-import type { LucideIcon } from "lucide-react";
 import {
   ChevronDown,
   ChevronRight,
@@ -11,18 +10,19 @@ import {
   Plus,
   Trash,
 } from "lucide-react";
+import stableHash from "stable-hash";
 
+import { IconBlock, type IconInfo } from "@/components/custom/icon-block";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  Skeleton,
-} from "@/components/ui";
+} from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { SPECIAL_KEYS } from "@/constants/keyboard";
-import { cn } from "@/lib";
-import { CRUDItemIcon } from "./crud-item-icon";
+import { cn } from "@/lib/utils";
 
 /** Styles */
 const bgHover = "hover:bg-neutral-300 dark:hover:bg-neutral-600";
@@ -31,7 +31,7 @@ const iconSize = "h-4 w-4";
 export interface CRUDItemProps {
   username?: string;
   label: string;
-  icon?: LucideIcon | string | null;
+  icon?: IconInfo;
   id?: string;
   active?: boolean;
   expanded?: boolean;
@@ -47,7 +47,7 @@ export const CRUDItem = ({
   id,
   username = "admin",
   label,
-  icon,
+  icon = { type: "lucide", name: "file" },
   active,
   level = 0,
   expanded,
@@ -86,7 +86,7 @@ export const CRUDItem = ({
       {!!id && (
         <div
           role="button"
-          className={cn(bgHover, "mr-1 h-full rounded-sm p-0.5")}
+          className={cn(bgHover, "h-full rounded-sm p-0.5")}
           onClick={handleExpand}
         >
           <ExpandIcon
@@ -94,8 +94,8 @@ export const CRUDItem = ({
           />
         </div>
       )}
-      <CRUDItemIcon icon={icon} className="mr-2" />
-      <span className="truncate">{label}</span>
+      <IconBlock key={stableHash(icon)} defaultIcon={icon} editable={false} />
+      <span className="ml-1 truncate">{label}</span>
       {shortcut && (
         <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
           {Array.from(shortcut).map((key, i) => (
@@ -106,7 +106,7 @@ export const CRUDItem = ({
         </kbd>
       )}
       {!!id && (
-        <div className="ml-auto flex items-center gap-x-1 p-0.5">
+        <div className="ml-auto flex items-center p-0.5">
           <DropdownMenu>
             <DropdownMenuTrigger onClick={(e) => e.stopPropagation()} asChild>
               <div
@@ -166,5 +166,3 @@ CRUDItem.Skeleton = function ItemSkeleton({ level }: { level?: number }) {
     </div>
   );
 };
-
-export * from "./crud-item-icon";

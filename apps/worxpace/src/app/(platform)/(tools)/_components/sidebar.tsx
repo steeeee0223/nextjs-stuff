@@ -6,31 +6,19 @@
 import { forwardRef, type ForwardedRef, type MouseEventHandler } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth, useOrganizationList } from "@clerk/nextjs";
-import {
-  ChevronsLeft,
-  Columns3,
-  PlusCircle,
-  Presentation,
-  Search,
-  Settings,
-  Trash,
-} from "lucide-react";
+import { ChevronsLeft } from "lucide-react";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
-import {
-  CRUDItem as Item,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  useTree,
-  WorkspaceSwitcher,
-} from "@acme/ui/components";
+import { CRUDItem as Item, useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
+import { WorkspaceSwitcher } from "@acme/ui/notion";
+import { Popover, PopoverContent, PopoverTrigger } from "@acme/ui/shadcn";
 
 import { archiveDocument, createDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { useClient, useSearch, useSettings } from "~/hooks";
+import { useClient, usePages, useSearch, useSettings } from "~/hooks";
+import { toIconInfo } from "~/lib";
 import DocList from "./doc-list";
 import TrashBox from "./trash-box";
 
@@ -73,6 +61,9 @@ export const Sidebar = forwardRef(function Sidebar(
   /** Docs */
   const { dispatch, onClickItem } = useTree();
   const onError = (e: Error) => toast.error(e.message);
+  const { isLoading } = usePages(workspaceId, (data) =>
+    dispatch({ type: "set", payload: data }),
+  );
   /** Action: Create */
   const { trigger: create } = useSWRMutation(
     `doc:${workspaceId}`,
@@ -82,7 +73,7 @@ export const Sidebar = forwardRef(function Sidebar(
         const { id, title, parentId, icon, type: group } = data;
         dispatch({
           type: "add",
-          payload: [{ id, title, parentId, icon, group }],
+          payload: [{ id, title, parentId, icon: toIconInfo(icon), group }],
         });
         toast.success(`Page Created: ${title}`);
         onClickItem?.(id, group);
@@ -131,24 +122,25 @@ export const Sidebar = forwardRef(function Sidebar(
         <WorkspaceSwitcher onLogout={handleLogout} onSelect={handleSelect} />
         <Item
           label="Search"
-          icon={Search}
+          icon={{ type: "lucide", name: "search" }}
           onClick={search.onOpen}
           shortcut="⌘K"
         />
         <Item
           label="Settings"
-          icon={Settings}
+          icon={{ type: "lucide", name: "settings" }}
           onClick={settings.onOpen}
           shortcut="⌘,"
         />
         <Item
           label="New page"
-          icon={PlusCircle}
+          icon={{ type: "lucide", name: "circle-plus" }}
           onClick={() => create({ type: "document", title: "Untitled" })}
         />
       </div>
       <div className="mt-4 flex flex-col gap-y-4">
         <DocList
+          isLoading={isLoading}
           group="document"
           title="Document"
           onCreate={(parentId) =>
@@ -157,9 +149,10 @@ export const Sidebar = forwardRef(function Sidebar(
           onArchive={(id) => archive({ id })}
         />
         <DocList
+          isLoading={isLoading}
           group="kanban"
           title="Kanban"
-          defaultIcon={Columns3}
+          defaultIcon={{ type: "lucide", name: "columns-3" }}
           showEmptyChild={false}
           onCreate={(parentId) =>
             create({ type: "kanban", title: "Untitled", parentId })
@@ -167,9 +160,10 @@ export const Sidebar = forwardRef(function Sidebar(
           onArchive={(id) => archive({ id })}
         />
         <DocList
+          isLoading={isLoading}
           group="whiteboard"
           title="Whiteboard"
-          defaultIcon={Presentation}
+          defaultIcon={{ type: "lucide", name: "presentation" }}
           showEmptyChild={false}
           onCreate={(parentId) =>
             create({ type: "whiteboard", title: "Untitled", parentId })
@@ -178,7 +172,7 @@ export const Sidebar = forwardRef(function Sidebar(
         />
         <Popover>
           <PopoverTrigger className="mt-4 w-full">
-            <Item label="Trash" icon={Trash} />
+            <Item label="Trash" icon={{ type: "lucide", name: "trash" }} />
           </PopoverTrigger>
           <PopoverContent
             className="z-[99999] w-72 p-0"

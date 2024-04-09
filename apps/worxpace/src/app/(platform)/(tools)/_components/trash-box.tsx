@@ -6,10 +6,12 @@ import { MouseEvent, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Trash, Undo } from "lucide-react";
 import { toast } from "sonner";
+import { stableHash } from "swr/_internal";
 import useSWRMutation from "swr/mutation";
 
-import { Input, Spinner, useTree } from "@acme/ui/components";
+import { IconBlock, Spinner, useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
+import { Input } from "@acme/ui/shadcn";
 
 import { deleteDocument, restoreDocument } from "~/actions";
 import { ConfirmModal } from "~/components";
@@ -89,7 +91,7 @@ const TrashBox = () => {
         <p className="hidden pb-2 text-center text-xs text-muted-foreground last:block">
           No documents found.
         </p>
-        {filteredDocuments?.map(({ id, title, group }) => (
+        {filteredDocuments?.map(({ id, title, group, icon }) => (
           <div
             key={id}
             role="button"
@@ -99,7 +101,14 @@ const TrashBox = () => {
               "w-full justify-between rounded-sm text-sm text-primary hover:bg-primary/5",
             )}
           >
-            <span className="truncate pl-2">{title}</span>
+            <div className={cn(theme.flex.gap1, "pl-2")}>
+              <IconBlock
+                key={stableHash(icon)}
+                defaultIcon={icon ?? { type: "emoji", emoji: " " }}
+                editable={false}
+              />
+              <span className="truncate">{title}</span>
+            </div>
             <div className={cn(theme.flex.gap1, "p-1")}>
               <div
                 onClick={(e) => onRestore(e, id)}

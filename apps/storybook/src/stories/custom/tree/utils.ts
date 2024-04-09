@@ -1,6 +1,4 @@
-import { FolderIcon, Settings } from "lucide-react";
-
-import type { TreeItem } from "@acme/ui/components";
+import type { TreeItem } from "@acme/ui/custom";
 
 export const delay = async (timeout: number) =>
   await new Promise((resolve) => setTimeout(resolve, timeout));
@@ -11,7 +9,7 @@ export const folderSystemItems: TreeItem[] = [
     id: "test-id-1",
     title: "app",
     parentId: null,
-    icon: FolderIcon,
+    icon: { type: "lucide", name: "folder" },
   },
   {
     group: null,
@@ -36,7 +34,7 @@ export const folderSystemItems: TreeItem[] = [
     id: "test-id-5",
     title: "docs",
     parentId: "test-id-1",
-    icon: FolderIcon,
+    icon: { type: "lucide", name: "folder" },
   },
   {
     group: null,
@@ -64,7 +62,7 @@ export const groupFolderItems: TreeItem[] = [
     id: "test-id-1",
     title: "app",
     parentId: null,
-    icon: FolderIcon,
+    icon: { type: "lucide", name: "folder" },
   },
   {
     group: "main",
@@ -89,7 +87,7 @@ export const groupFolderItems: TreeItem[] = [
     id: "test-id-5",
     title: "docs",
     parentId: "test-id-1",
-    icon: FolderIcon,
+    icon: { type: "lucide", name: "folder" },
   },
   {
     group: "main",
@@ -102,13 +100,13 @@ export const groupFolderItems: TreeItem[] = [
     id: "test-id-7",
     title: "package.json",
     parentId: null,
-    icon: Settings,
+    icon: { type: "lucide", name: "settings" },
   },
   {
     group: "config",
     id: "test-id-8",
     title: "tsconfig.json",
     parentId: null,
-    icon: Settings,
+    icon: { type: "lucide", name: "settings" },
   },
 ];

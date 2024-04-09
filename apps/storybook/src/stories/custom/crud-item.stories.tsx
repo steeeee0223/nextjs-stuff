@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Folder, PlusCircle, SearchIcon, SettingsIcon } from "lucide-react";
 
-import { CRUDItem } from "@acme/ui/components";
+import { CRUDItem } from "@acme/ui/custom";
 
 const meta = {
   title: "custom/Crud Item",
@@ -24,14 +23,14 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     label: "New Page",
-    icon: PlusCircle,
+    icon: { type: "lucide", name: "circle-plus" },
     onCreate: () => alert("Added New Page"),
   },
 };
 export const Search: Story = {
   args: {
     label: "Search",
-    icon: SearchIcon,
+    icon: { type: "lucide", name: "search" },
     onClick: () => alert("Opened Search Bar"),
     shortcut: "⌘K",
   },
@@ -39,7 +38,7 @@ export const Search: Story = {
 export const Settings: Story = {
   args: {
     label: "Search",
-    icon: SettingsIcon,
+    icon: { type: "lucide", name: "settings" },
     onClick: () => alert("Opened Settings Block"),
     shortcut: "⌘,",
   },
@@ -49,7 +48,7 @@ export const TreeItem: Story = {
     id: "test-id",
     username: "John Doe",
     label: "Folder",
-    icon: Folder,
+    icon: { type: "lucide", name: "folder" },
     onClick: () => alert(`Clicked item`),
     active: true,
     level: 0,

@@ -3,18 +3,14 @@
 import { useState, type PropsWithChildren } from "react";
 
 import { SingleImageDropzone } from "@/components/dnd";
-import { FormSubmit } from "@/components/form";
+import { Button } from "@/components/ui/button";
 import {
-  Button,
   Popover,
   PopoverContent,
   PopoverTrigger,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui";
-import { cn } from "@/lib";
+} from "@/components/ui/popover";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import { Unsplash } from "./unsplash";
 
 /** Styles */
@@ -101,7 +97,14 @@ export const CoverPicker = ({
           <TabsContent value="unsplash" className={tabContentStyle}>
             <form action={handleUnsplash} className="space-y-4">
               <Unsplash id="image" />
-              <FormSubmit className="w-full">Select</FormSubmit>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                size="sm"
+                className="w-full"
+              >
+                Select
+              </Button>
             </form>
           </TabsContent>
         </Tabs>

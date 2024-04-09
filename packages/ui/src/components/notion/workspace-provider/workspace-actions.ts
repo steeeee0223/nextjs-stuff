@@ -1,6 +1,6 @@
 import { type Reducer } from "react";
 
-import { Entity } from "@/lib";
+import { Entity } from "@/lib/types";
 import { Workspace } from "./index.types";
 
 export type WorkspaceAction =

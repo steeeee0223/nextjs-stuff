@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { IconPicker } from "@acme/ui/components";
+import { IconPicker } from "@acme/ui/custom";
 
 import CrudIcon from "./crud-icon";
 

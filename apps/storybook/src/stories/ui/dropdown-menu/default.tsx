@@ -12,7 +12,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@acme/ui/components";
+} from "@acme/ui/shadcn";
 
 export function DropdownMenuDemo() {
   return (

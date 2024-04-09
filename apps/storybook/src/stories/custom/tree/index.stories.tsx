@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { TreeProvider } from "@acme/ui/components";
+import { TreeProvider } from "@acme/ui/custom";
 
-import { AddItem, TreeItems } from "./_components";
+import { AddItem, Provider, TreeItems } from "./_components";
 import { folderSystemItems, groupFolderItems } from "./utils";
 
 const meta = {
@@ -49,4 +49,13 @@ export const GroupFolders: Story = {
       </div>
     ),
   },
+};
+
+export const WithSWR: Story = {
+  args: {
+    className: "w-80 bg-neutral-200 p-4 rounded-sm",
+    initialItems: [],
+    children: <TreeItems showEmptyChild />,
+  },
+  render: (props) => <Provider {...props} />,
 };

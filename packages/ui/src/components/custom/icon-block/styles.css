@@ -1,0 +1,19 @@
+.EmojiPickerReact {
+  /* emoji */
+  --epr-emoji-size: 24px;
+  --epr-emoji-gap: 4px;
+  --epr-category-label-height: 28px;
+  /* search bar */
+  --epr-search-bar-inner-padding: 12px;
+  --epr-search-input-border-radius: 4px;
+  --epr-search-input-padding: 0 40px;
+  --epr-search-input-height: 28px;
+  /* header & label */
+  --epr-category-navigation-button-size: 24px;
+  --epr-header-padding: 8px 20px;
+  --epr-horizontal-padding: 20px;
+  /* preview section */
+  --epr-preview-height: 40px;
+
+  border: none;
+}

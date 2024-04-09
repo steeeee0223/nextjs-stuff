@@ -3,15 +3,14 @@
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
-import useSWR from "swr";
 
-import type { Document } from "@acme/prisma";
-import { Cover } from "@acme/ui/components";
+import { Cover, IconBlock } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
 
-import { getDocument } from "~/app/(platform)/_functions";
 import { DocHeaderSkeleton } from "~/components";
 import { theme } from "~/constants/theme";
+import { usePage } from "~/hooks";
+import { toIconInfo } from "~/lib";
 
 interface Params {
   params: {
@@ -20,14 +19,7 @@ interface Params {
 }
 
 const DocumentPage = ({ params: { documentId } }: Params) => {
-  const {
-    data: document,
-    isLoading,
-    error,
-  } = useSWR<Document, Error>([documentId, true], getDocument, {
-    onSuccess: (_data, key) => console.log(`[swr] ${key} fetched data`),
-    onError: (e, key) => console.log(`[swr] ${key}: ${e.message}`),
-  });
+  const { page: document, isLoading, error } = usePage(documentId, true);
   /** Block Note Editor */
   const BlockNoteEditor = useMemo(
     () => dynamic(() => import("~/components/block-editor"), { ssr: false }),
@@ -41,7 +33,13 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
       <Cover preview url={document.coverImage} />
       <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
         <div className="group relative pl-[54px]">
-          {!!document.icon && <p className="pt-6 text-6xl">{document.icon}</p>}
+          {document.icon && (
+            <IconBlock
+              defaultIcon={toIconInfo(document.icon)}
+              editable={false}
+              size="lg"
+            />
+          )}
           <div
             className={cn(
               theme.flex.gap1,

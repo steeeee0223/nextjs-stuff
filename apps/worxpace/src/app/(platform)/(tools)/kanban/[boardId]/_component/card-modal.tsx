@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
-import { Dialog, DialogContent, useKanban } from "@acme/ui/components";
+import { useKanban } from "@acme/ui/custom";
+import { Dialog, DialogContent } from "@acme/ui/shadcn";
 
 export const CardModal = () => {
   const { activeItem, setActiveItem } = useKanban();

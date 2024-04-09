@@ -5,9 +5,8 @@ import { Plus } from "lucide-react";
 import {
   CRUDItem as Item,
   TreeList,
-  useTree,
   type TreeListProps,
-} from "@acme/ui/components";
+} from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
 
 import { theme } from "~/constants/theme";
@@ -16,6 +15,7 @@ interface DocListProps
   extends Pick<TreeListProps, "defaultIcon" | "showEmptyChild"> {
   group: string;
   title: string;
+  isLoading?: boolean;
   onCreate?: TreeListProps["onAddItem"];
   onArchive?: TreeListProps["onDeleteItem"];
 }
@@ -25,11 +25,10 @@ const DocList = ({
   title,
   defaultIcon,
   showEmptyChild,
+  isLoading,
   onCreate,
   onArchive,
 }: DocListProps) => {
-  const { isLoading } = useTree();
-
   return (
     <div>
       <div className={cn(theme.flex.center, "px-3 py-1")}>

@@ -5,6 +5,8 @@ import { MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
+import { useTree } from "@acme/ui/custom";
+import { cn } from "@acme/ui/lib";
 import {
   Button,
   DropdownMenu,
@@ -13,9 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   Skeleton,
-  useTree,
-} from "@acme/ui/components";
-import { cn } from "@acme/ui/lib";
+} from "@acme/ui/shadcn";
 
 import { archiveDocument } from "~/actions";
 import { theme } from "~/constants/theme";

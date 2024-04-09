@@ -1,48 +1,30 @@
 "use client";
 
 import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
-import { Columns3, FileIcon, Presentation } from "lucide-react";
 import { toast } from "sonner";
+import { stableHash } from "swr/_internal";
 import useSWRMutation from "swr/mutation";
 
-import {
-  Button,
-  CRUDItemIcon as Icon,
-  Input,
-  Skeleton,
-  useTree,
-  type TreeItem,
-} from "@acme/ui/components";
+import { Document } from "@acme/prisma";
+import { IconBlock, useTree } from "@acme/ui/custom";
+import { Button, Input, Skeleton } from "@acme/ui/shadcn";
 
-import { updateDocument } from "~/actions";
+import { updateInternalDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { useClient } from "~/hooks";
+import { toIconInfo } from "~/lib";
 
 interface TitleProps {
-  initialData: TreeItem;
+  page: Document;
 }
 
-const getIcon = (item: TreeItem): TreeItem["icon"] => {
-  if (item.icon) return item.icon;
-  switch (item.group) {
-    case "kanban":
-      return Columns3;
-    case "whiteboard":
-      return Presentation;
-    default:
-      return FileIcon;
-  }
-};
-
-const Title = ({ initialData }: TitleProps) => {
-  const { workspaceId } = useClient();
-  const [title, setTitle] = useState(initialData.title);
-  const icon = getIcon(initialData);
+const Title = ({ page }: TitleProps) => {
+  const [icon, _setIcon] = useState(() => toIconInfo(page.icon));
+  const [title, setTitle] = useState(page.title);
   /** Input */
   const inputRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
   const enableInput = () => {
-    setTitle(initialData.title);
+    // setTitle(page.title);
     setIsEditing(true);
     setTimeout(() => {
       inputRef.current?.focus();
@@ -53,16 +35,18 @@ const Title = ({ initialData }: TitleProps) => {
   /** Action - Rename */
   const { dispatch } = useTree();
   const { trigger: update } = useSWRMutation(
-    `doc:${workspaceId}`,
-    updateDocument,
+    [page.id, false],
+    updateInternalDocument,
     {
       onSuccess: (data) => {
         dispatch({
           type: "update:item",
-          payload: { ...data, group: data.type },
+          payload: { ...data, icon: toIconInfo(data.icon), group: data.type },
         });
         toast.success(`Renamed document "${data.title}"`);
       },
+      optimisticData: () => ({ ...page, title, icon }),
+      rollbackOnError: true,
     },
   );
   const onChange = (event: ChangeEvent<HTMLInputElement>) =>
@@ -71,14 +55,17 @@ const Title = ({ initialData }: TitleProps) => {
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       disableInput();
-      if (title !== initialData.title)
-        void update({ id: initialData.id, title, log: true });
+      if (title !== page.title) void update({ id: page.id, title, log: true });
     }
   };
 
   return (
     <div className={theme.flex.gap1}>
-      <Icon icon={icon} />
+      <IconBlock
+        key={stableHash(page.icon)}
+        defaultIcon={toIconInfo(page.icon)}
+        editable={false}
+      />
       {isEditing ? (
         <Input
           ref={inputRef}
@@ -87,16 +74,16 @@ const Title = ({ initialData }: TitleProps) => {
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={title}
-          className="ml-1 h-7 px-2 focus-visible:ring-transparent"
+          className="h-7 rounded-sm px-2 focus-visible:ring-transparent"
         />
       ) : (
         <Button
           onClick={enableInput}
           variant="ghost"
           size="sm"
-          className="ml-1 h-auto p-1 font-normal"
+          className="h-auto rounded-sm p-1 font-normal"
         >
-          <span className="truncate">{initialData.title}</span>
+          <span className="truncate">{page.title}</span>
         </Button>
       )}
     </div>
@@ -104,7 +91,12 @@ const Title = ({ initialData }: TitleProps) => {
 };
 
 Title.Skeleton = function TitleSkeleton() {
-  return <Skeleton className="h-9 w-20 rounded-md" />;
+  return (
+    <div className={theme.flex.gap1}>
+      <Skeleton className="h-5 w-5 rounded-sm" />
+      <Skeleton className="h-6 w-20 rounded-sm" />
+    </div>
+  );
 };
 
 export default Title;

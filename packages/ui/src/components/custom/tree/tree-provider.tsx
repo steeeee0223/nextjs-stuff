@@ -1,18 +1,12 @@
 "use client";
 
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  type PropsWithChildren,
-} from "react";
+import { useReducer, type PropsWithChildren } from "react";
 
 import type { TreeItem } from "./index.types";
 import { treeReducer, type TreeReducer } from "./tree-actions";
 import { TreeContext, type TreeContextInterface } from "./tree-context";
 
-interface TreeProviderProps extends PropsWithChildren {
+export interface TreeProviderProps extends PropsWithChildren {
   className?: string;
   groups?: string[];
   isLoading?: boolean;
@@ -30,29 +24,27 @@ export function TreeProvider({
   isItemActive,
   onClickItem,
 }: TreeProviderProps) {
-  const $initialItems = { ids: [], entities: {} };
-  const [state, dispatch] = useReducer<TreeReducer>(treeReducer, $initialItems);
-
-  useEffect(() => {
-    dispatch({ type: "set", payload: initialItems });
-  }, [initialItems]);
-
-  const treeItems = useMemo(() => Object.values(state.entities), [state]);
-  const getChildren = useCallback(
-    ($parentId: string | null, $group: string | null) =>
-      treeItems.filter(
-        ({ parentId, group }) => $group === group && $parentId === parentId,
-      ),
-    [treeItems],
+  const initializer = (init: TreeItem[]) => {
+    const e = init.reduce((acc, item) => ({ ...acc, [item.id]: item }), {});
+    return { ids: Object.keys(e), entities: e };
+  };
+  const [state, dispatch] = useReducer<TreeReducer, TreeItem[]>(
+    treeReducer,
+    initialItems,
+    initializer,
   );
-  const getGroup = useCallback(
-    ($group: string) => treeItems.filter(({ group }) => group === $group),
-    [treeItems],
-  );
+
+  const getChildren = ($parentId: string | null, $group: string | null) =>
+    Object.values(state.entities).filter(
+      ({ parentId, group }) => $group === group && $parentId === parentId,
+    );
+  const getGroup = ($group: string) =>
+    Object.values(state.entities).filter(({ group }) => group === $group);
+
   const treeContextValues: TreeContextInterface = {
-    isLoading,
+    isLoading: isLoading || !initialItems,
     groups,
-    treeItems,
+    treeItems: Object.values(state.entities),
     dispatch,
     getGroup,
     getChildren,
