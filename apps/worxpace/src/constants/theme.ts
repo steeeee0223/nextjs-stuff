@@ -20,6 +20,8 @@ export const theme = {
     gap4: "flex items-center gap-4",
   },
   inputBorder: "border-transparent hover:border-input focus:border-input",
+  tooltip:
+    "bg-black text-primary-foreground text-xs rounded-sm px-1.5 py-0.5 border-none",
 };
 
 export const COLORS = ["#DC2626", "#D97706", "#059669", "#7C3AED", "#DB2777"];
