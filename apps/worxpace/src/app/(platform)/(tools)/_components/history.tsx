@@ -45,7 +45,7 @@ const History = ({ pageId }: HistoryProps) => {
         </DrawerHeader>
         <Separator className="mb-2" />
         {isLoading || !logs ? (
-          <div className="inset-0 flex items-center">
+          <div className="inset-0 flex items-center justify-center py-4">
             <Spinner />
           </div>
         ) : (
