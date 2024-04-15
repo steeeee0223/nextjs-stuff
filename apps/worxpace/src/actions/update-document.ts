@@ -3,11 +3,11 @@
 import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Document } from "@acme/prisma";
+import type { Document, ENTITY_TYPE } from "@acme/prisma";
 import { UpdateDocument, type UpdateDocumentInput } from "@acme/validators";
 
 import {
-  createAuditLog,
+  auditLogs,
   createMutationFetcher,
   documents,
   fetchClient,
@@ -24,11 +24,13 @@ const handler: Action<UpdateDocumentInput, Document> = async (
     const { userId, orgId } = fetchClient();
     const result = await documents.update({ userId, orgId, id, ...updateData });
     /** Activity Log */
-    if (log)
-      await createAuditLog(
-        { type: "DOCUMENT", entityId: id, title: result.title },
+    if (log) {
+      const type = result.type.toUpperCase() as ENTITY_TYPE;
+      await auditLogs.create(
+        { type, entityId: id, title: result.title },
         "UPDATE",
       );
+    }
     revalidatePath(`/documents/${arg.id}`);
     return result;
   } catch (error) {

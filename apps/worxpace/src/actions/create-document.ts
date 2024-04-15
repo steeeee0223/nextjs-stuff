@@ -2,11 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 
-import { type Document } from "@acme/prisma";
+import { ENTITY_TYPE, type Document } from "@acme/prisma";
 import { CreateDocument, type CreateDocumentInput } from "@acme/validators";
 
 import {
-  createAuditLog,
+  auditLogs,
   createMutationFetcher,
   documents,
   fetchClient,
@@ -25,8 +25,9 @@ const handler: Action<CreateDocumentInput, Document> = async (
     const icon = toIcon(generateDefaultIcon(arg.type));
     const result = await documents.create({ ...arg, icon, userId, orgId });
     /** Activity Log */
-    await createAuditLog(
-      { title: result.title, entityId: result.id, type: "DOCUMENT" },
+    const type = result.type.toUpperCase() as ENTITY_TYPE;
+    await auditLogs.create(
+      { title: result.title, entityId: result.id, type },
       "CREATE",
     );
     revalidatePath(path);

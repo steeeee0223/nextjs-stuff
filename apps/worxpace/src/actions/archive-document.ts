@@ -2,12 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 
-import type { Document } from "@acme/prisma";
+import type { Document, ENTITY_TYPE } from "@acme/prisma";
 import { type Modified } from "@acme/ui/lib";
 import { DeleteDocument, type DeleteDocumentInput } from "@acme/validators";
 
 import {
-  createAuditLog,
+  auditLogs,
   createMutationFetcher,
   documents,
   fetchClient,
@@ -23,8 +23,9 @@ const handler: Action<DeleteDocumentInput, Modified<Document>> = async (
     const { userId, orgId } = fetchClient();
     const result = await documents.archive({ ...arg, userId, orgId });
     /** Activity Log */
-    await createAuditLog(
-      { title: result.item.title, entityId: arg.id, type: "DOCUMENT" },
+    const type = result.item.type.toUpperCase() as ENTITY_TYPE;
+    await auditLogs.create(
+      { title: result.item.title, entityId: arg.id, type },
       "DELETE",
     );
     revalidatePath(`/documents/${arg.id}`);

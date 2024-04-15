@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
+import { useState } from "react";
 import { Plus } from "lucide-react";
 
 import {
+  Hint,
   CRUDItem as Item,
   TreeList,
   type TreeListProps,
@@ -29,22 +31,47 @@ const DocList = ({
   onCreate,
   onArchive,
 }: DocListProps) => {
+  const [openGroup, setOpenGroup] = useState(true);
+  const toggle = () => setOpenGroup((prev) => !prev);
+
   return (
     <div>
       <div className={cn(theme.flex.center, "px-3 py-1")}>
-        <span className="grow pl-1.5 text-xs font-semibold text-primary/50">
-          {title}
-        </span>
-        <div
-          role="button"
-          onClick={() => onCreate?.()}
-          className={cn(
-            theme.bg.hover,
-            "ml-auto h-full grow-0 rounded-sm p-0.5 opacity-0 hover:opacity-100",
-          )}
-        >
-          <Plus className={cn(theme.size.icon, "text-muted-foreground")} />
+        <div className="grow">
+          <Hint
+            side="top"
+            description="Click to hide section"
+            className={theme.tooltip}
+          >
+            <div
+              role="button"
+              onClick={toggle}
+              className={cn(
+                theme.bg.hover,
+                "rounded-sm px-1.5 py-0.5",
+                "text-xs font-semibold text-primary/50",
+              )}
+            >
+              {title}
+            </div>
+          </Hint>
         </div>
+        <Hint
+          side="top"
+          description={`Add a ${group}`}
+          className={cn(theme.tooltip, "hover:opacity-100")}
+        >
+          <div
+            role="button"
+            onClick={() => onCreate?.()}
+            className={cn(
+              theme.bg.hover,
+              "ml-auto h-full grow-0 rounded-sm p-0.5 opacity-0 hover:opacity-100",
+            )}
+          >
+            <Plus className={cn(theme.size.icon, "text-muted-foreground")} />
+          </div>
+        </Hint>
       </div>
       {isLoading ? (
         <>
@@ -55,14 +82,16 @@ const DocList = ({
           </div>
         </>
       ) : (
-        <TreeList
-          group={group}
-          parentId={null}
-          defaultIcon={defaultIcon}
-          showEmptyChild={showEmptyChild}
-          onAddItem={onCreate}
-          onDeleteItem={onArchive}
-        />
+        openGroup && (
+          <TreeList
+            group={group}
+            parentId={null}
+            defaultIcon={defaultIcon}
+            showEmptyChild={showEmptyChild}
+            onAddItem={onCreate}
+            onDeleteItem={onArchive}
+          />
+        )
       )}
     </div>
   );

@@ -41,6 +41,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "cmdk": "^0.2.0",
@@ -59,6 +60,7 @@
     "unsplash-js": "^7.0.19",
     "usehooks-ts": "^2.9.1",
     "uuid": "^9.0.1",
+    "vaul": "^0.9.0",
     "zustand": "^4.5.0"
   },
   "devDependencies": {

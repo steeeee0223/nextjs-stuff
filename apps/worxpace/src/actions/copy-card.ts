@@ -6,7 +6,7 @@ import type { Card } from "@acme/prisma";
 import { CopyCard, type CopyCardInput } from "@acme/validators";
 
 import {
-  createAuditLog,
+  auditLogs,
   createMutationFetcher,
   fetchClient,
   kanban,
@@ -26,8 +26,8 @@ const handler: Action<CopyCardInput, Card> = async (_key, { arg }) => {
       description: srcCard.description,
     });
     /** Activity Log */
-    await createAuditLog(
-      { entityId: dest.id, title: dest.title, type: "CARD" },
+    await auditLogs.create(
+      { entityId: boardId, title: dest.title, type: "ITEM" },
       "CREATE",
     );
     revalidatePath(`/kanban/${boardId}`);

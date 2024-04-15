@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { generateLogMessage, type Log } from "./index.utils";
+import { generateLogMessage, type Entity, type Log } from "./index.utils";
 
 interface ActivityItemProps {
   data: Log;
@@ -27,3 +27,5 @@ export const ActivityItem = ({ data }: ActivityItemProps) => {
     </li>
   );
 };
+
+export type { Log, Entity, ActivityItemProps };

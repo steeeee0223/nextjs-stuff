@@ -6,7 +6,7 @@ import type { List } from "@acme/prisma";
 import { UpdateList, type UpdateListInput } from "@acme/validators";
 
 import {
-  createAuditLog,
+  auditLogs,
   createMutationFetcher,
   fetchClient,
   kanban,
@@ -21,8 +21,8 @@ const handler: Action<UpdateListInput, List> = async (_key, { arg }) => {
     const result = await kanban.updateList(updateData);
     /** Activity Log */
     if (log)
-      await createAuditLog(
-        { type: "DOCUMENT", entityId: result.id, title: result.title },
+      await auditLogs.create(
+        { type: "LIST", entityId: arg.boardId, title: result.title },
         "UPDATE",
       );
     revalidatePath(`/kanban/${arg.boardId}`);
