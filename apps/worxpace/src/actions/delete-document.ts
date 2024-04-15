@@ -7,7 +7,7 @@ import { type Modified } from "@acme/ui/lib";
 import { DeleteDocument, type DeleteDocumentInput } from "@acme/validators";
 
 import {
-  createAuditLog,
+  auditLogs,
   createMutationFetcher,
   documents,
   fetchClient,
@@ -23,14 +23,7 @@ const handler: Action<DeleteDocumentInput, Modified<Document>> = async (
     const { userId, orgId, path } = fetchClient();
     const result = await documents.remove({ userId, orgId, ...arg });
     /** Activity Log */
-    await createAuditLog(
-      {
-        title: result.item.title,
-        entityId: arg.id,
-        type: "DOCUMENT",
-      },
-      "DELETE",
-    );
+    await auditLogs.remove(arg.id);
     revalidatePath(path);
     return result;
   } catch (error) {

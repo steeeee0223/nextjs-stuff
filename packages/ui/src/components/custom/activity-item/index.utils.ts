@@ -1,5 +1,3 @@
-export type ACTION = "CREATE" | "UPDATE" | "DELETE";
-
 export interface Entity {
   entityId: string;
   type: string;
@@ -9,7 +7,7 @@ export interface Entity {
 export interface Log {
   username: string;
   avatar?: string;
-  action: ACTION;
+  action: string;
   entity: Entity;
   createdAt: Date;
 }
@@ -19,13 +17,13 @@ export const generateLogMessage = (log: Log): string => {
     action,
     entity: { title, type },
   } = log;
-  switch (action) {
-    case "CREATE":
-      return `created ${type.toLowerCase()} "${title}"`;
-    case "UPDATE":
-      return `updated ${type.toLowerCase()} "${title}"`;
-    case "DELETE":
-      return `deleted ${type.toLowerCase()} "${title}"`;
+  switch (action.toLowerCase()) {
+    case "update":
+      return `edited ${type.toLowerCase()} "${title}"`;
+    case "create":
+    case "restore":
+    case "delete":
+      return `${action.toLowerCase()}d ${type.toLowerCase()} "${title}"`;
     default:
       return `unknown action ${type.toLowerCase()} "${title}"`;
   }

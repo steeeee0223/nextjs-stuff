@@ -6,7 +6,7 @@ import type { Card } from "@acme/prisma";
 import { DeleteCard, type DeleteCardInput } from "@acme/validators";
 
 import {
-  createAuditLog,
+  auditLogs,
   createMutationFetcher,
   fetchClient,
   kanban,
@@ -20,8 +20,8 @@ const handler: Action<DeleteCardInput, Card> = async (_key, { arg }) => {
     fetchClient();
     const result = await kanban.deleteCard({ id });
     /** Activity Log */
-    await createAuditLog(
-      { title: result.title, entityId: result.id, type: "CARD" },
+    await auditLogs.create(
+      { title: result.title, entityId: boardId, type: "ITEM" },
       "DELETE",
     );
     revalidatePath(`/kanban/${boardId}`);

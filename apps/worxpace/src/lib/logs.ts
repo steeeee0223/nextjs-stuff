@@ -1,8 +1,17 @@
+"use server";
+
 import { auth, currentUser } from "@clerk/nextjs";
 
 import { ACTION, AuditLog, Entity, ROLE, worxpace } from "@acme/prisma";
 
-export const createAuditLog = async (entity: Entity, action: ACTION) => {
+const getByEntity = async (entityId: string): Promise<AuditLog[]> =>
+  await worxpace.auditLog.findMany({
+    where: { entity: { is: { entityId } } },
+    orderBy: { createdAt: "desc" },
+    take: 10,
+  });
+
+const create = async (entity: Entity, action: ACTION) => {
   try {
     const { orgId } = auth();
     const user = await currentUser();
@@ -26,19 +35,9 @@ export const createAuditLog = async (entity: Entity, action: ACTION) => {
   }
 };
 
-export const generateLogMessage = (log: AuditLog): string => {
-  const {
-    action,
-    entity: { title, type },
-  } = log;
-  switch (action) {
-    case ACTION.CREATE:
-      return `created ${type.toLowerCase()} "${title}"`;
-    case ACTION.UPDATE:
-      return `updated ${type.toLowerCase()} "${title}"`;
-    case ACTION.DELETE:
-      return `deleted ${type.toLowerCase()} "${title}"`;
-    default:
-      return `unknown action ${type.toLowerCase()} "${title}"`;
-  }
-};
+const remove = async (entityId: string) =>
+  await worxpace.auditLog.deleteMany({
+    where: { entity: { is: { entityId } } },
+  });
+
+export { getByEntity, create, remove };

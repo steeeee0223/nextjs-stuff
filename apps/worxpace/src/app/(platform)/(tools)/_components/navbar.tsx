@@ -8,6 +8,7 @@ import { cn } from "@acme/ui/lib";
 import { theme } from "~/constants/theme";
 import { usePage } from "~/hooks";
 import Banner from "./banner";
+import History from "./history";
 import Menu from "./menu";
 import Participants from "./participants";
 import Publish from "./publish";
@@ -54,15 +55,16 @@ const Navbar = forwardRef(function Navbar(
         {page && (
           <div className={cn(theme.flex.center, "w-full justify-between")}>
             <Title page={page} />
-            <div className={theme.flex.gap2}>
+            <div className={theme.flex.gap1}>
               <Participants />
               <Publish page={page} />
+              <History pageId={page.id} />
               <Menu documentId={page.id} />
             </div>
           </div>
         )}
       </nav>
-      {page?.type?.startsWith("trash") && <Banner documentId={page.id} />}
+      {page?.isArchived && <Banner documentId={page.id} />}
     </div>
   );
 });

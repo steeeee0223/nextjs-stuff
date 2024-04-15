@@ -51,7 +51,7 @@ const Menu = ({ documentId }: MenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="sm" variant="ghost">
+        <Button size="icon-nav" variant="ghost">
           <MoreHorizontal className={theme.size.icon} />
         </Button>
       </DropdownMenuTrigger>

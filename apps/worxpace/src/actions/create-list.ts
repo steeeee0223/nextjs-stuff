@@ -6,7 +6,7 @@ import type { List } from "@acme/prisma";
 import { CreateList, type CreateListInput } from "@acme/validators";
 
 import {
-  createAuditLog,
+  auditLogs,
   createMutationFetcher,
   fetchClient,
   kanban,
@@ -19,8 +19,8 @@ const handler: Action<CreateListInput, List> = async (_key, { arg }) => {
     fetchClient();
     const result = await kanban.createList(arg);
     /** Activity Log */
-    await createAuditLog(
-      { title: arg.title, entityId: arg.id, type: "CARD" },
+    await auditLogs.create(
+      { title: arg.title, entityId: arg.boardId, type: "ITEM" },
       "CREATE",
     );
     revalidatePath(`/kanban/${arg.boardId}`);

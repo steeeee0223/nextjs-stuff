@@ -21,7 +21,7 @@ export const theme = {
   },
   inputBorder: "border-transparent hover:border-input focus:border-input",
   tooltip:
-    "bg-black text-primary-foreground text-xs rounded-sm px-1.5 py-0.5 border-none",
+    "bg-black text-primary-foreground text-xs rounded-sm px-1.5 py-0.5 border-none font-medium",
 };
 
 export const COLORS = ["#DC2626", "#D97706", "#059669", "#7C3AED", "#DB2777"];

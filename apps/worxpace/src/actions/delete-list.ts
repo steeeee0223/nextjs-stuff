@@ -6,7 +6,7 @@ import type { List } from "@acme/prisma";
 import { DeleteList, type DeleteListInput } from "@acme/validators";
 
 import {
-  createAuditLog,
+  auditLogs,
   createMutationFetcher,
   fetchClient,
   kanban,
@@ -19,8 +19,8 @@ const handler: Action<DeleteListInput, List> = async (_key, { arg }) => {
     fetchClient();
     const result = await kanban.deleteList(arg);
     /** Activity Log */
-    await createAuditLog(
-      { title: result.title, entityId: result.id, type: "LIST" },
+    await auditLogs.create(
+      { title: result.title, entityId: arg.boardId, type: "LIST" },
       "DELETE",
     );
     revalidatePath(`/kanban/${arg.boardId}`);
