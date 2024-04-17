@@ -16,7 +16,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     url: image.src,
-    onUnsplash: async (url) => console.log(`Uploading unsplash image: ${url}`),
+    unsplashAPIKey: "UNSPLASH_ACCESS_KEY",
+    onUrlChange: async (url) => console.log(`Uploading url: ${url}`),
     onUploadChange: async (file) => console.log(`Uploading file: ${file.name}`),
     onRemove: async () => console.log(`Removing file`),
   },
