@@ -95,7 +95,7 @@ const LucidePicker = ({ onSelect, onColorChange }: LucidePickerProps) => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter..."
-            className="h-7 rounded-sm border-none bg-primary/5"
+            variant="notion"
           />
         </div>
         <Hint asChild description="Random" className={styles.tooltip}>
