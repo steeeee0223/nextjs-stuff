@@ -8,3 +8,4 @@ export * from "./icon-block";
 export * from "./icon-picker";
 export * from "./spinner";
 export * from "./tree";
+export * from "./unsplash";

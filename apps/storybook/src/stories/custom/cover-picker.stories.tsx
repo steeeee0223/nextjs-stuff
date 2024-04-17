@@ -15,10 +15,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    asChild: true,
+    asChild: false,
+    unsplashAPIKey: "UNSPLASH_ACCESS_KEY",
     onUploadChange: async (file) => console.log(`Uploading file: ${file.name}`),
     onRemove: async () => console.log(`Removing file`),
-    onUnsplash: async (url) => console.log(`Uploading unsplash image: ${url}`),
+    onUrlChange: async (url) => console.log(`Uploading url: ${url}`),
     children: (
       <>
         <Button variant="outline">
