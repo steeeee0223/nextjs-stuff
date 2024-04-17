@@ -30,7 +30,11 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
   if (!document || isLoading) return <DocHeaderSkeleton />;
   return (
     <div className="pb-40 dark:bg-[#1F1F1F]">
-      <Cover preview url={document.coverImage} />
+      <Cover
+        preview
+        unsplashAPIKey={process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY!}
+        url={document.coverImage?.url ?? null}
+      />
       <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
         <div className="group relative pl-[54px]">
           {document.icon && (
