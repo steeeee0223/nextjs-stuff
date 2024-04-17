@@ -38,6 +38,8 @@ export const env = createEnv({
     // EDGESTORE
     EDGE_STORE_ACCESS_KEY: z.string(),
     EDGE_STORE_SECRET_KEY: z.string(),
+    // UNSPLASH
+    NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: z.string(),
   },
   /**
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
@@ -60,7 +62,9 @@ export const env = createEnv({
     EDGE_STORE_ACCESS_KEY: process.env.EDGE_STORE_ACCESS_KEY,
     EDGE_STORE_SECRET_KEY: process.env.EDGE_STORE_SECRET_KEY,
     // LIVEBLOCKS
-    LIVEBLOCKS_SECRET_KEY: process.env.LIVEBLOCKS_SECRET_KEY
+    LIVEBLOCKS_SECRET_KEY: process.env.LIVEBLOCKS_SECRET_KEY,
+    // UNSPLASH
+    NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
   },
   skipValidation:
     !!process.env.CI ||

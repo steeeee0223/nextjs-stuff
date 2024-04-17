@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { stableHash } from "swr/_internal";
 import useSWRMutation from "swr/mutation";
 
-import type { Document } from "@acme/prisma";
+import type { CoverImage, Document } from "@acme/prisma";
 import {
   Cover,
   CoverPicker,
@@ -60,7 +60,9 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
   };
   /** Edgestore */
   const { edgestore } = useEdgeStore();
-  const deleteFile = async (url: string) => {
+  const deleteFile = async (coverImage?: CoverImage | null) => {
+    if (coverImage?.type !== "file") return;
+    const url = coverImage.url;
     try {
       await edgestore.publicFiles.delete({ url });
     } catch {
@@ -74,13 +76,11 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
     [document.id, false],
     updateInternalDocument,
     {
-      onSuccess: ({ id, parentId, icon, title, type }) => {
-        console.log(`updating icon to tree ->`, icon);
+      onSuccess: ({ id, parentId, icon, title, type }) =>
         dispatch({
           type: "update:item",
           payload: { id, parentId, icon: toIconInfo(icon), title, group: type },
-        });
-      },
+        }),
       onError: (e: Error) => toast.error(e.message),
       revalidate: true,
       populateCache: true,
@@ -91,6 +91,7 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
     void update({
       id: document.id,
       title: e.currentTarget.value ?? value,
+      log: true,
     });
   };
   const onIconSelect = (iconInfo: IconInfo) =>
@@ -99,27 +100,41 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
   const onUploadCover = async (file: File) => {
     const res = await edgestore.publicFiles.upload({
       file,
-      options: { replaceTargetUrl: document.coverImage ?? undefined },
+      options: {
+        replaceTargetUrl:
+          document.coverImage?.type === "file"
+            ? document.coverImage.url
+            : undefined,
+      },
     });
-    await update({ id: document.id, coverImage: res.url });
+    await update({
+      id: document.id,
+      coverImage: { type: "file", url: res.url },
+      log: true,
+    });
     console.log(`uploaded to edgestore: ${res.url}`);
   };
-  const onUnsplashCover = async (url: string) => {
-    if (document.coverImage) await deleteFile(document.coverImage);
-    await update({ id: document.id, coverImage: url });
+  const onUploadUrl = async (url: string) => {
+    await deleteFile(document.coverImage);
+    await update({
+      id: document.id,
+      coverImage: { type: "url", url },
+      log: true,
+    });
   };
   const onRemoveCover = async () => {
-    if (document.coverImage) await deleteFile(document.coverImage);
-    await update({ id: document.id, coverImage: null });
+    await deleteFile(document.coverImage);
+    await update({ id: document.id, coverImage: null, log: true });
   };
 
   return (
     <>
       <Cover
+        unsplashAPIKey={process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY!}
         preview={preview}
-        url={document.coverImage}
+        url={document.coverImage?.url ?? null}
         onUploadChange={onUploadCover}
-        onUnsplash={onUnsplashCover}
+        onUrlChange={onUploadUrl}
         onRemove={onRemoveCover}
       />
       <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
@@ -142,8 +157,9 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
             {!document.coverImage && !preview && (
               <CoverPicker
                 asChild
+                unsplashAPIKey={process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY!}
                 onUploadChange={onUploadCover}
-                onUnsplash={onUnsplashCover}
+                onUrlChange={onUploadUrl}
                 onRemove={onRemoveCover}
               >
                 <Button {...buttonProps}>

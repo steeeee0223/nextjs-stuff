@@ -113,22 +113,32 @@ type Icon {
   color String?
 }
 
+enum COVER_TYPE {
+  file
+  url
+}
+
+type CoverImage {
+  type COVER_TYPE
+  url  String
+}
+
 model Document {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
   type        String
   title       String
   userId      String
   orgId       String?
   isArchived  Boolean
-  parentId    String?    @db.ObjectId
+  parentId    String?     @db.ObjectId
   content     String?
-  coverImage  String?
+  coverImage  CoverImage?
   icon        Icon?
   isPublished Boolean
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  parent      Document?  @relation("DocumentParent", onUpdate: NoAction, onDelete: NoAction, fields: [parentId], references: [id])
-  children    Document[] @relation("DocumentParent")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  parent      Document?   @relation("DocumentParent", onUpdate: NoAction, onDelete: NoAction, fields: [parentId], references: [id])
+  children    Document[]  @relation("DocumentParent")
 
   @@index([userId, orgId], name: "byUser")
   @@index([userId, orgId, parentId], name: "byUserParent")

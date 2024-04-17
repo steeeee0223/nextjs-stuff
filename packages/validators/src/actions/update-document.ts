@@ -11,7 +11,13 @@ export const UpdateDocument = z.object({
     })
     .nullable()
     .optional(),
-  coverImage: z.string().nullable().optional(),
+  coverImage: z
+    .object({
+      type: z.enum(["file", "url"]),
+      url: z.string(),
+    })
+    .nullable()
+    .optional(),
   title: z.string().optional(),
   content: z.string().nullable().optional(),
   isPublished: z.boolean().optional(),
