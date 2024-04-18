@@ -8,7 +8,9 @@ import { IconBlock, type IconInfo } from ".";
 describe("<IconBlock />", () => {
   it("should render the emoji", () => {
     const iconInfo: IconInfo = { type: "emoji", emoji: "🚀" };
-    const { getByText } = render(<IconBlock defaultIcon={iconInfo} editable={false} />);
+    const { getByText } = render(
+      <IconBlock defaultIcon={iconInfo} editable={false} />,
+    );
     expect(getByText(iconInfo.emoji)).toBeDefined();
   });
   // it("should render the image url", async () => {
