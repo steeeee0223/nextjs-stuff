@@ -33,16 +33,16 @@ const config = {
         protocol: "https",
         hostname: "files.edgestore.dev",
       },
-    ]
+    ],
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
       /** To Fix Prisma */
       /** See https://www.prisma.io/docs/orm/more/help-and-troubleshooting/help-articles/nextjs-prisma-client-monorepo */
-      config.plugins = [...config.plugins, new PrismaPlugin()]
+      config.plugins = [...config.plugins, new PrismaPlugin()];
     }
 
-    return config
+    return config;
   },
 };
 
