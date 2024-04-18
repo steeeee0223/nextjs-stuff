@@ -19,6 +19,7 @@ export const WorxpaceProvider = ({ children }: PropsWithChildren) => {
       const org = params.clientId === userId ? null : params.clientId;
       setActive?.({ organization: org }).catch((e) => console.log(e));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.clientId, userId]);
 
   const initial = useMemo(
