@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { Button } from "@acme/ui/components";
+import { Button } from "@acme/ui/shadcn";
 
 import { theme } from "~/constants/theme";
 

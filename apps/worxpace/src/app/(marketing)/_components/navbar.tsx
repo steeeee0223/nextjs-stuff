@@ -1,8 +1,8 @@
 "use client";
 
-import { ThemeToggle } from "@acme/ui/components";
 import { useScrollTop } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
+import { ThemeToggle } from "@acme/ui/shadcn";
 
 import { theme } from "~/constants/theme";
 import Logo from "./logo";
