@@ -18,6 +18,3 @@ runs:
 
     - shell: bash
       run: pnpm -F prisma build
-
-    - shell: bash
-      run: pnpm -F ui build

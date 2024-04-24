@@ -4,38 +4,16 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    "./custom": {
-      "import": "./dist/custom.cjs",
-      "types": "./dist/custom.d.cts"
-    },
-    "./dnd": {
-      "import": "./dist/dnd.cjs",
-      "types": "./dist/dnd.d.cts"
-    },
-    "./form": {
-      "import": "./dist/form.cjs",
-      "types": "./dist/form.d.cts"
-    },
-    "./hooks": {
-      "import": "./dist/hooks.cjs",
-      "types": "./dist/hooks.d.cts"
-    },
-    "./notion": {
-      "import": "./dist/notion.cjs",
-      "types": "./dist/notion.d.cts"
-    },
-    "./shadcn": {
-      "import": "./dist/shadcn.cjs",
-      "types": "./dist/shadcn.d.cts"
-    },
-    "./lib": {
-      "import": "./dist/lib.js",
-      "types": "./dist/lib.d.ts"
-    }
+    "./custom": "./src/components/custom/index.ts",
+    "./dnd": "./src/components/dnd/index.ts",
+    "./form": "./src/components/form/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./notion": "./src/components/notion/index.ts",
+    "./shadcn": "./src/components/ui/index.ts",
+    "./lib": "./src/lib/index.ts"
   },
   "license": "MIT",
   "scripts": {
-    "build": "rm -rf dist && tsup",
     "ui:add": "pnpm dlx shadcn-ui@latest add",
     "clean": "rm -rf .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
@@ -102,7 +80,6 @@
     "jsdom": "^23.0.1",
     "prettier": "^3.1.1",
     "tailwindcss": "^3.4.0",
-    "tsup": "^8.0.2",
     "typescript": "^5.3.3",
     "vitest": "^1.1.0",
     "zod": "^3.22.4"
