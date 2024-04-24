@@ -3,7 +3,7 @@ import { defineConfig } from "tsup";
 export default defineConfig([
   {
     banner: {
-      js: `"use client";`,
+      js: `"use client";\nimport * as React from "react";`,
     },
     entry: {
       custom: "src/components/custom/index.ts",
