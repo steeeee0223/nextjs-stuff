@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect, type PropsWithChildren } from "react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 
 import { TreeProvider } from "@acme/ui/custom";
 import { useNavControl } from "@acme/ui/hooks";
 
 import { DocHeaderSkeleton, Room } from "~/components";
+import { usePlatform } from "~/hooks/use-platform";
 import Navbar, { NavbarSkeleton } from "./navbar";
-import SearchCommand from "./search-command";
 import { Sidebar } from "./sidebar";
 
 const DocsProvider = ({ children }: PropsWithChildren) => {
-  const router = useRouter();
+  const { toToolsPage } = usePlatform();
   const pathname = usePathname();
   const params = useParams<{
     documentId?: string;
@@ -51,11 +51,6 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
     "trash:kanban",
     "trash:whiteboard",
   ];
-  const onClickItem = (id: string, group: string | null) => {
-    if (group === "document") router.push(`/documents/${id}`);
-    if (group === "kanban") router.push(`/kanban/${id}`);
-    if (group === "whiteboard") router.push(`/whiteboard/${id}`);
-  };
   const isItemActive = (id: string, group: string | null) => {
     if (group === "document") return params.documentId === id;
     if (group === "kanban") return params.boardId === id;
@@ -67,7 +62,8 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
     <TreeProvider
       className="flex h-full dark:bg-[#1F1F1F]"
       groups={groups}
-      onClickItem={onClickItem}
+      onClickItem={toToolsPage}
+      // onClickItem={onClickItem}
       isItemActive={isItemActive}
     >
       <Sidebar
@@ -87,10 +83,7 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
           isMobile={isMobile}
           onResetWidth={resetWidth}
         />
-        <main className="h-full flex-1 overflow-y-auto">
-          <SearchCommand />
-          {children}
-        </main>
+        <main className="h-full flex-1 overflow-y-auto">{children}</main>
       </Room>
     </TreeProvider>
   );
