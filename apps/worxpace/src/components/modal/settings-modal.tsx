@@ -1,5 +1,6 @@
 "use client";
 
+import { useModal } from "@acme/ui/custom";
 import {
   Dialog,
   DialogContent,
@@ -8,13 +9,11 @@ import {
   ThemeToggle,
 } from "@acme/ui/shadcn";
 
-import { useSettings } from "~/hooks";
-
 export const SettingsModal = () => {
-  const settings = useSettings();
+  const { isOpen, setClose } = useModal();
 
   return (
-    <Dialog open={settings.isOpen} onOpenChange={settings.onClose}>
+    <Dialog open={isOpen} onOpenChange={setClose}>
       <DialogContent className="z-[99999]">
         <DialogHeader className="border-b pb-3">
           <h2 className="text-lg font-medium">My settings</h2>

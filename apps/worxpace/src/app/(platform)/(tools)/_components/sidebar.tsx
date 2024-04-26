@@ -3,21 +3,28 @@
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 "use client";
 
-import { forwardRef, type ForwardedRef, type MouseEventHandler } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  type ForwardedRef,
+  type MouseEventHandler,
+} from "react";
 import { useRouter } from "next/navigation";
 import { useAuth, useOrganizationList } from "@clerk/nextjs";
 import { ChevronsLeft } from "lucide-react";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
-import { CRUDItem as Item, useTree } from "@acme/ui/custom";
+import { CRUDItem as Item, useModal, useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
 import { WorkspaceSwitcher } from "@acme/ui/notion";
 import { Popover, PopoverContent, PopoverTrigger } from "@acme/ui/shadcn";
 
 import { archiveDocument, createDocument } from "~/actions";
+import { SearchCommand, SettingsModal } from "~/components/modal";
 import { theme } from "~/constants/theme";
-import { useClient, usePages, useSearch, useSettings } from "~/hooks";
+import { useClient, usePages } from "~/hooks";
 import { toIconInfo } from "~/lib";
 import DocList from "./doc-list";
 import TrashBox from "./trash-box";
@@ -55,9 +62,11 @@ export const Sidebar = forwardRef(function Sidebar(
   };
   const handleLogout = () =>
     signOut(() => router.push("/select-role")).catch((e) => console.log(e));
-  /** Search & Settings */
-  const search = useSearch();
-  const settings = useSettings();
+  /** Modals */
+  const { setOpen } = useModal();
+  const handleSettings = () => void setOpen(<SettingsModal />);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleSearch = useCallback(() => void setOpen(<SearchCommand />), []);
   /** Docs */
   const { dispatch, onClickItem } = useTree();
   const onError = (e: Error) => toast.error(e.message);
@@ -98,6 +107,18 @@ export const Sidebar = forwardRef(function Sidebar(
     },
   );
 
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        handleSearch();
+      }
+    };
+
+    addEventListener("keydown", down);
+    return () => removeEventListener("keydown", down);
+  }, [handleSearch]);
+
   return (
     <aside
       ref={ref}
@@ -123,13 +144,13 @@ export const Sidebar = forwardRef(function Sidebar(
         <Item
           label="Search"
           icon={{ type: "lucide", name: "search" }}
-          onClick={search.onOpen}
+          onClick={handleSearch}
           shortcut="⌘K"
         />
         <Item
           label="Settings"
           icon={{ type: "lucide", name: "settings" }}
-          onClick={settings.onOpen}
+          onClick={handleSettings}
           shortcut="⌘,"
         />
         <Item
