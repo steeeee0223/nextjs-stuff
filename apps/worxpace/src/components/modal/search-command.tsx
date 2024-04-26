@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import useSWR from "swr";
 import { stableHash } from "swr/_internal";
 
 import { type Document } from "@acme/prisma";
-import { IconBlock, useTree } from "@acme/ui/custom";
+import { IconBlock, useModal } from "@acme/ui/custom";
 import {
   CommandDialog,
   CommandEmpty,
@@ -16,49 +15,33 @@ import {
   CommandList,
 } from "@acme/ui/shadcn";
 
-import { useClient, useSearch } from "~/hooks";
+import { useClient } from "~/hooks";
+import { usePlatform } from "~/hooks/use-platform";
 import { fetchUrl, toIconInfo } from "~/lib";
 
 const SearchCommand = () => {
   /** Auth */
   const { workspace: name, userId, workspaceId } = useClient();
   /** Search */
-  const { toggle, isOpen, onClose } = useSearch();
+  const { isOpen, setClose } = useModal();
   /** Select */
-  const { onClickItem } = useTree();
+  const { toToolsPage } = usePlatform();
   const handleSelect = (id: string, group: string | null) => {
-    onClickItem?.(id, group);
-    onClose();
+    toToolsPage(id, group);
+    setClose();
   };
   /** Mount */
-  const [isMounted, setIsMounted] = useState(false);
   const { data: documents } = useSWR<Document[], Error>(
-    userId && isMounted ? `doc:${workspaceId}:search` : null,
+    userId && isOpen ? `doc:${workspaceId}:search` : null,
     (_key) => fetchUrl(`/api/documents?archived=${false}`),
     { onError: (e) => toast.error(e.message) },
   );
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-  /** Keyboard event */
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        toggle();
-      }
-    };
 
-    addEventListener("keydown", down);
-    return () => removeEventListener("keydown", down);
-  }, [toggle]);
-
-  if (!isMounted) return null;
   return (
     <CommandDialog
       className="z-[99999] pb-1"
       open={isOpen}
-      onOpenChange={onClose}
+      onOpenChange={setClose}
     >
       <CommandInput placeholder={`Search ${name}'s WorXpace...`} />
       <CommandList>
