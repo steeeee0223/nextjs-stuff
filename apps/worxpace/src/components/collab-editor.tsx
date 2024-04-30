@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { BlockNoteEditor, PartialBlock } from "@blocknote/core";
+import type { PartialBlock } from "@blocknote/core";
 import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
 import LiveblocksProvider from "@liveblocks/yjs";
 import { useTheme } from "next-themes";
@@ -10,8 +10,10 @@ import * as Y from "yjs";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 
+import { schema, type CustomEditor } from "~/components/blocknote";
 import { connectionIdToColor } from "~/lib";
 import { useRoom, useSelf } from "~/liveblocks.config";
+import { CustomSlashMenu } from "./blocknote";
 
 interface EditorProps {
   initialContent?: string | null;
@@ -60,7 +62,8 @@ function BlockNote({
   // Get user info from Liveblocks authentication endpoint
   const userInfo = useSelf();
 
-  const editor: BlockNoteEditor = useCreateBlockNote({
+  const editor: CustomEditor = useCreateBlockNote({
+    schema,
     initialContent: initialContent
       ? (JSON.parse(initialContent) as PartialBlock[])
       : undefined,
@@ -83,10 +86,13 @@ function BlockNote({
     <div>
       <BlockNoteView
         editor={editor}
+        slashMenu={false}
         editable={editable}
         onChange={() => onChange?.(JSON.stringify(editor.document))}
         theme={resolvedTheme === "dark" ? "dark" : "light"}
-      />
+      >
+        <CustomSlashMenu editor={editor} />
+      </BlockNoteView>
     </div>
   );
 }
