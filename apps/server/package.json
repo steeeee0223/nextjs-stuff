@@ -1,0 +1,64 @@
+{
+  "name": "@acme/server",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "nest build",
+    "clean": "rm -rf .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint .",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:cov": "vitest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/vitest --runInBand",
+    "test:e2e": "vitest --config e2e.config.ts",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@acme/prisma": "workspace:*",
+    "@acme/validators": "workspace:^0.1.0",
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/platform-express": "^10.0.0",
+    "reflect-metadata": "^0.2.0",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@acme/eslint-config": "workspace:*",
+    "@acme/prettier-config": "workspace:*",
+    "@nestjs/cli": "^10.0.0",
+    "@nestjs/schematics": "^10.0.0",
+    "@nestjs/testing": "^10.0.0",
+    "@swc/cli": "^0.3.12",
+    "@swc/core": "^1.4.17",
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.10.6",
+    "@types/supertest": "^6.0.0",
+    "@vitest/coverage-v8": "^1.5.3",
+    "eslint": "^8.56.0",
+    "jsdom": "^23.0.1",
+    "prettier": "^3.1.1",
+    "source-map-support": "^0.5.21",
+    "supertest": "^6.3.3",
+    "ts-loader": "^9.4.3",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.3.3",
+    "unplugin-swc": "^1.4.5",
+    "vitest": "^1.1.0",
+    "zod": "^3.22.4"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@acme/eslint-config/base",
+      "@acme/eslint-config/nestjs"
+    ]
+  },
+  "prettier": "@acme/prettier-config"
+}
