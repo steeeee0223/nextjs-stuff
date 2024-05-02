@@ -5,6 +5,7 @@
   "license": "MIT",
   "files": [
     "./base.js",
+    "./nestjs.js",
     "./nextjs.js",
     "./react.js"
   ],
