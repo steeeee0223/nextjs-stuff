@@ -2,15 +2,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 "use client";
 
-import type { MouseEvent } from "react";
-import {
-  ChevronDown,
-  ChevronRight,
-  MoreHorizontal,
-  Plus,
-  Trash,
-} from "lucide-react";
+import { useRef, type MouseEvent } from "react";
+import { MoreHorizontal, Plus, Trash } from "lucide-react";
 import stableHash from "stable-hash";
+import { useHover } from "usehooks-ts";
 
 import { IconBlock, type IconInfo } from "@/components/custom/icon-block";
 import {
@@ -34,6 +29,7 @@ export interface CRUDItemProps {
   icon?: IconInfo;
   id?: string;
   active?: boolean;
+  expandable?: boolean;
   expanded?: boolean;
   level?: number;
   shortcut?: string;
@@ -50,6 +46,7 @@ export const CRUDItem = ({
   icon = { type: "lucide", name: "file" },
   active,
   level = 0,
+  expandable = false,
   expanded,
   shortcut,
   onClick,
@@ -57,10 +54,13 @@ export const CRUDItem = ({
   onCreate,
   onDelete,
 }: CRUDItemProps) => {
-  const ExpandIcon = expanded ? ChevronDown : ChevronRight;
-  const handleExpand = (e: MouseEvent<HTMLDivElement>) => {
+  /** Icon Hover */
+  const hoverRef = useRef<HTMLDivElement>(null);
+  const isHover = useHover(hoverRef);
+  /** Events */
+  const handleExpand = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    onExpand?.();
+    if (isHover) onExpand?.();
   };
   const handleCreate = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -83,18 +83,30 @@ export const CRUDItem = ({
         active && "bg-primary/5 text-primary",
       )}
     >
-      {!!id && (
-        <div
-          role="button"
-          className={cn(bgHover, "h-full rounded-sm p-0.5")}
-          onClick={handleExpand}
-        >
-          <ExpandIcon
-            className={cn(iconSize, "shrink-0 text-muted-foreground/50")}
-          />
-        </div>
-      )}
-      <IconBlock key={stableHash(icon)} defaultIcon={icon} editable={false} />
+      <div ref={hoverRef}>
+        {expandable && (
+          <>
+            <IconBlock
+              className={cn("hidden shrink-0", expanded && isHover && "block")}
+              defaultIcon={{ type: "lucide", name: "chevron-down" }}
+              editable={false}
+              onClick={handleExpand}
+            />
+            <IconBlock
+              className={cn("hidden shrink-0", !expanded && isHover && "block")}
+              defaultIcon={{ type: "lucide", name: "chevron-right" }}
+              editable={false}
+              onClick={handleExpand}
+            />
+          </>
+        )}
+        <IconBlock
+          className={cn("shrink-0", expandable && isHover && "hidden")}
+          key={stableHash(icon)}
+          defaultIcon={icon}
+          editable={false}
+        />
+      </div>
       <span className="ml-1 truncate">{label}</span>
       {shortcut && (
         <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
@@ -137,16 +149,18 @@ export const CRUDItem = ({
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
-          <div
-            role="button"
-            onClick={handleCreate}
-            className={cn(
-              bgHover,
-              "ml-auto h-full rounded-sm p-0.5 opacity-0 group-hover:opacity-100",
-            )}
-          >
-            <Plus className={cn("h-4 w-4", "text-muted-foreground")} />
-          </div>
+          {expandable && (
+            <div
+              role="button"
+              onClick={handleCreate}
+              className={cn(
+                bgHover,
+                "ml-auto h-full rounded-sm p-0.5 opacity-0 group-hover:opacity-100",
+              )}
+            >
+              <Plus className={cn("h-4 w-4", "text-muted-foreground")} />
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { filterSuggestionItems } from "@blocknote/core";
 
 import "@blocknote/core/fonts/inter.css";
@@ -7,7 +9,7 @@ import {
   SuggestionMenuController,
 } from "@blocknote/react";
 
-import { insertCallout, type CustomEditor } from "./schema";
+import { insertCallout, insertQuote, type CustomEditor } from "./schema";
 
 interface CustomSlashMenuProps {
   editor: CustomEditor;
@@ -18,9 +20,13 @@ export const CustomSlashMenu = ({ editor }: CustomSlashMenuProps) => {
     <SuggestionMenuController
       triggerCharacter={"/"}
       getItems={async (query) =>
-        // Gets all default slash menu items and `insertCallout` item.
         filterSuggestionItems(
-          [...getDefaultReactSlashMenuItems(editor), insertCallout(editor)],
+          [
+            ...getDefaultReactSlashMenuItems(editor),
+            /** Customized items */
+            insertCallout(editor),
+            insertQuote(editor),
+          ],
           query,
         )
       }

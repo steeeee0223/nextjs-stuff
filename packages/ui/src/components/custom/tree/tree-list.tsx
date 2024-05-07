@@ -58,6 +58,7 @@ export function TreeList({
             onClick={() => onClickItem?.(id, group)}
             active={isItemActive?.(id, group)}
             level={level}
+            expandable={showEmptyChild}
             expanded={expanded[id]}
             onExpand={() => onExpand(id)}
             onCreate={() => onAddItem?.(id)}
