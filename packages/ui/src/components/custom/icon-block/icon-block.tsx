@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { MouseEventHandler, useMemo, useState, useTransition } from "react";
 import dynamic from "next/dynamic";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Theme, type EmojiClickData } from "emoji-picker-react";
@@ -45,12 +45,15 @@ const iconBlockVariants = cva("", {
 export interface IconBlockProps extends VariantProps<typeof iconBlockVariants> {
   editable?: boolean;
   className?: string;
+  /** @method onClick this fires only if `editable` is set to `false` */
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const IconBlock = ({
   className,
   size,
   editable = true,
+  onClick,
 }: IconBlockProps) => {
   /** Theme */
   const { resolvedTheme } = useTheme();
@@ -92,66 +95,72 @@ export const IconBlock = ({
   );
   return (
     <Popover>
-      <PopoverTrigger className={styles.popoverTrigger} disabled={!editable}>
+      <PopoverTrigger
+        className={styles.popoverTrigger}
+        disabled={!editable && !onClick}
+        onClick={!editable ? onClick : undefined}
+      >
         <IconDisplay
           iconInfo={currentIcon}
           className={cn(iconBlockVariants({ size, className }))}
         />
       </PopoverTrigger>
-      <PopoverContent className="z-[99999] h-[356px] w-[408px] p-0 shadow-none">
-        <Tabs defaultValue="emoji" className="relative mt-1 w-full">
-          <TabsList className="flex w-full justify-start rounded-none border-b bg-transparent p-0">
-            <div className="grow">
-              <TabsTrigger value="emoji" className={styles.tabTrigger}>
-                Emojis
-              </TabsTrigger>
-              <TabsTrigger value="lucide" className={styles.tabTrigger}>
-                Icons
-              </TabsTrigger>
-              <TabsTrigger value="file" className={styles.tabTrigger}>
-                Upload
-              </TabsTrigger>
-            </div>
-            <div className="grow-0">
-              <Button
-                onClick={remove}
-                size="sm"
-                className="mx-2 my-1 border-none p-1 shadow-none hover:bg-primary/5"
-                variant="outline"
-              >
-                Remove
-              </Button>
-            </div>
-          </TabsList>
-          <TabsContent value="emoji" className={cn(styles.tabContent, "p-0")}>
-            <EmojiPicker
-              height="300px"
-              width="406px"
-              theme={theme}
-              skinTonesDisabled
-              onEmojiClick={handleEmojiSelect}
-            />
-          </TabsContent>
-          <TabsContent value="lucide" className={styles.tabContent}>
-            <LucidePicker
-              onSelect={handleLucideSelect}
-              onColorChange={setColor}
-            />
-          </TabsContent>
-          <TabsContent value="file" className={styles.tabContent}>
-            <UrlForm disabled={isPending} onUrlSubmit={handleUrlSubmit} />
-            <ImageDropzone
-              className="mt-6 w-full border-solid border-input"
-              disabled={isPending}
-              value={file}
-              onChange={handleUpload}
-            />
-            <p className="p-4 text-center text-xs text-muted-foreground">
-              Recommended size is 280 × 280 pixels
-            </p>
-          </TabsContent>
-        </Tabs>
-      </PopoverContent>
+      {editable && (
+        <PopoverContent className="z-[99999] h-[356px] w-[408px] p-0 shadow-none">
+          <Tabs defaultValue="emoji" className="relative mt-1 w-full">
+            <TabsList className="flex w-full justify-start rounded-none border-b bg-transparent p-0">
+              <div className="grow">
+                <TabsTrigger value="emoji" className={styles.tabTrigger}>
+                  Emojis
+                </TabsTrigger>
+                <TabsTrigger value="lucide" className={styles.tabTrigger}>
+                  Icons
+                </TabsTrigger>
+                <TabsTrigger value="file" className={styles.tabTrigger}>
+                  Upload
+                </TabsTrigger>
+              </div>
+              <div className="grow-0">
+                <Button
+                  onClick={remove}
+                  size="sm"
+                  className="mx-2 my-1 border-none p-1 shadow-none hover:bg-primary/5"
+                  variant="outline"
+                >
+                  Remove
+                </Button>
+              </div>
+            </TabsList>
+            <TabsContent value="emoji" className={cn(styles.tabContent, "p-0")}>
+              <EmojiPicker
+                height="300px"
+                width="406px"
+                theme={theme}
+                skinTonesDisabled
+                onEmojiClick={handleEmojiSelect}
+              />
+            </TabsContent>
+            <TabsContent value="lucide" className={styles.tabContent}>
+              <LucidePicker
+                onSelect={handleLucideSelect}
+                onColorChange={setColor}
+              />
+            </TabsContent>
+            <TabsContent value="file" className={styles.tabContent}>
+              <UrlForm disabled={isPending} onUrlSubmit={handleUrlSubmit} />
+              <ImageDropzone
+                className="mt-6 w-full border-solid border-input"
+                disabled={isPending}
+                value={file}
+                onChange={handleUpload}
+              />
+              <p className="p-4 text-center text-xs text-muted-foreground">
+                Recommended size is 280 × 280 pixels
+              </p>
+            </TabsContent>
+          </Tabs>
+        </PopoverContent>
+      )}
     </Popover>
   );
 };

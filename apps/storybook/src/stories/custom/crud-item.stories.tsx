@@ -24,6 +24,7 @@ export const Default: Story = {
   args: {
     label: "New Page",
     icon: { type: "lucide", name: "circle-plus" },
+    expandable: false,
     onCreate: () => alert("Added New Page"),
   },
 };
@@ -31,14 +32,16 @@ export const Search: Story = {
   args: {
     label: "Search",
     icon: { type: "lucide", name: "search" },
+    expandable: false,
     onClick: () => alert("Opened Search Bar"),
     shortcut: "⌘K",
   },
 };
 export const Settings: Story = {
   args: {
-    label: "Search",
+    label: "Settings",
     icon: { type: "lucide", name: "settings" },
+    expandable: false,
     onClick: () => alert("Opened Settings Block"),
     shortcut: "⌘,",
   },
@@ -52,7 +55,7 @@ export const TreeItem: Story = {
     onClick: () => alert(`Clicked item`),
     active: true,
     level: 0,
-    expanded: true,
+    expandable: true,
     onExpand: () => alert(`Expanded item`),
     onCreate: () => alert(`Created item`),
     onDelete: () => alert(`Deleted item`),
