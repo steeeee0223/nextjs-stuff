@@ -1,6 +1,6 @@
 {
   "name": "@acme/tailwind-config",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -14,18 +14,18 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "tailwindcss": "^3.4.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@acme/eslint-config": "workspace:*",
+    "@acme/prettier-config": "workspace:*",
+    "@acme/tsconfig": "workspace:*",
     "eslint": "^8.56.0",
-    "prettier": "^3.1.1",
-    "typescript": "^5.3.3"
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5"
   },
   "eslintConfig": {
     "root": true,

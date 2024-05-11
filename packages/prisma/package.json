@@ -1,7 +1,7 @@
 {
   "name": "@acme/prisma",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
@@ -19,14 +19,14 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:^0.2.0",
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/tsconfig": "workspace:^0.1.0",
+    "@acme/eslint-config": "workspace:*",
+    "@acme/prettier-config": "workspace:*",
+    "@acme/tsconfig": "workspace:*",
     "@types/node": "^20.10.6",
     "eslint": "^8.56.0",
-    "prettier": "^3.1.1",
-    "prisma": "^5.8.1",
-    "typescript": "^5.3.3"
+    "prettier": "^3.2.5",
+    "prisma": "^5.13.0",
+    "typescript": "^5.4.5"
   },
   "eslintConfig": {
     "extends": [
@@ -35,6 +35,6 @@
   },
   "prettier": "@acme/prettier-config",
   "dependencies": {
-    "@prisma/client": "^5.8.1"
+    "@prisma/client": "^5.13.0"
   }
 }

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { IconPicker } from ".";
@@ -15,9 +15,7 @@ describe("<IconPicker />", () => {
     const user = userEvent.setup();
     const iconPicker = render(<IconPicker>Icon Picker</IconPicker>);
     const ui = screen.getByRole("button");
-    await user.click(ui);
-    await waitFor(() => {
-      expect(iconPicker.getByRole("dialog")).toBeDefined();
-    });
+    await act(() => user.click(ui));
+    expect(iconPicker.getByRole("dialog")).toBeDefined();
   });
 });

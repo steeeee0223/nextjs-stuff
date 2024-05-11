@@ -1,4 +1,4 @@
-import { render, type RenderResult } from "@testing-library/react";
+import { act, render, type RenderResult } from "@testing-library/react";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,7 @@ describe("<ModalProvider />", () => {
 
   it("should open the modal on trigger button", async () => {
     const trigger = rendered.getByRole("button", { name: "Open" });
-    await user.click(trigger);
+    await act(() => user.click(trigger));
 
     const modal = rendered.getByRole("dialog");
     expect(modal).toHaveTextContent("Modal");
@@ -51,10 +51,10 @@ describe("<ModalProvider />", () => {
 
   it("should close the modal on trigger the close button in modal", async () => {
     const trigger = rendered.getByRole("button", { name: "Open" });
-    await user.click(trigger);
+    await act(() => user.click(trigger));
 
     const close = rendered.getByRole("button", { name: "Close" });
-    await user.click(close);
+    await act(() => user.click(close));
     const modal = rendered.queryByRole("dialog");
     expect(modal).not.toBeInTheDocument();
   });

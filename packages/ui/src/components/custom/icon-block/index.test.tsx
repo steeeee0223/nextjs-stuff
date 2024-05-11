@@ -1,4 +1,4 @@
-import { render, type RenderResult } from "@testing-library/react";
+import { act, render, type RenderResult } from "@testing-library/react";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 
 import "../../../../__test__/mock/intersection-observer";
@@ -33,7 +33,7 @@ describe("<IconBlock /> - Menu", () => {
     const iconInfo: IconInfo = { type: "emoji", emoji: "🚀" };
     rendered = render(<IconBlock defaultIcon={iconInfo} editable />);
     const display = rendered.getByRole("button");
-    await user.click(display);
+    await act(() => user.click(display));
   });
 
   it("should render the default menu: Emojis", () => {
@@ -48,7 +48,7 @@ describe("<IconBlock /> - Menu", () => {
 
   it("should switch to Lucide icon picker", async () => {
     const tab = rendered.getByRole("tab", { name: "Icons" });
-    await user.click(tab);
+    await act(() => user.click(tab));
     expect(tab.ariaSelected).toBeTruthy();
     const tabPanel = rendered.getByRole("tabpanel");
     expect(tabPanel.id).toMatch(/content-lucide/);
