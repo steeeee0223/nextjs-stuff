@@ -15,7 +15,7 @@ const config = {
     "lucide-react",
   ],
   experimental: {
-    optimizePackageImports: ['lucide-react'],
+    optimizePackageImports: ["lucide-react"],
   },
 
   /** We already do linting and typechecking as separate tasks in CI */

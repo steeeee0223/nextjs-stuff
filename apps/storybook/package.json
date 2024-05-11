@@ -8,7 +8,7 @@
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "storybook dev -p 6006",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "next lint",
+    "lint": "eslint .",
     "start": "serve storybook-static",
     "typecheck": "tsc --noEmit"
   },
