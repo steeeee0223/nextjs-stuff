@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "storybook build -s public",
+    "build": "storybook build",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "storybook dev -p 6006",
     "format": "prettier --check . --ignore-path ../../.gitignore",
