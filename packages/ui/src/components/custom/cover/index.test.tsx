@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 
 import { Cover } from ".";
@@ -25,14 +25,14 @@ describe("<Cover />", () => {
 
   it("should not display buttons in preview state", async () => {
     const rendered = render(<Cover preview url="/" unsplashAPIKey="" />);
-    await user.hover(rendered.container);
+    await act(() => user.hover(rendered.container));
     const buttons = rendered.queryAllByRole("button");
     expect(buttons.length).toBe(0);
   });
 
   it("should display buttons on hover", async () => {
     const rendered = render(<Cover url="/" unsplashAPIKey="" />);
-    await user.hover(rendered.container);
+    await act(() => user.hover(rendered.container));
     const changeCoverButton = await rendered.findByRole("button", {
       name: "Change cover",
     });
@@ -48,11 +48,11 @@ describe("<Cover />", () => {
     const rendered = render(
       <Cover url="/" unsplashAPIKey="" onRemove={mock.onRemove} />,
     );
-    await user.hover(rendered.container);
+    await act(() => user.hover(rendered.container));
     const removeButton = await rendered.findByRole("button", {
       name: "Remove",
     });
-    await user.click(removeButton);
+    await act(() => user.click(removeButton));
     expect(mock.onRemove).toHaveBeenCalledOnce();
   });
 });

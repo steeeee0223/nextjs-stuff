@@ -4,7 +4,7 @@ import { Unsplash } from ".";
 
 describe("<Unsplash />", () => {
   it("should render the default text", () => {
-    const { getByText } = render(<Unsplash apiKey="" />);
-    expect(getByText("Unsplash")).toBeDefined();
+    const ui = render(<Unsplash apiKey="" />);
+    expect(ui.getByPlaceholderText(/Search for an image/i)).toBeDefined();
   });
 });

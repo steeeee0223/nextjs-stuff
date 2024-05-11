@@ -31,6 +31,7 @@ const config = {
     "**/.eslintrc.cjs",
     ".next",
     "dist",
+    "storybook-static",
     "pnpm-lock.yaml",
   ],
   reportUnusedDisableDirectives: true,

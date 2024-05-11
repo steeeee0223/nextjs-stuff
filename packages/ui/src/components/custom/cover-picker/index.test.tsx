@@ -1,4 +1,4 @@
-import { render, type RenderResult } from "@testing-library/react";
+import { act, render, type RenderResult } from "@testing-library/react";
 import userEvent, { type UserEvent } from "@testing-library/user-event";
 
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ describe("<CoverPicker /> - Menu", () => {
       </CoverPicker>,
     );
     const display = rendered.getByRole("button", { name: "Change cover" });
-    await user.click(display);
+    await act(() => user.click(display));
   });
 
   it("should render the default menu: Upload", () => {
@@ -42,7 +42,7 @@ describe("<CoverPicker /> - Menu", () => {
 
   it("should switch to Link tab", async () => {
     const tab = rendered.getByRole("tab", { name: "Link" });
-    await user.click(tab);
+    await act(() => user.click(tab));
     expect(tab.ariaSelected).toBeTruthy();
     const tabPanel = rendered.getByRole("tabpanel");
     expect(tabPanel.id).toMatch(/link/);

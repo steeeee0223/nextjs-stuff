@@ -1,7 +1,7 @@
 {
   "name": "@acme/prettier-config",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "exports": {
     ".": "./index.js"
@@ -12,13 +12,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
-    "prettier": "^3.1.1",
-    "prettier-plugin-tailwindcss": "^0.5.10"
+    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.14"
   },
   "devDependencies": {
-    "@acme/tsconfig": "workspace:^0.1.0",
-    "typescript": "^5.3.3"
+    "@acme/tsconfig": "workspace:*",
+    "typescript": "^5.4.5"
   },
   "prettier": "@acme/prettier-config"
 }

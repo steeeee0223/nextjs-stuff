@@ -22,7 +22,7 @@ export const Sidebar: Story = {
     children: (
       <div>
         <AddItem />
-        <TreeItems showEmptyChild />
+        <TreeItems />
       </div>
     ),
   },
@@ -31,7 +31,7 @@ export const Sidebar: Story = {
 export const FolderSystem: Story = {
   args: {
     className: "w-80 bg-neutral-200 p-4 rounded-sm",
-    children: <TreeItems title="React App" showEmptyChild={false} />,
+    children: <TreeItems title="React App" />,
     initialItems: folderSystemItems,
   },
 };
@@ -44,8 +44,8 @@ export const GroupFolders: Story = {
     children: (
       <div>
         <AddItem group="main" />
-        <TreeItems group="main" title="System" showEmptyChild={false} />
-        <TreeItems group="config" title="Config" showEmptyChild={false} />
+        <TreeItems group="main" title="System" />
+        <TreeItems group="config" title="Config" />
       </div>
     ),
   },
@@ -55,7 +55,7 @@ export const WithSWR: Story = {
   args: {
     className: "w-80 bg-neutral-200 p-4 rounded-sm",
     initialItems: [],
-    children: <TreeItems showEmptyChild />,
+    children: <TreeItems />,
   },
   render: (props) => <Provider {...props} />,
 };

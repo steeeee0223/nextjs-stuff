@@ -41,11 +41,9 @@ export const AddItem = ({ group }: { group?: string }) => {
 export const TreeItems = ({
   group,
   title,
-  showEmptyChild,
 }: {
   group?: string;
   title?: string;
-  showEmptyChild: boolean;
 }) => {
   const { isLoading, dispatch } = useTree();
   const onAddItem = (parentId?: string) =>
@@ -79,7 +77,7 @@ export const TreeItems = ({
         </>
       ) : (
         <TreeList
-          showEmptyChild={showEmptyChild}
+          showEmptyChild
           group={group ?? null}
           parentId={null}
           onAddItem={onAddItem}
