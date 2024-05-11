@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { Hint } from ".";
@@ -15,9 +15,7 @@ describe("<Hint />", () => {
     const user = userEvent.setup();
     const hint = render(<Hint description={description}>Hover</Hint>);
     const ui = screen.getByRole("button");
-    await user.hover(ui);
-    await waitFor(() => {
-      expect(hint.getByRole("tooltip")).toHaveTextContent(description);
-    });
+    await act(() => user.hover(ui));
+    expect(hint.getByRole("tooltip")).toHaveTextContent(description);
   });
 });

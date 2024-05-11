@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from "react";
 import type { PartialBlock } from "@blocknote/core";
-import { BlockNoteView, useCreateBlockNote } from "@blocknote/react";
+import { BlockNoteView } from "@blocknote/mantine";
+import { useCreateBlockNote } from "@blocknote/react";
 import LiveblocksProvider from "@liveblocks/yjs";
 import { useTheme } from "next-themes";
 import * as Y from "yjs";
 
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
+import "@blocknote/mantine/style.css";
 
 import { schema, type CustomEditor } from "~/components/blocknote";
 import { connectionIdToColor } from "~/lib";

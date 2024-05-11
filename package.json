@@ -1,16 +1,16 @@
 {
-  "name": "create-t3-turbo",
+  "name": "next-stuff",
   "private": true,
   "engines": {
     "node": ">=20.10"
   },
-  "packageManager": "pnpm@8.14.0",
+  "packageManager": "pnpm@9.1.0",
   "scripts": {
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
-    "db:push": "pnpm -F db push",
-    "db:studio": "pnpm -F db studio",
+    "db:push": "pnpm -F prisma push",
+    "db:studio": "pnpm -F prisma dev",
     "dev": "turbo dev --parallel",
     "gen:action": "turbo gen next-action",
     "gen:package": "turbo gen init",
@@ -25,11 +25,11 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "@acme/prettier-config": "workspace:^0.1.0",
-    "@turbo/gen": "^1.11.3",
-    "prettier": "^3.1.1",
-    "turbo": "^1.11.3",
-    "typescript": "^5.3.3"
+    "@acme/prettier-config": "workspace:*",
+    "@turbo/gen": "^1.13.3",
+    "prettier": "^3.2.5",
+    "turbo": "^1.13.3",
+    "typescript": "^5.4.5"
   },
   "prettier": "@acme/prettier-config"
 }
