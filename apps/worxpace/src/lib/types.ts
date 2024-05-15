@@ -11,3 +11,5 @@ export interface Client {
 }
 
 export type Action<Input, Output> = MutationFetcher<Output, string, Input>;
+
+export type PageType = "document" | "whiteboard" | "kanban" | "workflow";

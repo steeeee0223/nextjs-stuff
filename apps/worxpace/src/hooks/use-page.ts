@@ -5,8 +5,7 @@ import useSWR from "swr";
 import type { Document } from "@acme/prisma";
 import type { TreeItem } from "@acme/ui/custom";
 
-import { getDocument } from "~/app/(platform)/_functions";
-import { fetchUrl, toIconInfo } from "~/lib";
+import { fetchUrl, getDocument, toIconInfo } from "~/lib";
 
 export interface PageState {
   page?: Document;
