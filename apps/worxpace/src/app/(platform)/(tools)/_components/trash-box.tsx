@@ -26,7 +26,12 @@ const TrashBox = () => {
   const [search, setSearch] = useState("");
   const archivedDocs = useMemo(
     () =>
-      ["trash:document", "trash:kanban", "trash:whiteboard"].flatMap(getGroup),
+      [
+        "trash:document",
+        "trash:kanban",
+        "trash:whiteboard",
+        "trash:workflow",
+      ].flatMap(getGroup),
     [getGroup],
   );
   const filteredDocuments = archivedDocs.filter(({ title }) =>

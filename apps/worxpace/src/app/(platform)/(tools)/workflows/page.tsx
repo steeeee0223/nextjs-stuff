@@ -24,7 +24,7 @@ const Page = () => {
   return (
     <div className="pb-40">
       <DocHeader document={page} preview />
-      <Workflows />
+      <Workflows workspaceId={workspaceId} />
     </div>
   );
 };

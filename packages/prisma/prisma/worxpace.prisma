@@ -50,6 +50,7 @@ enum ENTITY_TYPE {
   KANBAN
   WHITEBOARD
   DOCUMENT
+  WORKFLOW
 }
 
 type User {

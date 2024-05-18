@@ -1,11 +1,11 @@
 "use client";
 
 import { FC } from "react";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 import { z } from "zod";
 
 import { useModal } from "@acme/ui/custom";
@@ -25,6 +25,9 @@ import {
   Input,
 } from "@acme/ui/shadcn";
 
+import { createDocument } from "~/actions";
+import { useClient } from "~/hooks";
+
 const WorkflowFormSchema = z.object({
   name: z.string().min(1, "Required"),
   description: z.string().min(1, "Required"),
@@ -37,6 +40,8 @@ export interface WorkflowFormProps {
 
 const Workflowform: FC<WorkflowFormProps> = ({ subTitle, title }) => {
   const { setClose } = useModal();
+  const { workspaceId } = useClient();
+  /** Form */
   const form = useForm<z.infer<typeof WorkflowFormSchema>>({
     mode: "onChange",
     resolver: zodResolver(WorkflowFormSchema),
@@ -45,23 +50,27 @@ const Workflowform: FC<WorkflowFormProps> = ({ subTitle, title }) => {
       description: "",
     },
   });
-
   const isLoading = form.formState.isLoading;
-  const router = useRouter();
 
-  const handleSubmit = async (values: z.infer<typeof WorkflowFormSchema>) => {
-    console.log(`submitted data:`, values);
-    // const workflow = await onCreateWorkflow(values.name, values.description)
-    const workflow = { message: "fake workflow" };
-    if (workflow) {
-      toast.message(workflow.message);
-      router.refresh();
-    }
+  /** Action: Create */
+  const { trigger: create } = useSWRMutation(
+    `doc:${workspaceId}`,
+    createDocument,
+    {
+      onSuccess: (data) => toast.success(`Workflow Created: ${data.title}`),
+      onError: (e: Error) => toast.error(e.message),
+    },
+  );
+  const handleSubmit = async ({
+    name,
+    description,
+  }: z.infer<typeof WorkflowFormSchema>) => {
+    const content = JSON.stringify({ type: "workflow", name, description });
+    await create({ type: "workflow", title: name, content });
     setClose();
   };
 
   return (
-    // max-w-[650px]
     <Card className="w-full border-none shadow-none">
       {title && subTitle && (
         <CardHeader>

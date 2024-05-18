@@ -176,7 +176,7 @@ export const Sidebar = forwardRef(function Sidebar(
           <Item
             label="Workflows"
             icon={{ type: "lucide", name: "git-pull-request-arrow" }}
-            // onClick={() => router.push(`/workflows`)}
+            onClick={() => router.push(`/workflows`)}
           />
         </Hint>
         <Hint
