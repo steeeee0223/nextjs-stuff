@@ -57,7 +57,7 @@ const DocList = ({
           </Hint>
         </div>
         <Hint
-          side="top"
+          side="right"
           description={`Add a ${group}`}
           className={cn(theme.tooltip, "hover:opacity-100")}
         >

@@ -16,7 +16,7 @@ import { ChevronsLeft } from "lucide-react";
 import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 
-import { CRUDItem as Item, useModal, useTree } from "@acme/ui/custom";
+import { Hint, CRUDItem as Item, useModal, useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
 import { WorkspaceSwitcher } from "@acme/ui/notion";
 import { Popover, PopoverContent, PopoverTrigger } from "@acme/ui/shadcn";
@@ -51,6 +51,7 @@ export const Sidebar = forwardRef(function Sidebar(
   const router = useRouter();
   const { path, userId, workspaceId } = useClient();
   /** Workspace */
+  const { isLoading, trigger } = usePages(workspaceId);
   const { signOut } = useAuth();
   const { setActive } = useOrganizationList();
   const handleSelect = async (id: string) => {
@@ -65,14 +66,19 @@ export const Sidebar = forwardRef(function Sidebar(
   /** Modals */
   const { setOpen } = useModal();
   const handleSettings = () => void setOpen(<SettingsModal />);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleSearch = useCallback(() => void setOpen(<SearchCommand />), []);
+  const fetchSearchData = async () => {
+    const data = await trigger();
+    const documents = data?.filter(({ isArchived }) => !isArchived) ?? [];
+    return { documents };
+  };
+  const handleSearch = useCallback(
+    () => void setOpen(<SearchCommand />, fetchSearchData),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fetchSearchData],
+  );
   /** Docs */
   const { dispatch, onClickItem } = useTree();
   const onError = (e: Error) => toast.error(e.message);
-  const { isLoading } = usePages(workspaceId, (data) =>
-    dispatch({ type: "set", payload: data }),
-  );
   /** Action: Create */
   const { trigger: create } = useSWRMutation(
     `doc:${workspaceId}`,
@@ -141,23 +147,56 @@ export const Sidebar = forwardRef(function Sidebar(
       </div>
       <div>
         <WorkspaceSwitcher onLogout={handleLogout} onSelect={handleSelect} />
-        <Item
-          label="Search"
-          icon={{ type: "lucide", name: "search" }}
-          onClick={handleSearch}
-          shortcut="⌘K"
-        />
-        <Item
-          label="Settings"
-          icon={{ type: "lucide", name: "settings" }}
-          onClick={handleSettings}
-          shortcut="⌘,"
-        />
-        <Item
-          label="New page"
-          icon={{ type: "lucide", name: "circle-plus" }}
-          onClick={() => create({ type: "document", title: "Untitled" })}
-        />
+        <Hint
+          side="right"
+          description="Search and quickly jump to a page"
+          className={theme.tooltip}
+          triggerProps="min-w-full"
+        >
+          <Item
+            label="Search"
+            icon={{ type: "lucide", name: "search" }}
+            onClick={handleSearch}
+            shortcut="⌘K"
+          />
+        </Hint>
+        <Hint
+          side="right"
+          description="Manage your account and settings"
+          className={theme.tooltip}
+          triggerProps="min-w-full"
+        >
+          <Item
+            label="Settings"
+            icon={{ type: "lucide", name: "settings" }}
+            onClick={handleSettings}
+            shortcut="⌘,"
+          />
+        </Hint>
+        <Hint
+          side="right"
+          description="Manage your workflows"
+          className={theme.tooltip}
+          triggerProps="min-w-full"
+        >
+          <Item
+            label="Workflows"
+            icon={{ type: "lucide", name: "git-pull-request-arrow" }}
+            onClick={() => router.push(`/workflows`)}
+          />
+        </Hint>
+        <Hint
+          side="right"
+          description="Create a new document"
+          className={theme.tooltip}
+          triggerProps="min-w-full"
+        >
+          <Item
+            label="New page"
+            icon={{ type: "lucide", name: "circle-plus" }}
+            onClick={() => create({ type: "document", title: "Untitled" })}
+          />
+        </Hint>
       </div>
       <div className="mt-4 flex flex-col gap-y-4">
         <DocList
@@ -193,7 +232,14 @@ export const Sidebar = forwardRef(function Sidebar(
         />
         <Popover>
           <PopoverTrigger className="mt-4 w-full">
-            <Item label="Trash" icon={{ type: "lucide", name: "trash" }} />
+            <Hint
+              side="right"
+              description="Restore deleted pages"
+              className={theme.tooltip}
+              triggerProps="min-w-full"
+            >
+              <Item label="Trash" icon={{ type: "lucide", name: "trash" }} />
+            </Hint>
           </PopoverTrigger>
           <PopoverContent
             className="z-[99999] w-72 p-0"

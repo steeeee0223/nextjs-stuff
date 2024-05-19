@@ -8,6 +8,7 @@ export const usePlatform = () => {
     if (group === "document") router.push(`/documents/${id}`);
     if (group === "kanban") router.push(`/kanban/${id}`);
     if (group === "whiteboard") router.push(`/whiteboard/${id}`);
+    if (group === "workflow") router.push(`/workflows/${id}`);
   };
   return { toToolsPage };
 };

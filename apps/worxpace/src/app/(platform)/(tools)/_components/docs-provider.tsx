@@ -7,6 +7,7 @@ import { TreeProvider } from "@acme/ui/custom";
 import { useNavControl } from "@acme/ui/hooks";
 
 import { DocHeaderSkeleton, Room } from "~/components";
+import { GROUPS } from "~/constants/site";
 import { usePlatform } from "~/hooks/use-platform";
 import Navbar, { NavbarSkeleton } from "./navbar";
 import { Sidebar } from "./sidebar";
@@ -18,6 +19,7 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
     documentId?: string;
     boardId?: string;
     whiteboardId?: string;
+    workflowId?: string;
   }>();
   /** Sidebar & Navbar */
   const {
@@ -42,28 +44,18 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
   }, [pathname, isMobile]);
   /** Docs */
   const pageId =
-    params.documentId ?? params.boardId ?? params.whiteboardId ?? null;
-  const groups = [
-    "document",
-    "kanban",
-    "whiteboard",
-    "trash:document",
-    "trash:kanban",
-    "trash:whiteboard",
-  ];
-  const isItemActive = (id: string, group: string | null) => {
-    if (group === "document") return params.documentId === id;
-    if (group === "kanban") return params.boardId === id;
-    if (group === "whiteboard") return params.whiteboardId === id;
-    return false;
-  };
+    params.documentId ??
+    params.boardId ??
+    params.whiteboardId ??
+    params.workflowId ??
+    null;
+  const isItemActive = (id: string) => pageId === id;
 
   return (
     <TreeProvider
       className="flex h-full dark:bg-[#1F1F1F]"
-      groups={groups}
+      groups={GROUPS}
       onClickItem={toToolsPage}
-      // onClickItem={onClickItem}
       isItemActive={isItemActive}
     >
       <Sidebar

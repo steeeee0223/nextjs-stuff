@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 
 export interface HintProps {
   className?: string;
+  /** @property triggerProps modifies the `className` of `TooltipTrigger`  */
+  triggerProps?: string;
   children: ReactNode;
   description: string;
   asChild?: boolean;
@@ -22,6 +24,7 @@ export interface HintProps {
 export const Hint = ({
   children,
   className,
+  triggerProps,
   description,
   asChild,
   side = "bottom",
@@ -32,7 +35,9 @@ export const Hint = ({
   return (
     <TooltipProvider>
       <Tooltip delayDuration={0}>
-        <TooltipTrigger asChild={asChild}>{children}</TooltipTrigger>
+        <TooltipTrigger asChild={asChild} className={triggerProps}>
+          {children}
+        </TooltipTrigger>
         <TooltipContent
           sideOffset={sideOffset}
           side={side}

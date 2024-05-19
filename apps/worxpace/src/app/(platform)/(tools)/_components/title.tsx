@@ -15,21 +15,23 @@ import { toIconInfo } from "~/lib";
 
 interface TitleProps {
   page: Document;
+  editable?: boolean;
 }
 
-const Title = ({ page }: TitleProps) => {
+const Title = ({ page, editable = true }: TitleProps) => {
   const [icon, _setIcon] = useState(() => toIconInfo(page.icon));
   const [title, setTitle] = useState(page.title);
   /** Input */
   const inputRef = useRef<HTMLInputElement>(null);
   const [isEditing, setIsEditing] = useState(false);
   const enableInput = () => {
-    // setTitle(page.title);
-    setIsEditing(true);
-    setTimeout(() => {
-      inputRef.current?.focus();
-      inputRef.current?.setSelectionRange(0, inputRef.current.value.length);
-    }, 0);
+    if (editable) {
+      setIsEditing(true);
+      setTimeout(() => {
+        inputRef.current?.focus();
+        inputRef.current?.setSelectionRange(0, inputRef.current.value.length);
+      }, 0);
+    }
   };
   const disableInput = () => setIsEditing(false);
   /** Action - Rename */
@@ -66,7 +68,7 @@ const Title = ({ page }: TitleProps) => {
         defaultIcon={toIconInfo(page.icon)}
         editable={false}
       />
-      {isEditing ? (
+      {editable && isEditing ? (
         <Input
           ref={inputRef}
           onClick={enableInput}

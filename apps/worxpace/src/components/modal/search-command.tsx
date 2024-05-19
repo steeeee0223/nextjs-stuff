@@ -1,7 +1,5 @@
 "use client";
 
-import { toast } from "sonner";
-import useSWR from "swr";
 import { stableHash } from "swr/_internal";
 
 import { type Document } from "@acme/prisma";
@@ -17,25 +15,19 @@ import {
 
 import { useClient } from "~/hooks";
 import { usePlatform } from "~/hooks/use-platform";
-import { fetchUrl, toIconInfo } from "~/lib";
+import { toIconInfo } from "~/lib";
 
 const SearchCommand = () => {
   /** Auth */
-  const { workspace: name, userId, workspaceId } = useClient();
+  const { workspace: name } = useClient();
   /** Search */
-  const { isOpen, setClose } = useModal();
+  const { data, isOpen, setClose } = useModal<{ documents?: Document[] }>();
   /** Select */
   const { toToolsPage } = usePlatform();
   const handleSelect = (id: string, group: string | null) => {
     toToolsPage(id, group);
     setClose();
   };
-  /** Mount */
-  const { data: documents } = useSWR<Document[], Error>(
-    userId && isOpen ? `doc:${workspaceId}:search` : null,
-    (_key) => fetchUrl(`/api/documents?archived=${false}`),
-    { onError: (e) => toast.error(e.message) },
-  );
 
   return (
     <CommandDialog
@@ -47,7 +39,7 @@ const SearchCommand = () => {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Pages">
-          {documents?.map(({ id, title, icon, type }) => (
+          {data.documents?.map(({ id, title, icon, type }) => (
             <CommandItem
               key={id}
               value={title}
