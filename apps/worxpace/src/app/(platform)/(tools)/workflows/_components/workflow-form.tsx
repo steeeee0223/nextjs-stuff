@@ -65,7 +65,12 @@ const Workflowform: FC<WorkflowFormProps> = ({ subTitle, title }) => {
     name,
     description,
   }: z.infer<typeof WorkflowFormSchema>) => {
-    const content = JSON.stringify({ type: "workflow", name, description });
+    const content = JSON.stringify({
+      type: "workflow",
+      name,
+      description,
+      isPublished: false,
+    });
     await create({ type: "workflow", title: name, content });
     setClose();
   };
