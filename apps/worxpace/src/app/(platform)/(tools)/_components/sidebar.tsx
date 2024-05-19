@@ -51,6 +51,7 @@ export const Sidebar = forwardRef(function Sidebar(
   const router = useRouter();
   const { path, userId, workspaceId } = useClient();
   /** Workspace */
+  const { isLoading, trigger } = usePages(workspaceId);
   const { signOut } = useAuth();
   const { setActive } = useOrganizationList();
   const handleSelect = async (id: string) => {
@@ -65,14 +66,19 @@ export const Sidebar = forwardRef(function Sidebar(
   /** Modals */
   const { setOpen } = useModal();
   const handleSettings = () => void setOpen(<SettingsModal />);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleSearch = useCallback(() => void setOpen(<SearchCommand />), []);
+  const fetchSearchData = async () => {
+    const data = await trigger();
+    const documents = data?.filter(({ isArchived }) => !isArchived) ?? [];
+    return { documents };
+  };
+  const handleSearch = useCallback(
+    () => void setOpen(<SearchCommand />, fetchSearchData),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fetchSearchData],
+  );
   /** Docs */
   const { dispatch, onClickItem } = useTree();
   const onError = (e: Error) => toast.error(e.message);
-  const { isLoading } = usePages(workspaceId, (data) =>
-    dispatch({ type: "set", payload: data }),
-  );
   /** Action: Create */
   const { trigger: create } = useSWRMutation(
     `doc:${workspaceId}`,

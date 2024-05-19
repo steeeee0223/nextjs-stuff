@@ -8,6 +8,7 @@ import { Label, Switch } from "@acme/ui/shadcn";
 
 import { archiveDocument } from "~/actions";
 import { usePages } from "~/hooks";
+import { toIconInfo } from "~/lib";
 import TableHeader from "./table-header";
 
 interface WorkflowsProps {
@@ -17,7 +18,9 @@ interface WorkflowsProps {
 const Workflows = ({ workspaceId }: WorkflowsProps) => {
   const { onClickItem } = useTree();
   const { documents, isLoading } = usePages(workspaceId);
-  const workflows = documents?.filter(({ group }) => group === "workflow");
+  const workflows = documents?.filter(
+    ({ type, isArchived }) => type === "workflow" && !isArchived,
+  );
   /** Action: Archive */
   const { trigger: archive } = useSWRMutation(
     `doc:${workspaceId}`,
@@ -52,7 +55,7 @@ const Workflows = ({ workspaceId }: WorkflowsProps) => {
                 label={title}
                 id={id}
                 expandable={false}
-                icon={icon}
+                icon={toIconInfo(icon)}
                 onClick={() => onClickItem?.(id, "workflow")}
                 onDelete={(id) => void archive({ id })}
               />
