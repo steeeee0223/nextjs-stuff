@@ -3,10 +3,9 @@
 import useSWR from "swr";
 
 import type { Document } from "@acme/prisma";
-import type { TreeItem } from "@acme/ui/custom";
+import { useTree } from "@acme/ui/custom";
 
-import { getDocument } from "~/app/(platform)/_functions";
-import { fetchUrl, toIconInfo } from "~/lib";
+import { fetchUrl, getDocument, toIconInfo } from "~/lib";
 
 export interface PageState {
   page?: Document;
@@ -28,18 +27,11 @@ export const usePage = (id: string | null, preview: boolean) => {
   return { page, isLoading, error };
 };
 
-export const usePages = (
-  workspaceId: string,
-  onSuccess?: (data: TreeItem[]) => void,
-) => {
-  const fetchItems = async (): Promise<TreeItem[]> => {
+export const usePages = (workspaceId: string) => {
+  const { dispatch } = useTree();
+  const fetchItems = async () => {
     try {
-      const documents: Document[] = await fetchUrl(`/api/documents/`);
-      return documents.map((doc) => ({
-        ...doc,
-        icon: toIconInfo(doc.icon),
-        group: doc.isArchived ? `trash:${doc.type}` : doc.type,
-      }));
+      return await fetchUrl<Document[]>(`/api/documents/`);
     } catch {
       throw new Error("Error occurred while fetching documents");
     }
@@ -48,9 +40,18 @@ export const usePages = (
     data: documents,
     isLoading,
     error,
-  } = useSWR<TreeItem[], Error>(`doc:${workspaceId}`, fetchItems, {
-    onSuccess,
+    mutate,
+  } = useSWR<Document[], Error>(`doc:${workspaceId}`, fetchItems, {
+    onSuccess: (data) =>
+      dispatch({
+        type: "set",
+        payload: data.map((doc) => ({
+          ...doc,
+          icon: toIconInfo(doc.icon),
+          group: doc.isArchived ? `trash:${doc.type}` : doc.type,
+        })),
+      }),
     onError: (e) => console.log(`[swr:workspace]: ${e.message}`),
   });
-  return { documents, isLoading, error };
+  return { documents, isLoading, error, trigger: mutate };
 };

@@ -5,11 +5,13 @@ import React, { useEffect, useState } from "react";
 import { ModalContext } from "./modal-context";
 import type { ModalContextInterface, ModalData } from "./modal-context";
 
-export type ModalProviderProps = React.PropsWithChildren;
+export type ModalProviderProps<_T extends ModalData> = React.PropsWithChildren;
 
-export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
+export function ModalProvider<T extends ModalData>({
+  children,
+}: ModalProviderProps<T>) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [data, setData] = useState<ModalData>({});
+  const [data, setData] = useState<T>({} as T);
   const [showingModal, setShowingModal] = useState<React.ReactNode>(null);
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -17,7 +19,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     setIsMounted(true);
   }, []);
 
-  const contextValue: ModalContextInterface = {
+  const contextValue: ModalContextInterface<ModalData> = {
     data,
     isOpen,
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
@@ -31,7 +33,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     },
     setClose: () => {
       setIsOpen(false);
-      setData({});
+      setData({} as T);
     },
   };
 
@@ -42,4 +44,4 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       {showingModal}
     </ModalContext.Provider>
   );
-};
+}

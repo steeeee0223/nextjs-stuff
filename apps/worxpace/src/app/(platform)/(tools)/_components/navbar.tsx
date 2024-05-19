@@ -41,7 +41,7 @@ const Navbar = forwardRef(function Navbar(
         className={cn(
           theme.bg.navbar,
           theme.flex.center,
-          "w-full gap-x-4 px-3 py-2",
+          "h-12 w-full gap-x-4 px-3 py-2",
         )}
       >
         {isCollapsed && (
@@ -75,7 +75,7 @@ export const NavbarSkeleton = () => {
       className={cn(
         theme.bg.navbar,
         theme.flex.center,
-        "w-full gap-x-4 px-3 py-2",
+        "h-12 w-full gap-x-4 px-3 py-2",
       )}
     >
       <Title.Skeleton />
