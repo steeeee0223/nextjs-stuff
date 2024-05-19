@@ -3,28 +3,26 @@
 
 import React, { createContext, useContext } from "react";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ModalData {}
+export type ModalData = Record<string, unknown>;
 
-export interface ModalContextInterface {
-  data: ModalData;
+export interface ModalContextInterface<T extends ModalData> {
+  data: T;
   isOpen: boolean;
-  setOpen: (
-    modal: React.ReactNode,
-    fetchData?: () => Promise<ModalData>,
-  ) => void;
+  setOpen: <T>(modal: React.ReactNode, fetchData?: () => Promise<T>) => void;
   setClose: () => void;
 }
 
-export const ModalContext = createContext<ModalContextInterface>({
+export const ModalContext = createContext<ModalContextInterface<ModalData>>({
   data: {},
   isOpen: false,
   setOpen: () => {},
   setClose: () => {},
 });
 
-export function useModal(): ModalContextInterface {
-  const object = useContext(ModalContext);
+export function useModal<T extends ModalData>(): ModalContextInterface<T> {
+  const object = useContext<ModalContextInterface<T>>(
+    ModalContext as unknown as React.Context<ModalContextInterface<T>>,
+  );
   if (!object) throw new Error("useModal must be used within ModalProvider");
   return object;
 }
