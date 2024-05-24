@@ -16,9 +16,25 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+export type TabType =
+  | "my-account"
+  | "my-settings"
+  | "my-notifications"
+  | "my-connections"
+  | "language-region"
+  | "settings"
+  | "people"
+  | "plans"
+  | "billing"
+  | "sites"
+  | "security"
+  | "identiy"
+  | "connections"
+  | "import";
+
 interface Item {
   name: string;
-  value: string;
+  value: TabType;
   Icon: LucideIcon;
 }
 
@@ -41,6 +57,3 @@ export const workspace: Item[] = [
   { name: "Connections", Icon: LayoutGrid, value: "connections" },
   { name: "Import", Icon: ArrowDownToLine, value: "import" },
 ] as const;
-
-const tabs = account.concat(workspace);
-export type TabType = (typeof tabs)[number]["value"];

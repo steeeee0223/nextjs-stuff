@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Section, SectionItem, SectionSeparator } from "../_components";
 import { mockUser } from "../mock";
-import { Section, SectionItem, SectionSeparator } from "../section";
 import { myAccount } from "./account.data";
+import { styles } from "./utils";
 
 export const Account = () => {
   const user = mockUser;
@@ -32,11 +33,11 @@ export const Account = () => {
                 Preferred name
               </Label>
               <Input
+                variant="notion"
                 type="username"
                 id="username"
                 value={user.name}
                 onChange={handleUpdateName}
-                className="bg-primary/6 h-7 select-none rounded-sm text-sm"
               />
             </div>
           </div>
@@ -45,27 +46,23 @@ export const Account = () => {
       <SectionSeparator />
       <Section title="Account security">
         <SectionItem title={myAccount.email.title} description={user.email}>
-          <Button
-            variant="outline"
-            size="sm"
-            className="select-none hover:bg-primary/10"
-          >
+          <Button variant="outline" size="sm" className={styles.button}>
             Change email
           </Button>
         </SectionItem>
         <SectionSeparator size="sm" />
         <SectionItem {...myAccount.password}>
-          <Switch />
+          <Switch size="sm" />
         </SectionItem>
         <SectionSeparator size="sm" />
         <SectionItem {...myAccount.verification}>
-          <Switch disabled />
+          <Switch size="sm" disabled />
         </SectionItem>
       </Section>
       <SectionSeparator />
       <Section title="Support">
         <SectionItem {...myAccount.support}>
-          <Switch />
+          <Switch size="sm" />
         </SectionItem>
         <SectionSeparator size="sm" />
         <SectionItem {...myAccount.logout}>

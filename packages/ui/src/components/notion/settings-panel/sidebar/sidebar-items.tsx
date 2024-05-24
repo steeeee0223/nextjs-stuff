@@ -3,7 +3,7 @@
 import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import type { UserState } from "../workspace-provider";
+import type { UserState } from "../../workspace-provider";
 
 export interface TabProps {
   name: string;
@@ -21,7 +21,7 @@ export const Tab = ({ name, isActive, Icon, onClick }: TabProps) => {
       )}
       onClick={onClick}
     >
-      <Icon className="h-5 w-5" />
+      <Icon strokeWidth={1.75} className="h-5 w-5" />
       <p className="m-0 px-2 py-0 text-sm">{name}</p>
     </div>
   );
