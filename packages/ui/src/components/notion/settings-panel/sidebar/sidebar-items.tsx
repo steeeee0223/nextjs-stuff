@@ -3,7 +3,7 @@
 import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import type { UserState } from "../../workspace-provider";
+import type { UserStore } from "../index.types";
 
 export interface TabProps {
   name: string;
@@ -27,13 +27,13 @@ export const Tab = ({ name, isActive, Icon, onClick }: TabProps) => {
   );
 };
 
-export const User = ({ user }: { user: UserState }) => {
+export const User = ({ user }: { user: UserStore }) => {
   return (
     <div className="flex items-center px-4 py-1">
       <div>
         <img
-          src="https://github.com/shadcn.png"
-          alt=""
+          src={user.imageUrl}
+          alt="CN"
           className="mr-3 w-5 rounded-full border border-solid"
         />
       </div>

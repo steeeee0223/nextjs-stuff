@@ -15,18 +15,33 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const mockSettings = {
+  user: {
+    id: "1",
+    name: "John Doe",
+    email: "johndoe@example.com",
+    imageUrl: "https://github.com/shadcn.png",
+  },
+  account: {
+    preferredName: "John Doe",
+    email: "johndoe@example.com",
+  },
+};
+
 export const Default: Story = {
-  render: () => (
+  args: { settings: mockSettings },
+  render: (props) => (
     <div className="flex h-[calc(100vh-100px)] max-h-[720px] w-[calc(100vw-100px)] max-w-[1150px] rounded border-solid p-0 shadow">
-      <SettingsPanel />
+      <SettingsPanel {...props} />
     </div>
   ),
 };
 
 export const Modal: Story = {
-  render: () => (
+  args: { settings: mockSettings },
+  render: ({ settings }) => (
     <ModalProvider>
-      <Settings />
+      <Settings initialData={settings} />
     </ModalProvider>
   ),
 };

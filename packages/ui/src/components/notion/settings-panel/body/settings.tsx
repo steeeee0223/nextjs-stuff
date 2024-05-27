@@ -1,5 +1,6 @@
 import { Switch } from "@/components/ui/switch";
 import { Section, SectionItem, SectionSeparator, Select } from "../_components";
+import { useSettings } from "../settings-context";
 import {
   appearanceOptions,
   mySettings,
@@ -8,13 +9,16 @@ import {
 } from "./settings.data";
 
 export const Settings = () => {
+  const { theme, setTheme } = useSettings();
+
   return (
     <>
       <Section title="My settings">
         <SectionItem {...mySettings.appearance}>
           <Select
             options={appearanceOptions}
-            defaultValue="system"
+            defaultValue={theme}
+            onChange={setTheme}
             side="left"
           />
         </SectionItem>

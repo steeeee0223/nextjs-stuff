@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 import { ChevronRight } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -7,14 +7,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Section, SectionItem, SectionSeparator } from "../_components";
-import { mockUser } from "../mock";
+import { useSettings } from "../settings-context";
 import { myAccount } from "./account.data";
 import { styles } from "./utils";
 
 export const Account = () => {
-  const user = mockUser;
+  const {
+    settings: { user, account },
+    updateSettings,
+  } = useSettings();
   const handleUpdateName = (e: ChangeEvent<HTMLInputElement>) =>
-    console.log(`Changed preffered name to ${e.currentTarget.value}`);
+    updateSettings({ account: { preferredName: e.target.value } });
 
   return (
     <>
@@ -22,7 +25,7 @@ export const Account = () => {
         <div className="flex flex-col">
           <div className="flex items-center">
             <Avatar className="size-[60px]">
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src={user.imageUrl} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <div className="ml-5 w-[250px]">
@@ -36,7 +39,7 @@ export const Account = () => {
                 variant="notion"
                 type="username"
                 id="username"
-                value={user.name}
+                value={account.preferredName}
                 onChange={handleUpdateName}
               />
             </div>
@@ -45,7 +48,7 @@ export const Account = () => {
       </Section>
       <SectionSeparator />
       <Section title="Account security">
-        <SectionItem title={myAccount.email.title} description={user.email}>
+        <SectionItem title={myAccount.email.title} description={account.email}>
           <Button variant="outline" size="sm" className={styles.button}>
             Change email
           </Button>
