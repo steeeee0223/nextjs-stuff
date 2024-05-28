@@ -28,7 +28,7 @@ export function SettingsProvider({
   }, []);
 
   const context: SettingsContextInterface = {
-    settings: {user, account},
+    settings: { user, account },
     updateSettings: async (data) => {
       update(data);
       await onUpdate?.(data);
