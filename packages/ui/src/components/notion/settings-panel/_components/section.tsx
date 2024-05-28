@@ -10,7 +10,7 @@ export const Section = ({ title, children }: SectionProps) => {
   return (
     <div className="p-0">
       <h3 className="pb-3 text-base font-medium">{title}</h3>
-      <Separator className="text-primary/9 mb-4" />
+      <Separator className="mb-4 bg-primary/10" />
       <div>{children}</div>
     </div>
   );

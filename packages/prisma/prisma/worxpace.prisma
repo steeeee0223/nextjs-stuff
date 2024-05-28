@@ -147,3 +147,14 @@ model Document {
   @@index([userId, orgId, parentId], name: "byUserParent")
   @@index([userId, orgId, type], name: "byUserType")
 }
+
+model AccountSettings {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @unique(map: "userId")
+  // Preferrance
+  preferredName String
+  email         String
+  password      String?
+  // Time
+  updatedAt     DateTime @updatedAt
+}

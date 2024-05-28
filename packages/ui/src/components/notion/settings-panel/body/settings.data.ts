@@ -1,5 +1,5 @@
-import type { Option } from "../section";
-import { PanelData } from "./utils";
+import type { Option } from "../_components";
+import type { PanelData } from "./utils";
 
 const $settings = [
   "appearance",
@@ -56,4 +56,8 @@ export const appearanceOptions: Option[] = [
 export const openStartOptions: Option[] = [
   { label: "Last visited page", value: "last" },
   { label: "Top page in sidebar", value: "top" },
+];
+export const viewHistoryOptions: Option[] = [
+  { label: "Record", value: "yes" },
+  { label: "Don't record", value: "no" },
 ];

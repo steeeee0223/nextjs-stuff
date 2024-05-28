@@ -1,13 +1,35 @@
-import { create } from "zustand";
+"use client";
 
-interface SettingsStore {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
+
+import type { SettingsStore as Settings, UpdateSettings } from "./index.types";
+
+interface SettingsStore extends Settings {
+  update: (...params: Parameters<UpdateSettings>) => void;
 }
 
-export const useSettings = create<SettingsStore>((set) => ({
-  isOpen: false,
-  onOpen: () => set({ isOpen: true }),
-  onClose: () => set({ isOpen: false }),
-}));
+export const useSettingsStore = create<SettingsStore>()(
+  devtools(
+    persist(
+      (set) => ({
+        user: {
+          id: "",
+          name: "",
+          email: "",
+          imageUrl: "",
+        },
+        account: {
+          preferredName: "",
+          email: "",
+        },
+        update: ({ user, account }) =>
+          set((state) => ({
+            user: { ...state.user, ...user },
+            account: { ...state.account, ...account },
+          })),
+      }),
+      { name: "settings" },
+    ),
+  ),
+);

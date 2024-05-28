@@ -1,32 +1,34 @@
 "use client";
 
 import { useModal } from "@acme/ui/custom";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  Label,
-  ThemeToggle,
-} from "@acme/ui/shadcn";
+import { SettingsPanel } from "@acme/ui/notion";
+import type { SettingsPanelProps, SettingsStore } from "@acme/ui/notion";
+import { Dialog, DialogContent } from "@acme/ui/shadcn";
+
+import { useClient, useSettings } from "~/hooks";
 
 export const SettingsModal = () => {
-  const { isOpen, setClose } = useModal();
+  const { userId } = useClient();
+  const { isOpen, setClose } = useModal<SettingsStore>();
+  const { settings, update } = useSettings(userId);
+  console.log(settings);
+
+  const onUpdate: SettingsPanelProps["onUpdate"] = async ({ account }) => {
+    account && (await update({ userId, account }));
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
-      <DialogContent className="z-[99999]">
-        <DialogHeader className="border-b pb-3">
-          <h2 className="text-lg font-medium">My settings</h2>
-        </DialogHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-col gap-y-1">
-            <Label>Appearance</Label>
-            <span className="text-[0.8rem] text-muted-foreground">
-              Customize how WorXpace looks on your device
-            </span>
-          </div>
-          <ThemeToggle />
-        </div>
+      <DialogContent
+        forceMount
+        className="z-[99999] flex h-[calc(100vh-100px)] max-h-[720px] w-[calc(100vw-100px)] max-w-[1150px] rounded border-none p-0 shadow"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <SettingsPanel
+          key={settings.user.id}
+          settings={settings}
+          onUpdate={onUpdate}
+        />
       </DialogContent>
     </Dialog>
   );
