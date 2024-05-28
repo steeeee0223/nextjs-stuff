@@ -18,6 +18,7 @@ if (process.env.NODE_ENV !== "production") {
 
 export type {
   Document,
+  AccountSettings,
   AuditLog,
   Entity,
   Card,
