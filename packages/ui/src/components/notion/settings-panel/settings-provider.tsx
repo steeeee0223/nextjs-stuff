@@ -14,11 +14,13 @@ import { useSettingsStore } from "./use-settings";
 export interface SettingsProviderProps {
   settings: SettingsStore;
   onUpdate?: UpdateSettings;
+  onUploadFile?: (file: File) => Promise<{ url: string }>;
 }
 
 export function SettingsProvider({
   settings,
   onUpdate,
+  onUploadFile,
 }: SettingsProviderProps) {
   const { theme, setTheme } = useTheme();
   const { update, user, account } = useSettingsStore();
@@ -33,6 +35,7 @@ export function SettingsProvider({
       update(data);
       await onUpdate?.(data);
     },
+    uploadFile: onUploadFile,
     theme,
     setTheme,
   };

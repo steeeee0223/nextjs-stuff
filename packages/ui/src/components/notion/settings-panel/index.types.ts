@@ -8,6 +8,7 @@ export interface UserStore {
 }
 export interface AccountStore {
   /** My Account */
+  avatarUrl: string;
   preferredName: string;
   email: string;
   password?: string | null;

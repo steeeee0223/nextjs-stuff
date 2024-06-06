@@ -23,6 +23,7 @@ const mockSettings = {
     imageUrl: "https://github.com/shadcn.png",
   },
   account: {
+    avatarUrl: "https://github.com/shadcn.png",
     preferredName: "John Doe",
     email: "johndoe@example.com",
   },

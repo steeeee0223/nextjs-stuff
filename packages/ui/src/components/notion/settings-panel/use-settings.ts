@@ -20,6 +20,7 @@ export const useSettingsStore = create<SettingsStore>()(
           imageUrl: "",
         },
         account: {
+          avatarUrl: "",
           preferredName: "",
           email: "",
         },
