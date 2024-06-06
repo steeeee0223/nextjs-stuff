@@ -28,7 +28,7 @@ export type TabType =
   | "billing"
   | "sites"
   | "security"
-  | "identiy"
+  | "identity"
   | "connections"
   | "import";
 
@@ -53,7 +53,7 @@ export const workspace: Item[] = [
   { name: "Billing", Icon: CreditCard, value: "billing" },
   { name: "Sites", Icon: AppWindow, value: "sites" },
   { name: "Security", Icon: KeyRound, value: "security" },
-  { name: "Identity & provisioning", Icon: ShieldCheck, value: "identiy" },
+  { name: "Identity & provisioning", Icon: ShieldCheck, value: "identity" },
   { name: "Connections", Icon: LayoutGrid, value: "connections" },
   { name: "Import", Icon: ArrowDownToLine, value: "import" },
 ] as const;

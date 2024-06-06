@@ -23,14 +23,14 @@ export function SettingsProvider({
   onUploadFile,
 }: SettingsProviderProps) {
   const { theme, setTheme } = useTheme();
-  const { update, user, account } = useSettingsStore();
+  const { update, user, account, workspace } = useSettingsStore();
   useEffect(() => {
     update(settings);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const context: SettingsContextInterface = {
-    settings: { user, account },
+    settings: { user, account, workspace },
     updateSettings: async (data) => {
       update(data);
       await onUpdate?.(data);

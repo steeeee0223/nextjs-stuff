@@ -6,6 +6,9 @@ export interface UserStore {
   email: string;
   imageUrl: string;
 }
+export interface WorkspaceStore {
+  id: string;
+}
 export interface AccountStore {
   /** My Account */
   avatarUrl: string;
@@ -16,10 +19,12 @@ export interface AccountStore {
 
 export interface SettingsStore extends ModalData {
   user: UserStore;
+  workspace: WorkspaceStore;
   account: AccountStore;
 }
 
 export type UpdateSettings = (data: {
   user?: Partial<UserStore>;
+  workspace?: Partial<WorkspaceStore>;
   account?: Partial<AccountStore>;
 }) => Promise<void>;

@@ -1,5 +1,12 @@
 import { NotImplemented, Section } from "./_components";
-import { Account, Connections, Notifications, Region, Settings } from "./body";
+import {
+  Account,
+  Connections,
+  Identity,
+  Notifications,
+  Region,
+  Settings,
+} from "./body";
 import { workspace, type TabType } from "./sidebar";
 
 interface SettingsBodyProps {
@@ -20,6 +27,8 @@ const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
       return <Connections />;
     case "language-region":
       return <Region />;
+    case "identity":
+      return <Identity />;
     default:
       return (
         <Section title={tab.name}>

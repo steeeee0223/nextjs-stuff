@@ -19,14 +19,18 @@ export const useSettingsStore = create<SettingsStore>()(
           email: "",
           imageUrl: "",
         },
+        workspace: {
+          id: "",
+        },
         account: {
           avatarUrl: "",
           preferredName: "",
           email: "",
         },
-        update: ({ user, account }) =>
+        update: ({ user, workspace, account }) =>
           set((state) => ({
             user: { ...state.user, ...user },
+            workspace: { ...state.workspace, ...workspace },
             account: { ...state.account, ...account },
           })),
       }),

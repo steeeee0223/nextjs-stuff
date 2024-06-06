@@ -22,6 +22,9 @@ const mockSettings = {
     email: "johndoe@example.com",
     imageUrl: "https://github.com/shadcn.png",
   },
+  workspace: {
+    id: "fake-workspace-id-12345-abcde",
+  },
   account: {
     avatarUrl: "https://github.com/shadcn.png",
     preferredName: "John Doe",
