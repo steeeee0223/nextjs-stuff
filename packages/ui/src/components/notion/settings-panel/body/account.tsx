@@ -5,6 +5,7 @@ import { ChevronRight, X } from "lucide-react";
 import { useHover } from "usehooks-ts";
 
 import { Hint } from "@/components/custom/hint";
+import { useModal } from "@/components/custom/modal-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { Section, SectionItem, SectionSeparator } from "../_components";
+import { EmailSettings, PasswordForm } from "../modals";
 import { useSettings } from "../settings-context";
 import { myAccount } from "./account.data";
 import { styles } from "./utils";
@@ -41,6 +43,17 @@ export const Account = () => {
   };
   const onUpdateName = (e: ChangeEvent<HTMLInputElement>) =>
     updateSettings({ account: { preferredName: e.target.value } });
+  /** Modals */
+  const { setOpen } = useModal();
+  const handleEmailSettings = () =>
+    setOpen(<EmailSettings email={account.email} />);
+  const handlePasswordForm = () =>
+    setOpen(
+      <PasswordForm
+        hasPassword={account.hasPassword}
+        onSubmit={() => updateSettings({ account: { hasPassword: true } })}
+      />,
+    );
 
   return (
     <>
@@ -71,7 +84,7 @@ export const Account = () => {
                   role="button"
                   onClick={onRemoveAvatar}
                   className={cn(
-                    "absolute right-[-2px] top-[-2px] z-10 hidden rounded-full border-[1px] border-solid border-primary/10  bg-primary-foreground p-1 text-primary/65 hover:bg-primary/10",
+                    "absolute right-[-2px] top-[-2px] z-10 hidden rounded-full border border-solid border-primary/10  bg-primary-foreground p-1 text-primary/65 hover:bg-primary/10",
                     (avatarIsHover || avatarCancelIsHover) && "block",
                   )}
                 >
@@ -107,13 +120,31 @@ export const Account = () => {
       <SectionSeparator />
       <Section title="Account security">
         <SectionItem title={myAccount.email.title} description={account.email}>
-          <Button variant="outline" size="sm" className={styles.button}>
+          <Button
+            variant="outline"
+            className={styles.button}
+            onClick={handleEmailSettings}
+          >
             Change email
           </Button>
         </SectionItem>
         <SectionSeparator size="sm" />
         <SectionItem {...myAccount.password}>
-          <Switch size="sm" />
+          {account.hasPassword ? (
+            <Button
+              variant="outline"
+              className={styles.button}
+              onClick={handlePasswordForm}
+            >
+              Change password
+            </Button>
+          ) : (
+            <Switch
+              size="sm"
+              onCheckedChange={handlePasswordForm}
+              checked={false}
+            />
+          )}
         </SectionItem>
         <SectionSeparator size="sm" />
         <SectionItem {...myAccount.verification}>

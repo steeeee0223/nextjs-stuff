@@ -14,7 +14,7 @@ export interface AccountStore {
   avatarUrl: string;
   preferredName: string;
   email: string;
-  password?: string | null;
+  hasPassword?: boolean;
 }
 
 export interface SettingsStore extends ModalData {

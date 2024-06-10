@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useTheme } from "next-themes";
 
+import { ModalProvider } from "@/components/custom/modal-provider";
 import type { SettingsStore, UpdateSettings } from "./index.types";
 import {
   SettingsContext,
@@ -42,7 +43,9 @@ export function SettingsProvider({
 
   return (
     <SettingsContext.Provider value={context}>
-      <SettingsPanel />
+      <ModalProvider>
+        <SettingsPanel />
+      </ModalProvider>
     </SettingsContext.Provider>
   );
 }
