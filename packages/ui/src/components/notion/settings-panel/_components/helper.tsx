@@ -38,7 +38,7 @@ export const PlanLink = ({ plan, onClick }: PlanLinkProps) => {
         className="ml-2 flex cursor-pointer select-none items-center rounded-sm hover:bg-primary/10"
         onClick={onClick}
       >
-        <div className="whitespace-nowrap rounded-sm bg-[#2383e2]/10 px-1.5 py-0.5 text-[9px] font-medium uppercase leading-none text-[#2383e2]">
+        <div className="text-button bg-button/10 whitespace-nowrap rounded-sm px-1.5 py-0.5 text-[9px] font-medium uppercase leading-none">
           {plan} ↗
         </div>
       </div>

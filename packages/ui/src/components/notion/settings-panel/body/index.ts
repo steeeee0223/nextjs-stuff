@@ -8,7 +8,7 @@ export { Region } from "./region";
 /** @todo Settings */
 /** @todo People */
 /** @todo Sites */
-/** @todo Security */
+export { Security } from "./security";
 export { Identity } from "./identity";
 /** @todo Connections */
 /** @todo Import */

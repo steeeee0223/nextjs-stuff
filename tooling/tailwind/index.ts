@@ -14,6 +14,7 @@ export default {
     },
     extend: {
       colors: {
+        button: "rgb(35, 131, 226)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
