@@ -4,8 +4,6 @@ import { Construction } from "lucide-react";
 
 import { Hint } from "@/components/custom/hint";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib";
-import { styles } from "../body/utils";
 
 interface HintButtonProps {
   icon: LucideIcon;
@@ -30,7 +28,9 @@ export const PlanLink = ({ plan, onClick }: PlanLinkProps) => {
   return (
     <Hint
       description="Upgrade to use this feature. Click to learn more."
-      className={cn(styles.tooltip, "w-[174px]")}
+      variant="notion"
+      size="sm"
+      className="w-[174px]"
     >
       <div
         role="button"

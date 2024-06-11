@@ -16,7 +16,6 @@ import { Section, SectionItem, SectionSeparator } from "../_components";
 import { EmailSettings, PasswordForm } from "../modals";
 import { useSettings } from "../settings-context";
 import { myAccount } from "./account.data";
-import { styles } from "./utils";
 
 export const Account = () => {
   const avatarInputRef = useRef<HTMLInputElement>(null);
@@ -65,8 +64,8 @@ export const Account = () => {
                 description={
                   avatarCancelIsHover ? "Remove photo" : "Replace photo"
                 }
-                className={styles.tooltip}
-                side="bottom"
+                variant="notion"
+                size="sm"
                 sideOffset={12}
               >
                 <Avatar

@@ -14,7 +14,6 @@ import {
 } from "../_components";
 import { useSettings } from "../settings-context";
 import { identity } from "./identity.data";
-import { styles } from "./utils";
 
 export const Identity = () => {
   const {
@@ -80,12 +79,13 @@ export const Identity = () => {
         <SectionItem {...identity.workspaceId}>
           <Hint
             description="Click to copy ID"
+            variant="notion"
+            size="sm"
             side="top"
             sideOffset={15}
             align="center"
-            className={styles.tooltip}
           >
-            <div className="px-[60px] text-xs/4 text-primary/65">
+            <div className="min-w-[400px] px-[60px] text-xs/4 text-primary/65">
               <a
                 onClick={handleCopy}
                 rel="noopener noreferrer"

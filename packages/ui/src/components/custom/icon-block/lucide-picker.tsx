@@ -27,7 +27,7 @@ const Icon = ({ name, onClick }: IconProps) => {
   const handleClick = () => onClick?.(name);
 
   return (
-    <Hint asChild side="top" description={name} className={styles.tooltip}>
+    <Hint asChild side="top" description={name} variant="notion" size="sm">
       <Button
         variant="outline"
         onClick={handleClick}
@@ -98,7 +98,7 @@ const LucidePicker = ({ onSelect, onColorChange }: LucidePickerProps) => {
             variant="notion"
           />
         </div>
-        <Hint asChild description="Random" className={styles.tooltip}>
+        <Hint asChild description="Random" variant="notion" size="sm">
           <Button
             variant="outline"
             size="icon-md"
@@ -111,7 +111,8 @@ const LucidePicker = ({ onSelect, onColorChange }: LucidePickerProps) => {
         <Hint
           asChild
           description="Select icon color"
-          className={styles.tooltip}
+          variant="notion"
+          size="sm"
         >
           <ColorPicker
             defaultColor={color}
