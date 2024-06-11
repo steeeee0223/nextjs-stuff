@@ -1,6 +1,5 @@
-import NextLink from "next/link";
 import type { Meta, StoryObj } from "@storybook/react";
-import { ChevronRight, MailOpen, RefreshCw } from "lucide-react";
+import { ChevronRight, CircleHelp, MailOpen, RefreshCw } from "lucide-react";
 
 import { Button } from "@acme/ui/shadcn";
 
@@ -18,17 +17,26 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: { children: "Button" },
 };
-export const Secondary: Story = {
-  args: { variant: "secondary", children: "Secondary" },
+export const Blue: Story = {
+  args: { variant: "blue", children: "Upgrade" },
 };
-export const Destructive: Story = {
-  args: { variant: "destructive", children: "Destructive" },
+export const Warning: Story = {
+  args: { variant: "warning", children: "Delete this project" },
 };
-export const Outline: Story = {
-  args: { variant: "outline", children: "Outline" },
+export const Hint: Story = {
+  args: {
+    variant: "hint",
+    size: "xs",
+    children: (
+      <>
+        <CircleHelp className="mr-1.5 h-3.5 w-3.5" />
+        Learn more about this feature
+      </>
+    ),
+  },
 };
-export const Ghost: Story = {
-  args: { variant: "ghost", children: "Ghost" },
+export const Notion: Story = {
+  args: { variant: "notion", children: "Notion Style" },
 };
 export const Link: Story = {
   args: { variant: "link", children: "Link" },
@@ -57,11 +65,5 @@ export const Loading: Story = {
         <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Please wait
       </>
     ),
-  },
-};
-export const AsChild: Story = {
-  args: {
-    asChild: true,
-    children: <NextLink href="/login">Login</NextLink>,
   },
 };
