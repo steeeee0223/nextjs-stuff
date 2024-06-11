@@ -10,7 +10,6 @@ import {
   Select,
 } from "../_components";
 import { myNotifications, slackOptions } from "./notifications.data";
-import { styles } from "./utils";
 
 export const Notifications = () => {
   return (
@@ -35,7 +34,7 @@ export const Notifications = () => {
         </SectionItem>
         <SectionSeparator size="sm" />
         <SectionItem {...myNotifications.emailAnnouncements}>
-          <Button variant="outline" size="sm" className={styles.button}>
+          <Button variant="notion" size="sm">
             <ArrowUpRight className="mr-2 size-4" />
             Manage Settings
           </Button>

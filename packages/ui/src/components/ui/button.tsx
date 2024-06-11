@@ -23,11 +23,16 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         /** Custom */
-        board: "hover:bg-blue-500/20 hover:text-blue-800",
-        boardActive: "bg-blue-500/20 text-blue-800",
+        notion:
+          "select-none border border-primary/10 bg-background font-normal shadow-none hover:bg-[#e1e1e1] dark:hover:bg-[#2f2f2f]",
+        blue: "border border-primary/10 bg-button text-white shadow-sm hover:bg-[#0077d4] hover:text-white",
+        hint: "select-none text-primary/50 shadow-none hover:bg-primary/10",
+        warning:
+          "border-warning/50 text-warning hover:bg-warning/10 select-none border bg-background font-normal shadow-none",
       },
       size: {
-        sm: "h-8 rounded-md px-3 text-xs",
+        xs: "h-6 rounded-sm px-1.5 text-xs",
+        sm: "h-8 rounded-sm px-3 text-sm",
         md: "h-9 px-4 py-2",
         lg: "h-10 rounded-md px-8",
         icon: "size-9",

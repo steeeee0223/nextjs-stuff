@@ -3,8 +3,6 @@
 import { useModal } from "@/components/custom/modal-provider";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
-import { styles } from "../body/utils";
 
 interface EmailSettingsProps {
   email: string;
@@ -27,8 +25,9 @@ export const EmailSettings = ({ email }: EmailSettingsProps) => {
         </p>
         <Button
           tabIndex={0}
-          variant="outline"
-          className={cn(styles.blueButton, "max-w-fit flex-shrink-0")}
+          variant="blue"
+          size="sm"
+          className="max-w-fit flex-shrink-0"
         >
           Send verification code
         </Button>

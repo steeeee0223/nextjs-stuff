@@ -14,7 +14,7 @@ interface HintButtonProps {
 
 export const HintButton = ({ icon: Icon, label }: HintButtonProps) => {
   return (
-    <Button className="inline-flex h-6 select-none rounded-sm bg-inherit px-1.5 text-xs text-primary/50 shadow-none hover:bg-primary/10">
+    <Button variant="hint" size="xs">
       <Icon className="mr-1.5 h-3.5 w-3.5" />
       {label}
     </Button>
@@ -38,7 +38,7 @@ export const PlanLink = ({ plan, onClick }: PlanLinkProps) => {
         className="ml-2 flex cursor-pointer select-none items-center rounded-sm hover:bg-primary/10"
         onClick={onClick}
       >
-        <div className="text-button bg-button/10 whitespace-nowrap rounded-sm px-1.5 py-0.5 text-[9px] font-medium uppercase leading-none">
+        <div className="whitespace-nowrap rounded-sm bg-button/10 px-1.5 py-0.5 text-[9px] font-medium uppercase leading-none text-button">
           {plan} ↗
         </div>
       </div>

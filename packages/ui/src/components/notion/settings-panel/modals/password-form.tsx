@@ -15,9 +15,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import { PasswordIcon } from "../_components/icons";
-import { styles } from "../body/utils";
 import { PasswordSuccess } from "./password-success";
 
 const message = "Please include additional unique characters.";
@@ -151,8 +149,9 @@ export const PasswordForm = ({
             )}
             <Button
               type="submit"
-              variant="outline"
-              className={cn(styles.blueButton, "mt-4 w-full")}
+              variant="blue"
+              size="sm"
+              className="mt-4 w-full"
             >
               {hasPassword ? "Change password" : "Set a password"}
             </Button>

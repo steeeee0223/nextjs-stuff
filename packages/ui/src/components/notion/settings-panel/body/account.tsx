@@ -120,22 +120,14 @@ export const Account = () => {
       <SectionSeparator />
       <Section title="Account security">
         <SectionItem title={myAccount.email.title} description={account.email}>
-          <Button
-            variant="outline"
-            className={styles.button}
-            onClick={handleEmailSettings}
-          >
+          <Button variant="notion" size="sm" onClick={handleEmailSettings}>
             Change email
           </Button>
         </SectionItem>
         <SectionSeparator size="sm" />
         <SectionItem {...myAccount.password}>
           {account.hasPassword ? (
-            <Button
-              variant="outline"
-              className={styles.button}
-              onClick={handlePasswordForm}
-            >
+            <Button variant="notion" size="sm" onClick={handlePasswordForm}>
               Change password
             </Button>
           ) : (

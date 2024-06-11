@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Section, SectionItem, SectionSeparator } from "../_components";
 import { card, security } from "./security.data";
-import { styles } from "./utils";
 
 interface CardItemProps {
   title: string;
@@ -16,10 +15,10 @@ const CardItem = ({ title, description, action }: CardItemProps) => {
       <header className="font-semibold">{title}</header>
       <p className="mb-4 mt-1 text-primary/65">{description}</p>
       <footer className="flex flex-wrap gap-x-3 gap-y-2">
-        <Button tabIndex={0} variant="outline" className={styles.blueButton}>
+        <Button tabIndex={0} variant="blue" size="sm">
           {action}
         </Button>
-        <Button tabIndex={0} variant="outline" className={styles.button}>
+        <Button tabIndex={0} variant="notion" size="sm">
           Learn more
         </Button>
       </footer>
