@@ -44,14 +44,14 @@ export const SectionItem = ({
 }: SectionItemProps) => {
   return (
     <div className="flex cursor-default items-center justify-between">
-      <div className="mr-[10%] flex flex-col">
+      <div className="mr-[10%] w-full flex flex-col">
         <div className="flex items-center">
           <h3 className={cn("mb-0.5 flex p-0 text-sm font-normal", titleProps)}>
             {title}
           </h3>
           {!!plan && <PlanLink plan={plan} />}
         </div>
-        <p className="text-xs text-primary/65">{description}</p>
+        <p className="w-4/5 text-xs text-primary/65">{description}</p>
       </div>
       <div>{children}</div>
     </div>

@@ -17,7 +17,7 @@ export const Tab = ({ name, isActive, Icon, onClick }: TabProps) => {
     <div
       className={cn(
         "flex cursor-pointer select-none items-center gap-x-1 rounded-sm px-4 py-1 hover:bg-primary/10",
-        isActive && "font-extrabold",
+        isActive && "bg-primary/10 font-extrabold",
       )}
       onClick={onClick}
     >

@@ -7,6 +7,7 @@ import {
   Region,
   Security,
   Settings,
+  Settings2,
 } from "./body";
 import { workspace, type TabType } from "./sidebar";
 
@@ -28,6 +29,8 @@ const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
       return <Connections />;
     case "language-region":
       return <Region />;
+    case "settings":
+      return <Settings2 />;
     case "security":
       return <Security />;
     case "identity":

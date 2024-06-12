@@ -1,3 +1,4 @@
+import type { IconInfo } from "@/components/custom/icon-block";
 import type { ModalData } from "@/components/custom/modal-provider";
 
 export interface UserStore {
@@ -8,6 +9,9 @@ export interface UserStore {
 }
 export interface WorkspaceStore {
   id: string;
+  name: string;
+  icon: IconInfo;
+  domain: string;
 }
 export interface AccountStore {
   /** My Account */
