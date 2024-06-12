@@ -26,22 +26,22 @@ export const Account = () => {
   /** Handlers */
   const {
     settings: { account },
-    updateSettings,
+    updateSettings: update,
     uploadFile,
   } = useSettings();
   const onUpdateAvatar = () => avatarInputRef.current?.click();
-  const onRemoveAvatar = () =>
-    void updateSettings({ account: { avatarUrl: "" } });
+  const onRemoveAvatar = () => void update({ account: { avatarUrl: "" } });
   const onSelectImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      console.log(file);
+      const url = URL.createObjectURL(file);
+      await update({ account: { avatarUrl: url } });
       const res = await uploadFile?.(file);
-      if (res?.url) await updateSettings({ account: { avatarUrl: res.url } });
+      if (res?.url) await update({ account: { avatarUrl: res.url } });
     }
   };
   const onUpdateName = (e: ChangeEvent<HTMLInputElement>) =>
-    updateSettings({ account: { preferredName: e.target.value } });
+    update({ account: { preferredName: e.target.value } });
   /** Modals */
   const { setOpen } = useModal();
   const handleEmailSettings = () =>
@@ -50,7 +50,7 @@ export const Account = () => {
     setOpen(
       <PasswordForm
         hasPassword={account.hasPassword}
-        onSubmit={() => updateSettings({ account: { hasPassword: true } })}
+        onSubmit={() => update({ account: { hasPassword: true } })}
       />,
     );
 
