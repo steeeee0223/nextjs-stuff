@@ -55,8 +55,9 @@ export const UrlForm = ({ onUrlSubmit, disabled }: UrlFormProps) => {
         />
         <Button
           type="submit"
-          variant="outline"
-          className="h-7 rounded-sm"
+          variant="blue"
+          size="sm"
+          className="h-7"
           disabled={disabled}
         >
           Submit
