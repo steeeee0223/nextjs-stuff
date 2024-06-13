@@ -28,7 +28,7 @@ const buttonVariants = cva(
         blue: "border border-primary/10 bg-button text-white shadow-sm hover:bg-[#0077d4] hover:text-white",
         hint: "select-none text-primary/50 shadow-none hover:bg-primary/10",
         warning:
-          "border-warning/50 text-warning hover:bg-warning/10 select-none border bg-background font-normal shadow-none",
+          "select-none border border-warning/50 bg-background font-normal text-warning shadow-none hover:bg-warning/10",
       },
       size: {
         xs: "h-6 rounded-sm px-1.5 text-xs",

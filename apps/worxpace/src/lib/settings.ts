@@ -3,10 +3,15 @@
 import { currentUser } from "@clerk/nextjs";
 
 import { worxpace as db } from "@acme/prisma";
-import type { SettingsStore, UserStore } from "@acme/ui/notion";
-import type { UpdateSettingsInput } from "@acme/validators";
+import type { AccountStore, UserStore, WorkspaceStore } from "@acme/ui/notion";
+import type {
+  UpdateAccountSettingsInput,
+  UpdateWorkspaceSettingsInput,
+} from "@acme/validators";
 
-const getUserStore = async (userId: string): Promise<UserStore> => {
+import { toIconInfo } from "./icon";
+
+const getUser = async (userId: string): Promise<UserStore> => {
   const user = await currentUser();
   return {
     id: userId,
@@ -16,32 +21,64 @@ const getUserStore = async (userId: string): Promise<UserStore> => {
   };
 };
 
-const get = async (userId: string): Promise<SettingsStore> => {
-  const user = await getUserStore(userId);
+const getAccount = async (userId: string): Promise<AccountStore> => {
   const account = await db.accountSettings.findUnique({
     where: { userId },
   });
-
-  if (!account) return await update({ userId });
-  return { user, account };
+  if (!account) return await updateAccount(userId);
+  return account;
 };
 
-const update = async ({
-  userId,
-  account,
-}: UpdateSettingsInput): Promise<SettingsStore> => {
-  const user = await getUserStore(userId);
-  const { email, preferredName, password } = await db.accountSettings.upsert({
-    where: { userId },
-    create: {
-      userId,
-      email: account?.email ?? user.email,
-      preferredName: account?.preferredName ?? user.name,
-      password: account?.password,
-    },
-    update: { ...account },
+const updateAccount = async (
+  userId: string,
+  account?: UpdateAccountSettingsInput,
+): Promise<AccountStore> => {
+  const user = await getUser(userId);
+  const { avatarUrl, email, preferredName, hasPassword } =
+    await db.accountSettings.upsert({
+      where: { userId },
+      create: {
+        userId,
+        avatarUrl: account?.avatarUrl ?? user.imageUrl,
+        email: account?.email ?? user.email,
+        preferredName: account?.preferredName ?? user.name,
+        hasPassword: false,
+      },
+      update: { ...account },
+    });
+  return { avatarUrl, email, preferredName, hasPassword };
+};
+
+const getWorkspace = async (workspaceId: string): Promise<WorkspaceStore> => {
+  const workspace = await db.workspaceSettings.findUnique({
+    where: { workspaceId },
   });
-  return { user, account: { email, preferredName, password } };
+  if (!workspace) return await updateWorkspace(workspaceId);
+  return {
+    id: workspaceId,
+    name: workspace.name,
+    icon: toIconInfo(workspace.icon),
+    domain: workspace.domain,
+  };
 };
 
-export { get, update };
+const updateWorkspace = async (
+  workspaceId: string,
+  workspace?: UpdateWorkspaceSettingsInput,
+): Promise<WorkspaceStore> => {
+  const { name, icon, domain } = await db.workspaceSettings.upsert({
+    where: { workspaceId },
+    create: {
+      workspaceId,
+      /** @todo Fill in organization name */
+      name: "",
+      /** @todo Fill in organization imageUrl */
+      icon: null,
+      domain: workspaceId,
+    },
+    update: { ...workspace },
+  });
+  return { id: workspaceId, name, icon: toIconInfo(icon), domain };
+};
+
+export { getUser, getAccount, updateAccount, getWorkspace, updateWorkspace };

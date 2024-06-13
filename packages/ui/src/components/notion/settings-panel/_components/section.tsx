@@ -44,7 +44,7 @@ export const SectionItem = ({
 }: SectionItemProps) => {
   return (
     <div className="flex cursor-default items-center justify-between">
-      <div className="mr-[10%] w-full flex flex-col">
+      <div className="mr-[10%] flex w-full flex-col">
         <div className="flex items-center">
           <h3 className={cn("mb-0.5 flex p-0 text-sm font-normal", titleProps)}>
             {title}

@@ -18,7 +18,7 @@ import useSWRMutation from "swr/mutation";
 
 import { Hint, CRUDItem as Item, useModal, useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
-import { WorkspaceSwitcher } from "@acme/ui/notion";
+import { useSettingsStore, WorkspaceSwitcher } from "@acme/ui/notion";
 import { Popover, PopoverContent, PopoverTrigger } from "@acme/ui/shadcn";
 
 import { archiveDocument, createDocument } from "~/actions";
@@ -51,12 +51,14 @@ export const Sidebar = forwardRef(function Sidebar(
   const router = useRouter();
   const { path, userId, workspaceId } = useClient();
   /** Workspace */
+  const { reset } = useSettingsStore();
   const { isLoading, trigger } = usePages(workspaceId);
   const { signOut } = useAuth();
   const { setActive } = useOrganizationList();
   const handleSelect = async (id: string) => {
     const workspaceId = id === userId ? null : id;
     await setActive?.({ organization: workspaceId });
+    reset();
     const newPath =
       id === userId ? `/personal/${userId}` : `/organization/${id}`;
     router.push(newPath);
