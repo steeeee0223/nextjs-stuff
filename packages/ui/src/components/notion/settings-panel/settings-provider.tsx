@@ -15,7 +15,13 @@ import { useSettingsStore } from "./use-settings";
 export interface SettingsProviderProps {
   settings: SettingsStore;
   onUpdate?: UpdateSettings;
-  onUploadFile?: (file: File) => Promise<{ url: string }>;
+  onUploadFile?: (
+    file: File,
+    options?: {
+      /** @params replaceTargetUrl: provide the URL to replaced with */
+      replaceTargetUrl?: string;
+    },
+  ) => Promise<{ url: string }>;
 }
 
 export function SettingsProvider({

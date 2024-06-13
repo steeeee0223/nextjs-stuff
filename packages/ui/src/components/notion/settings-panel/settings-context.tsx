@@ -9,7 +9,10 @@ export interface SettingsContextInterface
   extends Pick<UseThemeProps, "theme" | "setTheme"> {
   settings: SettingsStore;
   updateSettings: UpdateSettings;
-  uploadFile?: (file: File) => Promise<{ url: string }>;
+  uploadFile?: (
+    file: File,
+    options?: { replaceTargetUrl?: string },
+  ) => Promise<{ url: string }>;
 }
 
 export const SettingsContext = createContext<SettingsContextInterface | null>(

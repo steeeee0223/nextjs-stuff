@@ -60,9 +60,11 @@ export const Settings2 = () => {
   const onUpdateIcon = (icon: IconInfo) => update({ workspace: { icon } });
   const onRemoveIcon = () => update({ workspace: { icon: undefined } });
   const onUploadIcon = async (file: File) => {
+    const replaceTargetUrl =
+      workspace.icon.type === "file" ? workspace.icon.url : undefined;
     const url = URL.createObjectURL(file);
     await update({ workspace: { icon: { type: "file", url } } });
-    const res = await uploadFile?.(file);
+    const res = await uploadFile?.(file, { replaceTargetUrl });
     if (res?.url)
       await update({ workspace: { icon: { type: "file", url: res.url } } });
   };

@@ -34,9 +34,10 @@ export const Account = () => {
   const onSelectImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const replaceTargetUrl = account.avatarUrl;
       const url = URL.createObjectURL(file);
       await update({ account: { avatarUrl: url } });
-      const res = await uploadFile?.(file);
+      const res = await uploadFile?.(file, { replaceTargetUrl });
       if (res?.url) await update({ account: { avatarUrl: res.url } });
     }
   };
