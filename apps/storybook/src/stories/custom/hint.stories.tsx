@@ -15,7 +15,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    // sideOffset: 40,
+    description: "Shows some messages",
+    children: <HelpCircle className="h-4 w-4" />,
+  },
+};
+
+export const Notion: Story = {
+  args: {
+    variant: "notion",
     description: "Shows some messages",
     children: <HelpCircle className="h-4 w-4" />,
   },

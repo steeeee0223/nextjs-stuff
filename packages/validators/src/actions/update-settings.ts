@@ -1,14 +1,22 @@
 import { z } from "zod";
 
-const Account = z.object({
+import { Icon } from "../objects";
+
+export const UpdateAccountSettings = z.object({
+  avatarUrl: z.string().optional(),
   preferredName: z.string().optional(),
   email: z.string().email().optional(),
-  password: z.string().nullable().optional(),
+  hasPassword: z.boolean().optional(),
 });
 
-export const UpdateSettings = z.object({
-  userId: z.string(),
-  account: Account.optional(),
+export type UpdateAccountSettingsInput = z.infer<typeof UpdateAccountSettings>;
+
+export const UpdateWorkspaceSettings = z.object({
+  name: z.string().optional(),
+  icon: Icon.nullable().optional(),
+  domain: z.string().optional(),
 });
 
-export type UpdateSettingsInput = z.infer<typeof UpdateSettings>;
+export type UpdateWorkspaceSettingsInput = z.infer<
+  typeof UpdateWorkspaceSettings
+>;

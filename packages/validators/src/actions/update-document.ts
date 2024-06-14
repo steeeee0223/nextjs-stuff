@@ -1,23 +1,12 @@
 import { z } from "zod";
 
+import { CoverImage, Icon } from "../objects";
+
 export const UpdateDocument = z.object({
   /** Document Fields */
   id: z.string(),
-  icon: z
-    .object({
-      type: z.enum(["emoji", "lucide", "file"]),
-      src: z.string(),
-      color: z.string().nullable().optional(),
-    })
-    .nullable()
-    .optional(),
-  coverImage: z
-    .object({
-      type: z.enum(["file", "url"]),
-      url: z.string(),
-    })
-    .nullable()
-    .optional(),
+  icon: Icon.nullable().optional(),
+  coverImage: CoverImage.nullable().optional(),
   title: z.string().optional(),
   content: z.string().nullable().optional(),
   isPublished: z.boolean().optional(),

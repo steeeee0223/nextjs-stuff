@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { ModalProvider } from "@acme/ui/custom";
-import { SettingsPanel } from "@acme/ui/notion";
+import { SettingsPanel, type SettingsStore } from "@acme/ui/notion";
 
 import { Settings } from "./settings";
 
@@ -15,14 +15,21 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const mockSettings = {
+const mockSettings: SettingsStore = {
   user: {
     id: "1",
     name: "John Doe",
     email: "johndoe@example.com",
     imageUrl: "https://github.com/shadcn.png",
   },
+  workspace: {
+    id: "fake-workspace-id-12345",
+    name: "John's Private",
+    icon: { type: "emoji", emoji: "🚀" },
+    domain: "fake-domain",
+  },
   account: {
+    avatarUrl: "https://github.com/shadcn.png",
     preferredName: "John Doe",
     email: "johndoe@example.com",
   },
