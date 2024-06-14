@@ -6,3 +6,4 @@ export const CreatePostSchema = z.object({
 });
 
 export * from "./actions";
+export * from "./objects";

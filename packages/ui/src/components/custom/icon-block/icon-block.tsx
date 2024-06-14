@@ -36,7 +36,8 @@ const iconBlockVariants = cva("", {
     size: {
       sm: "size-5 rounded-sm p-0.5 text-sm/4",
       md: "size-10 rounded-md p-1 text-3xl/8",
-      lg: "size-20 rounded-lg p-2 text-6xl",
+      lg: "size-16 rounded-md p-1 text-5xl/tight",
+      xl: "size-[78px] rounded-lg p-1 text-7xl",
     },
   },
   defaultVariants: { size: "sm" },
@@ -149,7 +150,7 @@ export const IconBlock = ({
             <TabsContent value="file" className={styles.tabContent}>
               <UrlForm disabled={isPending} onUrlSubmit={handleUrlSubmit} />
               <ImageDropzone
-                className="mt-6 w-full border-solid border-input"
+                className="mt-6 w-full border-solid border-primary/10"
                 disabled={isPending}
                 value={file}
                 onChange={handleUpload}

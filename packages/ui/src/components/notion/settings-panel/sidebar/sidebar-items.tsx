@@ -3,7 +3,7 @@
 import type { LucideIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import type { UserStore } from "../index.types";
+import type { SettingsStore } from "../index.types";
 
 export interface TabProps {
   name: string;
@@ -17,7 +17,7 @@ export const Tab = ({ name, isActive, Icon, onClick }: TabProps) => {
     <div
       className={cn(
         "flex cursor-pointer select-none items-center gap-x-1 rounded-sm px-4 py-1 hover:bg-primary/10",
-        isActive && "font-extrabold",
+        isActive && "bg-primary/10 font-extrabold",
       )}
       onClick={onClick}
     >
@@ -27,13 +27,15 @@ export const Tab = ({ name, isActive, Icon, onClick }: TabProps) => {
   );
 };
 
-export const User = ({ user }: { user: UserStore }) => {
+export const User = ({ settings }: { settings: SettingsStore }) => {
+  const { user, account } = settings;
+
   return (
     <div className="flex items-center px-4 py-1">
       <div>
         <img
-          src={user.imageUrl}
-          alt="CN"
+          src={account.avatarUrl}
+          alt=" "
           className="mr-3 w-5 rounded-full border border-solid"
         />
       </div>

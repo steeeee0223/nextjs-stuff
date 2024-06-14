@@ -60,9 +60,9 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
   };
   /** Edgestore */
   const { edgestore } = useEdgeStore();
-  const deleteFile = async (coverImage?: CoverImage | null) => {
-    if (coverImage?.type !== "file") return;
-    const url = coverImage.url;
+  const deleteFile = async (data?: CoverImage | IconInfo | null) => {
+    if (data?.type !== "file") return;
+    const url = data.url;
     try {
       await edgestore.publicFiles.delete({ url });
     } catch {
@@ -94,25 +94,40 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
       log: true,
     });
   };
-  const onIconSelect = (iconInfo: IconInfo) =>
-    void update({ id: document.id, icon: toIcon(iconInfo) });
+  const onIconSelect = async (iconInfo: IconInfo) => {
+    await deleteFile(toIconInfo(document.icon));
+    await update({ id: document.id, icon: toIcon(iconInfo) });
+  };
   const onRemoveIcon = () => update({ id: document.id, icon: null });
-  const onUploadCover = async (file: File) => {
-    const res = await edgestore.publicFiles.upload({
+  const onUploadIcon = async (file: File) => {
+    const replaceTargetUrl =
+      document.icon?.type === "file" ? document.icon.src : undefined;
+    const { url } = await edgestore.publicFiles.upload({
       file,
-      options: {
-        replaceTargetUrl:
-          document.coverImage?.type === "file"
-            ? document.coverImage.url
-            : undefined,
-      },
+      options: { replaceTargetUrl },
     });
     await update({
       id: document.id,
-      coverImage: { type: "file", url: res.url },
+      icon: { type: "file", src: url },
       log: true,
     });
-    console.log(`uploaded to edgestore: ${res.url}`);
+    console.log(`[doc:icon] uploaded to edgestore: ${url}`);
+  };
+  const onUploadCover = async (file: File) => {
+    const replaceTargetUrl =
+      document.coverImage?.type === "file"
+        ? document.coverImage.url
+        : undefined;
+    const { url } = await edgestore.publicFiles.upload({
+      file,
+      options: { replaceTargetUrl },
+    });
+    await update({
+      id: document.id,
+      coverImage: { type: "file", url },
+      log: true,
+    });
+    console.log(`[doc:cover] uploaded to edgestore: ${url}`);
   };
   const onUploadUrl = async (url: string) => {
     await deleteFile(document.coverImage);
@@ -143,10 +158,10 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
             key={stableHash(document.icon)}
             defaultIcon={toIconInfo(document.icon)}
             editable={!preview}
-            size="lg"
+            size="xl"
             onRemove={onRemoveIcon}
             onSelect={onIconSelect}
-            // onUpload={}
+            onUpload={onUploadIcon}
           />
           <div
             className={cn(

@@ -152,9 +152,21 @@ model AccountSettings {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   userId        String   @unique(map: "userId")
   // Preferrance
+  avatarUrl     String
   preferredName String
   email         String
-  password      String?
+  hasPassword   Boolean
   // Time
   updatedAt     DateTime @updatedAt
+}
+
+model WorkspaceSettings {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  workspaceId String   @unique(map: "workspaceId")
+  // Settings
+  name        String
+  icon        Icon?
+  domain      String
+  // Time
+  updatedAt   DateTime @updatedAt
 }

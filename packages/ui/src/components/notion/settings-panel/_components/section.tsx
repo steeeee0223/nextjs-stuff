@@ -2,6 +2,7 @@ import { type PropsWithChildren } from "react";
 
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { PlanLink } from "./helper";
 
 interface SectionProps extends PropsWithChildren {
   title: string;
@@ -32,20 +33,25 @@ interface SectionItemProps extends PropsWithChildren {
   title: string;
   description: string;
   titleProps?: string;
+  plan?: string;
 }
 export const SectionItem = ({
   children,
   title,
   description,
   titleProps,
+  plan,
 }: SectionItemProps) => {
   return (
     <div className="flex cursor-default items-center justify-between">
-      <div className="mr-[10%] flex flex-col">
-        <h3 className={cn("mb-0.5 flex p-0 text-sm font-normal", titleProps)}>
-          {title}
-        </h3>
-        <p className="text-xs text-primary/65">{description}</p>
+      <div className="mr-[10%] flex w-full flex-col">
+        <div className="flex items-center">
+          <h3 className={cn("mb-0.5 flex p-0 text-sm font-normal", titleProps)}>
+            {title}
+          </h3>
+          {!!plan && <PlanLink plan={plan} />}
+        </div>
+        <p className="w-4/5 text-xs text-primary/65">{description}</p>
       </div>
       <div>{children}</div>
     </div>

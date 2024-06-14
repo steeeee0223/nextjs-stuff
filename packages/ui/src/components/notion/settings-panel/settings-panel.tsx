@@ -18,16 +18,14 @@ const styles = {
 
 export const SettingsPanel = () => {
   const [activeTab, setActiveTab] = useState<TabType>("my-settings");
-  const {
-    settings: { user },
-  } = useSettings();
+  const { settings } = useSettings();
 
   return (
     <div className="flex w-full">
       <div className={styles.sidebar}>
         <div className={styles.sidebarSection}>
           <div className={styles.title}>Account</div>
-          <User user={user} />
+          <User settings={settings} />
           {account.map(({ name, value, Icon }, i) => (
             <Tab
               key={i}

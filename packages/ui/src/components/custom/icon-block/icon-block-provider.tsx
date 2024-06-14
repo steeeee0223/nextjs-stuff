@@ -13,7 +13,7 @@ export interface IconBlockProviderProps extends IconBlockProps {
   defaultIcon: IconInfo;
   onSelect?: (iconInfo: IconInfo) => void;
   onRemove?: () => void;
-  onUpload?: (file: File) => Promise<string>;
+  onUpload?: (file: File) => void;
 }
 
 export function IconBlockProvider({
@@ -42,11 +42,9 @@ export function IconBlockProvider({
       onRemove?.();
     },
     upload: (file) => {
-      let url = file.name;
-      onUpload?.(file)
-        .then((data) => (url = data))
-        .catch(() => console.log(`[icon-picker] upload error`));
+      const url = URL.createObjectURL(file);
       setIcon({ type: "file", url });
+      onUpload?.(file);
     },
   };
 
