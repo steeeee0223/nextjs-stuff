@@ -5,7 +5,7 @@ export default function Page() {
     <OrganizationList
       afterSelectPersonalUrl="/personal/:id"
       afterSelectOrganizationUrl="/organization/:id"
-      afterCreateOrganizationUrl="/organization/:id"
+      afterCreateOrganizationUrl="/onboarding"
     />
   );
 }
