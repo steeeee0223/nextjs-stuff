@@ -9,7 +9,7 @@ describe("<WorkspaceSwitcher />", () => {
       <WorkspaceProvider
         user={user}
         workspaces={workspaces}
-        initial="mock-workspace-personal"
+        initial="dummy-workspace-personal"
       >
         <WorkspaceSwitcher />
       </WorkspaceProvider>,
