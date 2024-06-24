@@ -1,5 +1,7 @@
 "use server";
 
+import type { Fetcher } from "swr";
+
 import { worxpace as db, type Document } from "@acme/prisma";
 import type { Modified } from "@acme/ui/lib";
 import type {
@@ -9,6 +11,7 @@ import type {
 } from "@acme/validators";
 
 import type { Client } from "./types";
+import { fetchClient } from "./utils";
 
 type User = Pick<Client, "userId" | "orgId">;
 type Action = "ARCHIVE" | "RESTORE";
@@ -147,4 +150,23 @@ export const remove = async ({
   /** Delete the document */
   const item = await db.document.delete({ where: { userId, orgId, id } });
   return { item, ids: modifiedIds };
+};
+
+export const getDocument: Fetcher<Document, [string, boolean]> = async ([
+  documentId,
+  preview,
+]) => {
+  console.log(`[swr] [${documentId}, ${preview}]: start fetching`);
+  const document = await getById(documentId);
+  if (!document) throw new Error("Not found");
+  // Published & not archived
+  if (document.isPublished && !document.isArchived) return document;
+  // Preview, but either archived or not published
+  if (preview) throw new Error("Not found");
+  // Verify user if not preview
+  const { userId, orgId } = fetchClient();
+  if (document.userId !== userId || document.orgId !== orgId)
+    throw new Error("Unauthorized");
+  // Return authorized doc
+  return document;
 };

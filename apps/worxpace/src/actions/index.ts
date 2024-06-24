@@ -16,6 +16,11 @@ export * from "./create-card";
 export * from "./delete-card";
 export * from "./update-card";
 export * from "./update-card-order";
-/** Settings */
-export * from "./update-account-settings";
-export * from "./update-workspace-settings";
+/** Account */
+export * from "./create-account";
+export * from "./delete-account";
+export * from "./update-account";
+/** Workspace */
+export * from "./create-workspace";
+export * from "./delete-workspace";
+export * from "./update-workspace";

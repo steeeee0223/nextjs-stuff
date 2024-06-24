@@ -1,26 +1,58 @@
 "use server";
 
-import type { Fetcher } from "swr";
+import { worxpace as db, WORKSPACE_ROLE } from "@acme/prisma";
+import type { Membership, Workspace } from "@acme/prisma";
+import type {
+  CreateWorkspaceInput,
+  UpdateWorkspaceInput,
+} from "@acme/validators";
 
-import type { Document } from "@acme/prisma";
+export type WorkspaceMemberships = Workspace & { memberships: Membership[] };
 
-import { documents, fetchClient } from "~/lib";
+/**
+ * Create Workspace
+ *
+ * 1. Create a workspace
+ * 2. Create a membership of the created account
+ * @returns
+ */
+const create = async (data: CreateWorkspaceInput): Promise<Workspace> =>
+  await db.workspace.create({
+    data: {
+      ...data,
+      domain: data.name,
+      memberships: {
+        create: {
+          role: WORKSPACE_ROLE.OWNER,
+          joinedAt: new Date(),
+          account: { connect: { id: data.createdBy } },
+        },
+      },
+    },
+  });
 
-export const getDocument: Fetcher<Document, [string, boolean]> = async ([
-  documentId,
-  preview,
-]) => {
-  console.log(`[swr] [${documentId}, ${preview}]: start fetching`);
-  const document = await documents.getById(documentId);
-  if (!document) throw new Error("Not found");
-  // Published & not archived
-  if (document.isPublished && !document.isArchived) return document;
-  // Preview, but either archived or not published
-  if (preview) throw new Error("Not found");
-  // Verify user if not preview
-  const { userId, orgId } = fetchClient();
-  if (document.userId !== userId || document.orgId !== orgId)
-    throw new Error("Unauthorized");
-  // Return authorized doc
-  return document;
+const get = async (workspaceId: string): Promise<WorkspaceMemberships | null> =>
+  await db.workspace.findUnique({
+    where: { id: workspaceId },
+    include: { memberships: true },
+  });
+
+/**
+ * Delete Workspace
+ *
+ * 1. Delete all memberships in this workspcae
+ * 2. Delete the workspace
+ * @returns the deleted workspace
+ */
+const remove = async (workspaceId: string): Promise<Workspace> => {
+  await db.membership.deleteMany({ where: { workspaceId } });
+  return await db.workspace.delete({ where: { id: workspaceId } });
 };
+
+const update = async (
+  workspaceId: string,
+  data?: UpdateWorkspaceInput,
+): Promise<Workspace> =>
+  await db.workspace.update({ where: { id: workspaceId }, data: { ...data } });
+
+export { create, get, update, remove as delete };

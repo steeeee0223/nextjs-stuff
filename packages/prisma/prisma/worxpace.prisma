@@ -148,25 +148,48 @@ model Document {
   @@index([userId, orgId, type], name: "byUserType")
 }
 
-model AccountSettings {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String   @unique(map: "userId")
+enum WORKSPACE_ROLE {
+  OWNER
+  MEMBER
+  GUEST
+}
+
+model Membership {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  role        WORKSPACE_ROLE
+  joinedAt    DateTime       @default(now())
+  accountId   String
+  account     Account        @relation(fields: [accountId], references: [id])
+  workspaceId String
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id])
+
+  @@unique([accountId, workspaceId])
+  @@index([accountId])
+  @@index([workspaceId])
+}
+
+model Account {
+  id            String       @id @default(uuid()) @map("_id")
+  name          String
+  clerkId       String       @unique(map: "clerkId")
+  updatedAt     DateTime     @updatedAt
+  memberships   Membership[]
   // Preferrance
   avatarUrl     String
   preferredName String
   email         String
   hasPassword   Boolean
-  // Time
-  updatedAt     DateTime @updatedAt
 }
 
-model WorkspaceSettings {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  workspaceId String   @unique(map: "workspaceId")
+model Workspace {
+  id          String       @id @default(uuid()) @map("_id")
+  createdBy   String
+  memberships Membership[]
+  updatedAt   DateTime     @updatedAt
   // Settings
   name        String
   icon        Icon?
   domain      String
-  // Time
-  updatedAt   DateTime @updatedAt
+
+  @@index([createdBy])
 }

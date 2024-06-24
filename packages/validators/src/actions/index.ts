@@ -14,5 +14,7 @@ export * from "./create-card";
 export * from "./delete-card";
 export * from "./update-card";
 export * from "./update-card-order";
-/** Settings */
-export * from "./update-settings";
+/** Account */
+export * from "./account";
+/** Workspace */
+export * from "./workspace";
