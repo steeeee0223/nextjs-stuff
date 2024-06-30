@@ -48,6 +48,7 @@ export const Settings2 = () => {
     settings: { workspace },
     updateSettings: update,
     uploadFile,
+    deleteWorkspace,
   } = useSettings();
   const site = `${workspace.domain}.notion.site`;
   const link = `www.notion.so/${workspace.domain}`;
@@ -70,6 +71,7 @@ export const Settings2 = () => {
   };
   const onUpdateDomain = (e: ChangeEvent<HTMLInputElement>) =>
     update({ workspace: { domain: e.target.value } });
+  const onDeleteWorkspace = () => deleteWorkspace?.(workspace.id);
 
   return (
     <>
@@ -132,7 +134,7 @@ export const Settings2 = () => {
         </Field>
         <Separator className="my-4 bg-primary/15" />
         <Field {...settings.danger} hint="Learn about deleting workspaces.">
-          <Button variant="warning" size="sm">
+          <Button variant="warning" size="sm" onClick={onDeleteWorkspace}>
             Delete entire workspace
           </Button>
         </Field>

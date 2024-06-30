@@ -28,6 +28,7 @@ export const Account = () => {
     settings: { account },
     updateSettings: update,
     uploadFile,
+    deleteAccount,
   } = useSettings();
   const onUpdateAvatar = () => avatarInputRef.current?.click();
   const onRemoveAvatar = () => void update({ account: { avatarUrl: "" } });
@@ -43,6 +44,7 @@ export const Account = () => {
   };
   const onUpdateName = (e: ChangeEvent<HTMLInputElement>) =>
     update({ account: { preferredName: e.target.value } });
+  const onDeleteAccount = () => deleteAccount?.(account.id);
   /** Modals */
   const { setOpen } = useModal();
   const handleEmailSettings = () =>
@@ -156,7 +158,12 @@ export const Account = () => {
         </SectionItem>
         <SectionSeparator size="sm" />
         <SectionItem {...myAccount.del} titleProps="text-[#eb5757]">
-          <Button variant="ghost" size="icon-sm" className="text-primary/35">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="text-primary/35"
+            onClick={onDeleteAccount}
+          >
             <ChevronRight className="h-4 w-4" />
           </Button>
         </SectionItem>

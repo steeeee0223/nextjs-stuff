@@ -8,6 +8,8 @@ export interface Client {
   username: string;
   workspace: string;
   workspaceId: string;
+  email: string;
+  avatarUrl: string;
 }
 
 export type Action<Input, Output> = MutationFetcher<Output, string, Input>;

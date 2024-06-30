@@ -1,14 +1,19 @@
 "use server";
 
 import { worxpace as db } from "@acme/prisma";
-import type { Account, Membership } from "@acme/prisma";
+import type { Account, Membership, Workspace } from "@acme/prisma";
 import type {
   CreateAccountInput,
   DeleteAccountInput,
   UpdateAccountInput,
 } from "@acme/validators";
 
-export type AccountMemberships = Account & { memberships: Membership[] };
+type WorkspaceMembership = Membership & {
+  workspace: Workspace;
+};
+export type AccountMemberships = Account & {
+  memberships: WorkspaceMembership[];
+};
 
 const create = async (data: CreateAccountInput): Promise<Account> =>
   await db.account.create({
@@ -18,7 +23,7 @@ const create = async (data: CreateAccountInput): Promise<Account> =>
 const get = async (clerkId: string): Promise<AccountMemberships | null> =>
   await db.account.findUnique({
     where: { clerkId },
-    include: { memberships: true },
+    include: { memberships: { include: { workspace: true } } },
   });
 
 const isInWorkspace = async (
@@ -49,21 +54,22 @@ const joinWorkspace = async ({
 /**
  * Delete Account
  *
- * 1. Delete all workspaces created by the account
- * 2. Delete all memberships of the account
+ * 1. Delete all memberships of the account
+ * 2. Delete all workspaces created by the account
  * 3. Delete the account
  * @returns the deleted account
  */
 const remove = async (data: DeleteAccountInput): Promise<Account> => {
-  await db.workspace.deleteMany({ where: { createdBy: data.id } });
   await db.membership.deleteMany({ where: { accountId: data.id } });
+  await db.workspace.deleteMany({ where: { createdBy: data.id } });
+
   return await db.account.delete({ where: data });
 };
 
 const update = async (
-  accountId: string,
+  clerkId: string,
   data?: UpdateAccountInput,
 ): Promise<Account> =>
-  await db.account.update({ where: { id: accountId }, data: { ...data } });
+  await db.account.update({ where: { clerkId }, data: { ...data } });
 
 export { create, get, isInWorkspace, joinWorkspace, update, remove as delete };

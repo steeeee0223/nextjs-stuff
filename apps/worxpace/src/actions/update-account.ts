@@ -10,28 +10,25 @@ import {
   createMutationFetcher,
   fetchClient,
   UnauthorizedError,
-  type Action,
 } from "~/lib";
 
-const handler: Action<UpdateAccountInput, AccountStore> = async (
-  userId,
-  { arg },
-) => {
-  try {
-    fetchClient();
-    const { avatarUrl, email, preferredName, hasPassword } =
-      await account.update(userId, arg);
-    return { avatarUrl, email, preferredName, hasPassword };
-  } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to update account.");
-  }
-};
-
-const update = createMutationFetcher(UpdateAccount, handler);
+const handler = createMutationFetcher(
+  UpdateAccount,
+  async (clerkId, { arg }) => {
+    try {
+      fetchClient();
+      const { id, name, avatarUrl, email, preferredName, hasPassword } =
+        await account.update(clerkId, arg);
+      return { id, name, avatarUrl, email, preferredName, hasPassword };
+    } catch (error) {
+      if (error instanceof UnauthorizedError) throw error;
+      throw new Error("Failed to update account.");
+    }
+  },
+);
 
 export const updateAccount: MutationFetcher<
   AccountStore,
-  { type: "settings"; userId: string; workspaceId: string },
+  { type: "settings"; clerkId: string; workspaceId: string },
   UpdateAccountInput
-> = ({ userId }, data) => update(userId, data);
+> = ({ clerkId }, data) => handler(clerkId, data);

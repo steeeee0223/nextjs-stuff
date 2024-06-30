@@ -17,6 +17,8 @@ export const useClient = (): Client => {
       username: "User",
       workspace: "Unknown",
       workspaceId: "unknown",
+      email: "unknown",
+      avatarUrl: "",
     };
   if (!orgId || !organization) {
     /** @todo Admin role */
@@ -29,6 +31,8 @@ export const useClient = (): Client => {
       username: user.fullName ?? "User",
       workspace: user.fullName ?? "User",
       workspaceId: userId,
+      email: user.emailAddresses[0]?.emailAddress ?? "",
+      avatarUrl: user.imageUrl,
     };
   } else {
     return {
@@ -39,6 +43,8 @@ export const useClient = (): Client => {
       username: user.fullName ?? "User",
       workspace: organization.name,
       workspaceId: orgId,
+      email: "",
+      avatarUrl: organization.imageUrl,
     };
   }
 };

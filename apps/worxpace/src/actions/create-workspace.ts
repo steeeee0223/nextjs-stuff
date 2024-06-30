@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import type { Workspace } from "@acme/prisma";
 import { CreateWorkspace, type CreateWorkspaceInput } from "@acme/validators";
 
@@ -15,7 +17,9 @@ const handler: Action<CreateWorkspaceInput, Workspace> = async (
   { arg },
 ) => {
   try {
-    return await workspace.create(arg);
+    const result = await workspace.create(arg);
+    revalidatePath(`/workspace/${result.id}`);
+    return result;
   } catch (error) {
     if (error instanceof UnauthorizedError) throw error;
     throw new Error("Failed to create workspace.");

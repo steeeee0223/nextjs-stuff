@@ -11,12 +11,6 @@ interface SettingsStore extends Settings {
 }
 
 const initialSettings: Settings = {
-  user: {
-    id: "",
-    name: "",
-    email: "",
-    imageUrl: "",
-  },
   workspace: {
     id: "",
     name: "",
@@ -24,6 +18,8 @@ const initialSettings: Settings = {
     domain: "",
   },
   account: {
+    id: "",
+    name: "",
     avatarUrl: "",
     preferredName: "",
     email: "",
@@ -35,9 +31,8 @@ export const useSettingsStore = create<SettingsStore>()(
     persist(
       (set) => ({
         ...initialSettings,
-        update: ({ user, workspace, account }) =>
+        update: ({ workspace, account }) =>
           set((state) => ({
-            user: { ...state.user, ...user },
             workspace: { ...state.workspace, ...workspace },
             account: { ...state.account, ...account },
           })),

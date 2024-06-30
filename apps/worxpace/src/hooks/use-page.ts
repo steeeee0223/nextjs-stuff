@@ -5,7 +5,7 @@ import useSWR from "swr";
 import type { Document } from "@acme/prisma";
 import { useTree } from "@acme/ui/custom";
 
-import { fetchUrl, getDocument, toIconInfo } from "~/lib";
+import { documents, fetchUrl, toIconInfo } from "~/lib";
 
 export interface PageState {
   page?: Document;
@@ -17,12 +17,17 @@ export const usePage = (id: string | null, preview: boolean) => {
     data: page,
     isLoading,
     error,
-  } = useSWR<Document, Error>(id ? [id, preview] : null, getDocument, {
-    onSuccess: ({ title, icon }) => console.log(`[swr:page] ${title} - `, icon),
-    onError: (e) => console.log(`[swr:page]: ${e.message}`),
-    revalidateIfStale: true,
-    revalidateOnMount: true,
-  });
+  } = useSWR<Document, Error>(
+    id ? [id, preview] : null,
+    documents.getDocument,
+    {
+      onSuccess: ({ title, icon }) =>
+        console.log(`[swr:page] ${title} - `, icon),
+      onError: (e) => console.log(`[swr:page]: ${e.message}`),
+      revalidateIfStale: true,
+      revalidateOnMount: true,
+    },
+  );
 
   return { page, isLoading, error };
 };

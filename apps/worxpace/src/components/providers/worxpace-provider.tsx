@@ -1,63 +1,70 @@
 "use client";
 
-import { useEffect, useMemo, type PropsWithChildren } from "react";
+import { useMemo, useState, type PropsWithChildren } from "react";
 import { useParams } from "next/navigation";
-import { useOrganizationList, useUser } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
+import useSWR from "swr";
 
-import { Workspace, WorkspaceProvider } from "@acme/ui/notion";
+import { Spinner } from "@acme/ui/custom";
+import {
+  WorkspaceProvider,
+  type UserState,
+  type Workspace,
+} from "@acme/ui/notion";
 
 import { useClient } from "~/hooks";
+import { account, toIconInfo } from "~/lib";
 
 export const WorxpaceProvider = ({ children }: PropsWithChildren) => {
-  const { user } = useUser();
-  const { setActive } = useOrganizationList();
-  const { userId, username, workspaceId } = useClient();
-  const params = useParams();
+  const { username, email } = useClient();
+  const { userId: clerkId } = useAuth();
+  const params = useParams<{ workspaceId?: string }>();
+  const [user, setUser] = useState<UserState>({
+    id: "",
+    name: username,
+    email,
+  });
+  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
 
-  useEffect(() => {
-    if (typeof params.clientId === "string") {
-      const org = params.clientId === userId ? null : params.clientId;
-      setActive?.({ organization: org }).catch((e) => console.log(e));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.clientId, userId]);
-
-  const initial = useMemo(
-    () => (params.clientId as string) ?? workspaceId,
-    [params, workspaceId],
+  const { isLoading } = useSWR(
+    clerkId ? { type: "settings", clerkId } : null,
+    async (key) => {
+      const data = await account.get(key.clerkId);
+      if (!data) throw new Error("Not Found.");
+      return data;
+    },
+    {
+      onSuccess: ({ name, email, id, memberships }) => {
+        setUser({ id, name, email });
+        setWorkspaces(
+          memberships.map<Workspace>(({ workspace, role }) => ({
+            id: workspace.id,
+            name: workspace.name,
+            icon: toIconInfo(workspace.icon),
+            role: role.toLowerCase() as Workspace["role"],
+            members: 1,
+            plan: "Free Plan",
+          })),
+        );
+      },
+    },
   );
 
-  const workspaceUser = {
-    id: userId,
-    name: username,
-    profilePicture: { url: user?.imageUrl ?? "" },
-    isDarkMode: false,
-    email: user?.emailAddresses[0]?.emailAddress ?? "no email provided",
-  };
-  const personal: Workspace = {
-    id: userId,
-    name: username,
-    icon: "🎑",
-    owner: username,
-    ownerId: userId,
-    members: [],
-  };
-  const workspaces = [
-    personal,
-    ...(user?.organizationMemberships.map(({ organization: { id, name } }) => ({
-      id,
-      name,
-      icon: "🎑",
-      owner: `owner`,
-      ownerId: `ownerId`,
-      members: [],
-    })) ?? []),
-  ];
+  const initial = useMemo(
+    () => params.workspaceId ?? workspaces.at(0)?.id ?? "",
+    [params.workspaceId, workspaces],
+  );
 
+  if (isLoading)
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
   return (
     <WorkspaceProvider
       className="h-full"
-      user={workspaceUser}
+      user={user}
       workspaces={workspaces}
       initial={initial}
     >

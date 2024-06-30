@@ -2,10 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import useSWRMutation from "swr/mutation";
 
 import { Button } from "@acme/ui/shadcn";
+import { CreateAccountInput } from "@acme/validators";
 
+import { createAccount, createWorkspace } from "~/actions";
 import { useClient } from "~/hooks";
+import { account } from "~/lib";
 import { Card, type CardProps } from "./_components/card";
 
 const data: Omit<CardProps, "checked">[] = [
@@ -33,7 +38,39 @@ const data: Omit<CardProps, "checked">[] = [
 export default function Page() {
   const [checked, setChecked] = useState(-1);
   const router = useRouter();
-  const { path } = useClient();
+  const {
+    email,
+    workspaceId: clerkId,
+    workspace: name,
+    avatarUrl,
+  } = useClient();
+
+  const onError = (e: Error) => toast.error(e.message);
+  const { trigger: create } = useSWRMutation(
+    clerkId,
+    async (key, payload: { arg: CreateAccountInput }) => {
+      const data = await account.get(key);
+      if (!data) return await createAccount(key, payload);
+      return data;
+    },
+    {
+      onError,
+      onSuccess: ({ id, name }) => {
+        void $create({
+          createdBy: id,
+          name: `${name}'s Workspace`,
+          icon: { type: "lucide", src: "coffee", color: "#9F6B53" },
+        });
+      },
+    },
+  );
+  const { trigger: $create } = useSWRMutation(clerkId, createWorkspace, {
+    onError,
+    // onSuccess: () => router.push(path),
+    onSuccess: ({ id }) => router.push(`/workspace/${id}`),
+  });
+  const onContinue = async () =>
+    await create({ name, clerkId, email, avatarUrl });
 
   return (
     <>
@@ -65,7 +102,7 @@ export default function Page() {
               size="sm"
               className="w-[280px]"
               disabled={!(checked in ([0, 1, 2] as const))}
-              onClick={() => router.push(path)}
+              onClick={onContinue}
             >
               Continue
             </Button>

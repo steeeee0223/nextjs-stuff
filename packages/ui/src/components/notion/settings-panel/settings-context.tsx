@@ -13,6 +13,8 @@ export interface SettingsContextInterface
     file: File,
     options?: { replaceTargetUrl?: string },
   ) => Promise<{ url: string }>;
+  deleteAccount?: (accountId: string) => Promise<void>;
+  deleteWorkspace?: (workspaceId: string) => Promise<void>;
 }
 
 export const SettingsContext = createContext<SettingsContextInterface | null>(

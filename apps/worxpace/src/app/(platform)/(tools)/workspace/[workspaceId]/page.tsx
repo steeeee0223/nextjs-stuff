@@ -7,15 +7,19 @@ import useSWRMutation from "swr/mutation";
 
 import { useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
+import { useWorkspace } from "@acme/ui/notion";
 import { Button } from "@acme/ui/shadcn";
 
 import { createDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { useClient } from "~/hooks";
 import { toIconInfo } from "~/lib";
 
-const Client = () => {
-  const { workspace, workspaceId } = useClient();
+interface Params {
+  params: { workspaceId: string };
+}
+
+const Workspace = ({ params: { workspaceId } }: Params) => {
+  const { activeWorkspace } = useWorkspace();
   /** Action */
   const { dispatch } = useTree();
   const { trigger } = useSWRMutation(`doc:${workspaceId}`, createDocument, {
@@ -54,7 +58,7 @@ const Client = () => {
         className="hidden dark:block"
       />
       <h2 className="text-lg font-medium">
-        Welcome to {workspace}&apos;s WorXpace
+        Welcome to {activeWorkspace?.name ?? "WorXpace"}
       </h2>
       <form action={onSubmit}>
         <Button type="submit">
@@ -66,4 +70,4 @@ const Client = () => {
   );
 };
 
-export default Client;
+export default Workspace;
