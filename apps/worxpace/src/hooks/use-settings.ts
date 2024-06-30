@@ -8,10 +8,12 @@ import { useSettingsStore } from "@acme/ui/notion";
 import type { SettingsStore } from "@acme/ui/notion";
 
 import {
-  deleteAccount as _deleteAccount,
-  deleteWorkspace as _deleteWorkspace,
-  updateAccount as _updateAccount,
-  updateWorkspace as _updateWorkspace,
+  createAccount as $addAccount,
+  createWorkspace as $addWorkspace,
+  deleteAccount as $delAccount,
+  deleteWorkspace as $delWorkspace,
+  updateAccount as $updAccount,
+  updateWorkspace as $updWorkspace,
 } from "~/actions";
 import {
   account as _account,
@@ -25,7 +27,10 @@ export const useSettings = (
   const { user, account, workspace } = useSettingsStore();
 
   const key = info ? { type: "settings" as const, ...info } : null;
-  const onError = (e: Error) => toast.error(e.message);
+  const userKey = info
+    ? { type: "settings" as const, clerkId: info.clerkId }
+    : null;
+  const options = { onError: (e: Error) => toast.error(e.message) };
   const { data, isLoading, mutate } = useSWR(
     key,
     async ({ clerkId, workspaceId }) => {
@@ -39,25 +44,37 @@ export const useSettings = (
       } satisfies SettingsStore;
     },
   );
-  const { trigger: updateAccount } = useSWRMutation(key, _updateAccount, {
-    onError,
-  });
-  const { trigger: updateWorkspace } = useSWRMutation(key, _updateWorkspace, {
-    onError,
-  });
-  const { trigger: deleteAccount } = useSWRMutation(key, _deleteAccount, {
-    onError,
-  });
-  const { trigger: deleteWorkspace } = useSWRMutation(key, _deleteWorkspace, {
-    onError,
-  });
+  const { trigger: createAccount } = useSWRMutation(
+    userKey,
+    $addAccount,
+    options,
+  );
+  const { trigger: createWorkspace } = useSWRMutation(
+    userKey,
+    $addWorkspace,
+    options,
+  );
+  const { trigger: updateAccount } = useSWRMutation(key, $updAccount, options);
+  const { trigger: updateWorkspace } = useSWRMutation(
+    key,
+    $updWorkspace,
+    options,
+  );
+  const { trigger: deleteAccount } = useSWRMutation(key, $delAccount, options);
+  const { trigger: deleteWorkspace } = useSWRMutation(
+    key,
+    $delWorkspace,
+    options,
+  );
 
   return {
     settings: isLoading || !data ? { user, account, workspace } : data,
     fetchData: () => mutate(),
+    createAccount,
+    createWorkspace,
     updateAccount,
-    deleteAccount,
     updateWorkspace,
+    deleteAccount,
     deleteWorkspace,
   };
 };

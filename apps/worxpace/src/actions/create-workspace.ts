@@ -9,10 +9,10 @@ import {
   createMutationFetcher,
   UnauthorizedError,
   workspace,
-  type Action,
 } from "~/lib";
+import type { MutationFetcher } from "swr/mutation";
 
-const handler: Action<CreateWorkspaceInput, Workspace> = async (
+const handler= createMutationFetcher(CreateWorkspace,async (
   _key,
   { arg },
 ) => {
@@ -24,6 +24,12 @@ const handler: Action<CreateWorkspaceInput, Workspace> = async (
     if (error instanceof UnauthorizedError) throw error;
     throw new Error("Failed to create workspace.");
   }
-};
+});
 
-export const createWorkspace = createMutationFetcher(CreateWorkspace, handler);
+export const createWorkspace :MutationFetcher<
+Workspace,
+{ type: "settings"; clerkId: string },
+CreateWorkspaceInput
+> = ({ clerkId }, data) => handler(clerkId, data);
+
+
