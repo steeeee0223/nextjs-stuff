@@ -49,7 +49,7 @@ export const Settings: Story = {
 export const TreeItem: Story = {
   args: {
     id: "test-id",
-    username: "John Doe",
+    lastEditedBy: "John Doe",
     label: "Folder",
     icon: { type: "lucide", name: "folder" },
     onClick: () => alert(`Clicked item`),

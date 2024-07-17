@@ -5,30 +5,35 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui";
+} from "@/components/ui/dropdown-menu";
 
 const styles = {
-  dropdown: "hover:bg-primary/5 hover:rounded-sm",
-  icon: "text-muted-foreground h-4 w-4 mr-2",
+  dropdown: "p-0.5 hover:bg-primary/5 hover:rounded-sm",
+  icon: "text-muted-foreground h-4 w-4",
+  item: "gap-x-2 h-7 focus:bg-primary/5",
 };
 
 interface HeaderDropdownProps {
   onLogout?: () => void;
+  onCreateWorkspace?: () => void;
 }
 
-const HeaderDropdown = ({ onLogout }: HeaderDropdownProps) => {
+const HeaderDropdown = ({
+  onCreateWorkspace,
+  onLogout,
+}: HeaderDropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className={styles.dropdown}>
         <MoreHorizontal className={styles.icon} />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="z-[99999]">
-        <DropdownMenuItem>
+      <DropdownMenuContent className="z-[99999] border-primary/15">
+        <DropdownMenuItem className={styles.item} onClick={onCreateWorkspace}>
           <PlusSquare className={styles.icon} />
           <p>Join or create workspace</p>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <XCircle className={styles.icon} onClick={onLogout} />
+        <DropdownMenuItem className={styles.item} onClick={onLogout}>
+          <XCircle className={styles.icon} />
           <p>Log out</p>
         </DropdownMenuItem>
       </DropdownMenuContent>

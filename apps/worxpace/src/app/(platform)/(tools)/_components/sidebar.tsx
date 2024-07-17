@@ -11,21 +11,22 @@ import {
   type MouseEventHandler,
 } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth, useOrganizationList } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
+// import { useAuth, useOrganizationList } from "@clerk/nextjs";
 import { ChevronsLeft } from "lucide-react";
-import { toast } from "sonner";
-import useSWRMutation from "swr/mutation";
 
-import { Hint, CRUDItem as Item, useModal, useTree } from "@acme/ui/custom";
+import { Hint, CRUDItem as Item, useModal } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
-import { useSettingsStore, WorkspaceSwitcher } from "@acme/ui/notion";
+import {
+  useSettingsStore,
+  WorkspaceSwitcher,
+  type WorkspaceSwitcherProps,
+} from "@acme/ui/notion";
 import { Popover, PopoverContent, PopoverTrigger } from "@acme/ui/shadcn";
 
-import { archiveDocument, createDocument } from "~/actions";
 import { SearchCommand, SettingsModal } from "~/components/modal";
 import { theme } from "~/constants/theme";
-import { useClient, usePages } from "~/hooks";
-import { toIconInfo } from "~/lib";
+import { useDocuments, usePlatform } from "~/hooks";
 import DocList from "./doc-list";
 import TrashBox from "./trash-box";
 
@@ -49,27 +50,37 @@ export const Sidebar = forwardRef(function Sidebar(
 ) {
   /** Route */
   const router = useRouter();
-  const { path, userId, workspaceId } = useClient();
   /** Workspace */
   const { reset } = useSettingsStore();
-  const { isLoading, trigger } = usePages(workspaceId);
+  const { accountId, workspaceId, ...platform } = usePlatform();
   const { signOut } = useAuth();
-  const { setActive } = useOrganizationList();
-  const handleSelect = async (id: string) => {
-    const workspaceId = id === userId ? null : id;
-    await setActive?.({ organization: workspaceId });
-    reset();
-    const newPath =
-      id === userId ? `/personal/${userId}` : `/organization/${id}`;
-    router.push(newPath);
+  // const { setActive } = useOrganizationList();
+  const switcherHandlers: WorkspaceSwitcherProps = {
+    onSelect: async (id) => {
+      // TODO fix this
+      // await setActive?.({ organization: workspaceId });
+      platform.update((prev) => ({ ...prev, workspaceId: id }));
+      reset();
+      router.push(`/workspace/${id}`);
+    },
+    onCreateWorkspace: () => router.push("/onboarding"),
+    onLogout: () => {
+      platform.reset();
+      void signOut(() => router.push("/select-role"));
+    },
   };
-  const handleLogout = () =>
-    signOut(() => router.push("/select-role")).catch((e) => console.log(e));
+  /** Docs */
+  const { isLoading, fetchData, create, archive } = useDocuments({
+    workspaceId,
+  });
+  const handleCreate = (type: string, parentId?: string) =>
+    create({ type, parentId, title: "Untitled", accountId, workspaceId });
+  const handleArchive = (id: string) => archive({ id, accountId, workspaceId });
   /** Modals */
   const { setOpen } = useModal();
   const handleSettings = () => void setOpen(<SettingsModal />);
   const fetchSearchData = async () => {
-    const data = await trigger();
+    const data = await fetchData();
     const documents = data?.filter(({ isArchived }) => !isArchived) ?? [];
     return { documents };
   };
@@ -77,42 +88,6 @@ export const Sidebar = forwardRef(function Sidebar(
     () => void setOpen(<SearchCommand />, fetchSearchData),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [fetchSearchData],
-  );
-  /** Docs */
-  const { dispatch, onClickItem } = useTree();
-  const onError = (e: Error) => toast.error(e.message);
-  /** Action: Create */
-  const { trigger: create } = useSWRMutation(
-    `doc:${workspaceId}`,
-    createDocument,
-    {
-      onSuccess: (data) => {
-        const { id, title, parentId, icon, type: group } = data;
-        dispatch({
-          type: "add",
-          payload: [{ id, title, parentId, icon: toIconInfo(icon), group }],
-        });
-        toast.success(`Page Created: ${title}`);
-        onClickItem?.(id, group);
-      },
-      onError,
-    },
-  );
-  /** Action: Archive */
-  const { trigger: archive } = useSWRMutation(
-    `doc:${workspaceId}`,
-    archiveDocument,
-    {
-      onSuccess: ({ item, ids }) => {
-        dispatch({
-          type: "update:group",
-          payload: { ids, group: `trash:${item.type}` },
-        });
-        toast.success(`Page "${item.title}" Moved to Trash`);
-        router.push(path);
-      },
-      onError,
-    },
   );
 
   useEffect(() => {
@@ -148,7 +123,7 @@ export const Sidebar = forwardRef(function Sidebar(
         <ChevronsLeft className="h-6 w-6" />
       </div>
       <div>
-        <WorkspaceSwitcher onLogout={handleLogout} onSelect={handleSelect} />
+        <WorkspaceSwitcher {...switcherHandlers} />
         <Hint
           side="right"
           description="Search and quickly jump to a page"
@@ -196,7 +171,7 @@ export const Sidebar = forwardRef(function Sidebar(
           <Item
             label="New page"
             icon={{ type: "lucide", name: "circle-plus" }}
-            onClick={() => create({ type: "document", title: "Untitled" })}
+            onClick={() => handleCreate("document")}
           />
         </Hint>
       </div>
@@ -205,10 +180,8 @@ export const Sidebar = forwardRef(function Sidebar(
           isLoading={isLoading}
           group="document"
           title="Document"
-          onCreate={(parentId) =>
-            create({ type: "document", title: "Untitled", parentId })
-          }
-          onArchive={(id) => archive({ id })}
+          onCreate={(parentId) => handleCreate("document", parentId)}
+          onArchive={handleArchive}
         />
         <DocList
           isLoading={isLoading}
@@ -216,10 +189,8 @@ export const Sidebar = forwardRef(function Sidebar(
           title="Kanban"
           defaultIcon={{ type: "lucide", name: "columns-3" }}
           showEmptyChild={false}
-          onCreate={(parentId) =>
-            create({ type: "kanban", title: "Untitled", parentId })
-          }
-          onArchive={(id) => archive({ id })}
+          onCreate={(parentId) => handleCreate("kanban", parentId)}
+          onArchive={handleArchive}
         />
         <DocList
           isLoading={isLoading}
@@ -227,10 +198,8 @@ export const Sidebar = forwardRef(function Sidebar(
           title="Whiteboard"
           defaultIcon={{ type: "lucide", name: "presentation" }}
           showEmptyChild={false}
-          onCreate={(parentId) =>
-            create({ type: "whiteboard", title: "Untitled", parentId })
-          }
-          onArchive={(id) => archive({ id })}
+          onCreate={(parentId) => handleCreate("whiteboard", parentId)}
+          onArchive={handleArchive}
         />
         <Popover>
           <PopoverTrigger className="mt-4 w-full">

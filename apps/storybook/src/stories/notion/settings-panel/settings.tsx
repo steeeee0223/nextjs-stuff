@@ -14,8 +14,8 @@ const Panel = () => {
   const { data, isOpen, setClose } = useModal<SettingsStore>();
   const props: SettingsPanelProps = {
     settings: data,
-    onUpdate: async ({ user, account }) => {
-      console.log(`mutating`, { user, account });
+    onUpdate: async ({ account }) => {
+      console.log(`mutating`, { account });
     },
   };
 

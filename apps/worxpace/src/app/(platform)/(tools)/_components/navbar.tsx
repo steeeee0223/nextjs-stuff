@@ -6,15 +6,17 @@ import { MenuIcon } from "lucide-react";
 import { cn } from "@acme/ui/lib";
 
 import { theme } from "~/constants/theme";
-import { usePage } from "~/hooks";
+import { useDocument } from "~/hooks";
 import Banner from "./banner";
 import History from "./history";
 import Menu from "./menu";
 import Participants from "./participants";
 import Publish from "./publish";
-import Title from "./title";
+import Title, { type TitleProps } from "./title";
 
 interface NavbarProps {
+  accountId: string;
+  workspaceId: string;
   pageId: string | null;
   isResetting: boolean;
   isMobile: boolean;
@@ -23,10 +25,23 @@ interface NavbarProps {
 }
 
 const Navbar = forwardRef(function Navbar(
-  { pageId, isCollapsed, isResetting, isMobile, onResetWidth }: NavbarProps,
+  {
+    accountId,
+    workspaceId,
+    pageId,
+    isCollapsed,
+    isResetting,
+    isMobile,
+    onResetWidth,
+  }: NavbarProps,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
-  const { page, isLoading } = usePage(pageId, false);
+  const { page, isLoading, update } = useDocument(
+    pageId ? { documentId: pageId, preview: false } : null,
+  );
+  const onUpdate: TitleProps["onUpdate"] = async (data) => {
+    if (pageId) await update({ accountId, workspaceId, ...data, log: true });
+  };
 
   return (
     <div
@@ -54,17 +69,27 @@ const Navbar = forwardRef(function Navbar(
         {pageId && isLoading && <Title.Skeleton />}
         {page && (
           <div className={cn(theme.flex.center, "w-full justify-between")}>
-            <Title page={page} />
+            <Title page={page} onUpdate={onUpdate} />
             <div className={theme.flex.gap1}>
               <Participants />
               <Publish page={page} />
               <History pageId={page.id} />
-              <Menu documentId={page.id} />
+              <Menu
+                accountId={accountId}
+                workspaceId={workspaceId}
+                documentId={page.id}
+              />
             </div>
           </div>
         )}
       </nav>
-      {page?.isArchived && <Banner documentId={page.id} />}
+      {page?.isArchived && (
+        <Banner
+          accountId={accountId}
+          workspaceId={workspaceId}
+          documentId={page.id}
+        />
+      )}
     </div>
   );
 });

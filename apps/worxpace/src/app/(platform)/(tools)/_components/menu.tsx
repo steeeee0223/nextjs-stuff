@@ -1,11 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { MoreHorizontal, Trash } from "lucide-react";
-import { toast } from "sonner";
-import useSWRMutation from "swr/mutation";
 
-import { useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
 import {
   Button,
@@ -17,36 +13,21 @@ import {
   Skeleton,
 } from "@acme/ui/shadcn";
 
-import { archiveDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { useClient } from "~/hooks";
+import { useDocuments } from "~/hooks";
 
 interface MenuProps {
+  accountId: string;
+  workspaceId: string;
   documentId: string;
 }
 
-const Menu = ({ documentId }: MenuProps) => {
-  const router = useRouter();
-  const { username, path, workspaceId } = useClient();
-  const { dispatch } = useTree();
-
-  /** Action - Archive */
-  const onError = (e: Error) => toast.error(e.message);
-  const { trigger: archive } = useSWRMutation(
-    `doc:${workspaceId}`,
-    archiveDocument,
-    {
-      onSuccess: ({ ids, item }) => {
-        dispatch({
-          type: "update:group",
-          payload: { ids, group: `trash:${item.type}` },
-        });
-        toast.success(`Document "${item.title}" Moved to Trash`);
-        router.push(path);
-      },
-      onError,
-    },
-  );
+const Menu = ({ accountId, workspaceId, documentId }: MenuProps) => {
+  /** Docs */
+  const { archive } = useDocuments({ workspaceId });
+  const onArchive = () => archive({ id: documentId, accountId, workspaceId });
+  // TODO last edited by
+  const lastEditedBy = "user";
 
   return (
     <DropdownMenu>
@@ -61,13 +42,13 @@ const Menu = ({ documentId }: MenuProps) => {
         alignOffset={8}
         forceMount
       >
-        <DropdownMenuItem onClick={() => archive({ id: documentId })}>
+        <DropdownMenuItem onClick={onArchive}>
           <Trash className={cn(theme.size.icon, "mr-2")} />
           Delete
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <div className="p-2 text-xs text-muted-foreground">
-          Last edited by: {username}
+          Last edited by: {lastEditedBy}
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

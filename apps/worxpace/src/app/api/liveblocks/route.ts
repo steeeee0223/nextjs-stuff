@@ -1,33 +1,34 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { auth, currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { Liveblocks } from "@liveblocks/node";
 
-import { worxpace } from "@acme/prisma";
-
 import { env } from "~/env";
+import { account, documents, fetchClient } from "~/lib";
 
 const liveblocks = new Liveblocks({ secret: env.LIVEBLOCKS_SECRET_KEY });
 
 export async function POST(req: NextRequest) {
-  const authorization = auth();
+  /** Clerk user */
   const user = await currentUser();
-
-  if (!authorization || !user)
-    return new NextResponse("Unauthorized", { status: 403 });
-
+  if (!user) return new NextResponse("Unauthorized", { status: 403 });
+  /** Find document */
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { room }: { room: string } = await req.json();
-  const page = await worxpace.document.findUnique({ where: { id: room } });
-
-  if (
-    page?.userId !== authorization.userId &&
-    page?.orgId !== authorization.orgId
-  )
+  const page = await documents.getById(room);
+  if (!page) return new NextResponse("Not Found", { status: 404 });
+  /** Verify account & workspace */
+  const { clerkId } = fetchClient();
+  const acc = await account.get(clerkId);
+  const inWorkspace = await account.isInWorkspace({
+    clerkId,
+    workspaceId: page?.workspaceId,
+  });
+  if (!acc || !inWorkspace)
     return new NextResponse("Unauthorized", { status: 403 });
-
-  const userInfo = { name: user.firstName ?? "User", picture: user.imageUrl };
+  /** Liveblocks data */
+  const userInfo = { name: acc.preferredName, picture: acc.avatarUrl };
   console.log(userInfo);
-  const session = liveblocks.prepareSession(user.id, { userInfo });
+  const session = liveblocks.prepareSession(acc.id, { userInfo });
 
   if (room) session.allow(room, session.FULL_ACCESS);
 

@@ -8,7 +8,12 @@ import { Button, Separator } from "@acme/ui/shadcn";
 import WorkflowModal from "./workflow-create-modal";
 import WorkflowForm from "./workflow-form";
 
-const TableHeader = () => {
+interface TableHeaderProps {
+  accountId: string;
+  workspaceId: string;
+}
+
+const TableHeader = (props: TableHeaderProps) => {
   const { setOpen } = useModal();
   const handleClick = () => {
     void setOpen(
@@ -16,7 +21,7 @@ const TableHeader = () => {
         title="Create a Workflow Automation"
         subheading="Workflows are a powerfull that help you automate tasks"
       >
-        <WorkflowForm />
+        <WorkflowForm {...props} />
       </WorkflowModal>,
     );
   };

@@ -1,6 +1,7 @@
 "use server";
 
-import { worxpace as db, type Document } from "@acme/prisma";
+import { worxpace as db } from "@acme/prisma";
+import type { Document } from "@acme/prisma";
 import type { Modified } from "@acme/ui/lib";
 import type {
   CreateDocumentInput,
@@ -8,143 +9,141 @@ import type {
   UpdateDocumentInput,
 } from "@acme/validators";
 
-import type { Client } from "./types";
+import type { DetailedDocument } from "./types";
 
-type User = Pick<Client, "userId" | "orgId">;
 type Action = "ARCHIVE" | "RESTORE";
 const UPDATE: Record<Action, Partial<Document>> = {
   ARCHIVE: { isArchived: true },
   RESTORE: { isArchived: false },
 };
+const include = { workspace: true, createdBy: true, updatedBy: true };
 
-export const create = async (
-  data: CreateDocumentInput & User & Pick<Document, "icon">,
-): Promise<Document> =>
+export const create = async ({
+  accountId,
+  ...data
+}: CreateDocumentInput & Pick<Document, "icon">): Promise<DetailedDocument> =>
   await db.document.create({
-    data: { ...data, isArchived: false, isPublished: false },
+    data: {
+      ...data,
+      isArchived: false,
+      isPublished: false,
+      createdId: accountId,
+      updatedId: accountId,
+    },
+    include,
   });
 
-/** @deprecated */
-export const getAll = async (
-  userId: string,
-  orgId: string | null,
-  isArchived?: boolean,
-  parentId?: string | null,
-): Promise<Document[]> =>
-  await db.document.findMany({
-    where: { userId, orgId, parentId, isArchived },
-    orderBy: { createdAt: "desc" },
-  });
+export const getById = async (
+  documentId: string,
+): Promise<DetailedDocument | null> =>
+  await db.document.findUnique({ where: { id: documentId }, include });
 
-export const getById = async (documentId: string): Promise<Document | null> =>
-  await db.document.findUnique({ where: { id: documentId } });
-
-export const getByRole = async (
-  { role, userId, orgId }: Client,
-  isArchived?: boolean,
-): Promise<Document[]> =>
+export const getByWorkspace = async (where: {
+  workspaceId: string;
+  isArchived?: boolean;
+}): Promise<DetailedDocument[]> =>
   await db.document.findMany({
-    where:
-      role === "organization"
-        ? { orgId, isArchived }
-        : { userId, orgId: null, isArchived },
+    where,
     orderBy: { createdAt: "desc" },
+    include,
   });
 
 const updateChildrenState = async (
   action: Action,
-  data: Pick<Document, "parentId"> & User,
+  where: Pick<Document, "workspaceId" | "parentId">,
   onSuccess?: (childrenIds: string[]) => void,
 ): Promise<void> => {
-  await db.document.updateMany({ where: data, data: UPDATE[action] });
-  const children = await db.document.findMany({ where: data });
+  await db.document.updateMany({ where, data: UPDATE[action] });
+  const children = await db.document.findMany({ where });
   onSuccess?.(children.map(({ id }) => id));
   for (const { id } of children)
-    await updateChildrenState(action, { ...data, parentId: id }, onSuccess);
+    await updateChildrenState(action, { ...where, parentId: id }, onSuccess);
 };
 
 export const archive = async ({
-  userId,
-  orgId,
+  accountId,
+  workspaceId,
   id,
-}: DeleteDocumentInput & User): Promise<Modified<Document>> => {
+}: DeleteDocumentInput): Promise<Modified<DetailedDocument>> => {
   const modifiedIds = [id];
   const item = await db.document.update({
-    where: { userId, orgId, id },
-    data: UPDATE.ARCHIVE,
+    where: { id },
+    data: { ...UPDATE.ARCHIVE, updatedId: accountId },
+    include,
   });
-  await updateChildrenState("ARCHIVE", { userId, orgId, parentId: id }, (ids) =>
+  await updateChildrenState("ARCHIVE", { workspaceId, parentId: id }, (ids) =>
     modifiedIds.push(...ids),
   );
   return { item, ids: modifiedIds };
 };
 
 export const restore = async ({
-  userId,
-  orgId,
+  accountId,
+  workspaceId,
   id,
-}: DeleteDocumentInput & User): Promise<Modified<Document>> => {
+}: DeleteDocumentInput): Promise<Modified<DetailedDocument>> => {
   let item;
   const modifiedIds = [id];
   /** Restore `id`
    * if it has a parent, set parent to `undefined`
    */
   item = await db.document.findUnique({
-    where: { userId, orgId, id },
+    where: { id },
     include: { parent: true },
   });
   if (!item) throw new Error("Document not found");
   item = await db.document.update({
-    where: { userId, orgId, id },
+    where: { id },
     data: item.parent?.isArchived
-      ? {
-          parentId: null,
-          isArchived: false,
-        }
-      : UPDATE.RESTORE,
+      ? { parentId: null, isArchived: false, updatedId: accountId }
+      : { ...UPDATE.RESTORE, updatedId: accountId },
+    include,
   });
   /** Restore all its children */
-  await updateChildrenState("RESTORE", { userId, orgId, parentId: id }, (ids) =>
+  await updateChildrenState("RESTORE", { workspaceId, parentId: id }, (ids) =>
     modifiedIds.push(...ids),
   );
   return { item, ids: modifiedIds };
 };
 
 export const update = async ({
-  userId,
-  orgId,
+  accountId,
+  workspaceId,
   id,
   ...updateData
-}: Omit<UpdateDocumentInput, "log"> & User): Promise<Document> =>
-  await db.document.update({ where: { userId, orgId, id }, data: updateData });
+}: Omit<UpdateDocumentInput, "log">): Promise<DetailedDocument> =>
+  await db.document.update({
+    where: { workspaceId, id },
+    data: { ...updateData, updatedId: accountId },
+    include,
+  });
 
 const removeChildren = async (
-  data: Pick<Document, "parentId"> & User,
+  where: Pick<Document, "workspaceId" | "parentId">,
   onSuccess?: (childrenIds: string[]) => void,
 ) => {
-  const children = await db.document.findMany({ where: data });
+  const children = await db.document.findMany({ where });
   /** Delete children */
   const childrenIds = [];
   for (const { id } of children) {
-    await removeChildren({ ...data, parentId: id }, onSuccess);
+    await removeChildren({ ...where, parentId: id }, onSuccess);
     childrenIds.push(id);
   }
   onSuccess?.(childrenIds);
   /** Delete parent */
-  await db.document.deleteMany({ where: data });
+  await db.document.deleteMany({ where });
 };
 
 export const remove = async ({
-  userId,
-  orgId,
+  workspaceId,
   id,
-}: DeleteDocumentInput & User): Promise<Modified<Document>> => {
+}: DeleteDocumentInput): Promise<Modified<Document>> => {
   const modifiedIds = [id];
   /** Delete all its children */
-  await removeChildren({ userId, orgId, parentId: id }, (ids) =>
+  await removeChildren({ workspaceId, parentId: id }, (ids) =>
     modifiedIds.push(...ids),
   );
   /** Delete the document */
-  const item = await db.document.delete({ where: { userId, orgId, id } });
+  const item = await db.document.delete({ where: { workspaceId, id } });
   return { item, ids: modifiedIds };
 };

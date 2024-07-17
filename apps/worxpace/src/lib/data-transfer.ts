@@ -1,5 +1,9 @@
+import { format } from "date-fns";
+
 import type { Icon } from "@acme/prisma";
-import type { IconInfo } from "@acme/ui/custom";
+import type { IconInfo, TreeItem } from "@acme/ui/custom";
+
+import type { DetailedDocument } from "./types";
 
 export function generateDefaultIcon(group?: string): IconInfo {
   switch (group) {
@@ -38,4 +42,20 @@ export function toIcon(info: IconInfo): Icon {
     case "file":
       return { type: info.type, src: info.url, color: null };
   }
+}
+
+export function toDateString(date: Date | string | number): string {
+  return format(new Date(date), "MMM d, yyyy 'at' h:mm a");
+}
+
+export function toTreeItem(doc: DetailedDocument): TreeItem {
+  return {
+    id: doc.id,
+    title: doc.title,
+    parentId: doc.parentId,
+    icon: toIconInfo(doc.icon),
+    group: doc.isArchived ? `trash:${doc.type}` : doc.type,
+    lastEditedBy: doc.updatedBy.preferredName,
+    lastEditedAt: toDateString(doc.updatedAt),
+  };
 }

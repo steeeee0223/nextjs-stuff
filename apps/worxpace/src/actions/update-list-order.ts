@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import type { MutationFetcher } from "swr/mutation";
 
 import type { List } from "@acme/prisma";
 import { UpdateListOrder, type UpdateListOrderInput } from "@acme/validators";
@@ -10,19 +11,26 @@ import {
   fetchClient,
   kanban,
   UnauthorizedError,
-  type Action,
+  type KanbanKey,
 } from "~/lib";
 
-const handler: Action<UpdateListOrderInput, List[]> = async (_key, { arg }) => {
-  try {
-    fetchClient();
-    const result = await kanban.updateListsOrder(arg);
-    revalidatePath(`/kanban/${arg.boardId}`);
-    return result;
-  } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to reorder lists.");
-  }
-};
+const handler = createMutationFetcher(
+  UpdateListOrder,
+  async (boardId, { arg }) => {
+    try {
+      fetchClient();
+      const result = await kanban.updateListsOrder(arg);
+      revalidatePath(`/kanban/${boardId}`);
+      return result;
+    } catch (error) {
+      if (error instanceof UnauthorizedError) throw error;
+      throw new Error("Failed to reorder lists.");
+    }
+  },
+);
 
-export const updateListOrder = createMutationFetcher(UpdateListOrder, handler);
+export const updateListOrder: MutationFetcher<
+  List[],
+  KanbanKey,
+  UpdateListOrderInput
+> = ({ boardId }, data) => handler(boardId, data);

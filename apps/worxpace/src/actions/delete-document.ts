@@ -1,35 +1,43 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import type { MutationFetcher } from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
 import { type Modified } from "@acme/ui/lib";
 import { DeleteDocument, type DeleteDocumentInput } from "@acme/validators";
 
 import {
+  account,
   auditLogs,
   createMutationFetcher,
   documents,
   fetchClient,
   UnauthorizedError,
-  type Action,
+  type DocumentsKey,
 } from "~/lib";
 
-const handler: Action<DeleteDocumentInput, Modified<Document>> = async (
-  _key,
-  { arg },
-) => {
-  try {
-    const { userId, orgId, path } = fetchClient();
-    const result = await documents.remove({ userId, orgId, ...arg });
-    /** Activity Log */
-    await auditLogs.remove(arg.id);
-    revalidatePath(path);
-    return result;
-  } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to archive document.");
-  }
-};
+const handler = createMutationFetcher(
+  DeleteDocument,
+  async (workspaceId, { arg }) => {
+    try {
+      const { clerkId } = fetchClient();
+      const inWorkspace = await account.isInWorkspace({ clerkId, workspaceId });
+      if (!inWorkspace) throw new UnauthorizedError();
+      const result = await documents.remove(arg);
+      /** Activity Log */
+      await auditLogs.remove(arg.id);
+      revalidatePath(`/workspace/${workspaceId}`);
+      return result;
+    } catch (error) {
+      if (error instanceof UnauthorizedError) throw error;
+      throw new Error("Failed to archive document.");
+    }
+  },
+);
 
-export const deleteDocument = createMutationFetcher(DeleteDocument, handler);
+export const deleteDocument: MutationFetcher<
+  Modified<Document>,
+  DocumentsKey,
+  DeleteDocumentInput
+> = ({ workspaceId }, data) => handler(workspaceId, data);

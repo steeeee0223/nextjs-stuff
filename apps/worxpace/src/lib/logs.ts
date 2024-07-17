@@ -1,39 +1,35 @@
 "use server";
 
-import { auth, currentUser } from "@clerk/nextjs";
+import { Account, ACTION, AuditLog, Entity, worxpace } from "@acme/prisma";
 
-import { ACTION, AuditLog, Entity, ROLE, worxpace } from "@acme/prisma";
+export type LogWithAccount = AuditLog & {
+  account: Account;
+};
 
-const getByEntity = async (entityId: string): Promise<AuditLog[]> =>
+const getByEntity = async (entityId: string): Promise<LogWithAccount[]> =>
   await worxpace.auditLog.findMany({
     where: { entity: { is: { entityId } } },
     orderBy: { createdAt: "desc" },
+    include: { account: true },
     take: 10,
   });
 
-const create = async (entity: Entity, action: ACTION) => {
-  try {
-    const { orgId } = auth();
-    const user = await currentUser();
-    if (!user) throw new Error("User not found!");
-
-    await worxpace.auditLog.create({
-      data: {
-        entity,
-        action,
-        user: {
-          role: orgId ? ROLE.ORG : ROLE.USER,
-          userId: user.id,
-          orgId: orgId ?? undefined,
-          image: user.imageUrl,
-          name: `${user.firstName} ${user.lastName}`,
-        },
-      },
-    });
-  } catch (error) {
-    console.log(`[AUDIT] Error`, error);
-  }
-};
+const create = async ({
+  entity,
+  action,
+  accountId,
+}: {
+  entity: Entity;
+  action: ACTION;
+  accountId: string;
+}) =>
+  await worxpace.auditLog.create({
+    data: {
+      entity,
+      action,
+      account: { connect: { id: accountId } },
+    },
+  });
 
 const remove = async (entityId: string) =>
   await worxpace.auditLog.deleteMany({

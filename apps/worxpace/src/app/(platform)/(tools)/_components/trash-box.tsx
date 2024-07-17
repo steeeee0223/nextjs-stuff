@@ -3,26 +3,21 @@
 "use client";
 
 import { MouseEvent, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Search, Trash, Undo } from "lucide-react";
-import { toast } from "sonner";
 import { stableHash } from "swr/_internal";
-import useSWRMutation from "swr/mutation";
 
 import { IconBlock, Spinner, useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
 import { Input } from "@acme/ui/shadcn";
 
-import { deleteDocument, restoreDocument } from "~/actions";
 import { ConfirmModal } from "~/components";
 import { theme } from "~/constants/theme";
-import { useClient } from "~/hooks";
+import { useDocuments, usePlatform } from "~/hooks";
 
 const TrashBox = () => {
-  const router = useRouter();
-  const { path, workspaceId } = useClient();
+  const { accountId, workspaceId } = usePlatform();
   /** Tree */
-  const { getGroup, dispatch, onClickItem } = useTree();
+  const { getGroup, onClickItem } = useTree();
   const [search, setSearch] = useState("");
   const archivedDocs = useMemo(
     () =>
@@ -37,43 +32,19 @@ const TrashBox = () => {
   const filteredDocuments = archivedDocs.filter(({ title }) =>
     title.toLowerCase().includes(search.toLowerCase()),
   );
-  /** Action */
+  /** Docs */
+  const { restore, remove } = useDocuments({ workspaceId });
   const onClick = (id: string, group: string | null) => {
     if (group) {
       const [, grp] = group.split(":");
       onClickItem?.(id, grp ?? null);
     }
   };
-  const onError = (e: Error) => toast.error(e.message);
-  /** Action: Restore */
-  const { trigger: restore } = useSWRMutation(
-    `doc:${workspaceId}`,
-    restoreDocument,
-    {
-      onSuccess: ({ ids, item }) => {
-        dispatch({ type: "update:group", payload: { ids, group: item.type } });
-        toast.success(`Restored document "${item.title}"`);
-      },
-      onError,
-    },
-  );
-  const onRestore = (e: MouseEvent<HTMLDivElement>, documentId: string) => {
+  const onRestore = (e: MouseEvent<HTMLDivElement>, id: string) => {
     e.stopPropagation();
-    void restore({ id: documentId });
+    void restore({ id, accountId, workspaceId });
   };
-  /** Action: Remove */
-  const { trigger: remove } = useSWRMutation(
-    `doc:${workspaceId}`,
-    deleteDocument,
-    {
-      onSuccess: (data) => {
-        dispatch({ type: "delete", payload: data.ids });
-        toast.success(`Deleted document "${data.item.title}"`);
-        router.push(path);
-      },
-      onError,
-    },
-  );
+  const onRemove = (id: string) => remove({ id, accountId, workspaceId });
 
   if (archivedDocs === undefined)
     return (
@@ -124,7 +95,7 @@ const TrashBox = () => {
                   className={cn(theme.size.icon, "text-muted-foreground")}
                 />
               </div>
-              <ConfirmModal onConfirm={() => remove({ id })}>
+              <ConfirmModal onConfirm={() => onRemove(id)}>
                 <div
                   role="button"
                   className={cn(theme.bg.hover, "rounded-sm p-1")}

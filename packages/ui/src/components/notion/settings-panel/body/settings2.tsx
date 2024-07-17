@@ -4,11 +4,13 @@ import type { ChangeEvent, PropsWithChildren } from "react";
 import { CircleHelp } from "lucide-react";
 
 import { IconBlock, type IconInfo } from "@/components/custom/icon-block";
+import { useModal } from "@/components/custom/modal-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { HintButton, PlanLink, Section, SectionItem } from "../_components";
+import { DeleteWorkspace } from "../modals";
 import { useSettings } from "../settings-context";
 import { settings } from "./settings2.data";
 import type { Section as SectionProps } from "./utils";
@@ -44,10 +46,12 @@ export const Field = ({
 };
 
 export const Settings2 = () => {
+  const { setOpen } = useModal();
   const {
     settings: { workspace },
     updateSettings: update,
     uploadFile,
+    deleteWorkspace,
   } = useSettings();
   const site = `${workspace.domain}.notion.site`;
   const link = `www.notion.so/${workspace.domain}`;
@@ -70,6 +74,13 @@ export const Settings2 = () => {
   };
   const onUpdateDomain = (e: ChangeEvent<HTMLInputElement>) =>
     update({ workspace: { domain: e.target.value } });
+  const onDeleteWorkspace = () =>
+    setOpen(
+      <DeleteWorkspace
+        name={workspace.name}
+        onSubmit={() => deleteWorkspace?.(workspace.id)}
+      />,
+    );
 
   return (
     <>
@@ -132,7 +143,7 @@ export const Settings2 = () => {
         </Field>
         <Separator className="my-4 bg-primary/15" />
         <Field {...settings.danger} hint="Learn about deleting workspaces.">
-          <Button variant="warning" size="sm">
+          <Button variant="warning" size="sm" onClick={onDeleteWorkspace}>
             Delete entire workspace
           </Button>
         </Field>

@@ -4,6 +4,7 @@ import { stableHash } from "swr/_internal";
 
 import { type Document } from "@acme/prisma";
 import { IconBlock, useModal } from "@acme/ui/custom";
+import { useWorkspace } from "@acme/ui/notion";
 import {
   CommandDialog,
   CommandEmpty,
@@ -13,13 +14,11 @@ import {
   CommandList,
 } from "@acme/ui/shadcn";
 
-import { useClient } from "~/hooks";
 import { usePlatform } from "~/hooks/use-platform";
 import { toIconInfo } from "~/lib";
 
 const SearchCommand = () => {
-  /** Auth */
-  const { workspace: name } = useClient();
+  const { activeWorkspace } = useWorkspace();
   /** Search */
   const { data, isOpen, setClose } = useModal<{ documents?: Document[] }>();
   /** Select */
@@ -35,7 +34,7 @@ const SearchCommand = () => {
       open={isOpen}
       onOpenChange={setClose}
     >
-      <CommandInput placeholder={`Search ${name}'s WorXpace...`} />
+      <CommandInput placeholder={`Search ${activeWorkspace?.name ?? ""}...`} />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Pages">

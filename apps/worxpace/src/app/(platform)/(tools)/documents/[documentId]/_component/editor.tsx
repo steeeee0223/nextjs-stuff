@@ -2,33 +2,24 @@
 
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
-import { toast } from "sonner";
-import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
 
-import { updateInternalDocument } from "~/actions";
 import { useEdgeStore } from "~/hooks";
+import { type UpdateDocumentHandler } from "~/lib";
 
 interface EditorProps {
   document: Document;
   preview?: boolean;
+  onUpdate?: UpdateDocumentHandler;
 }
 
-const Editor = ({ document, preview }: EditorProps) => {
+const Editor = ({ document, preview, onUpdate }: EditorProps) => {
   /** Edgestore */
   const { edgestore } = useEdgeStore();
-  /** Action - update */
-  const { trigger: update } = useSWRMutation(
-    [document.id, false],
-    updateInternalDocument,
-    {
-      onError: (e: Error) => toast.error(e.message),
-    },
-  );
-
+  /** Handlers */
   const onUpdateContent = (content: string) =>
-    update({ id: document.id, content });
+    onUpdate?.({ id: document.id, content });
   const onUploadIntoNote = async (file: File) => {
     const res = await edgestore.publicFiles.upload({ file });
     return res.url;

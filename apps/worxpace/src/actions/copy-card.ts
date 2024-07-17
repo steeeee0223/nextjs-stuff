@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import type { MutationFetcher } from "swr/mutation";
 
 import type { Card } from "@acme/prisma";
 import { CopyCard, type CopyCardInput } from "@acme/validators";
@@ -11,31 +12,36 @@ import {
   fetchClient,
   kanban,
   UnauthorizedError,
-  type Action,
+  type KanbanKey,
 } from "~/lib";
 
-const handler: Action<CopyCardInput, Card> = async (_key, { arg }) => {
-  const { src, dest, boardId } = arg;
+const handler = createMutationFetcher(CopyCard, async (_key, { arg }) => {
+  const { src, dest, boardId, accountId } = arg;
   try {
     fetchClient();
     const srcCard = await kanban.getCard(src.id);
     if (!srcCard) throw new Error("Not found");
 
     const result = await kanban.createCard({
+      accountId,
       ...dest,
       description: srcCard.description,
     });
     /** Activity Log */
-    await auditLogs.create(
-      { entityId: boardId, title: dest.title, type: "ITEM" },
-      "CREATE",
-    );
+    await auditLogs.create({
+      entity: { entityId: boardId, title: dest.title, type: "ITEM" },
+      action: "CREATE",
+      accountId,
+    });
     revalidatePath(`/kanban/${boardId}`);
     return result;
   } catch (error) {
     if (error instanceof UnauthorizedError) throw error;
     throw new Error("Failed to copy card.");
   }
-};
+});
 
-export const copyCard = createMutationFetcher(CopyCard, handler);
+export const copyCard: MutationFetcher<Card, KanbanKey, CopyCardInput> = (
+  { boardId },
+  data,
+) => handler(boardId, data);

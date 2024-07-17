@@ -1,20 +1,16 @@
-// import { type LucideIcon } from "lucide-react";
+import type { IconInfo } from "@/components/custom/icon-block";
 
 export interface UserState {
   id: string;
   name: string;
   email: string;
-  isDarkMode: boolean;
-  profilePicture: {
-    url: string;
-  };
 }
 
 export interface Workspace {
   id: string;
-  ownerId: string;
-  owner: string;
+  role: "owner" | "member" | "guest";
   name: string;
-  icon?: string | null; // | LucideIcon
-  members: string[];
+  icon: IconInfo;
+  members: number;
+  plan: string;
 }

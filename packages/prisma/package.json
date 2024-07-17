@@ -1,7 +1,7 @@
 {
   "name": "@acme/prisma",
   "private": true,
-  "version": "0.2.1",
+  "version": "1.0.0",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
@@ -14,6 +14,7 @@
     "db:generate": "bash ./scripts/prisma.sh generate",
     "db:push": "bash ./scripts/prisma.sh db push --skip-generate",
     "dev": "prisma studio",
+    "dev:worxpace": "prisma studio --schema prisma/worxpace.prisma",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"

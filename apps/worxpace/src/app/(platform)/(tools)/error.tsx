@@ -5,10 +5,11 @@ import Link from "next/link";
 
 import { Button } from "@acme/ui/shadcn";
 
-import { useClient } from "~/hooks";
+import { usePlatform } from "~/hooks";
 
 const Error = () => {
-  const { path } = useClient();
+  const { workspaceId } = usePlatform();
+
   return (
     <div className="flex h-full flex-col items-center justify-center space-y-4">
       <Image
@@ -27,7 +28,7 @@ const Error = () => {
       />
       <h2 className="text-xl font-medium">Something went wrong!</h2>
       <Button asChild>
-        <Link href={path}>Go back</Link>
+        <Link href={`/workspace/${workspaceId}`}>Go back</Link>
       </Button>
     </div>
   );

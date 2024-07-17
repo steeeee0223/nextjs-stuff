@@ -2,35 +2,31 @@
 
 import Image from "next/image";
 import { PlusCircle } from "lucide-react";
-import { toast } from "sonner";
-import useSWRMutation from "swr/mutation";
 
-import { useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
+import { useWorkspace } from "@acme/ui/notion";
 import { Button } from "@acme/ui/shadcn";
 
-import { createDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { useClient } from "~/hooks";
-import { toIconInfo } from "~/lib";
+import { useDocuments, usePlatform } from "~/hooks";
 
-const Client = () => {
-  const { workspace, workspaceId } = useClient();
+interface Params {
+  params: { workspaceId: string };
+}
+
+const Workspace = ({ params: { workspaceId } }: Params) => {
+  const { activeWorkspace } = useWorkspace();
+  const { accountId } = usePlatform();
+  const { create } = useDocuments({ workspaceId });
   /** Action */
-  const { dispatch } = useTree();
-  const { trigger } = useSWRMutation(`doc:${workspaceId}`, createDocument, {
-    onSuccess: (data) => {
-      const { id, title, parentId, icon, type: group } = data;
-      toast.success(`Document created: ${title}`);
-      dispatch({
-        type: "add",
-        payload: [{ id, title, group, parentId, icon: toIconInfo(icon) }],
-      });
-    },
-    onError: (e: Error) => toast.error(e.message),
-  });
   const onSubmit = () =>
-    void trigger({ title: "Untitled", parentId: undefined, type: "document" });
+    void create({
+      title: "Untitled",
+      parentId: undefined,
+      type: "document",
+      workspaceId,
+      accountId,
+    });
 
   return (
     <div
@@ -54,7 +50,7 @@ const Client = () => {
         className="hidden dark:block"
       />
       <h2 className="text-lg font-medium">
-        Welcome to {workspace}&apos;s WorXpace
+        Welcome to {activeWorkspace?.name ?? "WorXpace"}
       </h2>
       <form action={onSubmit}>
         <Button type="submit">
@@ -66,4 +62,4 @@ const Client = () => {
   );
 };
 
-export default Client;
+export default Workspace;

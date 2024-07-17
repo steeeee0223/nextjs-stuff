@@ -16,6 +16,8 @@ model List {
   id        String   @id @default(uuid()) @map("_id")
   title     String
   order     Int
+  createdBy String
+  updatedBy String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   boardId   String   @db.ObjectId
@@ -29,6 +31,8 @@ model Card {
   title       String
   order       Int
   description String?  @db.String
+  createdBy   String
+  updatedBy   String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   listId      String
@@ -53,14 +57,6 @@ enum ENTITY_TYPE {
   WORKFLOW
 }
 
-type User {
-  userId String
-  name   String  @db.String
-  image  String
-  orgId  String?
-  role   ROLE
-}
-
 type Entity {
   entityId String
   type     ENTITY_TYPE
@@ -69,13 +65,14 @@ type Entity {
 
 model AuditLog {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  user      User
+  accountId String
+  account   Account  @relation(fields: [accountId], references: [id])
   action    ACTION
   entity    Entity
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([user.role, user.userId], map: "role_user_id")
+  @@index([accountId], map: "accountId")
   @@index([entity.entityId])
 }
 
@@ -128,45 +125,78 @@ type CoverImage {
 
 model Document {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  workspaceId String
+  workspace   Workspace   @relation(fields: [workspaceId], references: [id])
   type        String
   title       String
-  userId      String
-  orgId       String?
   isArchived  Boolean
   parentId    String?     @db.ObjectId
   content     String?
   coverImage  CoverImage?
   icon        Icon?
   isPublished Boolean
+  createdId   String
+  createdBy   Account     @relation("createdBy", fields: [createdId], references: [id])
+  updatedId   String
+  updatedBy   Account     @relation("updatedBy", fields: [updatedId], references: [id])
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   parent      Document?   @relation("DocumentParent", onUpdate: NoAction, onDelete: NoAction, fields: [parentId], references: [id])
   children    Document[]  @relation("DocumentParent")
 
-  @@index([userId, orgId], name: "byUser")
-  @@index([userId, orgId, parentId], name: "byUserParent")
-  @@index([userId, orgId, type], name: "byUserType")
+  @@index([workspaceId], name: "workspaceId")
+  @@index([workspaceId, parentId], name: "byWorkspaceParent")
+  @@index([workspaceId, type], name: "byWorkspaceType")
 }
 
-model AccountSettings {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId        String   @unique(map: "userId")
+enum WORKSPACE_ROLE {
+  OWNER
+  MEMBER
+  GUEST
+}
+
+model Membership {
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  role        WORKSPACE_ROLE
+  joinedAt    DateTime       @default(now())
+  accountId   String
+  account     Account        @relation(fields: [accountId], references: [id])
+  workspaceId String
+  workspace   Workspace      @relation(fields: [workspaceId], references: [id])
+
+  @@unique([accountId, workspaceId])
+  @@index([accountId])
+  @@index([workspaceId])
+}
+
+model Account {
+  id                    String       @id @default(uuid()) @map("_id")
+  name                  String
+  clerkId               String       @unique(map: "clerkId")
+  updatedAt             DateTime     @updatedAt
+  memberships           Membership[]
   // Preferrance
-  avatarUrl     String
-  preferredName String
-  email         String
-  hasPassword   Boolean
-  // Time
-  updatedAt     DateTime @updatedAt
+  avatarUrl             String
+  preferredName         String
+  email                 String
+  hasPassword           Boolean
+  // Relations
+  x_auditLog            AuditLog[]
+  x_document_created_by Document[]   @relation("createdBy")
+  x_document_updated_by Document[]   @relation("updatedBy")
 }
 
-model WorkspaceSettings {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  workspaceId String   @unique(map: "workspaceId")
+model Workspace {
+  id          String       @id @default(uuid()) @map("_id")
+  createdBy   String
+  memberships Membership[]
+  updatedAt   DateTime     @updatedAt
   // Settings
   name        String
   icon        Icon?
   domain      String
-  // Time
-  updatedAt   DateTime @updatedAt
+  // Relations
+  x_document  Document[]
+
+  @@index([createdBy])
 }

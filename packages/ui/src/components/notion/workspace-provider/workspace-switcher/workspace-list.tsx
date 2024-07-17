@@ -3,21 +3,52 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, GripVertical } from "lucide-react";
+import { Check } from "lucide-react";
+import stableHash from "stable-hash";
 
-import { DropdownMenuItem } from "@/components/ui";
+import { IconBlock } from "@/components/custom/icon-block";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import type { Workspace } from "../index.types";
 import { useWorkspace } from "../workspace-context";
+import { DragHandle, Globe } from "./icons";
 
-const styles = {
-  display_container: "select-none",
-  workspace_tab:
-    "flex justify-between cursor-pointer hover:bg-primary/5 rounded-sm",
-  workspace_info: "flex gap-2.5 p-0",
-  workspace_icon: "self-center text-2xl",
-  drag_handle:
-    "pl-2 fill-primary self-center cursor-grab text-muted-foreground",
-  workspace_title: "text-primary text-sm self-center",
-  workspace_check: "select-none self-center h-4 w-4 mr-4",
+interface TitleProps {
+  workspace: Workspace;
+  onClick: (workspaceId: string) => void;
+}
+const Title = ({ workspace, onClick }: TitleProps) => {
+  switch (workspace.role) {
+    case "guest":
+      return (
+        <div className="mx-2 min-w-0">
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-primary">
+            <div className="flex">
+              <span className="flex-shrink overflow-hidden text-ellipsis">
+                {workspace.name}
+              </span>
+              <div className="ml-2 flex select-none items-center self-center whitespace-nowrap rounded-sm bg-[#f6c05042] px-1.5 py-0.5 text-[9px] uppercase leading-none text-[#cf8807]">
+                <Globe className="mr-0.5 inline size-2 flex-shrink-0 fill-[#cf8807] align-middle" />
+                Guest
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    default:
+      return (
+        <div className="mx-2 min-w-0">
+          <div
+            className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-primary"
+            onClick={() => onClick(workspace.id)}
+          >
+            {workspace.name}
+          </div>
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs text-primary/65">
+            {workspace.plan} · {workspace.members} members
+          </div>
+        </div>
+      );
+  }
 };
 
 interface WorkspaceListProps {
@@ -49,9 +80,7 @@ const WorkspaceList = ({ onSelect }: WorkspaceListProps) => {
 
   const handleClick = (workspaceId: string) => {
     select(workspaceId);
-    onSelect?.(workspaceId)
-      .then(() => console.log(`switching workspace`))
-      .catch((e) => console.log(e));
+    void onSelect?.(workspaceId);
   };
 
   useEffect(() => {
@@ -60,11 +89,11 @@ const WorkspaceList = ({ onSelect }: WorkspaceListProps) => {
   }, [workspaces, initialWorkspaces]);
 
   return (
-    <div className={styles.display_container}>
+    <div className="select-none">
       {workspaces?.map((workspace, i) => (
         <DropdownMenuItem
           key={i}
-          className={styles.workspace_tab}
+          className="flex h-11 items-center rounded-sm px-0 py-1 text-sm/[120%] focus:bg-primary/5"
           draggable
           onDragStart={() => (dragItem.current = i)}
           onDragEnter={() => (dragOverItem.current = i)}
@@ -72,20 +101,22 @@ const WorkspaceList = ({ onSelect }: WorkspaceListProps) => {
           onDragOver={(e) => e.preventDefault()}
           onClick={() => handleClick(workspace.id)}
         >
-          <div className={styles.workspace_info}>
-            <GripVertical className={styles.drag_handle} />
-            <div draggable={false} className={styles.workspace_icon}>
-              {workspace.icon}
-            </div>
-            <div
-              className={styles.workspace_title}
-              onClick={() => handleClick(workspace.id)}
-            >
-              {workspace.name}
-            </div>
+          <div className="visible mx-1 flex h-6 w-[18px] flex-shrink-0 cursor-grab items-center justify-center">
+            <DragHandle className="block size-3 flex-shrink-0 fill-primary/45" />
           </div>
+          <div draggable={false} className="flex items-center">
+            <IconBlock
+              editable={false}
+              size="md"
+              defaultIcon={workspace.icon}
+              key={stableHash(workspace.icon)}
+            />
+          </div>
+          <Title workspace={workspace} onClick={handleClick} />
           {activeWorkspace?.id === workspace.id && (
-            <Check className={styles.workspace_check} />
+            <div className="ml-auto mr-1 size-4 flex-shrink-0">
+              <Check className="mr-2 h-4 w-4 select-none self-center" />
+            </div>
           )}
         </DropdownMenuItem>
       ))}

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Check, Copy, Globe } from "lucide-react";
 import { toast } from "sonner";
-import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
 import { useOrigin } from "@acme/ui/hooks";
@@ -15,14 +14,15 @@ import {
   PopoverTrigger,
 } from "@acme/ui/shadcn";
 
-import { updateInternalDocument } from "~/actions";
 import { theme } from "~/constants/theme";
+import { type UpdateDocumentHandler } from "~/lib";
 
 interface PublishProps {
   page: Document;
+  onUpdate?: UpdateDocumentHandler;
 }
 
-const Publish = ({ page }: PublishProps) => {
+const Publish = ({ page, onUpdate }: PublishProps) => {
   const [isPublished, setIsPublished] = useState(page.isPublished);
 
   /** Url */
@@ -37,23 +37,14 @@ const Publish = ({ page }: PublishProps) => {
   };
   /** Actions - Publish & Unpublish */
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { trigger: update } = useSWRMutation(
-    [page.id, false],
-    updateInternalDocument,
-    {
-      onSuccess: (data) => {
-        setIsSubmitting(false);
-        setIsPublished(data.isPublished);
-        data.isPublished
-          ? toast.success(`Published Document: "${data.title}"`)
-          : toast.success(`Unpublished Document: "${data.title}"`);
-      },
-      onError: (e: Error) => toast(e.message),
-    },
-  );
-  const handlePublish = () => {
+  const handlePublish = async () => {
     setIsSubmitting(true);
-    void update({ id: page.id, isPublished: !isPublished, log: true });
+    await onUpdate?.({ id: page.id, isPublished: !isPublished });
+    setIsSubmitting(false);
+    setIsPublished((prev) => !prev);
+    isPublished
+      ? toast.success(`Published Document: "${page.title}"`)
+      : toast.success(`Unpublished Document: "${page.title}"`);
   };
 
   return (

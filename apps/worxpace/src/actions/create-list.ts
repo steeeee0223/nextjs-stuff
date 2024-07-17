@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import type { MutationFetcher } from "swr/mutation";
 
 import type { List } from "@acme/prisma";
 import { CreateList, type CreateListInput } from "@acme/validators";
@@ -11,24 +12,28 @@ import {
   fetchClient,
   kanban,
   UnauthorizedError,
-  type Action,
+  type KanbanKey,
 } from "~/lib";
 
-const handler: Action<CreateListInput, List> = async (_key, { arg }) => {
+const handler = createMutationFetcher(CreateList, async (boardId, { arg }) => {
   try {
     fetchClient();
     const result = await kanban.createList(arg);
     /** Activity Log */
-    await auditLogs.create(
-      { title: arg.title, entityId: arg.boardId, type: "ITEM" },
-      "CREATE",
-    );
-    revalidatePath(`/kanban/${arg.boardId}`);
+    await auditLogs.create({
+      entity: { title: arg.title, entityId: boardId, type: "ITEM" },
+      action: "CREATE",
+      accountId: arg.accountId,
+    });
+    revalidatePath(`/kanban/${boardId}`);
     return result;
   } catch (error) {
     if (error instanceof UnauthorizedError) throw error;
     throw new Error("Failed to create list.");
   }
-};
+});
 
-export const createList = createMutationFetcher(CreateList, handler);
+export const createList: MutationFetcher<List, KanbanKey, CreateListInput> = (
+  { boardId },
+  data,
+) => handler(boardId, data);

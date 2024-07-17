@@ -19,14 +19,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { SPECIAL_KEYS } from "@/constants/keyboard";
 import { cn } from "@/lib/utils";
 
-/** Styles */
-const bgHover = "hover:bg-neutral-300 dark:hover:bg-neutral-600";
-const iconSize = "h-4 w-4";
-
 export interface CRUDItemProps {
-  username?: string;
   label: string;
   icon?: IconInfo;
+  lastEditedBy?: string;
+  lastEditedAt?: string;
   id?: string;
   active?: boolean;
   expandable?: boolean;
@@ -41,10 +38,11 @@ export interface CRUDItemProps {
 
 export const CRUDItem = ({
   id,
-  username = "admin",
   label,
   icon = { type: "lucide", name: "file" },
   active,
+  lastEditedBy = "admin",
+  lastEditedAt = "now",
   level = 0,
   expandable = false,
   expanded,
@@ -79,7 +77,7 @@ export const CRUDItem = ({
       style={{ paddingLeft: `${((level ?? 0) + 1) * 12}px` }}
       className={cn(
         "flex items-center",
-        "group min-h-[27px] w-full py-1 pr-3 text-sm font-medium text-muted-foreground hover:bg-primary/5",
+        "group min-h-[27px] w-full py-1 pr-3 text-sm font-medium text-primary/50 hover:bg-primary/10",
         active && "bg-primary/5 text-primary",
       )}
     >
@@ -109,7 +107,7 @@ export const CRUDItem = ({
       </div>
       <span className="ml-1 truncate">{label}</span>
       {shortcut && (
-        <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+        <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-primary/50 opacity-100">
           {Array.from(shortcut).map((key, i) => (
             <span className={SPECIAL_KEYS.has(key) ? "text-xs" : ""} key={i}>
               {key}
@@ -123,29 +121,32 @@ export const CRUDItem = ({
             <DropdownMenuTrigger onClick={(e) => e.stopPropagation()} asChild>
               <div
                 role="button"
-                className={cn(
-                  bgHover,
-                  "ml-auto h-full rounded-sm p-0.5 opacity-0 group-hover:opacity-100",
-                )}
+                className="ml-auto h-full rounded-sm p-0.5 opacity-0 hover:bg-primary/10 group-hover:opacity-100"
               >
-                <MoreHorizontal
-                  className={cn(iconSize, "text-muted-foreground")}
-                />
+                <MoreHorizontal className="size-4 text-primary/50" />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="z-[99999] w-60"
+              className="z-[99999] w-60 border-primary/10"
               align="start"
               side="right"
               forceMount
             >
-              <DropdownMenuItem onClick={handleDelete}>
-                <Trash className={cn(iconSize, "mr-2")} />
+              <DropdownMenuItem
+                className="focus:bg-primary/10"
+                onClick={handleDelete}
+              >
+                <Trash className="mr-2 size-4" />
                 Delete
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <div className="p-2 text-xs text-muted-foreground">
-                Last edited by: {username}
+              <DropdownMenuSeparator className="bg-primary/10" />
+              <div className="flex flex-col items-center px-2 py-1">
+                <div className="w-full text-xs text-primary/50">
+                  Last edited by: {lastEditedBy}
+                </div>
+                <div className="w-full text-xs text-primary/50">
+                  {lastEditedAt}
+                </div>
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -153,12 +154,9 @@ export const CRUDItem = ({
             <div
               role="button"
               onClick={handleCreate}
-              className={cn(
-                bgHover,
-                "ml-auto h-full rounded-sm p-0.5 opacity-0 group-hover:opacity-100",
-              )}
+              className="ml-auto h-full rounded-sm p-0.5 opacity-0 hover:bg-primary/10 group-hover:opacity-100"
             >
-              <Plus className={cn("h-4 w-4", "text-muted-foreground")} />
+              <Plus className="size-4 text-primary/50" />
             </div>
           )}
         </div>

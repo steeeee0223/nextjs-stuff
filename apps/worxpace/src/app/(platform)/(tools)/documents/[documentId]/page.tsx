@@ -3,7 +3,8 @@
 import { redirect } from "next/navigation";
 
 import { DocHeader, DocHeaderSkeleton } from "~/components";
-import { usePage } from "~/hooks";
+import { useDocument, usePlatform } from "~/hooks";
+import { UpdateDocumentHandler } from "~/lib";
 import Error from "../../error";
 import Editor from "./_component/editor";
 
@@ -12,7 +13,16 @@ interface Params {
 }
 
 const DocumentPage = ({ params: { documentId } }: Params) => {
-  const { page: document, isLoading, error } = usePage(documentId, false);
+  const { accountId, workspaceId } = usePlatform();
+  const {
+    page: document,
+    isLoading,
+    error,
+    update,
+  } = useDocument({ documentId, preview: false });
+  const onUpdate: UpdateDocumentHandler = async (data) => {
+    await update({ accountId, workspaceId, ...data });
+  };
 
   if (error) {
     switch (error.message) {
@@ -28,8 +38,8 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
         <DocHeaderSkeleton />
       ) : (
         <>
-          <DocHeader document={document} />
-          <Editor document={document} />
+          <DocHeader document={document} onUpdate={onUpdate} />
+          <Editor document={document} onUpdate={onUpdate} />
         </>
       )}
     </div>

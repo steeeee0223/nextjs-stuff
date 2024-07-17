@@ -8,12 +8,12 @@ import { useNavControl } from "@acme/ui/hooks";
 
 import { DocHeaderSkeleton, Room } from "~/components";
 import { GROUPS } from "~/constants/site";
-import { usePlatform } from "~/hooks/use-platform";
+import { usePlatform } from "~/hooks";
 import Navbar, { NavbarSkeleton } from "./navbar";
 import { Sidebar } from "./sidebar";
 
 const DocsProvider = ({ children }: PropsWithChildren) => {
-  const { toToolsPage } = usePlatform();
+  const { accountId, workspaceId, toToolsPage } = usePlatform();
   const pathname = usePathname();
   const params = useParams<{
     documentId?: string;
@@ -68,6 +68,8 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
       />
       <Room roomId={pageId} fallback={<Skeleton />}>
         <Navbar
+          accountId={accountId}
+          workspaceId={workspaceId}
           pageId={pageId}
           ref={navbarRef}
           isCollapsed={isCollapsed}

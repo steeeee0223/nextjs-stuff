@@ -28,7 +28,7 @@ export const Tab = ({ name, isActive, Icon, onClick }: TabProps) => {
 };
 
 export const User = ({ settings }: { settings: SettingsStore }) => {
-  const { user, account } = settings;
+  const { account } = settings;
 
   return (
     <div className="flex items-center px-4 py-1">
@@ -41,10 +41,10 @@ export const User = ({ settings }: { settings: SettingsStore }) => {
       </div>
       <div>
         <div>
-          <p className="text-sm font-medium text-primary">{user.name}</p>
+          <p className="text-sm font-medium text-primary">{account.name}</p>
         </div>
         <div>
-          <p className="mt-1 text-xs text-primary/65">{user.email}</p>
+          <p className="mt-1 text-xs text-primary/65">{account.email}</p>
         </div>
       </div>
     </div>
