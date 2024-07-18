@@ -22,27 +22,36 @@ export interface SettingsProviderProps {
       replaceTargetUrl?: string;
     },
   ) => Promise<{ url: string }>;
+  onDeleteAccount?: (data: {
+    accountId: string;
+    email: string;
+  }) => Promise<void>;
+  onDeleteWorkspace?: (workspaceId: string) => Promise<void>;
 }
 
 export function SettingsProvider({
   settings,
   onUpdate,
   onUploadFile,
+  onDeleteAccount,
+  onDeleteWorkspace,
 }: SettingsProviderProps) {
   const { theme, setTheme } = useTheme();
-  const { update, user, account, workspace } = useSettingsStore();
+  const { update, account, workspace } = useSettingsStore();
   useEffect(() => {
     update(settings);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const context: SettingsContextInterface = {
-    settings: { user, account, workspace },
+    settings: { account, workspace },
     updateSettings: async (data) => {
       update(data);
       await onUpdate?.(data);
     },
     uploadFile: onUploadFile,
+    deleteAccount: onDeleteAccount,
+    deleteWorkspace: onDeleteWorkspace,
     theme,
     setTheme,
   };

@@ -5,25 +5,16 @@
 import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { ImageIcon } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
-import { toast } from "sonner";
 import { stableHash } from "swr/_internal";
-import useSWRMutation from "swr/mutation";
 
 import type { CoverImage, Document } from "@acme/prisma";
-import {
-  Cover,
-  CoverPicker,
-  IconBlock,
-  useTree,
-  type IconInfo,
-} from "@acme/ui/custom";
+import { Cover, CoverPicker, IconBlock, type IconInfo } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
 import { Button, Skeleton, type ButtonProps } from "@acme/ui/shadcn";
 
-import { updateInternalDocument } from "~/actions";
 import { theme } from "~/constants/theme";
 import { useEdgeStore } from "~/hooks";
-import { toIcon, toIconInfo } from "~/lib";
+import { toIcon, toIconInfo, UpdateDocumentHandler } from "~/lib";
 
 /** Styles */
 const buttonProps: ButtonProps = {
@@ -35,9 +26,10 @@ const buttonProps: ButtonProps = {
 interface DocHeaderProps {
   document: Document;
   preview?: boolean;
+  onUpdate?: UpdateDocumentHandler;
 }
 
-const DocHeader = ({ document, preview }: DocHeaderProps) => {
+const DocHeader = ({ document, preview, onUpdate }: DocHeaderProps) => {
   /** Input */
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -70,25 +62,9 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
     }
   };
   /** Tree Actions */
-  const { dispatch } = useTree();
-  /** Action - update */
-  const { trigger: update } = useSWRMutation(
-    [document.id, false],
-    updateInternalDocument,
-    {
-      onSuccess: ({ id, parentId, icon, title, type }) =>
-        dispatch({
-          type: "update:item",
-          payload: { id, parentId, icon: toIconInfo(icon), title, group: type },
-        }),
-      onError: (e: Error) => toast.error(e.message),
-      revalidate: true,
-      populateCache: true,
-    },
-  );
   const onUpdateTitle = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.currentTarget.value);
-    void update({
+    void onUpdate?.({
       id: document.id,
       title: e.currentTarget.value ?? value,
       log: true,
@@ -96,9 +72,9 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
   };
   const onIconSelect = async (iconInfo: IconInfo) => {
     await deleteFile(toIconInfo(document.icon));
-    await update({ id: document.id, icon: toIcon(iconInfo) });
+    await onUpdate?.({ id: document.id, icon: toIcon(iconInfo) });
   };
-  const onRemoveIcon = () => update({ id: document.id, icon: null });
+  const onRemoveIcon = () => onUpdate?.({ id: document.id, icon: null });
   const onUploadIcon = async (file: File) => {
     const replaceTargetUrl =
       document.icon?.type === "file" ? document.icon.src : undefined;
@@ -106,7 +82,7 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
       file,
       options: { replaceTargetUrl },
     });
-    await update({
+    await onUpdate?.({
       id: document.id,
       icon: { type: "file", src: url },
       log: true,
@@ -122,7 +98,7 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
       file,
       options: { replaceTargetUrl },
     });
-    await update({
+    await onUpdate?.({
       id: document.id,
       coverImage: { type: "file", url },
       log: true,
@@ -131,7 +107,7 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
   };
   const onUploadUrl = async (url: string) => {
     await deleteFile(document.coverImage);
-    await update({
+    await onUpdate?.({
       id: document.id,
       coverImage: { type: "url", url },
       log: true,
@@ -139,7 +115,7 @@ const DocHeader = ({ document, preview }: DocHeaderProps) => {
   };
   const onRemoveCover = async () => {
     await deleteFile(document.coverImage);
-    await update({ id: document.id, coverImage: null, log: true });
+    await onUpdate?.({ id: document.id, coverImage: null, log: true });
   };
 
   return (

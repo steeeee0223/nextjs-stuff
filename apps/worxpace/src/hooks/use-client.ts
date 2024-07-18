@@ -10,35 +10,35 @@ export const useClient = (): Client => {
   const { organization } = useOrganization();
   if (!userId || !user)
     return {
-      role: "personal",
+      type: "personal",
       userId: "unknown",
       orgId: null,
-      path: "/",
-      username: "User",
-      workspace: "Unknown",
-      workspaceId: "unknown",
+      clerkId: "unknown",
+      name: "Unknown",
+      email: "unknown",
+      avatarUrl: "",
     };
   if (!orgId || !organization) {
     /** @todo Admin role */
     /** User role */
     return {
-      role: "personal",
+      type: "personal",
       userId,
       orgId: null,
-      path: `/personal/${userId}`,
-      username: user.fullName ?? "User",
-      workspace: user.fullName ?? "User",
-      workspaceId: userId,
+      clerkId: userId,
+      name: user.fullName ?? "User",
+      email: user.emailAddresses[0]?.emailAddress ?? "",
+      avatarUrl: user.imageUrl,
     };
   } else {
     return {
-      role: "organization",
+      type: "organization",
       userId,
       orgId,
-      path: `/organization/${orgId}`,
-      username: user.fullName ?? "User",
-      workspace: organization.name,
-      workspaceId: orgId,
+      clerkId: orgId,
+      name: organization.name,
+      email: "",
+      avatarUrl: organization.imageUrl,
     };
   }
 };

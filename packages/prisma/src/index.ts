@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== "production") {
 
 export type {
   Document,
-  AccountSettings,
+  Account,
   AuditLog,
   Entity,
   Card,
@@ -26,7 +26,13 @@ export type {
   Icon,
   Limitation,
   List,
+  Membership,
   Subscription,
-  User,
+  Workspace,
 } from ".prisma/client/worxpace";
-export { ROLE, ACTION, ENTITY_TYPE } from ".prisma/client/worxpace";
+export {
+  ROLE,
+  ACTION,
+  ENTITY_TYPE,
+  WORKSPACE_ROLE,
+} from ".prisma/client/worxpace";

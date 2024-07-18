@@ -1,48 +1,44 @@
 "use client";
 
 import { toast } from "sonner";
-import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
 import { CRUDItem } from "@acme/ui/custom";
 import { Label, Switch } from "@acme/ui/shadcn";
 
-import { archiveDocument, updateDocument } from "~/actions";
-import { usePlatform } from "~/hooks";
+import { useDocuments, usePlatform } from "~/hooks";
 import { toIconInfo, type WorkflowContent } from "~/lib";
 
 interface WorkflowItemProps {
+  accountId: string;
   workspaceId: string;
   workflow: Document;
 }
 
-const WorkflowItem = ({ workspaceId, workflow }: WorkflowItemProps) => {
+const WorkflowItem = ({
+  accountId,
+  workspaceId,
+  workflow,
+}: WorkflowItemProps) => {
   const { id, title, icon, content: $content } = workflow;
   const content = JSON.parse($content!) as WorkflowContent;
   /** Actions */
   const { toToolsPage } = usePlatform();
-  const onError = (e: Error) => toast.error(e.message);
-  /** Action: Publish / Unpublish */
-  const { trigger: update } = useSWRMutation(
-    `doc:${workspaceId}`,
-    updateDocument,
-    { onError },
-  );
+  const { archive, update } = useDocuments({ workspaceId });
   const onPublishFlow = async (id: string, publish: boolean) => {
     const newContent = JSON.stringify({ ...content, isPublished: publish });
-    await update({ id, content: newContent, log: true });
+    await update({
+      id,
+      content: newContent,
+      log: true,
+      accountId,
+      workspaceId,
+    });
     toast.success(`${title} is currently ${publish ? "published" : "down"}`);
   };
-  /** Action: Archive */
-  const { trigger: archive } = useSWRMutation(
-    `doc:${workspaceId}`,
-    archiveDocument,
-    { onError },
-  );
   const onArchive = async (id: string) => {
     if (content.isPublished) await onPublishFlow(id, false);
-    await archive({ id });
-    toast.success(`Workflow moved into trash: ${title}`);
+    await archive({ id, accountId, workspaceId });
   };
 
   return (

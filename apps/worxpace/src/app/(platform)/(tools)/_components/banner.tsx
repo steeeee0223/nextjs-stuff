@@ -1,57 +1,24 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import useSWRMutation from "swr/mutation";
-
-import { useTree } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
 import { Button } from "@acme/ui/shadcn";
 
-import { deleteDocument, restoreDocument } from "~/actions";
 import { ConfirmModal } from "~/components/modal";
 import { theme } from "~/constants/theme";
-import { useClient } from "~/hooks";
+import { useDocuments } from "~/hooks";
 
 interface BannerProps {
+  accountId: string;
+  workspaceId: string;
   documentId: string;
 }
 const $buttonProps =
   "rounded-sm border-white bg-transparent hover:bg-primary/5 text-white hover:text-white p-1 px-2 h-auto font-normal";
 
-const Banner = ({ documentId }: BannerProps) => {
-  const router = useRouter();
-  const { path, workspaceId } = useClient();
-  /** Tree */
-  const { dispatch } = useTree();
-  const onError = (e: Error) => toast.error(e.message);
-  /** Action - Restore */
-  const { trigger: restore } = useSWRMutation(
-    `doc:${workspaceId}`,
-    restoreDocument,
-    {
-      onSuccess: ({ ids, item }) => {
-        dispatch({ type: "update:group", payload: { ids, group: item.type } });
-        toast.success(`Restored document "${item.title}"`);
-        router.push(path);
-      },
-      onError,
-    },
-  );
-  const onRestore = () => restore({ id: documentId });
-  /** Action - Remove */
-  const { trigger: remove } = useSWRMutation(
-    `doc:${workspaceId}`,
-    deleteDocument,
-    {
-      onSuccess: (data) => {
-        toast.success(`Deleted document "${data.item.title}"`);
-        if (documentId === data.item.id) router.push(path);
-      },
-      onError,
-    },
-  );
-  const onRemove = () => remove({ id: documentId });
+const Banner = ({ accountId, workspaceId, documentId }: BannerProps) => {
+  const { restore, remove } = useDocuments({ workspaceId });
+  const onRestore = () => restore({ id: documentId, accountId, workspaceId });
+  const onRemove = () => remove({ id: documentId, accountId, workspaceId });
 
   return (
     <div

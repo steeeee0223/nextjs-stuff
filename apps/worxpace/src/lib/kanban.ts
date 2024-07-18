@@ -18,24 +18,44 @@ type CardWithList = Card & { list: List };
 export const countLists = async (boardId: string): Promise<number> =>
   await db.list.count({ where: { boardId } });
 
-export const createCard = async (
-  data: Omit<CreateCardInput, "boardId">,
-): Promise<Card> => await db.card.create({ data });
+export const createCard = async ({
+  accountId,
+  ...data
+}: Omit<CreateCardInput, "boardId">): Promise<Card> =>
+  await db.card.create({
+    data: { ...data, createdBy: accountId, updatedBy: accountId },
+  });
 
 export const createList = async (
-  data: CreateListInput,
+  { accountId, ...data }: CreateListInput,
   cards?: Pick<CreateCardInput, "title" | "order" | "description">[],
 ): Promise<List> =>
   await db.list.create({
-    data: { ...data, ...(cards && { cards: { createMany: { data: cards } } }) },
+    data: {
+      ...data,
+      createdBy: accountId,
+      updatedBy: accountId,
+      ...(cards && {
+        cards: {
+          createMany: {
+            data: cards.map((card) => ({
+              ...card,
+              createdBy: accountId,
+              updatedBy: accountId,
+            })),
+          },
+        },
+      }),
+    },
   });
 
 export const deleteCard = async (
-  data: Omit<DeleteCardInput, "boardId">,
+  data: Pick<DeleteCardInput, "id">,
 ): Promise<Card> => await db.card.delete({ where: data });
 
-export const deleteList = async (data: DeleteListInput): Promise<List> =>
-  await db.list.delete({ where: data });
+export const deleteList = async (
+  data: Omit<DeleteListInput, "accountId">,
+): Promise<List> => await db.list.delete({ where: data });
 
 export const getCard = async (id: string): Promise<CardWithList | null> =>
   await db.card.findUnique({ where: { id }, include: { list: true } });
@@ -53,11 +73,15 @@ export const getLists = async (boardId: string): Promise<ListWithCards[]> =>
   });
 
 export const updateCard = async ({
+  accountId,
   id,
   listId,
-  ...updateData
+  ...data
 }: Omit<UpdateCardInput, "log" | "boardId">): Promise<Card> =>
-  await db.card.update({ where: { id, listId }, data: updateData });
+  await db.card.update({
+    where: { id, listId },
+    data: { ...data, updatedBy: accountId },
+  });
 
 export const updateCardsOrder = async ({
   items,
@@ -73,11 +97,15 @@ export const updateCardsOrder = async ({
 };
 
 export const updateList = async ({
+  accountId,
   id,
   boardId,
-  ...updateData
+  ...data
 }: Omit<UpdateListInput, "log">): Promise<List> =>
-  await db.list.update({ where: { id, boardId }, data: updateData });
+  await db.list.update({
+    where: { id, boardId },
+    data: { ...data, updatedBy: accountId },
+  });
 
 export const updateListsOrder = async ({
   lists,

@@ -6,15 +6,15 @@ import type { ExcalidrawElement } from "@excalidraw/excalidraw/types/element/typ
 import { SaveIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
-import useSWRMutation from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
 import { Button, type ButtonProps } from "@acme/ui/shadcn";
 
-import { updateInternalDocument } from "~/actions";
+import { type UpdateDocumentHandler } from "~/lib";
 
 interface CanvasProps {
   board: Document;
+  onUpdate?: UpdateDocumentHandler;
 }
 
 const SaveButton = ({ onClick }: Pick<ButtonProps, "onClick">) => {
@@ -30,22 +30,15 @@ const SaveButton = ({ onClick }: Pick<ButtonProps, "onClick">) => {
   );
 };
 
-const Canvas = ({ board: { id, content } }: CanvasProps) => {
+const Canvas = ({ board: { id, title, content }, onUpdate }: CanvasProps) => {
   const { resolvedTheme } = useTheme();
   const [whiteBoardData, setWhiteBoardData] = useState<
     readonly ExcalidrawElement[]
   >(content ? (JSON.parse(content) as readonly ExcalidrawElement[]) : []);
-
-  const { trigger: update } = useSWRMutation(
-    [id, false],
-    updateInternalDocument,
-    {
-      onSuccess: ({ title }) => toast.success(`Updated whiteboard "${title}"`),
-      onError: (e: Error) => toast.error(e.message),
-    },
-  );
-  const handleSave = () =>
-    void update({ id, content: JSON.stringify(whiteBoardData) });
+  const handleSave = async () => {
+    await onUpdate?.({ id, content: JSON.stringify(whiteBoardData) });
+    toast.success(`Updated whiteboard "${title}"`);
+  };
 
   return (
     <div className="h-[calc(100vh-48px)]">

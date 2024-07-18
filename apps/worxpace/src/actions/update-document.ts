@@ -3,33 +3,39 @@
 import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Document, ENTITY_TYPE } from "@acme/prisma";
+import type { ENTITY_TYPE } from "@acme/prisma";
 import { UpdateDocument, type UpdateDocumentInput } from "@acme/validators";
 
 import {
+  account,
   auditLogs,
   createMutationFetcher,
   documents,
   fetchClient,
   UnauthorizedError,
-  type Action,
+  type DetailedDocument,
+  type DocumentKey,
+  type DocumentsKey,
 } from "~/lib";
 
-const handler: Action<UpdateDocumentInput, Document> = async (
-  _key,
-  { arg },
-) => {
+const handler = createMutationFetcher(UpdateDocument, async (_key, { arg }) => {
   const { log, id, ...updateData } = arg;
   try {
-    const { userId, orgId } = fetchClient();
-    const result = await documents.update({ userId, orgId, id, ...updateData });
+    const { clerkId } = fetchClient();
+    const inWorkspace = await account.isInWorkspace({
+      clerkId,
+      workspaceId: arg.workspaceId,
+    });
+    if (!inWorkspace) throw new UnauthorizedError();
+    const result = await documents.update({ id, ...updateData });
     /** Activity Log */
     if (log) {
       const type = result.type.toUpperCase() as ENTITY_TYPE;
-      await auditLogs.create(
-        { type, entityId: id, title: result.title },
-        "UPDATE",
-      );
+      await auditLogs.create({
+        entity: { type, entityId: id, title: result.title },
+        action: "UPDATE",
+        accountId: arg.accountId,
+      });
     }
     revalidatePath(`/documents/${arg.id}`);
     return result;
@@ -37,11 +43,15 @@ const handler: Action<UpdateDocumentInput, Document> = async (
     if (error instanceof UnauthorizedError) throw error;
     throw new Error("Failed to archive document.");
   }
-};
+});
 
-export const updateDocument = createMutationFetcher(UpdateDocument, handler);
-export const updateInternalDocument: MutationFetcher<
-  Document,
-  [string, boolean],
+export const updateDocument: MutationFetcher<
+  DetailedDocument,
+  DocumentsKey,
   UpdateDocumentInput
-> = ([key], data) => updateDocument(key, data);
+> = ({ workspaceId }, data) => handler(workspaceId, data);
+export const updateInternalDocument: MutationFetcher<
+  DetailedDocument,
+  DocumentKey,
+  UpdateDocumentInput
+> = ({ documentId }, data) => handler(documentId, data);

@@ -16,12 +16,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockSettings: SettingsStore = {
-  user: {
-    id: "1",
-    name: "John Doe",
-    email: "johndoe@example.com",
-    imageUrl: "https://github.com/shadcn.png",
-  },
   workspace: {
     id: "fake-workspace-id-12345",
     name: "John's Private",
@@ -32,6 +26,8 @@ const mockSettings: SettingsStore = {
     avatarUrl: "https://github.com/shadcn.png",
     preferredName: "John Doe",
     email: "johndoe@example.com",
+    id: "fake-account-id-123",
+    name: "John Wick",
   },
 };
 

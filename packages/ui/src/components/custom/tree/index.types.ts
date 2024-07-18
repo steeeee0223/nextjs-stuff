@@ -6,4 +6,6 @@ export interface TreeItem {
   parentId?: string | null;
   group: string | null;
   icon?: IconInfo;
+  lastEditedBy?: string;
+  lastEditedAt?: string;
 }

@@ -21,23 +21,23 @@ export function fetchClient(): Client {
     /** @todo Admin role */
     /** User role */
     return {
-      role: "personal",
+      type: "personal",
       userId,
       orgId: null,
-      path: `/personal/${userId}`,
-      username: `${user?.firstName} ${user?.lastName}`,
-      workspace: `${user?.firstName} ${user?.lastName}`,
-      workspaceId: userId,
+      clerkId: userId,
+      name: `${user?.firstName} ${user?.lastName}`,
+      email: user?.emailAddresses[0]?.emailAddress ?? "",
+      avatarUrl: user?.imageUrl ?? "",
     };
   } else {
     return {
-      role: "organization",
+      type: "organization",
       userId,
       orgId,
-      path: `/organization/${orgId}`,
-      username: `${user?.firstName} ${user?.lastName}`,
-      workspace: organization?.name ?? "Organization",
-      workspaceId: orgId,
+      clerkId: orgId,
+      name: organization?.name ?? "Organization",
+      email: "",
+      avatarUrl: organization?.imageUrl ?? "",
     };
   }
 }

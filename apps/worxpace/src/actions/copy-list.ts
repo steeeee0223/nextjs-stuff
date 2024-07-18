@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import type { MutationFetcher } from "swr/mutation";
 
 import type { List } from "@acme/prisma";
 import { CopyList, type CopyListInput } from "@acme/validators";
@@ -11,11 +12,11 @@ import {
   fetchClient,
   kanban,
   UnauthorizedError,
-  type Action,
+  type KanbanKey,
 } from "~/lib";
 
-const handler: Action<CopyListInput, List> = async (_key, { arg }) => {
-  const { boardId, srcId, destId } = arg;
+const handler = createMutationFetcher(CopyList, async (_key, { arg }) => {
+  const { boardId, srcId, destId, accountId } = arg;
   try {
     fetchClient();
     const srcList = await kanban.getListById({ boardId, id: srcId });
@@ -32,6 +33,7 @@ const handler: Action<CopyListInput, List> = async (_key, { arg }) => {
         : undefined;
     const result = await kanban.createList(
       {
+        accountId,
         id: destId,
         title: `${srcList.title} Copy`,
         order: numLists + 1,
@@ -40,16 +42,20 @@ const handler: Action<CopyListInput, List> = async (_key, { arg }) => {
       cards,
     );
     /** Activity Log */
-    await auditLogs.create(
-      { title: result.title, entityId: boardId, type: "LIST" },
-      "CREATE",
-    );
+    await auditLogs.create({
+      entity: { title: result.title, entityId: boardId, type: "LIST" },
+      action: "CREATE",
+      accountId,
+    });
     revalidatePath(`/kanban/${boardId}`);
     return result;
   } catch (error) {
     if (error instanceof UnauthorizedError) throw error;
     throw new Error("Failed to copy list.");
   }
-};
+});
 
-export const copyList = createMutationFetcher(CopyList, handler);
+export const copyList: MutationFetcher<List, KanbanKey, CopyListInput> = (
+  { boardId },
+  data,
+) => handler(boardId, data);

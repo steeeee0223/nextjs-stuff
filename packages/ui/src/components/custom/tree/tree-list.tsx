@@ -49,7 +49,7 @@ export function TreeList({
           No pages inside
         </p>
       )}
-      {items.map(({ id, title, icon, group }) => (
+      {items.map(({ id, title, icon, group, lastEditedBy, lastEditedAt }) => (
         <div key={id}>
           <Item
             id={id}
@@ -58,6 +58,8 @@ export function TreeList({
             onClick={() => onClickItem?.(id, group)}
             active={isItemActive?.(id, group)}
             level={level}
+            lastEditedBy={lastEditedBy}
+            lastEditedAt={lastEditedAt}
             expandable={showEmptyChild}
             expanded={expanded[id]}
             onExpand={() => onExpand(id)}

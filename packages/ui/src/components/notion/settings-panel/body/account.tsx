@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { Section, SectionItem, SectionSeparator } from "../_components";
-import { EmailSettings, PasswordForm } from "../modals";
+import { DeleteAccount, EmailSettings, PasswordForm } from "../modals";
 import { useSettings } from "../settings-context";
 import { myAccount } from "./account.data";
 
@@ -28,6 +28,7 @@ export const Account = () => {
     settings: { account },
     updateSettings: update,
     uploadFile,
+    deleteAccount,
   } = useSettings();
   const onUpdateAvatar = () => avatarInputRef.current?.click();
   const onRemoveAvatar = () => void update({ account: { avatarUrl: "" } });
@@ -52,6 +53,13 @@ export const Account = () => {
       <PasswordForm
         hasPassword={account.hasPassword}
         onSubmit={() => update({ account: { hasPassword: true } })}
+      />,
+    );
+  const handleDeleteAccount = () =>
+    setOpen(
+      <DeleteAccount
+        email={account.email}
+        onSubmit={(email) => deleteAccount?.({ accountId: account.id, email })}
       />,
     );
 
@@ -156,7 +164,12 @@ export const Account = () => {
         </SectionItem>
         <SectionSeparator size="sm" />
         <SectionItem {...myAccount.del} titleProps="text-[#eb5757]">
-          <Button variant="ghost" size="icon-sm" className="text-primary/35">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="text-primary/35"
+            onClick={handleDeleteAccount}
+          >
             <ChevronRight className="h-4 w-4" />
           </Button>
         </SectionItem>

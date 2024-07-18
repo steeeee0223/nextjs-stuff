@@ -7,12 +7,17 @@ import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
 export default authMiddleware({
   publicRoutes: ["/", "/api/webhook"],
   afterAuth(auth, req) {
+    // After sign up
+    if (req.url.startsWith("/sign-up")) {
+      return NextResponse.redirect("/onboarding");
+    }
+
     if (auth.userId && auth.isPublicRoute) {
-      const path = auth.orgId
-        ? `/organization/${auth.orgId}`
-        : `/personal/${auth.userId}`;
-      const orgSelection = new URL(path, req.url);
-      return NextResponse.redirect(orgSelection);
+      // const path = auth.orgId
+      //   ? `/organization/${auth.orgId}`
+      //   : `/personal/${auth.userId}`;
+      const url = new URL(`/`, req.url);
+      return NextResponse.redirect(url);
     }
 
     if (!auth.userId && !auth.isPublicRoute) {

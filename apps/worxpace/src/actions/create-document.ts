@@ -1,11 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import type { MutationFetcher } from "swr/mutation";
 
-import { ENTITY_TYPE, type Document } from "@acme/prisma";
+import type { ENTITY_TYPE } from "@acme/prisma";
 import { CreateDocument, type CreateDocumentInput } from "@acme/validators";
 
 import {
+  account,
   auditLogs,
   createMutationFetcher,
   documents,
@@ -13,29 +15,37 @@ import {
   generateDefaultIcon,
   toIcon,
   UnauthorizedError,
-  type Action,
+  type DetailedDocument,
+  type DocumentsKey,
 } from "~/lib";
 
-const handler: Action<CreateDocumentInput, Document> = async (
-  _key,
-  { arg },
-) => {
-  try {
-    const { userId, orgId, path } = fetchClient();
-    const icon = toIcon(generateDefaultIcon(arg.type));
-    const result = await documents.create({ ...arg, icon, userId, orgId });
-    /** Activity Log */
-    const type = result.type.toUpperCase() as ENTITY_TYPE;
-    await auditLogs.create(
-      { title: result.title, entityId: result.id, type },
-      "CREATE",
-    );
-    revalidatePath(path);
-    return result;
-  } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to archive document.");
-  }
-};
+const handler = createMutationFetcher(
+  CreateDocument,
+  async (workspaceId, { arg }) => {
+    try {
+      const { clerkId } = fetchClient();
+      const inWorkspace = await account.isInWorkspace({ clerkId, workspaceId });
+      if (!inWorkspace) throw new UnauthorizedError();
+      const icon = toIcon(generateDefaultIcon(arg.type));
+      const result = await documents.create({ ...arg, icon });
+      /** Activity Log */
+      const type = result.type.toUpperCase() as ENTITY_TYPE;
+      await auditLogs.create({
+        entity: { title: result.title, entityId: result.id, type },
+        action: "CREATE",
+        accountId: arg.accountId,
+      });
+      revalidatePath(`/workspace/${workspaceId}`);
+      return result;
+    } catch (error) {
+      if (error instanceof UnauthorizedError) throw error;
+      throw new Error("Failed to archive document.");
+    }
+  },
+);
 
-export const createDocument = createMutationFetcher(CreateDocument, handler);
+export const createDocument: MutationFetcher<
+  DetailedDocument,
+  DocumentsKey,
+  CreateDocumentInput
+> = ({ workspaceId }, data) => handler(workspaceId, data);

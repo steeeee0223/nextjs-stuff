@@ -3,23 +3,22 @@
 import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { toast } from "sonner";
 import { stableHash } from "swr/_internal";
-import useSWRMutation from "swr/mutation";
 
-import { Document } from "@acme/prisma";
-import { IconBlock, useTree } from "@acme/ui/custom";
+import type { Document } from "@acme/prisma";
+import { IconBlock } from "@acme/ui/custom";
 import { Button, Input, Skeleton } from "@acme/ui/shadcn";
 
-import { updateInternalDocument } from "~/actions";
 import { theme } from "~/constants/theme";
-import { toIconInfo } from "~/lib";
+import { toIconInfo, type UpdateDocumentHandler } from "~/lib";
 
-interface TitleProps {
+export interface TitleProps {
   page: Document;
   editable?: boolean;
+  onUpdate?: UpdateDocumentHandler;
 }
 
-const Title = ({ page, editable = true }: TitleProps) => {
-  const [icon, _setIcon] = useState(() => toIconInfo(page.icon));
+const Title = ({ page, editable = true, onUpdate }: TitleProps) => {
+  const _ = useState(() => toIconInfo(page.icon));
   const [title, setTitle] = useState(page.title);
   /** Input */
   const inputRef = useRef<HTMLInputElement>(null);
@@ -34,30 +33,17 @@ const Title = ({ page, editable = true }: TitleProps) => {
     }
   };
   const disableInput = () => setIsEditing(false);
-  /** Action - Rename */
-  const { dispatch } = useTree();
-  const { trigger: update } = useSWRMutation(
-    [page.id, false],
-    updateInternalDocument,
-    {
-      onSuccess: (data) => {
-        dispatch({
-          type: "update:item",
-          payload: { ...data, icon: toIconInfo(data.icon), group: data.type },
-        });
-        toast.success(`Renamed document "${data.title}"`);
-      },
-      optimisticData: () => ({ ...page, title, icon }),
-      rollbackOnError: true,
-    },
-  );
+  /** Handlers */
   const onChange = (event: ChangeEvent<HTMLInputElement>) =>
     setTitle(event.target.value);
 
   const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       disableInput();
-      if (title !== page.title) void update({ id: page.id, title, log: true });
+      if (title !== page.title) {
+        void onUpdate?.({ id: page.id, title });
+        toast.success(`Renamed document "${title}"`);
+      }
     }
   };
 

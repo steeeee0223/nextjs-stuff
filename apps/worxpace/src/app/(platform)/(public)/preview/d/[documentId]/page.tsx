@@ -9,7 +9,7 @@ import { cn } from "@acme/ui/lib";
 
 import { DocHeaderSkeleton } from "~/components";
 import { theme } from "~/constants/theme";
-import { usePage } from "~/hooks";
+import { useDocument } from "~/hooks";
 import { toIconInfo } from "~/lib";
 
 interface Params {
@@ -19,7 +19,7 @@ interface Params {
 }
 
 const DocumentPage = ({ params: { documentId } }: Params) => {
-  const { page: document, isLoading, error } = usePage(documentId, true);
+  const { page, isLoading, error } = useDocument({ documentId, preview: true });
   /** Block Note Editor */
   const BlockNoteEditor = useMemo(
     () => dynamic(() => import("~/components/block-editor"), { ssr: false }),
@@ -27,19 +27,19 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
   );
 
   if (error) return notFound();
-  if (!document || isLoading) return <DocHeaderSkeleton />;
+  if (!page || isLoading) return <DocHeaderSkeleton />;
   return (
     <div className="pb-40 dark:bg-[#1F1F1F]">
       <Cover
         preview
         unsplashAPIKey={process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY!}
-        url={document.coverImage?.url ?? null}
+        url={page.coverImage?.url ?? null}
       />
       <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
         <div className="group relative pl-[54px]">
-          {document.icon && (
+          {page.icon && (
             <IconBlock
-              defaultIcon={toIconInfo(document.icon)}
+              defaultIcon={toIconInfo(page.icon)}
               editable={false}
               size="lg"
             />
@@ -51,10 +51,10 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
             )}
           />
           <div className="break-words pb-[11.5px] text-5xl font-bold text-[#3F3F3F] outline-none dark:text-[#CFCFCF]">
-            {document.title}
+            {page.title}
           </div>
         </div>
-        <BlockNoteEditor editable={false} initialContent={document.content} />
+        <BlockNoteEditor editable={false} initialContent={page.content} />
       </div>
     </div>
   );

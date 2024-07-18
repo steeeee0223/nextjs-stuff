@@ -3,7 +3,8 @@
 import { redirect } from "next/navigation";
 
 import { DocHeaderSkeleton } from "~/components";
-import { usePage } from "~/hooks";
+import { useDocument, usePlatform } from "~/hooks";
+import { type UpdateDocumentHandler } from "~/lib";
 import Error from "../../error";
 import Canvas from "./_components/canvas";
 
@@ -12,7 +13,16 @@ interface Params {
 }
 
 const WhiteboardPage = ({ params: { whiteboardId } }: Params) => {
-  const { page: board, isLoading, error } = usePage(whiteboardId, false);
+  const { accountId, workspaceId } = usePlatform();
+  const {
+    page: board,
+    isLoading,
+    error,
+    update,
+  } = useDocument({ documentId: whiteboardId, preview: false });
+  const onUpdate: UpdateDocumentHandler = async (data) => {
+    await update({ accountId, workspaceId, ...data });
+  };
 
   if (error) {
     switch (error.message) {
@@ -25,7 +35,11 @@ const WhiteboardPage = ({ params: { whiteboardId } }: Params) => {
   return (
     <div>
       <div className="h-12" />
-      {isLoading || !board ? <DocHeaderSkeleton /> : <Canvas board={board} />}
+      {isLoading || !board ? (
+        <DocHeaderSkeleton />
+      ) : (
+        <Canvas board={board} onUpdate={onUpdate} />
+      )}
     </div>
   );
 };

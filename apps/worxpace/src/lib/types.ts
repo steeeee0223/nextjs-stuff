@@ -1,13 +1,16 @@
 import type { MutationFetcher } from "swr/mutation";
 
+import type { Account, Document, Workspace } from "@acme/prisma";
+import type { UpdateDocumentInput } from "@acme/validators";
+
 export interface Client {
-  role: "admin" | "personal" | "organization";
+  type: "admin" | "personal" | "organization";
   userId: string;
   orgId: string | null;
-  path: string;
-  username: string;
-  workspace: string;
-  workspaceId: string;
+  clerkId: string;
+  name: string;
+  email: string;
+  avatarUrl: string;
 }
 
 export type Action<Input, Output> = MutationFetcher<Output, string, Input>;
@@ -20,3 +23,13 @@ export interface WorkflowContent {
   description: string;
   isPublished: boolean;
 }
+
+export type DetailedDocument = Document & {
+  workspace: Workspace;
+  createdBy: Account;
+  updatedBy: Account;
+};
+
+export type UpdateDocumentHandler = (
+  data: Omit<UpdateDocumentInput, "accountId" | "workspaceId">,
+) => Promise<void>;

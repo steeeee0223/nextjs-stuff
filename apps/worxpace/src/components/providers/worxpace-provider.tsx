@@ -1,65 +1,55 @@
 "use client";
 
-import { useEffect, useMemo, type PropsWithChildren } from "react";
+import { useEffect, useState, type PropsWithChildren } from "react";
 import { useParams } from "next/navigation";
-import { useOrganizationList, useUser } from "@clerk/nextjs";
 
-import { Workspace, WorkspaceProvider } from "@acme/ui/notion";
+import {
+  WorkspaceProvider,
+  type UserState,
+  type Workspace,
+} from "@acme/ui/notion";
 
-import { useClient } from "~/hooks";
+import { useClient, usePlatform, useSetup } from "~/hooks";
+import { toIconInfo } from "~/lib";
 
 export const WorxpaceProvider = ({ children }: PropsWithChildren) => {
-  const { user } = useUser();
-  const { setActive } = useOrganizationList();
-  const { userId, username, workspaceId } = useClient();
-  const params = useParams();
+  const { name, email, clerkId } = useClient();
+  const params = useParams<{ workspaceId?: string }>();
+  const [user, setUser] = useState<UserState>({ id: "", name, email });
+  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
+
+  const { workspaceId, update } = usePlatform();
 
   useEffect(() => {
-    if (typeof params.clientId === "string") {
-      const org = params.clientId === userId ? null : params.clientId;
-      setActive?.({ organization: org }).catch((e) => console.log(e));
+    if (params.workspaceId) {
+      update((prev) => ({ ...prev, workspaceId: params.workspaceId! }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.clientId, userId]);
+  }, [params.workspaceId]);
 
-  const initial = useMemo(
-    () => (params.clientId as string) ?? workspaceId,
-    [params, workspaceId],
-  );
-
-  const workspaceUser = {
-    id: userId,
-    name: username,
-    profilePicture: { url: user?.imageUrl ?? "" },
-    isDarkMode: false,
-    email: user?.emailAddresses[0]?.emailAddress ?? "no email provided",
-  };
-  const personal: Workspace = {
-    id: userId,
-    name: username,
-    icon: "🎑",
-    owner: username,
-    ownerId: userId,
-    members: [],
-  };
-  const workspaces = [
-    personal,
-    ...(user?.organizationMemberships.map(({ organization: { id, name } }) => ({
-      id,
-      name,
-      icon: "🎑",
-      owner: `owner`,
-      ownerId: `ownerId`,
-      members: [],
-    })) ?? []),
-  ];
+  const { accountMemberships } = useSetup({ clerkId });
+  useEffect(() => {
+    if (!accountMemberships) return;
+    const { name, email, id, memberships } = accountMemberships;
+    setUser({ id, name, email });
+    setWorkspaces(
+      memberships.map<Workspace>(({ workspace, role }) => ({
+        id: workspace.id,
+        name: workspace.name,
+        icon: toIconInfo(workspace.icon),
+        role: role.toLowerCase() as Workspace["role"],
+        members: 1,
+        plan: "Free Plan",
+      })),
+    );
+  }, [accountMemberships]);
 
   return (
     <WorkspaceProvider
       className="h-full"
-      user={workspaceUser}
+      user={user}
       workspaces={workspaces}
-      initial={initial}
+      initial={workspaceId}
     >
       {children}
     </WorkspaceProvider>

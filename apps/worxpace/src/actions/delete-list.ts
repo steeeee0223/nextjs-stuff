@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import type { MutationFetcher } from "swr/mutation";
 
 import type { List } from "@acme/prisma";
 import { DeleteList, type DeleteListInput } from "@acme/validators";
@@ -11,24 +12,29 @@ import {
   fetchClient,
   kanban,
   UnauthorizedError,
-  type Action,
+  type KanbanKey,
 } from "~/lib";
 
-const handler: Action<DeleteListInput, List> = async (_key, { arg }) => {
+const handler = createMutationFetcher(DeleteList, async (boardId, { arg }) => {
+  const { accountId, ...data } = arg;
   try {
     fetchClient();
-    const result = await kanban.deleteList(arg);
+    const result = await kanban.deleteList(data);
     /** Activity Log */
-    await auditLogs.create(
-      { title: result.title, entityId: arg.boardId, type: "LIST" },
-      "DELETE",
-    );
-    revalidatePath(`/kanban/${arg.boardId}`);
+    await auditLogs.create({
+      entity: { title: result.title, entityId: boardId, type: "LIST" },
+      action: "DELETE",
+      accountId,
+    });
+    revalidatePath(`/kanban/${boardId}`);
     return result;
   } catch (error) {
     if (error instanceof UnauthorizedError) throw error;
     throw new Error("Failed to delete list.");
   }
-};
+});
 
-export const deleteList = createMutationFetcher(DeleteList, handler);
+export const deleteList: MutationFetcher<List, KanbanKey, DeleteListInput> = (
+  { boardId },
+  data,
+) => handler(boardId, data);

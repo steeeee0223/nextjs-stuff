@@ -3,7 +3,8 @@
 import { redirect } from "next/navigation";
 
 import { DocHeader, DocHeaderSkeleton } from "~/components";
-import { usePage } from "~/hooks";
+import { useDocument, usePlatform } from "~/hooks";
+import { type UpdateDocumentHandler } from "~/lib";
 import Error from "../../error";
 import KanbanBoard from "./_component/kanban-board";
 
@@ -12,7 +13,16 @@ interface Params {
 }
 
 const KanbanPage = ({ params: { boardId } }: Params) => {
-  const { page: board, isLoading, error } = usePage(boardId, false);
+  const { accountId, workspaceId } = usePlatform();
+  const {
+    page: board,
+    isLoading,
+    error,
+    update,
+  } = useDocument({ documentId: boardId, preview: false });
+  const onUpdate: UpdateDocumentHandler = async (data) => {
+    await update({ accountId, workspaceId, ...data });
+  };
 
   if (error) {
     switch (error.message) {
@@ -28,8 +38,12 @@ const KanbanPage = ({ params: { boardId } }: Params) => {
         <DocHeaderSkeleton />
       ) : (
         <>
-          <DocHeader document={board} />
-          <KanbanBoard board={board} />
+          <DocHeader document={board} onUpdate={onUpdate} />
+          <KanbanBoard
+            accountId={accountId}
+            workspaceId={workspaceId}
+            board={board}
+          />
         </>
       )}
     </div>

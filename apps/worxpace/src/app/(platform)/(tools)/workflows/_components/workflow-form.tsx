@@ -26,7 +26,6 @@ import {
 } from "@acme/ui/shadcn";
 
 import { createDocument } from "~/actions";
-import { useClient } from "~/hooks";
 
 const WorkflowFormSchema = z.object({
   name: z.string().min(1, "Required"),
@@ -34,13 +33,19 @@ const WorkflowFormSchema = z.object({
 });
 
 export interface WorkflowFormProps {
+  accountId: string;
+  workspaceId: string;
   title?: string;
   subTitle?: string;
 }
 
-const Workflowform: FC<WorkflowFormProps> = ({ subTitle, title }) => {
+const Workflowform: FC<WorkflowFormProps> = ({
+  accountId,
+  workspaceId,
+  subTitle,
+  title,
+}) => {
   const { setClose } = useModal();
-  const { workspaceId } = useClient();
   /** Form */
   const form = useForm<z.infer<typeof WorkflowFormSchema>>({
     mode: "onChange",
@@ -54,7 +59,7 @@ const Workflowform: FC<WorkflowFormProps> = ({ subTitle, title }) => {
 
   /** Action: Create */
   const { trigger: create } = useSWRMutation(
-    `doc:${workspaceId}`,
+    { type: "document", workspaceId } as const,
     createDocument,
     {
       onSuccess: (data) => toast.success(`Workflow Created: ${data.title}`),
@@ -71,7 +76,13 @@ const Workflowform: FC<WorkflowFormProps> = ({ subTitle, title }) => {
       description,
       isPublished: false,
     });
-    await create({ type: "workflow", title: name, content });
+    await create({
+      type: "workflow",
+      title: name,
+      content,
+      accountId,
+      workspaceId,
+    });
     setClose();
   };
 
