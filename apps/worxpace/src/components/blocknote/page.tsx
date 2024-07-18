@@ -2,7 +2,6 @@
 
 import { defaultProps } from "@blocknote/core";
 import type {
-  CustomBlockConfig,
   InlineContentSchema,
   PropSpec,
   StyleSchema,
@@ -17,8 +16,9 @@ import { cn } from "@acme/ui/lib";
 
 import { usePlatform } from "~/hooks";
 
-export interface PageBlockSpec extends CustomBlockConfig {
+export interface PageBlockSpec {
   type: "page";
+  content: "none";
   readonly propSchema: Pick<typeof defaultProps, "backgroundColor"> & {
     pageId: PropSpec<string>;
     title: PropSpec<string>;

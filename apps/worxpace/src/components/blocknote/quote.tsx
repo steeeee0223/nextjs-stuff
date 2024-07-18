@@ -1,10 +1,6 @@
 "use client";
 
-import type {
-  CustomBlockConfig,
-  InlineContentSchema,
-  StyleSchema,
-} from "@blocknote/core";
+import type { InlineContentSchema, StyleSchema } from "@blocknote/core";
 import { defaultProps } from "@blocknote/core";
 import {
   createReactBlockSpec,
@@ -13,8 +9,9 @@ import {
 
 import { cn } from "@acme/ui/lib";
 
-export interface QuoteSpec extends CustomBlockConfig {
+export interface QuoteSpec {
   type: "quote";
+  content: "inline";
   readonly propSchema: typeof defaultProps;
 }
 
