@@ -33,10 +33,12 @@ const DocsProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     isMobile ? collapse() : resetWidth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
   useEffect(() => {
     if (isMobile) collapse();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, isMobile]);
   /** Docs */
   const pageId =

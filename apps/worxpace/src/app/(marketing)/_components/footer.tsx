@@ -1,5 +1,5 @@
-import { Button } from "@acme/ui/components";
 import { cn } from "@acme/ui/lib";
+import { Button } from "@acme/ui/shadcn";
 
 import { theme } from "~/constants/theme";
 import Logo from "./logo";

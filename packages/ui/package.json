@@ -4,12 +4,12 @@
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    "./components": "./src/components/index.ts",
-    "./shadcn": "./src/components/ui/index.ts",
     "./custom": "./src/components/custom/index.ts",
     "./dnd": "./src/components/dnd/index.ts",
-    "./notion": "./src/components/notion/index.ts",
+    "./form": "./src/components/form/index.ts",
     "./hooks": "./src/hooks/index.ts",
+    "./notion": "./src/components/notion/index.ts",
+    "./shadcn": "./src/components/ui/index.ts",
     "./lib": "./src/lib/index.ts"
   },
   "license": "MIT",

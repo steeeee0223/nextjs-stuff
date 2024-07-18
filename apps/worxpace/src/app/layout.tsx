@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
-import { ThemeProvider } from "@acme/ui/components";
+import { ThemeProvider } from "@acme/ui/shadcn";
 
 import { env } from "~/env";
 

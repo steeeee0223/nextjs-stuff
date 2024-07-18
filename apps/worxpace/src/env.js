@@ -21,7 +21,7 @@ export const env = createEnv({
     DB_AUTH: z.string(),
     DB_WORXPACE: z.string(),
     // LIVEBLOCKS
-    LIVEBLOCKS_SECRET_KEY: z.string()
+    LIVEBLOCKS_SECRET_KEY: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -51,9 +51,12 @@ export const env = createEnv({
     // CLERK
     NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
     NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
-    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL,
-    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL,
-    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL:
+      process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL,
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL:
+      process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL,
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     // DB
     DB_AUTH: process.env.DB_AUTH,
@@ -64,7 +67,8 @@ export const env = createEnv({
     // LIVEBLOCKS
     LIVEBLOCKS_SECRET_KEY: process.env.LIVEBLOCKS_SECRET_KEY,
     // UNSPLASH
-    NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
+    NEXT_PUBLIC_UNSPLASH_ACCESS_KEY:
+      process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
   },
   skipValidation:
     !!process.env.CI ||

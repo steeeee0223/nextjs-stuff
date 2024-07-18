@@ -4,7 +4,7 @@ import { Unsplash } from ".";
 
 describe("<Unsplash />", () => {
   it("should render the default text", () => {
-    const { getByText } = render(<Unsplash accessKey="" />);
+    const { getByText } = render(<Unsplash apiKey="" />);
     expect(getByText("Unsplash")).toBeDefined();
   });
 });
