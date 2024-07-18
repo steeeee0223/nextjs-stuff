@@ -52,111 +52,14 @@ importers:
         specifier: ^5.4.5
         version: 5.5.3
 
-  apps/nextjs:
-    dependencies:
-      '@acme/api':
-        specifier: workspace:*
-        version: link:../../packages/api
-      '@acme/auth':
-        specifier: workspace:*
-        version: link:../../packages/auth
-      '@acme/db':
-        specifier: workspace:*
-        version: link:../../packages/db
-      '@acme/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-      '@acme/validators':
-        specifier: workspace:*
-        version: link:../../packages/validators
-      '@t3-oss/env-nextjs':
-        specifier: ^0.10.1
-        version: 0.10.1(typescript@5.5.3)(zod@3.23.8)
-      '@tanstack/react-query':
-        specifier: ^5.17.7
-        version: 5.51.5(react@18.2.0)
-      '@tanstack/react-query-devtools':
-        specifier: ^5.17.7
-        version: 5.51.5(@tanstack/react-query@5.51.5(react@18.2.0))(react@18.2.0)
-      '@tanstack/react-query-next-experimental':
-        specifier: 5.17.7
-        version: 5.17.7(@tanstack/react-query@5.51.5(react@18.2.0))(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
-      '@trpc/client':
-        specifier: next
-        version: 11.0.0-rc.466(@trpc/server@11.0.0-rc.466)
-      '@trpc/next':
-        specifier: next
-        version: 11.0.0-rc.466(@tanstack/react-query@5.51.5(react@18.2.0))(@trpc/client@11.0.0-rc.466(@trpc/server@11.0.0-rc.466))(@trpc/react-query@11.0.0-rc.466(@tanstack/react-query@5.51.5(react@18.2.0))(@trpc/client@11.0.0-rc.466(@trpc/server@11.0.0-rc.466))(@trpc/server@11.0.0-rc.466)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.466)(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@trpc/react-query':
-        specifier: next
-        version: 11.0.0-rc.466(@tanstack/react-query@5.51.5(react@18.2.0))(@trpc/client@11.0.0-rc.466(@trpc/server@11.0.0-rc.466))(@trpc/server@11.0.0-rc.466)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@trpc/server':
-        specifier: next
-        version: 11.0.0-rc.466
-      geist:
-        specifier: ^1.2.0
-        version: 1.3.1(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
-      next:
-        specifier: ^14.2.3
-        version: 14.2.5(@babel/core@7.24.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react:
-        specifier: 18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: 18.2.0
-        version: 18.2.0(react@18.2.0)
-      superjson:
-        specifier: 2.2.1
-        version: 2.2.1
-      zod:
-        specifier: ^3.23.7
-        version: 3.23.8
-    devDependencies:
-      '@acme/eslint-config':
-        specifier: workspace:*
-        version: link:../../tooling/eslint
-      '@acme/prettier-config':
-        specifier: workspace:*
-        version: link:../../tooling/prettier
-      '@acme/tailwind-config':
-        specifier: workspace:*
-        version: link:../../tooling/tailwind
-      '@acme/tsconfig':
-        specifier: workspace:*
-        version: link:../../tooling/typescript
-      '@types/node':
-        specifier: ^20.10.6
-        version: 20.14.11
-      '@types/react':
-        specifier: ^18.2.46
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.3.0
-      dotenv-cli:
-        specifier: ^7.4.2
-        version: 7.4.2
-      eslint:
-        specifier: ^8.56.0
-        version: 8.57.0
-      prettier:
-        specifier: ^3.2.5
-        version: 3.3.3
-      tailwindcss:
-        specifier: ^3.4.3
-        version: 3.4.6(ts-node@10.9.2(@types/node@20.14.11)(typescript@5.5.3))
-      typescript:
-        specifier: ^5.4.5
-        version: 5.5.3
-
   apps/storybook:
     dependencies:
       '@acme/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       lucide-react:
-        specifier: ^0.378.0
-        version: 0.378.0(react@18.2.0)
+        specifier: ^0.408.0
+        version: 0.408.0(react@18.2.0)
       next:
         specifier: ^14.2.3
         version: 14.2.5(@babel/core@7.24.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -176,8 +79,8 @@ importers:
         specifier: ^2.9.1
         version: 2.16.0(react@18.2.0)
       uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
+        specifier: ^10.0.0
+        version: 10.0.0
     devDependencies:
       '@acme/eslint-config':
         specifier: workspace:*
@@ -228,8 +131,8 @@ importers:
         specifier: ^18.2.18
         version: 18.3.0
       '@types/uuid':
-        specifier: ^9.0.7
-        version: 9.0.8
+        specifier: ^10.0.0
+        version: 10.0.0
       eslint:
         specifier: ^8.56.0
         version: 8.57.0
@@ -264,14 +167,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/validators
       '@blocknote/core':
-        specifier: ^0.13.2
-        version: 0.13.5
+        specifier: ^0.15.0
+        version: 0.15.0
       '@blocknote/mantine':
-        specifier: ^0.13.2
-        version: 0.13.5(@tiptap/pm@2.5.4)(@types/react@18.3.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^0.15.0
+        version: 0.15.0(@tiptap/pm@2.5.4)(@types/react@18.3.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@blocknote/react':
-        specifier: ^0.13.2
-        version: 0.13.5(@tiptap/pm@2.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^0.15.0
+        version: 0.15.0(@tiptap/pm@2.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@clerk/nextjs':
         specifier: ^4.29.4
         version: 4.31.3(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -300,8 +203,8 @@ importers:
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.5.3)(zod@3.23.8)
       lucide-react:
-        specifier: ^0.378.0
-        version: 0.378.0(react@18.2.0)
+        specifier: ^0.408.0
+        version: 0.408.0(react@18.2.0)
       next:
         specifier: ^14.2.3
         version: 14.2.5(@babel/core@7.24.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -620,8 +523,8 @@ importers:
         specifier: ^2.9.1
         version: 2.16.0(react@18.2.0)
       uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
+        specifier: ^10.0.0
+        version: 10.0.0
       vaul:
         specifier: ^0.9.0
         version: 0.9.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -660,8 +563,8 @@ importers:
         specifier: ^18.2.18
         version: 18.3.0
       '@types/uuid':
-        specifier: ^9.0.7
-        version: 9.0.8
+        specifier: ^10.0.0
+        version: 10.0.0
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.3.1(vite@5.3.4(@types/node@20.14.11)(terser@5.31.3))
@@ -1717,17 +1620,17 @@ packages:
   '@base2/pretty-print-object@1.0.1':
     resolution: {integrity: sha512-4iri8i1AqYHJE2DstZYkyEprg6Pq6sKx3xn5FpySk9sNhH7qN2LLlHJCfDTZRILNwQNPD7mATWM0TBui7uC1pA==}
 
-  '@blocknote/core@0.13.5':
-    resolution: {integrity: sha512-HhDAFgOEONLGtAh8LVXEdpPN1fQJ5MUJgqj7AlZtJQwurrg5jSgpjWi10qWoMc/+1zx4oJ5fk/Olr6ys+9r1jA==}
+  '@blocknote/core@0.15.0':
+    resolution: {integrity: sha512-MQVRhQO8lO69e42ADNbwDj/5YhllPtmYpLXQNOPgAM8zrA8AIZAWBztUsk6+FdYGfbjSPhrvrmb3dWAavnGBiw==}
 
-  '@blocknote/mantine@0.13.5':
-    resolution: {integrity: sha512-q4/EqnY9GRoh/iETXbqXVGG/KjQYg/WDGPQg7x1UQddri3h72cOBCH0mqwoeaR3Bw8nj412vue5O2Bo0IuPNcg==}
+  '@blocknote/mantine@0.15.0':
+    resolution: {integrity: sha512-MqVbCtkd1BT7ej1FPzwghtZ6IOsxcHKwNWGYKA2UBMQWbektJtxZ7AVubeUbrTnS1yLwpLElYiuGgAgdaW2+4w==}
     peerDependencies:
       react: ^18
       react-dom: ^18
 
-  '@blocknote/react@0.13.5':
-    resolution: {integrity: sha512-aOOp/5LUCVFfrhrq2b3rRMGJ1omeASA6NbJtMXYczt4AyoYZAuP5Ro9Syj5V34ThtDmfKn5u8tr9sl3ZfDwkoA==}
+  '@blocknote/react@0.15.0':
+    resolution: {integrity: sha512-KTpHvXYceirK9VBHUys4S6erCq2UfZ4C4tfQUjXf3GLKd3YrBGQhkZhaNTyiP9lq6mRKtpB/2GR+VRb0ZtdTdA==}
     peerDependencies:
       react: ^18
       react-dom: ^18
@@ -1811,6 +1714,9 @@ packages:
 
   '@emnapi/runtime@1.2.0':
     resolution: {integrity: sha512-bV21/9LQmcQeCPEg3BDFtvwL6cwiTMksYNWQQ4KOxCZikEGalWtenoZ0wCiukJINlGCIi2KXx01g4FoH/LxpzQ==}
+
+  '@emoji-mart/data@1.2.1':
+    resolution: {integrity: sha512-no2pQMWiBy6gpBEiqGeU77/bFejDqUTRY7KX+0+iur13op3bqUsXdnwoZs6Xb1zbv0gAj5VvS1PWoUUckSr5Dw==}
 
   '@esbuild-kit/core-utils@3.3.2':
     resolution: {integrity: sha512-sPRAnw9CdSsRmEtnsl2WXWdyquogVpB3yZ3dgwJfe8zrOzTsV7cJvmwrKVa+0ma5BoiGJ+BoqkMvawbayKUsqQ==}
@@ -4040,30 +3946,6 @@ packages:
       typescript:
         optional: true
 
-  '@tanstack/query-core@5.51.5':
-    resolution: {integrity: sha512-qovOto6hFet2zA4Pf3cDO+qkOqskO6xP39PlKnr6YKPtjRsePWyZnTaMf59+VnlOLY8gpku1I4WPC4dqBXo4FQ==}
-
-  '@tanstack/query-devtools@5.51.1':
-    resolution: {integrity: sha512-rehG0WmL3EXER6MAI2uHQia/n0b5c3ZROohpYm7u3G7yg4q+HsfQy6nuAo6uy40NzHUe3FmnfWCZQ0Vb/3lE6g==}
-
-  '@tanstack/react-query-devtools@5.51.5':
-    resolution: {integrity: sha512-Gu2jSgFuCGnD8tGCJpwpkmrQ3F2j13dgxjKRY+yGN7aN5W7Wxo9jEUctlKotGvXDn/iFE/uscTRsE1Au7wBWPQ==}
-    peerDependencies:
-      '@tanstack/react-query': ^5.51.5
-      react: ^18 || ^19
-
-  '@tanstack/react-query-next-experimental@5.17.7':
-    resolution: {integrity: sha512-SiweKiXsMvHVvk1vPuoLLhnLyEtqQqgF1DwxZE8YdPIzbUsmJjHpV/KIyqxzXDvAqNXHTxPiu5ngDixWyD6zOA==}
-    peerDependencies:
-      '@tanstack/react-query': ^5.17.7
-      next: ^13 || ^14
-      react: ^18.0.0
-
-  '@tanstack/react-query@5.51.5':
-    resolution: {integrity: sha512-jaYYPGF55HT3DSV2NxFHa7zGRUm6LiRENw1rspkzqNiOU93umP5YCdE/l4S61/ZdLnjzwYIM4FU96EQt+imq5Q==}
-    peerDependencies:
-      react: ^18.0.0
-
   '@testing-library/dom@10.1.0':
     resolution: {integrity: sha512-wdsYKy5zupPyLCW2Je5DLHSxSfbIp6h80WoHOQc+RPtmPGA52O9x5MJEkv92Sjonpq+poOAtUKhh1kBGAXBrNA==}
     engines: {node: '>=18'}
@@ -4264,31 +4146,6 @@ packages:
     resolution: {integrity: sha512-8nEYgDPvTrXzn00FgLEOU/BHtH89LVQ0JTiW2efa4wW2XIrj3Nv/QKCRkNXV6yu7VSefwU+p2PulUL6TjNlzAg==}
     peerDependencies:
       '@trpc/server': 11.0.0-rc.466+1e8344ea7
-
-  '@trpc/next@11.0.0-rc.466':
-    resolution: {integrity: sha512-kB6bpi81ABUzD2xy6I4+ELbPLqTXqweCouw2jnVkYH1yGUJqKYur/M8pWG1qA5fh1dReOt1zouaTyAq4QqzRUw==}
-    peerDependencies:
-      '@tanstack/react-query': ^5.49.2
-      '@trpc/client': 11.0.0-rc.466+1e8344ea7
-      '@trpc/react-query': 11.0.0-rc.466+1e8344ea7
-      '@trpc/server': 11.0.0-rc.466+1e8344ea7
-      next: '*'
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    peerDependenciesMeta:
-      '@tanstack/react-query':
-        optional: true
-      '@trpc/react-query':
-        optional: true
-
-  '@trpc/react-query@11.0.0-rc.466':
-    resolution: {integrity: sha512-nt0hcskUrr1+kj8kRRhucB6h+VuK55By7ZR1oxaIGdbPygwfXoi2n4+s3t7kjZsJzugKDWtDnwJGfGFaUIP62A==}
-    peerDependencies:
-      '@tanstack/react-query': ^5.49.2
-      '@trpc/client': 11.0.0-rc.466+1e8344ea7
-      '@trpc/server': 11.0.0-rc.466+1e8344ea7
-      react: '>=18.2.0'
-      react-dom: '>=18.2.0'
 
   '@trpc/server@11.0.0-rc.466':
     resolution: {integrity: sha512-/40QZXyZCc3HvgJbQ2+IqCGm4m+fJs7q7gMp6nLiuPB3FIJJeV0r+w1M/NGcG5avbCJ3A5Qy45s4N1glcMv1ug==}
@@ -4495,6 +4352,9 @@ packages:
 
   '@types/use-sync-external-store@0.0.6':
     resolution: {integrity: sha512-zFDAD+tlpf2r4asuHEj0XH6pY6i0g5NeAHPn+15wk3BV6JA69eERFXC1gyGThDkVa1zCyKr5jox1+2LbV/AMLg==}
+
+  '@types/uuid@10.0.0':
+    resolution: {integrity: sha512-7gqG38EyHgyP1S+7+xomFtL+ZNHcKv6DwNaCZmJmo1vgMugyF3TCnXVg4t1uk89mLNwnLtnY3TpOpCOyp1/xHQ==}
 
   '@types/uuid@9.0.8':
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
@@ -5837,6 +5697,9 @@ packages:
   elliptic@6.5.6:
     resolution: {integrity: sha512-mpzdtpeCLuS3BmE3pO3Cpp5bbjlOPY2Q0PgoF+Od1XZrHLYI28Xe3ossCmYCQt11FQKEYd9+PF8jymTvtWJSHQ==}
 
+  emoji-mart@5.6.0:
+    resolution: {integrity: sha512-eJp3QRe79pjwa+duv+n7+5YsNhRcMl812EcFVwrnRvYKoNPoQb5qxU8DG6Bgwji0akHdp6D4Ln6tYLG58MFSow==}
+
   emoji-picker-react@4.11.1:
     resolution: {integrity: sha512-e3vhGcZyyNu7GqJaXzgoVxtASXs97duAP/vh7aL88dHJcW72DjuwYMjipzNBCjPFxXwUiQas483SKCAxPwwaUQ==}
     engines: {node: '>=10'}
@@ -6334,11 +6197,6 @@ packages:
     resolution: {integrity: sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==}
     engines: {node: '>=10'}
     deprecated: This package is no longer supported.
-
-  geist@1.3.1:
-    resolution: {integrity: sha512-Q4gC1pBVPN+D579pBaz0TRRnGA4p9UK6elDY/xizXdFk/g4EKR5g0I+4p/Kj6gM0SajDBZ/0FvDV9ey9ud7BWw==}
-    peerDependencies:
-      next: '>=13.2.0'
 
   gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
@@ -7256,10 +7114,10 @@ packages:
   lru-queue@0.1.0:
     resolution: {integrity: sha512-BpdYkt9EvGl8OfWHDQPISVpcl5xZthb+XPsbELj5AQXxIC8IriDZIQYjBJPEm5rS420sjZ0TLEzRcq5KdBhYrQ==}
 
-  lucide-react@0.378.0:
-    resolution: {integrity: sha512-u6EPU8juLUk9ytRcyapkWI18epAv3RU+6+TC23ivjR0e+glWKBobFeSgRwOIJihzktILQuy6E0E80P2jVTDR5g==}
+  lucide-react@0.408.0:
+    resolution: {integrity: sha512-8kETAAeWmOvtGIr7HPHm51DXoxlfkNncQ5FZWXR+abX8saQwMYXANWIkUstaYtcKSo/imOe/q+tVFA8ANzdSVA==}
     peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
@@ -9692,12 +9550,6 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
-  use-prefers-color-scheme@1.1.3:
-    resolution: {integrity: sha512-ZRgDfb5BFLum/Sud4SpZ+d1YcV+lRbsupw0qQ/rGy5kGrpE3KMUQgEQOKiQQSa4Wslex46n5fKFO+9FGMTosUQ==}
-    engines: {node: '>=8', npm: '>=5'}
-    peerDependencies:
-      react: '>= 16.8.0'
-
   use-sidecar@1.1.2:
     resolution: {integrity: sha512-epTbsLuzZ7lPClpz2TyryBfztm7m+28DlEv2ZCQ3MDr5ssiwyOwGH/e5F9CkfWjJ1t4clvI58yF822/GUkjjhw==}
     engines: {node: '>=10'}
@@ -9736,6 +9588,10 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  uuid@10.0.0:
+    resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
+    hasBin: true
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
@@ -9987,8 +9843,8 @@ packages:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
 
-  y-prosemirror@1.2.5:
-    resolution: {integrity: sha512-T/JATxC8P2Dbvq/dAiaiztD1a8KEwRP8oLRlT8YlaZdNlLGE1Ea0IJ8If25UlDYmk+4+uqLbqT/S+dzUmwwgbA==}
+  y-prosemirror@1.2.9:
+    resolution: {integrity: sha512-fThGIVmSqrqnG/ckywEGlHM9ElfILC4TcMZd5zxWPe/i+UuP97TEr4swsopRKG3Y+KHBVt4Y/5NVBC3AAsUoUg==}
     engines: {node: '>=16.0.0', npm: '>=8.0.0'}
     peerDependencies:
       prosemirror-model: ^1.7.1
@@ -11530,13 +11386,14 @@ snapshots:
 
   '@base2/pretty-print-object@1.0.1': {}
 
-  '@blocknote/core@0.13.5':
+  '@blocknote/core@0.15.0':
     dependencies:
+      '@emoji-mart/data': 1.2.1
       '@tiptap/core': 2.5.4(@tiptap/pm@2.5.4)
       '@tiptap/extension-bold': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))
       '@tiptap/extension-code': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))
-      '@tiptap/extension-collaboration': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(@tiptap/pm@2.5.4)(y-prosemirror@1.2.5(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))
-      '@tiptap/extension-collaboration-cursor': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(y-prosemirror@1.2.5(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))
+      '@tiptap/extension-collaboration': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(@tiptap/pm@2.5.4)(y-prosemirror@1.2.9(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))
+      '@tiptap/extension-collaboration-cursor': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(y-prosemirror@1.2.9(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))
       '@tiptap/extension-dropcursor': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(@tiptap/pm@2.5.4)
       '@tiptap/extension-gapcursor': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(@tiptap/pm@2.5.4)
       '@tiptap/extension-hard-break': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))
@@ -11552,6 +11409,7 @@ snapshots:
       '@tiptap/extension-text': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))
       '@tiptap/extension-underline': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))
       '@tiptap/pm': 2.5.4
+      emoji-mart: 5.6.0
       hast-util-from-dom: 4.2.0
       prosemirror-model: 1.22.1
       prosemirror-state: 1.4.3
@@ -11568,31 +11426,30 @@ snapshots:
       remark-stringify: 10.0.3
       unified: 10.1.2
       uuid: 8.3.2
-      y-prosemirror: 1.2.5(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18)
+      y-prosemirror: 1.2.9(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18)
       y-protocols: 1.0.6(yjs@13.6.18)
       yjs: 13.6.18
     transitivePeerDependencies:
       - supports-color
 
-  '@blocknote/mantine@0.13.5(@tiptap/pm@2.5.4)(@types/react@18.3.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@blocknote/mantine@0.15.0(@tiptap/pm@2.5.4)(@types/react@18.3.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@blocknote/core': 0.13.5
-      '@blocknote/react': 0.13.5(@tiptap/pm@2.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@blocknote/core': 0.15.0
+      '@blocknote/react': 0.15.0(@tiptap/pm@2.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@mantine/core': 7.11.2(@mantine/hooks@7.11.2(react@18.2.0))(@types/react@18.3.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@mantine/hooks': 7.11.2(react@18.2.0)
       '@mantine/utils': 6.0.22(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-icons: 5.2.1(react@18.2.0)
-      use-prefers-color-scheme: 1.1.3(react@18.2.0)
     transitivePeerDependencies:
       - '@tiptap/pm'
       - '@types/react'
       - supports-color
 
-  '@blocknote/react@0.13.5(@tiptap/pm@2.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@blocknote/react@0.15.0(@tiptap/pm@2.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
-      '@blocknote/core': 0.13.5
+      '@blocknote/core': 0.15.0
       '@floating-ui/react': 0.26.19(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@tiptap/core': 2.5.4(@tiptap/pm@2.5.4)
       '@tiptap/react': 2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(@tiptap/pm@2.5.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -11600,7 +11457,6 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-icons: 5.2.1(react@18.2.0)
-      use-prefers-color-scheme: 1.1.3(react@18.2.0)
     transitivePeerDependencies:
       - '@tiptap/pm'
       - supports-color
@@ -11715,6 +11571,8 @@ snapshots:
     dependencies:
       tslib: 2.6.3
     optional: true
+
+  '@emoji-mart/data@1.2.1': {}
 
   '@esbuild-kit/core-utils@3.3.2':
     dependencies:
@@ -13973,27 +13831,6 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.3
 
-  '@tanstack/query-core@5.51.5': {}
-
-  '@tanstack/query-devtools@5.51.1': {}
-
-  '@tanstack/react-query-devtools@5.51.5(@tanstack/react-query@5.51.5(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@tanstack/query-devtools': 5.51.1
-      '@tanstack/react-query': 5.51.5(react@18.2.0)
-      react: 18.2.0
-
-  '@tanstack/react-query-next-experimental@5.17.7(@tanstack/react-query@5.51.5(react@18.2.0))(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@tanstack/react-query': 5.51.5(react@18.2.0)
-      next: 14.2.5(@babel/core@7.24.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react: 18.2.0
-
-  '@tanstack/react-query@5.51.5(react@18.2.0)':
-    dependencies:
-      '@tanstack/query-core': 5.51.5
-      react: 18.2.0
-
   '@testing-library/dom@10.1.0':
     dependencies:
       '@babel/code-frame': 7.24.7
@@ -14078,16 +13915,16 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.5.4(@tiptap/pm@2.5.4)
 
-  '@tiptap/extension-collaboration-cursor@2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(y-prosemirror@1.2.5(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))':
+  '@tiptap/extension-collaboration-cursor@2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(y-prosemirror@1.2.9(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))':
     dependencies:
       '@tiptap/core': 2.5.4(@tiptap/pm@2.5.4)
-      y-prosemirror: 1.2.5(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18)
+      y-prosemirror: 1.2.9(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18)
 
-  '@tiptap/extension-collaboration@2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(@tiptap/pm@2.5.4)(y-prosemirror@1.2.5(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))':
+  '@tiptap/extension-collaboration@2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(@tiptap/pm@2.5.4)(y-prosemirror@1.2.9(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18))':
     dependencies:
       '@tiptap/core': 2.5.4(@tiptap/pm@2.5.4)
       '@tiptap/pm': 2.5.4
-      y-prosemirror: 1.2.5(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18)
+      y-prosemirror: 1.2.9(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18)
 
   '@tiptap/extension-dropcursor@2.5.4(@tiptap/core@2.5.4(@tiptap/pm@2.5.4))(@tiptap/pm@2.5.4)':
     dependencies:
@@ -14194,25 +14031,6 @@ snapshots:
   '@trpc/client@11.0.0-rc.466(@trpc/server@11.0.0-rc.466)':
     dependencies:
       '@trpc/server': 11.0.0-rc.466
-
-  '@trpc/next@11.0.0-rc.466(@tanstack/react-query@5.51.5(react@18.2.0))(@trpc/client@11.0.0-rc.466(@trpc/server@11.0.0-rc.466))(@trpc/react-query@11.0.0-rc.466(@tanstack/react-query@5.51.5(react@18.2.0))(@trpc/client@11.0.0-rc.466(@trpc/server@11.0.0-rc.466))(@trpc/server@11.0.0-rc.466)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@trpc/server@11.0.0-rc.466)(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@trpc/client': 11.0.0-rc.466(@trpc/server@11.0.0-rc.466)
-      '@trpc/server': 11.0.0-rc.466
-      next: 14.2.5(@babel/core@7.24.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    optionalDependencies:
-      '@tanstack/react-query': 5.51.5(react@18.2.0)
-      '@trpc/react-query': 11.0.0-rc.466(@tanstack/react-query@5.51.5(react@18.2.0))(@trpc/client@11.0.0-rc.466(@trpc/server@11.0.0-rc.466))(@trpc/server@11.0.0-rc.466)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-
-  '@trpc/react-query@11.0.0-rc.466(@tanstack/react-query@5.51.5(react@18.2.0))(@trpc/client@11.0.0-rc.466(@trpc/server@11.0.0-rc.466))(@trpc/server@11.0.0-rc.466)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@tanstack/react-query': 5.51.5(react@18.2.0)
-      '@trpc/client': 11.0.0-rc.466(@trpc/server@11.0.0-rc.466)
-      '@trpc/server': 11.0.0-rc.466
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
 
   '@trpc/server@11.0.0-rc.466': {}
 
@@ -14466,6 +14284,8 @@ snapshots:
   '@types/use-sync-external-store@0.0.3': {}
 
   '@types/use-sync-external-store@0.0.6': {}
+
+  '@types/uuid@10.0.0': {}
 
   '@types/uuid@9.0.8': {}
 
@@ -15867,7 +15687,7 @@ snapshots:
   dot-case@3.0.4:
     dependencies:
       no-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.6.3
 
   dot-prop@8.0.2:
     dependencies:
@@ -15935,6 +15755,8 @@ snapshots:
       inherits: 2.0.4
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
+
+  emoji-mart@5.6.0: {}
 
   emoji-picker-react@4.11.1(react@18.2.0):
     dependencies:
@@ -16742,10 +16564,6 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wide-align: 1.1.5
-
-  geist@1.3.1(next@14.2.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)):
-    dependencies:
-      next: 14.2.5(@babel/core@7.24.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
   gensync@1.0.0-beta.2: {}
 
@@ -17804,7 +17622,7 @@ snapshots:
 
   lower-case@2.0.2:
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.6.3
 
   lru-cache@10.4.3: {}
 
@@ -17818,7 +17636,7 @@ snapshots:
     dependencies:
       es5-ext: 0.10.64
 
-  lucide-react@0.378.0(react@18.2.0):
+  lucide-react@0.408.0(react@18.2.0):
     dependencies:
       react: 18.2.0
 
@@ -18429,7 +18247,7 @@ snapshots:
   no-case@3.0.4:
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.4.1
+      tslib: 2.6.3
 
   node-abort-controller@3.1.1: {}
 
@@ -20717,10 +20535,6 @@ snapshots:
     dependencies:
       react: 18.2.0
 
-  use-prefers-color-scheme@1.1.3(react@18.2.0):
-    dependencies:
-      react: 18.2.0
-
   use-sidecar@1.1.2(@types/react@18.3.3)(react@18.2.0):
     dependencies:
       detect-node-es: 1.1.0
@@ -20755,6 +20569,8 @@ snapshots:
   utila@0.4.0: {}
 
   utils-merge@1.0.1: {}
+
+  uuid@10.0.0: {}
 
   uuid@8.3.2: {}
 
@@ -21049,7 +20865,7 @@ snapshots:
 
   xtend@4.0.2: {}
 
-  y-prosemirror@1.2.5(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18):
+  y-prosemirror@1.2.9(prosemirror-model@1.22.1)(prosemirror-state@1.4.3)(prosemirror-view@1.33.8)(y-protocols@1.0.6(yjs@13.6.18))(yjs@13.6.18):
     dependencies:
       lib0: 0.2.94
       prosemirror-model: 1.22.1
