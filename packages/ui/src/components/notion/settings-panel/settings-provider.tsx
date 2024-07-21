@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { useTheme } from "next-themes";
 
+import { I18nProvider, useTranslation } from "@acme/i18n";
+
 import { ModalProvider } from "@/components/custom/modal-provider";
 import type { SettingsStore, UpdateSettings } from "./index.types";
 import {
@@ -38,10 +40,15 @@ export function SettingsProvider({
 }: SettingsProviderProps) {
   const { theme, setTheme } = useTheme();
   const { update, account, workspace } = useSettingsStore();
+  const { i18n } = useTranslation();
   useEffect(() => {
     update(settings);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    void i18n.changeLanguage(account.language);
+  }, [i18n, account.language]);
 
   const context: SettingsContextInterface = {
     settings: { account, workspace },
@@ -57,10 +64,12 @@ export function SettingsProvider({
   };
 
   return (
-    <SettingsContext.Provider value={context}>
-      <ModalProvider>
-        <SettingsPanel />
-      </ModalProvider>
-    </SettingsContext.Provider>
+    <I18nProvider defaultNS="settings">
+      <SettingsContext.Provider value={context}>
+        <ModalProvider>
+          <SettingsPanel />
+        </ModalProvider>
+      </SettingsContext.Provider>
+    </I18nProvider>
   );
 }

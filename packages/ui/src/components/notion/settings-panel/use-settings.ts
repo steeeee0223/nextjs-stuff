@@ -23,6 +23,7 @@ const initialSettings: Settings = {
     avatarUrl: "",
     preferredName: "",
     email: "",
+    language: "en",
   },
 };
 

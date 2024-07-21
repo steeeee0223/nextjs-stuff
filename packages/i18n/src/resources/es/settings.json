@@ -1,0 +1,13 @@
+{
+  "settings": "Configuración",
+  "common": {
+    "account": "Cuenta",
+    "workspace": "Espacio de trabajo"
+  },
+  "my-account": {
+    "title": "Mi cuenta"
+  },
+  "my-settings": {
+    "title": "Mi configuración"
+  }
+}

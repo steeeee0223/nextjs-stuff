@@ -1,0 +1,25 @@
+{
+  "settings": "EinStellungen",
+  "common": {
+    "account": "Konto",
+    "workspace": "Workspace"
+  },
+  "my-account": {
+    "title": "Mein Konto"
+  },
+  "my-settings": {
+    "title": "Meine Einstellungen"
+  },
+  "my-notifications": { "title": "Meine Benachrichtigungen" },
+  "my-connections": { "title": "Meine Verbindungen" },
+  "language-region": { "title": "Sprache & Region" },
+  "workspace-settings": { "title": "Einstellungen" },
+  "people": { "title": "Personen" },
+  "plans": { "title": "Tarife anzeigen" },
+  "billing": { "title": "Abrechnung" },
+  "sites": { "title": "Websites" },
+  "security": { "title": "Sicherheit" },
+  "identity": { "title": "Identität & Bereitstellung" },
+  "connections": { "title": "Verbindungen" },
+  "import": { "title": "Importieren" }
+}
