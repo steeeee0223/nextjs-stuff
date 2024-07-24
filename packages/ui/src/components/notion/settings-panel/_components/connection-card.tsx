@@ -10,17 +10,19 @@ import {
 } from "@/components/ui/card";
 
 export interface ConnectionCardProps {
+  id?: string;
   imageUrl: string;
   title: string;
   description: string;
-  value?: string;
+  tags: string[];
 }
 
 export const ConnectionCard = ({
+  id,
   imageUrl,
   title,
   description,
-  value,
+  tags,
 }: ConnectionCardProps) => {
   return (
     <Card
@@ -30,15 +32,24 @@ export const ConnectionCard = ({
     >
       <CardContent className="flex flex-col items-start gap-2 p-0">
         <CardHeader className="px-0 py-1">
-          <img src={imageUrl} alt={value} className="size-7 rounded-md" />
+          <img src={imageUrl} alt={id} className="size-7 rounded-md" />
         </CardHeader>
         <CardTitle className="text-sm/[1.3] font-medium">{title}</CardTitle>
         <CardDescription className="max-h-[72px] overflow-hidden  text-xs/[1.3] text-primary/65">
           {description}
         </CardDescription>
-        <Badge variant="gray" size="sm" className="cursor-default uppercase">
-          Link Preview
-        </Badge>
+        <div className="flex gap-1">
+          {tags.map((tag, i) => (
+            <Badge
+              key={i}
+              variant="gray"
+              size="sm"
+              className="cursor-default uppercase"
+            >
+              {tag}
+            </Badge>
+          ))}
+        </div>
       </CardContent>
       <CardFooter className="p-0">
         <Button variant="soft-blue" size="sm" className="h-7 w-full">

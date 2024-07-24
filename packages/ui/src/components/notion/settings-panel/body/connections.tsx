@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 import {
   ConnectionCard,
   HintButton,
-  NotImplemented,
   Section,
   SectionSeparator,
 } from "../_components";
+import { MyConnections, myConnectionsColumns } from "../../tables";
 import { cards } from "./connections.data";
 
 export const Connections = () => {
@@ -24,11 +24,15 @@ export const Connections = () => {
 
   return (
     <>
-      <Section title={title}>
-        <NotImplemented />
+      <Section title={title} noSeparator>
+        <MyConnections
+          variant="notion"
+          columns={myConnectionsColumns}
+          data={[]}
+        />
       </Section>
       <SectionSeparator />
-      <Section title="Discover new connections">
+      <Section title="Discover new connections" noSeparator>
         <div className="grid grid-cols-3 gap-4">
           {cards.slice(0, toggle ? 3 : undefined).map((card, i) => (
             <ConnectionCard key={i} {...card} />

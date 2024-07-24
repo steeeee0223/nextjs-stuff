@@ -6,12 +6,17 @@ import { PlanLink } from "./helper";
 
 interface SectionProps extends PropsWithChildren {
   title: string;
+  noSeparator?: boolean;
 }
-export const Section = ({ title, children }: SectionProps) => {
+export const Section = ({
+  title,
+  noSeparator = false,
+  children,
+}: SectionProps) => {
   return (
     <div className="p-0">
       <h3 className="pb-3 text-base font-medium">{title}</h3>
-      <Separator className="mb-4 bg-primary/10" />
+      {!noSeparator && <Separator className="mb-4 bg-primary/10" />}
       <div>{children}</div>
     </div>
   );

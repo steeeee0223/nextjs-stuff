@@ -7,8 +7,9 @@ import {
   ChevronRightIcon,
   DotFilledIcon,
 } from "@radix-ui/react-icons";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib";
+import { cn } from "@/lib/utils";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
@@ -74,19 +75,33 @@ const DropdownMenuContent = React.forwardRef<
 ));
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
+const menuItemVariants = cva(
+  "relative flex select-none items-center rounded-sm px-2 py-1.5 transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+  {
+    variants: {
+      variant: {
+        default:
+          "cursor-default text-sm outline-none focus:bg-accent focus:text-accent-foreground",
+        notion:
+          "min-h-7 cursor-pointer text-sm/[1.2] hover:bg-primary/5 focus-visible:outline-none",
+        warning:
+          "min-h-7 text-sm/[1.2] text-warning hover:bg-primary/5 focus-visible:outline-none",
+      },
+      inset: { true: "pl-8" },
+    },
+    defaultVariants: { variant: "default" },
+  },
+);
+export interface DropdownMenuItemProps
+  extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>,
+    VariantProps<typeof menuItemVariants> {}
 const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...props }, ref) => (
+  DropdownMenuItemProps
+>(({ className, inset, variant, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
-    className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      inset && "pl-8",
-      className,
-    )}
+    className={cn(menuItemVariants({ variant, inset, className }))}
     {...props}
   />
 ));
