@@ -1,53 +1,66 @@
+import { useTranslation } from "@acme/i18n";
+
 import { Switch } from "@/components/ui/switch";
 import { Section, SectionItem, SectionSeparator, Select } from "../_components";
 import { useSettings } from "../settings-context";
-import {
-  appearanceOptions,
-  mySettings,
-  openStartOptions,
-  viewHistoryOptions,
-} from "./settings.data";
+import { toOptions } from "./utils";
 
 export const Settings = () => {
   const { theme, setTheme } = useSettings();
+  /** i18n */
+  const { t } = useTranslation("settings");
+  const {
+    title,
+    "my-settings": mySettings,
+    "date-time": dateTime,
+    privacy,
+  } = t("my-settings", { returnObjects: true });
 
   return (
     <>
-      <Section title="My settings">
+      <Section title={title}>
         <SectionItem {...mySettings.appearance}>
           <Select
-            options={appearanceOptions}
-            defaultValue={theme}
+            options={toOptions(mySettings.appearance.options)}
+            defaultValue={theme ?? "system"}
             onChange={setTheme}
             side="left"
           />
         </SectionItem>
         <SectionSeparator size="sm" />
-        <SectionItem {...mySettings.openStart}>
-          <Select options={openStartOptions} defaultValue="top" side="left" />
+        <SectionItem {...mySettings["open-on-start"]}>
+          <Select
+            options={toOptions(mySettings["open-on-start"].options)}
+            defaultValue="top"
+            side="left"
+          />
         </SectionItem>
         <SectionSeparator size="sm" />
-        <SectionItem {...mySettings.openLinks}>
+        <SectionItem {...mySettings["open-links"]}>
           <Switch size="sm" />
         </SectionItem>
       </Section>
       <SectionSeparator />
       <Section title="Date & time">
-        <SectionItem {...mySettings.setTimezone}>
+        <SectionItem {...dateTime["set-timezone"]}>
           <Switch size="sm" />
         </SectionItem>
         <SectionSeparator size="sm" />
-        <SectionItem {...mySettings.timezone}></SectionItem>
+        <SectionItem {...dateTime.timezone}></SectionItem>
       </Section>
       <SectionSeparator />
       <Section title="Privacy">
-        <SectionItem {...mySettings.cookie}></SectionItem>
+        <SectionItem {...privacy.cookie}></SectionItem>
         <SectionSeparator size="sm" />
-        <SectionItem {...mySettings.viewHistory}>
-          <Select options={viewHistoryOptions} defaultValue="yes" side="left" />
+        <SectionItem {...privacy["view-history"]}>
+          <Select
+            options={toOptions(privacy["view-history"].options)}
+            defaultValue="yes"
+            side="left"
+          />
         </SectionItem>
         <SectionSeparator size="sm" />
-        <SectionItem {...mySettings.profile}>
+        <SectionItem {...privacy["discover-profile"]}>
           <Switch size="sm" />
         </SectionItem>
       </Section>

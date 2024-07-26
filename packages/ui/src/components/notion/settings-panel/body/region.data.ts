@@ -17,5 +17,6 @@ export const region: PanelData<typeof $region> = {
 export const languageOptions: Option[] = [
   { label: "English", value: "en" },
   { label: "Deutsch", value: "de" },
+  { label: "Spanish", value: "es" },
   // { label: "Français", value: "fr" },
 ];

@@ -6,7 +6,7 @@ import { I18nextProvider, useTranslation } from "react-i18next";
 
 import i18n from "./config";
 
-export type LOCALE = "en" | "fr" | "de";
+export type LOCALE = "en" | "de" | "es" | "fr";
 export { useTranslation };
 
 export interface I18nProviderProps extends React.PropsWithChildren {

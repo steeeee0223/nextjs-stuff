@@ -5,10 +5,98 @@
     "workspace": "Workspace"
   },
   "my-account": {
-    "title": "Mein Konto"
+    "title": "Mein Konto",
+    "my-profile": {
+      "title": "Mein Profil",
+      "preferred-name": "Bevorzugter Name",
+      "remove-photo": "Foto entfernen",
+      "replace-photo": "Foto ersetzen"
+    },
+    "account-security": {
+      "title": "Kontosicherheit",
+      "email": { "title": "E-Mail", "button": "E-Mail-Addresse ändern" },
+      "password": {
+        "title": "Passwort",
+        "description": "Wenn du den Zugriff auf deine Hochschul-E-Mail-Adresse verlierst, kannst du dich mit deinem Passwort anmelden.",
+        "button": "Passwort ändern"
+      },
+      "verification": {
+        "title": "2-stufige Verifizierung",
+        "description": "Sichere dein Konto zusätzlich, indem du deine Identität mit einem einmaligen Code verifizierst."
+      }
+    },
+    "support": {
+      "title": "Support",
+      "support": {
+        "title": "Support-Zugriff",
+        "description": "Gewähre dem Notion-Support temporären Zugriff auf dein Konto, damit wir Probleme beheben oder Inhalte in deinem Namen wiederherstellen können. Du kannst den Zugriff jederzeit widerrufen."
+      },
+      "logout": {
+        "title": "Von allen Geräten abmelden",
+        "description": "Du wirst von allen anderen aktiven Sitzungen auf anderen Geräten abgemeldet."
+      },
+      "delete": {
+        "title": "Mein Konto löschen",
+        "description": "Konto dauerhaft löschen und den Zugriff auf alle Workspaces entfernen."
+      }
+    }
   },
   "my-settings": {
-    "title": "Meine Einstellungen"
+    "title": "Meine Einstellungen",
+    "my-settings": {
+      "appearance": {
+        "title": "Darstellung",
+        "description": "Passe an, wie Notion auf deinem Gerät dargestellt wird.",
+        "options": {
+          "system": "Systemeinstellung verwenden",
+          "light": "Hell",
+          "dark": "Dunkel"
+        }
+      },
+      "open-on-start": {
+        "title": "Open on start",
+        "description": "Wähle aus, was angezeigt werden soll, wenn Notion startet oder wenn du den Workspace wechselst.",
+        "options": {
+          "last": "Zuletzt besuchte Seite",
+          "home": "Startseite",
+          "top": "Oberste Seite in der Seitenleiste"
+        }
+      },
+      "open-links": {
+        "title": "Links in Desktop-App öffnen",
+        "description": "Du musst die macOS-App installiert haben."
+      }
+    },
+    "date-time": {
+      "title": "Datum und Uhrzeit",
+      "set-timezone": {
+        "title": "Zeitzone automatisch anhand deines Standorts einstellen",
+        "description": "Du erhältst Erinnerungen, Benachrichtigungen und E-Mails abgestimmt auf deine Zeitzone."
+      },
+      "timezone": {
+        "title": "Zeitzone",
+        "description": "Aktuelle Zeitzoneneinstellung."
+      }
+    },
+    "privacy": {
+      "title": "Datenschutz",
+      "cookie": {
+        "title": "Cookie-Einstellungen",
+        "description": "Passe Cookies an. Weitere Informationen findest du unter Hinweis zu Cookies."
+      },
+      "view-history": {
+        "title": "Meine Ansichtshistorie anzeigen",
+        "description": "Benutzer/-innen mit Bearbeitungs- oder Vollzugriff können sehen, wann du eine Seite angesehen hast. Mehr erfahren.",
+        "options": {
+          "yes": "Aufzeichnen",
+          "no": "Nicht aufzeichnen"
+        }
+      },
+      "discover-profile": {
+        "title": "Auffindbarkeit des Profils",
+        "description": "Mitglieder mit deiner E-Mail-Adresse können deinen Namen und dein Profilbild sehen, wenn sie dich zu einem neuen Workspace einladen. Weitere Informationen"
+      }
+    }
   },
   "my-notifications": { "title": "Meine Benachrichtigungen" },
   "my-connections": { "title": "Meine Verbindungen" },

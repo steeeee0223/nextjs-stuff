@@ -5,9 +5,100 @@
     "workspace": "Espacio de trabajo"
   },
   "my-account": {
-    "title": "Mi cuenta"
+    "title": "Mi cuenta",
+    "my-profile": {
+      "title": "Mi perfil",
+      "preferred-name": "Nombre",
+      "remove-photo": "Eliminar foto",
+      "replace-photo": "Reemplazar foto"
+    },
+    "account-security": {
+      "title": "Seguridad de la cuenta",
+      "email": {
+        "title": "Correo electrónico",
+        "button": "Cambiar correo electrónico"
+      },
+      "password": {
+        "title": "Contraseña",
+        "description": "Si dejas de tener acceso a la dirección de correo electrónico de tu centro educativo, aún podrás iniciar sesión con tu contraseña.",
+        "button": "Cambiar contraseña"
+      },
+      "verification": {
+        "title": "Verificación en dos pasos",
+        "description": "Añade una capa de seguridad a tu cuenta durante el inicio de sesión."
+      }
+    },
+    "support": {
+      "title": "Soporte",
+      "support": {
+        "title": "Accesso de Soporte",
+        "description": "Nuestro equipo de Soporte tendrá acceso temporal a tu cuenta para que podamos solucionar problemas o recuperar contenido en tu nombre. Puedes revocar el acceso en cualquier momento."
+      },
+      "logout": {
+        "title": "Cerrar sesión en todos los dispositivos",
+        "description": "Se cerrará la sesión en todos los demás dispositivos además de este."
+      },
+      "delete": {
+        "title": "Eliminar mi cuenta",
+        "description": "Elimina la cuenta de forma permanente y cancela el acceso a todos los espacios de trabajo."
+      }
+    }
   },
   "my-settings": {
-    "title": "Mi configuración"
+    "title": "Mi configuración",
+    "my-settings": {
+      "appearance": {
+        "title": "Apariencia",
+        "description": "Personaliza el aspecto de Notion en tu dispositivo.",
+        "options": {
+          "system": "Usar la configuración del sistema",
+          "light": "Claro",
+          "dark": "Oscuro"
+        }
+      },
+      "open-on-start": {
+        "title": "Open on start",
+        "description": "Elige qué mostrar cuando Notion se inicie o cuando cambies de espacio de trabajo.",
+        "options": {
+          "last": "Última página visitada",
+          "home": "Inicio",
+          "top": "Página superior de la barra lateral"
+        }
+      },
+      "open-links": {
+        "title": "Abrir enlaces en la app de escritorio",
+        "description": "Debes tener instalada la app de macOS."
+      }
+    },
+    "date-time": {
+      "title": "Fecha y hora",
+      "set-timezone": {
+        "title": "Establecer automáticamente la zona horaria según mi ubicación",
+        "description": "Los recordatorios, las notificaciones y correos electrónicos se enviarán teniendo en cuenta tu zona horaria."
+      },
+      "timezone": {
+        "title": "Zona horaria",
+        "description": "Configuración de zona horaria actual."
+      }
+    },
+    "privacy": {
+      "title": "Privacidad",
+      "cookie": {
+        "title": "Configuración de cookies",
+        "description": "Personaliza las cookies. Consulta más detalles en el Aviso sobre Cookies."
+      },
+      "view-history": {
+        "title": "Mostrar mi historial de visitas",
+        "description": "Las personas con acceso completo o de edición podrán ver cuándo has visitado una página. Más informatión.",
+        "options": {
+          "yes": "Registrar",
+          "no": "No registrar"
+        }
+      },
+      "discover-profile": {
+        "title": "Visibilidad del perfil",
+        "description": "Los usuarios que tengan tu correo electrónico pueden ver tu nombre y foto del perfil cuando te inviten a un nuevo espacio de trabajo. Más informatión."
+      }
+    }
   }
 }
