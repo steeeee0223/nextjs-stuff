@@ -90,7 +90,7 @@ interface Resources {
         };
         "view-history": {
           title: "Show my view history";
-          description: "People with edit or full access will be able to see when you’ve viewed a page. Leran more.";
+          description: "People with edit or full access will be able to see when you've viewed a page. Leran more.";
           options: {
             yes: "Record";
             no: "Don't record";
@@ -104,12 +104,67 @@ interface Resources {
     };
     "my-notifications": {
       title: "My notifications";
+      "my-notifications": {
+        mobile: {
+          title: "Mobile push notifications";
+          description: "Receive push notifications on mentions and comments via your mobile app";
+        };
+      };
+      "slack-notifications": {
+        title: "Slack notifications";
+        slack: {
+          title: "Slack notifications";
+          description: "Receive notifications in your Slack workspace when you're mentioned in a page, database property, or comment";
+          options: {
+            off: "Off";
+          };
+        };
+      };
+      "email-notifications": {
+        title: "Email notifications";
+        activity: {
+          title: "Activity in your workspace";
+          description: "Receive emails when you get comments, mentions, page invites, reminders, access requests, and property changes";
+        };
+        digests: {
+          title: "Email digests";
+          description: "Receive email digests every 8 hours for changes to pages you're subscribed to";
+        };
+        announcements: {
+          title: "Announcements and update emails";
+          description: "Receive occasional emails about product launches and new features from Notion";
+          button: "Manage settings";
+        };
+      };
+      buttons: {
+        more: "Learn about notifications";
+      };
     };
     "my-connections": {
       title: "My connections";
+      buttons: {
+        browse: "Browse connections in Gallery";
+        integrations: "Develop or manage integrations";
+        more: "Learn more about connections";
+      };
     };
     "language-region": {
       title: "Language & region";
+      region: {
+        language: {
+          title: "Language";
+          description: "Change the language used in the user interface.";
+          options: {
+            en: "English";
+            de: "Deutsch";
+            es: "Español";
+          };
+        };
+        "start-week": {
+          title: "Start week on Monday";
+          description: "This will change how all calendars in your app look.";
+        };
+      };
     };
     "workspace-settings": {
       title: "Settings";

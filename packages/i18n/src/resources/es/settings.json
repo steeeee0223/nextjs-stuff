@@ -89,7 +89,7 @@
       },
       "view-history": {
         "title": "Mostrar mi historial de visitas",
-        "description": "Las personas con acceso completo o de edición podrán ver cuándo has visitado una página. Más informatión.",
+        "description": "Las personas con acceso completo o de edición podrán ver cuándo has visitado una página. Más información.",
         "options": {
           "yes": "Registrar",
           "no": "No registrar"
@@ -97,8 +97,79 @@
       },
       "discover-profile": {
         "title": "Visibilidad del perfil",
-        "description": "Los usuarios que tengan tu correo electrónico pueden ver tu nombre y foto del perfil cuando te inviten a un nuevo espacio de trabajo. Más informatión."
+        "description": "Los usuarios que tengan tu correo electrónico pueden ver tu nombre y foto del perfil cuando te inviten a un nuevo espacio de trabajo. Más información."
       }
     }
-  }
+  },
+  "my-notifications": {
+    "title": "Mis notificaciones",
+    "my-notifications": {
+      "mobile": {
+        "title": "Notificaciones push en el móvil",
+        "description": "Recibe notificaciones emergentes de menciones y comentarios a través de la aplicación móvil."
+      }
+    },
+    "slack-notifications": {
+      "title": "Notificaciones de Slack",
+      "slack": {
+        "title": "Notificaciones de Slack",
+        "description": "Recibe notificaciones en tu espacio de trabajo de Slack cuando te mencionen en una página, propiedad de base de datos o comentario.",
+        "options": { "off": "Desactivadas" }
+      }
+    },
+    "email-notifications": {
+      "title": "Notificaciones por correo electrónico",
+      "activity": {
+        "title": "Actividad en tu espacio de trabajo",
+        "description": "Recibe mensajes de correo electrónico para notificarte sobre comentarios, menciones, invitaciones a páginas, recordatorios, solicitudes de acceso y cambios en las propiedades"
+      },
+      "digests": {
+        "title": "Resumen por correo electrónico",
+        "description": "Recibe resúmenes por correo electrónico cada 8 horas sobre los cambios producidos en las páginas a las que te hayas suscrito."
+      },
+      "announcements": {
+        "title": "Correos sobre novedades y actualizaciones",
+        "description": "Recibe de vez en cuando mensajes de correo electrónico sobre lanzamientos de productos y nuevas funciones de Notion",
+        "button": "Gestionar configuración"
+      }
+    },
+    "buttons": {
+      "more": "Más información sobre las notificaciones"
+    }
+  },
+  "my-connections": {
+    "title": "Mis conexiones",
+    "buttons": {
+      "browse": "Examinar conexiones en la Galería",
+      "integrations": "Desarrollar o gestionar las integraciones",
+      "more": "Más información sobre las conexiones"
+    }
+  },
+  "language-region": {
+    "title": "Idioma y región",
+    "region": {
+      "language": {
+        "title": "Idioma",
+        "description": "Elige el idioma que te gustaría usar en Notion.",
+        "options": {
+          "en": "English",
+          "de": "Deutsch",
+          "es": "Español"
+        }
+      },
+      "start-week": {
+        "title": "Comenzar la semana el lunes",
+        "description": "Esto cambiará el aspecto de todos los calendarios."
+      }
+    }
+  },
+  "workspace-settings": { "title": "Configuración" },
+  "people": { "title": "Personas" },
+  "plans": { "title": "Planes" },
+  "billing": { "title": "Facturación" },
+  "sites": { "title": "Sitios" },
+  "security": { "title": "Seguridad" },
+  "identity": { "title": "Identidad y aprovisionamiento" },
+  "connections": { "title": "Conexiones" },
+  "import": { "title": "Importar" }
 }

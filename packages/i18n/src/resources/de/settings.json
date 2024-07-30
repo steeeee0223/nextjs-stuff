@@ -1,5 +1,5 @@
 {
-  "settings": "EinStellungen",
+  "settings": "Einstellungen",
   "common": {
     "account": "Konto",
     "workspace": "Workspace"
@@ -98,9 +98,68 @@
       }
     }
   },
-  "my-notifications": { "title": "Meine Benachrichtigungen" },
-  "my-connections": { "title": "Meine Verbindungen" },
-  "language-region": { "title": "Sprache & Region" },
+  "my-notifications": {
+    "title": "Meine Benachrichtigungens",
+    "my-notifications": {
+      "mobile": {
+        "title": "Mobile Push-Benachrichtigungen",
+        "description": "Erhalte Push-Benachrichtigungen zu Erwähnungen und Kommentaren über deine mobile App"
+      }
+    },
+    "slack-notifications": {
+      "title": "Slack-Benachrichtigungen",
+      "slack": {
+        "title": "Slack-Benachrichtigungen",
+        "description": "Erhalte Benachrichtigungen in deinem Slack-Workspace, wenn du auf einer Seite, in einer Datenbankeigenschaft oder in einem Kommentar erwähnt wirst",
+        "options": { "off": "Aus" }
+      }
+    },
+    "email-notifications": {
+      "title": "E-Mail-Benachrichtigungen",
+      "activity": {
+        "title": "Aktivität in deinem Workspace",
+        "description": "Erhalte E-Mails zu Kommentaren, Erwähnungen, Seiteneinladungen, Erinnerungen, Zugriffsanfragen und Eigenschaftsänderungen"
+      },
+      "digests": {
+        "title": "Benachrichtigungen mit Zusammenfassungen per E-Mail",
+        "description": "Erhalte per E-Mail alle 8 Stunden Zusammenfassungen über Änderungen an Seiten, die du abonniert hast"
+      },
+      "announcements": {
+        "title": "Ankündigungen und E-Mails zu Updates",
+        "description": "Gelegentliche E-Mails zu Produkteinführungen und neuen Funktionen von Notion erhalten",
+        "button": "Einstellungen verwalten"
+      }
+    },
+    "buttons": {
+      "more": "Mehr zu Benachrichtigungen"
+    }
+  },
+  "my-connections": {
+    "title": "Meine Verbindungen",
+    "buttons": {
+      "browse": "Verbindungen in der Galerie durchsuchen",
+      "integrations": "Eigene Einbindungen entwickeln oder verwalten",
+      "more": "Weitere Informationen zu Verbindungen"
+    }
+  },
+  "language-region": {
+    "title": "Sprache und Region",
+    "region": {
+      "language": {
+        "title": "Sprache",
+        "description": "Ändere die in der Benutzeroberfläche verwendete Sprache.",
+        "options": {
+          "en": "English",
+          "de": "Deutsch",
+          "es": "Español"
+        }
+      },
+      "start-week": {
+        "title": "Montag als Wochenanfang festlegen",
+        "description": "Diese Änderung bezieht sich auf alle Kalender in deiner App."
+      }
+    }
+  },
   "workspace-settings": { "title": "Einstellungen" },
   "people": { "title": "Personen" },
   "plans": { "title": "Tarife anzeigen" },
