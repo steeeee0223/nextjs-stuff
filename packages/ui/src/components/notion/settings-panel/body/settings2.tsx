@@ -3,6 +3,8 @@
 import type { ChangeEvent, PropsWithChildren } from "react";
 import { CircleHelp } from "lucide-react";
 
+import { useTranslation } from "@acme/i18n";
+
 import { IconBlock, type IconInfo } from "@/components/custom/icon-block";
 import { useModal } from "@/components/custom/modal-provider";
 import { Button } from "@/components/ui/button";
@@ -12,7 +14,6 @@ import { Switch } from "@/components/ui/switch";
 import { HintButton, PlanLink, Section, SectionItem } from "../_components";
 import { DeleteWorkspace } from "../modals";
 import { useSettings } from "../settings-context";
-import { settings } from "./settings2.data";
 import type { Section as SectionProps } from "./utils";
 
 type FieldProps = PropsWithChildren<SectionProps> & {
@@ -55,9 +56,12 @@ export const Settings2 = () => {
   } = useSettings();
   const site = `${workspace.domain}.notion.site`;
   const link = `www.notion.so/${workspace.domain}`;
-  /** Descriptions (Dyn.) */
-  const $domain = `Pages shared to web will be under ${site}.\nAnyone with an allowed email domain can join this workspace via ${link}.`;
-  const $public = `Access your public home page via ${site}.`;
+  /** i18n */
+  const { t } = useTranslation("settings");
+  const {
+    "workspace-settings": workspaceSettings,
+    "public-settings": publicSettings,
+  } = t("workspace-settings", { returnObjects: true });
   /** Handlers */
   const onUpdateName = (e: ChangeEvent<HTMLInputElement>) =>
     update({ workspace: { name: e.target.value } });
@@ -84,8 +88,8 @@ export const Settings2 = () => {
 
   return (
     <>
-      <Section title="Workspace settings">
-        <Field {...settings.name}>
+      <Section title={workspaceSettings.title}>
+        <Field {...workspaceSettings.name}>
           <Input
             variant="notion"
             value={workspace.name}
@@ -93,7 +97,7 @@ export const Settings2 = () => {
           />
         </Field>
         <Separator className="my-4 bg-primary/15" />
-        <Field {...settings.icon}>
+        <Field {...workspaceSettings.icon}>
           <div className="rounded-md border border-primary/10 p-0.5">
             <IconBlock
               defaultIcon={workspace.icon}
@@ -106,8 +110,14 @@ export const Settings2 = () => {
         </Field>
       </Section>
       <Separator className="my-4 bg-primary/15" />
-      <Section title="Public Settings">
-        <Field {...settings.domain} description={$domain}>
+      <Section title={publicSettings.title}>
+        <Field
+          title={publicSettings.domain.title}
+          description={t(
+            "workspace-settings.public-settings.domain.description",
+            { site, link },
+          )}
+        >
           <Input
             variant="notion"
             className="w-[255px]"
@@ -116,35 +126,51 @@ export const Settings2 = () => {
           />
         </Field>
         <Separator className="my-4 bg-primary/15" />
-        <Field {...settings.public} description={$public}>
+        <Field
+          title={publicSettings.public.title}
+          description={t(
+            "workspace-settings.public-settings.public.description",
+            { site },
+          )}
+        >
           <Input variant="search" placeholder="Select a page shared to web" />
         </Field>
         <Separator className="my-4 bg-primary/15" />
-        <Field {...settings.content} hint="Learn about exporting workspaces.">
+        <Field title={publicSettings.content.title} description="">
           <Button variant="notion" size="sm">
-            Export all workspace content
-          </Button>
-        </Field>
-        <Separator className="my-4 bg-primary/15" />
-        <Field {...settings.members} hint="Learn about exporting members.">
-          <Button variant="notion" size="sm" disabled>
-            Export members as CSV
+            {publicSettings.content.button}
           </Button>
         </Field>
         <Separator className="my-4 bg-primary/15" />
         <Field
-          title="Analytics"
+          title={publicSettings.members.title}
           description=""
-          hint="Learn about workspace analytics."
+          plan="business"
         >
-          <SectionItem {...settings.analytics}>
+          <Button variant="notion" size="sm" disabled>
+            {publicSettings.members.button}
+          </Button>
+        </Field>
+        <Separator className="my-4 bg-primary/15" />
+        <Field
+          title={publicSettings.analytics.head}
+          description=""
+          hint={publicSettings.analytics.hint}
+        >
+          <SectionItem
+            title={publicSettings.analytics.title}
+            description={t(
+              "workspace-settings.public-settings.analytics.description",
+              { workspace: workspace.name },
+            )}
+          >
             <Switch size="sm" />
           </SectionItem>
         </Field>
         <Separator className="my-4 bg-primary/15" />
-        <Field {...settings.danger} hint="Learn about deleting workspaces.">
+        <Field {...publicSettings.danger} description="">
           <Button variant="warning" size="sm" onClick={onDeleteWorkspace}>
-            Delete entire workspace
+            {publicSettings.danger.button}
           </Button>
         </Field>
       </Section>

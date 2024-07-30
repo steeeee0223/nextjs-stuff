@@ -160,7 +160,52 @@
       }
     }
   },
-  "workspace-settings": { "title": "Einstellungen" },
+  "workspace-settings": {
+    "title": "Einstellungen",
+    "workspace-settings": {
+      "title": "Workspace-Einstellungen",
+      "name": {
+        "title": "Name",
+        "description": "Du kannst den Namen deiner Organisation bzw., deines Unternehmens verwenden. Keep it simple."
+      },
+      "icon": {
+        "title": "Icon",
+        "description": "Lade ein Bild hoch oder wähle ein Emoji aus. Es wird in der Seitenleiste und in deinen Benachrichtigungen angezeigt."
+      }
+    },
+    "public-settings": {
+      "title": "Öffentliche Einstellungen",
+      "domain": {
+        "title": "Domain",
+        "description": "Pages shared to web will be under {{site}}. Anyone with an allowed email domain can join this workspace via {{link}}."
+      },
+      "public": {
+        "title": "Public home page",
+        "description": "Access your public home page via {{site}}."
+      },
+      "content": {
+        "title": "Inhalt exportieren",
+        "hint": "Informationen zum Exportieren von Workspaces",
+        "button": "Gesamten Workspace-Inhalt exportieren"
+      },
+      "members": {
+        "title": "Mitglieder exportieren",
+        "hint": "Informationen zum Exportieren von Mitgliedern",
+        "button": "Export members as CSV"
+      },
+      "analytics": {
+        "head": "Analytics",
+        "title": "Save and display page view analytics",
+        "description": "People with edit or full access will be able to see how many views a page has. If this is turned off, page views will not be stored for all pages in {{workspace}}.",
+        "hint": "Learn about workspace analytics."
+      },
+      "danger": {
+        "title": "Danger zone",
+        "hint": "Learn about deleting workspaces.",
+        "button": "Delete entire workspace"
+      }
+    }
+  },
   "people": { "title": "Personen" },
   "plans": { "title": "Tarife anzeigen" },
   "billing": { "title": "Abrechnung" },

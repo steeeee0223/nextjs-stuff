@@ -176,7 +176,50 @@ interface Resources {
       }
     },
     "workspace-settings": {
-      "title": "Settings"
+      "title": "Settings",
+      "workspace-settings": {
+        "title": "Workspace settings",
+        "name": {
+          "title": "Name",
+          "description": "You can use your organization or company name. Keep it simple."
+        },
+        "icon": {
+          "title": "Icon",
+          "description": "Upload an image or pick an emoji. It will show up in your sidebar and notifications."
+        }
+      },
+      "public-settings": {
+        "title": "Public settings",
+        "domain": {
+          "title": "Domain",
+          "description": "Pages shared to web will be under {{site}}. Anyone with an allowed email domain can join this workspace via {{link}}."
+        },
+        "public": {
+          "title": "Public home page",
+          "description": "Access your public home page via {{site}}."
+        },
+        "content": {
+          "title": "Export content",
+          "hint": "Learn about exporting workspaces.",
+          "button": "Export all workspace content"
+        },
+        "members": {
+          "title": "Export members",
+          "hint": "Learn about exporting members.",
+          "button": "Export members as CSV"
+        },
+        "analytics": {
+          "head": "Analytics",
+          "title": "Save and display page view analytics",
+          "description": "People with edit or full access will be able to see how many views a page has. If this is turned off, page views will not be stored for all pages in {{workspace}}.",
+          "hint": "Learn about workspace analytics."
+        },
+        "danger": {
+          "title": "Danger zone",
+          "hint": "Learn about deleting workspaces.",
+          "button": "Delete entire workspace"
+        }
+      }
     },
     "people": {
       "title": "People"

@@ -163,7 +163,52 @@
       }
     }
   },
-  "workspace-settings": { "title": "Configuración" },
+  "workspace-settings": {
+    "title": "Configuración",
+    "workspace-settings": {
+      "title": "Configuración del espacio de trabajo",
+      "name": {
+        "title": "Nombre",
+        "description": "Puedes usar el nombre de tu empresa u organización. No te compliques."
+      },
+      "icon": {
+        "title": "Icono",
+        "description": "Sube una imagen o selecciona un emoji, aparecerá en tu barra lateral y en las notificaciones."
+      }
+    },
+    "public-settings": {
+      "title": "Configuración pública",
+      "domain": {
+        "title": "Domain",
+        "description": "Pages shared to web will be under {{site}}. Anyone with an allowed email domain can join this workspace via {{link}}."
+      },
+      "public": {
+        "title": "Public home page",
+        "description": "Access your public home page via {{site}}."
+      },
+      "content": {
+        "title": "Exportar contenido",
+        "hint": "Más información sobre cómo exportar espacios de trabajo.",
+        "button": "Exportar todo el contenido del espacio de trabajo"
+      },
+      "members": {
+        "title": "Exportar miembros",
+        "hint": "Más información sobre cómo exportar miembros.",
+        "button": "Exportar miembros como CSV"
+      },
+      "analytics": {
+        "head": "Estadísticas",
+        "title": "Guardar y mostrar las estadísticas del número de visitas a páginas",
+        "description": "Las personas con acceso de edición o acceso completo podrán ver el número de visitas de una página. Si desactivas esta opción, el número de visitas no se guardará para las páginas de {{workspace}}.",
+        "hint": "Más información sobre las estadísticas del espacios de trabajo."
+      },
+      "danger": {
+        "title": "Zona de riesgo",
+        "hint": "Más información sobre cómo eliminar espacios de trabajo.",
+        "button": "Eliminar todo el espacio de trabajo"
+      }
+    }
+  },
   "people": { "title": "Personas" },
   "plans": { "title": "Planes" },
   "billing": { "title": "Facturación" },
