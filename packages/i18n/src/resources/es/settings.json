@@ -152,9 +152,9 @@
         "title": "Idioma",
         "description": "Elige el idioma que te gustaría usar en Notion.",
         "options": {
-          "en": "English",
-          "de": "Deutsch",
-          "es": "Español"
+          "en": { "label": "English", "description": "Inglés" },
+          "de": { "label": "Deutsch", "description": "Alemán" },
+          "es": { "label": "Español", "description": "Español" }
         }
       },
       "start-week": {

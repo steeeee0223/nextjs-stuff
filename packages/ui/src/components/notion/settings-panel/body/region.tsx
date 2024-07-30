@@ -1,10 +1,10 @@
 import { LOCALE, useTranslation } from "@acme/i18n";
 
+import { Select } from "@/components/custom/select";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
-import { Section, SectionItem, Select } from "../_components";
+import { Section, SectionItem } from "../_components";
 import { useSettings } from "../settings-context";
-import { toOptions } from "./utils";
 
 export const Region = () => {
   const {
@@ -25,11 +25,16 @@ export const Region = () => {
       <Section title={title}>
         <SectionItem {...region.language}>
           <Select
-            options={toOptions(region.language.options)}
+            options={region.language.options}
             defaultValue={account.language ?? "en"}
             onChange={onSwitchLanguage}
             side="bottom"
             align="end"
+            customDisplay={({ option }) => (
+              <div className="overflow-hidden text-ellipsis whitespace-nowrap text-primary/65">
+                {typeof option === "string" ? option : option?.label}
+              </div>
+            )}
           />
         </SectionItem>
         <Separator className="my-4 bg-primary/15" />

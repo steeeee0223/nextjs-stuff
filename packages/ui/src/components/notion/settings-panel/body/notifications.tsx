@@ -2,6 +2,7 @@ import { ArrowUpRight, CircleHelp } from "lucide-react";
 
 import { useTranslation } from "@acme/i18n";
 
+import { Select } from "@/components/custom/select";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import {
@@ -9,9 +10,7 @@ import {
   Section,
   SectionItem,
   SectionSeparator,
-  Select,
 } from "../_components";
-import { toOptions } from "./utils";
 
 export const Notifications = () => {
   /** i18n */
@@ -33,7 +32,7 @@ export const Notifications = () => {
         <SectionSeparator size="sm" />
         <SectionItem {...slackNotifications.slack}>
           <Select
-            options={toOptions(slackNotifications.slack.options)}
+            options={slackNotifications.slack.options}
             defaultValue="off"
           />
         </SectionItem>

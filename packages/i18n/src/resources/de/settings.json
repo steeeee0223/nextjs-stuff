@@ -149,9 +149,9 @@
         "title": "Sprache",
         "description": "Ändere die in der Benutzeroberfläche verwendete Sprache.",
         "options": {
-          "en": "English",
-          "de": "Deutsch",
-          "es": "Español"
+          "en": { "label": "English", "description": "Englisch" },
+          "de": { "label": "Deutsch", "description": "Deutsch" },
+          "es": { "label": "Español", "description": "Spanisch" }
         }
       },
       "start-week": {

@@ -149,9 +149,9 @@
         "title": "Language",
         "description": "Change the language used in the user interface.",
         "options": {
-          "en": "English",
-          "de": "Deutsch",
-          "es": "Español"
+          "en": { "label": "English", "description": "English" },
+          "de": { "label": "Deutsch", "description": "German" },
+          "es": { "label": "Español", "description": "Spanish" }
         }
       },
       "start-week": {

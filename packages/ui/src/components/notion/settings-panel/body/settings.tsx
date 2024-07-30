@@ -1,9 +1,9 @@
 import { useTranslation } from "@acme/i18n";
 
+import { Select } from "@/components/custom/select";
 import { Switch } from "@/components/ui/switch";
-import { Section, SectionItem, SectionSeparator, Select } from "../_components";
+import { Section, SectionItem, SectionSeparator } from "../_components";
 import { useSettings } from "../settings-context";
-import { toOptions } from "./utils";
 
 export const Settings = () => {
   const { theme, setTheme } = useSettings();
@@ -21,7 +21,7 @@ export const Settings = () => {
       <Section title={title}>
         <SectionItem {...mySettings.appearance}>
           <Select
-            options={toOptions(mySettings.appearance.options)}
+            options={mySettings.appearance.options}
             defaultValue={theme ?? "system"}
             onChange={setTheme}
             side="left"
@@ -30,7 +30,7 @@ export const Settings = () => {
         <SectionSeparator size="sm" />
         <SectionItem {...mySettings["open-on-start"]}>
           <Select
-            options={toOptions(mySettings["open-on-start"].options)}
+            options={mySettings["open-on-start"].options}
             defaultValue="top"
             side="left"
           />
@@ -54,7 +54,7 @@ export const Settings = () => {
         <SectionSeparator size="sm" />
         <SectionItem {...privacy["view-history"]}>
           <Select
-            options={toOptions(privacy["view-history"].options)}
+            options={privacy["view-history"].options}
             defaultValue="yes"
             side="left"
           />
