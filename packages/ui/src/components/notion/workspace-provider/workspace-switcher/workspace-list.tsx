@@ -7,6 +7,7 @@ import { Check } from "lucide-react";
 import stableHash from "stable-hash";
 
 import { IconBlock } from "@/components/custom/icon-block";
+import { Badge } from "@/components/ui/badge";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import type { Workspace } from "../index.types";
 import { useWorkspace } from "../workspace-context";
@@ -26,10 +27,14 @@ const Title = ({ workspace, onClick }: TitleProps) => {
               <span className="flex-shrink overflow-hidden text-ellipsis">
                 {workspace.name}
               </span>
-              <div className="ml-2 flex select-none items-center self-center whitespace-nowrap rounded-sm bg-[#f6c05042] px-1.5 py-0.5 text-[9px] uppercase leading-none text-[#cf8807]">
+              <Badge
+                variant="orange"
+                size="sm"
+                className="ml-2 select-none self-center whitespace-nowrap uppercase"
+              >
                 <Globe className="mr-0.5 inline size-2 flex-shrink-0 fill-[#cf8807] align-middle" />
                 Guest
-              </div>
+              </Badge>
             </div>
           </div>
         </div>
