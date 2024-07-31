@@ -5,6 +5,8 @@ import { CircleHelp } from "lucide-react";
 import { toast } from "sonner";
 import { useCopyToClipboard } from "usehooks-ts";
 
+import { useTranslation } from "@acme/i18n";
+
 import { Hint } from "@/components/custom/hint";
 import {
   HintButton,
@@ -13,14 +15,18 @@ import {
   SectionSeparator,
 } from "../_components";
 import { useSettings } from "../settings-context";
-import { identity } from "./identity.data";
 
 export const Identity = () => {
   const {
     settings: { workspace },
   } = useSettings();
+  /** i18n */
+  const { t } = useTranslation("settings");
+  const { domain, user, saml, scim, setup } = t("identity", {
+    returnObjects: true,
+  });
+  /** Handlers */
   const [, copy] = useCopyToClipboard();
-
   const handleCopy = async () => {
     await copy(workspace.id);
     toast.success("Copied property to clipboard");
@@ -28,57 +34,56 @@ export const Identity = () => {
 
   return (
     <>
-      <Section title="Domain management">
-        <SectionItem {...identity.domains} />
+      <Section title={domain.title}>
+        <SectionItem {...domain.domains} plan="business" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.creation} />
+        <SectionItem {...domain.creation} plan="enterprise" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.claim} />
+        <SectionItem {...domain.claim} plan="enterprise" />
       </Section>
       <SectionSeparator />
-      <Section title="User management">
+      <Section title={user.title}>
         <div className="text-sm/4 font-normal text-primary/65">
-          These settings apply to all users with a verified domain, even if they
-          are not a member of this workspace.
+          {user.description}
         </div>
         <SectionSeparator size="sm" />
-        <HintButton icon={CircleHelp} label="Learn about managed users" />
+        <HintButton icon={CircleHelp} label={user.buttons.hint} />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.dashboard} />
+        <SectionItem {...user.dashboard} plan="enterprise" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.profile} />
+        <SectionItem {...user.profile} plan="enterprise" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.external} />
+        <SectionItem {...user.external} plan="enterprise" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.pervention} />
+        <SectionItem {...user.support} plan="enterprise" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.session} />
+        <SectionItem {...user.session} plan="enterprise" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.logout} />
+        <SectionItem {...user.logout} plan="enterprise" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.password} />
+        <SectionItem {...user.password} plan="enterprise" />
       </Section>
       <SectionSeparator />
-      <Section title="SAML Single sign-on (SSO)">
-        <HintButton icon={CircleHelp} label="Learn about SAML SSO" />
+      <Section title={saml.title}>
+        <HintButton icon={CircleHelp} label={saml.buttons.hint} />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.SAML} />
+        <SectionItem {...saml.saml} plan="business" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.login} />
+        <SectionItem {...saml.login} plan="business" />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.autoCreation} />
+        <SectionItem {...saml.creation} />
         <SectionSeparator size="sm" />
-        <SectionItem {...identity.linked} />
+        <SectionItem {...saml.linked} />
       </Section>
       <SectionSeparator />
-      <Section title="SCIM provisioning">
-        <SectionItem {...identity.SCIM} />
+      <Section title={scim.title}>
+        <SectionItem {...scim.scim} plan="enterprise" />
       </Section>
       <SectionSeparator />
-      <Section title="Setup information">
-        <SectionItem {...identity.workspaceId}>
+      <Section title={setup.title}>
+        <SectionItem title="" description={setup["workspace-id"].description}>
           <Hint
-            description="Click to copy ID"
+            description={setup["workspace-id"].tooltip}
             variant="notion"
             size="sm"
             side="top"

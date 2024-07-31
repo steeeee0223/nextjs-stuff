@@ -14,11 +14,13 @@ import { Switch } from "@/components/ui/switch";
 import { HintButton, PlanLink, Section, SectionItem } from "../_components";
 import { DeleteWorkspace } from "../modals";
 import { useSettings } from "../settings-context";
-import type { Section as SectionProps } from "./utils";
 
-type FieldProps = PropsWithChildren<SectionProps> & {
+interface FieldProps extends PropsWithChildren {
+  title: string;
+  description: string;
+  plan?: string;
   hint?: string;
-};
+}
 
 export const Field = ({
   children,

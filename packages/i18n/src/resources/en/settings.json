@@ -210,8 +210,154 @@
   "plans": { "title": "Plans" },
   "billing": { "title": "Billing" },
   "sites": { "title": "Sites" },
-  "security": { "title": "Security" },
-  "identity": { "title": "Identity & provisioning" },
+  "security": {
+    "title": "Security",
+    "cards": {
+      "sso": {
+        "title": "Upgrade for SAML SSO & more admin tools",
+        "description": "The Business Plan includes single sign-on to manage employee access at scale, private teamspaces to collaborate on sensitive docs, and more.",
+        "action": "Upgrade to Business",
+        "more": "Learn more"
+      },
+      "scim": {
+        "title": "Upgrade for SCIM, advanced security & more",
+        "description": "The Enterprise Plan allows you to automatically provision users and groups, and gain more visibility and controls across the workspace.",
+        "action": "Upgrade to Enterprise",
+        "more": "Learn more"
+      }
+    },
+    "general": {
+      "title": "General",
+      "publish": {
+        "title": "Disable publishing sites",
+        "description": "Disable the Share to web option in the Share menu on every page in this workspace."
+      },
+      "edit": {
+        "title": "Prevent members from editing the Workspace section",
+        "description": "Disable the ability for members to create, move, reorder, and delete top-level Workspace pages."
+      },
+      "duplicate": {
+        "title": "Disable duplicating pages to other workspaces",
+        "description": "Prevent anyone from duplicating pages to other workspaces via the Move To or Duplicate To actions."
+      },
+      "export": {
+        "title": "Disable export",
+        "description": "Prevent anyone from exporting as Markdown, CSV, or PDF."
+      }
+    },
+    "invite": {
+      "title": "Inviting members & guests",
+      "access": {
+        "title": "Allow page access requests from non-members",
+        "description": "This allows anyone with the link to a page to request access. Workspace members can always request access."
+      },
+      "invite": {
+        "title": "Disable members inviting guests to pages",
+        "description": "Your workspace currently has {{guests}} guest."
+      },
+      "guest": {
+        "title": "Allow members to request adding guests",
+        "description": "Requests must be approved by a workspace owner."
+      },
+      "member": {
+        "title": "Allow members to request adding other members",
+        "description": "Members can submit requests to admins to add more members."
+      },
+      "user": {
+        "title": "Allow any user to request to be added as a member of the workspace",
+        "description": "If enabled, users with teamspace invite links can submit requests to admins to be added as members"
+      }
+    }
+  },
+  "identity": {
+    "title": "Identity & provisioning",
+    "domain": {
+      "title": "Domain management",
+      "domains": {
+        "title": "Verified domains",
+        "description": "Verify ownership of an email domain to access advanced security features including single-sign on."
+      },
+      "creation": {
+        "title": "Workspace creation",
+        "description": "Customize who can create new workspaces."
+      },
+      "claim": {
+        "title": "Claim workspaces",
+        "description": "Claim workspaces created by users with a verified domain or require owners to use an external domain."
+      }
+    },
+    "user": {
+      "title": "User management",
+      "description": "These settings apply to all users with a verified domain, even if they are not a member of this workspace.",
+      "buttons": {
+        "hint": "Learn about managed users"
+      },
+      "dashboard": {
+        "title": "Managed users dashboard",
+        "description": "Manage and view users that are using your verified domains."
+      },
+      "profile": {
+        "title": "Allow managed users to change profile information",
+        "description": "Control if managed users can change their preferred name, email address, and profile photo."
+      },
+      "external": {
+        "title": "External workspace access",
+        "description": "Control if managed users are able to join workspaces that aren't owned by your organization."
+      },
+      "support": {
+        "title": "Prevent managed users from granting support access",
+        "description": "Control if managed users can enable support access on their accounts."
+      },
+      "session": {
+        "title": "Session duration",
+        "description": "Control how long your managed users can be logged in for before they must re-authenticate."
+      },
+      "logout": {
+        "title": "Log out all users",
+        "description": "Force log out all managed users and require them to re-authenticate."
+      },
+      "password": {
+        "title": "Reset passwords for all users",
+        "description": "Force reset the passwords for all managed users and require them to create a new one the next time they log in."
+      }
+    },
+    "saml": {
+      "title": "SAML Single sign-on (SSO)",
+      "buttons": {
+        "hint": "Learn about SAML SSO"
+      },
+      "saml": {
+        "title": "Enable SAML SSO",
+        "description": "Workspace members can log in with SAML SSO if their email address uses a verified domain."
+      },
+      "login": {
+        "title": "Login method",
+        "description": "Customize how users access workspaces that have SAML SSO enabled. Workspace owners can always log in with a password."
+      },
+      "creation": {
+        "title": "Automatic account creation",
+        "description": "Automatically create Notion accounts for new users who log in via SAML SSO."
+      },
+      "linked": {
+        "title": "Linked workspaces",
+        "description": "This SAML SSO configuration applies to the following other workspaces. Contact support to add or remove a workspace."
+      }
+    },
+    "scim": {
+      "title": "SCIM provisioning",
+      "scim": {
+        "title": "SCIM tokens",
+        "description": "Generate a token to configure SCIM."
+      }
+    },
+    "setup": {
+      "title": "Setup information",
+      "workspace-id": {
+        "description": "Workspace ID",
+        "tooltip": "Click to copy ID"
+      }
+    }
+  },
   "connections": { "title": "Connections" },
   "import": { "title": "Import" }
 }

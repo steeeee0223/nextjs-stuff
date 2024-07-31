@@ -191,18 +191,18 @@
       "members": {
         "title": "Mitglieder exportieren",
         "hint": "Informationen zum Exportieren von Mitgliedern",
-        "button": "Export members as CSV"
+        "button": "Mitglieder in CSV exportieren"
       },
       "analytics": {
-        "head": "Analytics",
-        "title": "Save and display page view analytics",
-        "description": "People with edit or full access will be able to see how many views a page has. If this is turned off, page views will not be stored for all pages in {{workspace}}.",
-        "hint": "Learn about workspace analytics."
+        "head": "Analysen",
+        "title": "Seitenaufruf-Analysen speichern und anzeigen",
+        "description": "Personen mit Bearbeitungs- oder Vollzugriff können sehen, wie viele Aufrufe eine Seite hat. Ist diese Funktion deaktiviert, werden die Seitenaufrufe nicht für alle Seiten in {{workspace}} gespeichert.",
+        "hint": "Erfahre mehr über Workspace-Analysen."
       },
       "danger": {
-        "title": "Danger zone",
-        "hint": "Learn about deleting workspaces.",
-        "button": "Delete entire workspace"
+        "title": "Achtung, Gefahrenzone!",
+        "hint": "Informationen zum Löschen von Workspaces",
+        "button": "Gesamten Workspace löschen"
       }
     }
   },
@@ -210,8 +210,154 @@
   "plans": { "title": "Tarife anzeigen" },
   "billing": { "title": "Abrechnung" },
   "sites": { "title": "Websites" },
-  "security": { "title": "Sicherheit" },
-  "identity": { "title": "Identität & Bereitstellung" },
+  "security": {
+    "title": "Sicherheit",
+    "cards": {
+      "sso": {
+        "title": "Upgrade für SAML SSO und weitere Admin-Tools",
+        "description": "Der Business Plan umfasst Single Sign-On zur Massen-Zugriffsverwaltung der Mitarbeitenden, private Teamspaces für die gemeinsame Arbeit an vertraulichen Dokumenten und vieles mehr.",
+        "action": "Upgrade auf Business Plan",
+        "more": "Weitere Informationen"
+      },
+      "scim": {
+        "title": "Upgrade für SCIM, erweiterte Sicherheit und mehr",
+        "description": "Mit dem Enterprise Plan kannst du Benutzer/-innen und Gruppen automatisch bereitstellen und mehr Transparenz und Kontrolle über den gesamten Workspace erhalten.",
+        "action": "Upgrade auf Enterprise Plan",
+        "more": "Weitere Informationen"
+      }
+    },
+    "general": {
+      "title": "Allgemein",
+      "publish": {
+        "title": "Veröffentlichung von Websites deaktivieren",
+        "description": "Deaktiviere die Option „Im Internet veröffentlichen“ im Menü „Teilen“ auf jeder Seite in diesem Workspace."
+      },
+      "edit": {
+        "title": "Verhindern, dass Mitglieder den Workspace-Abschnitt ändern",
+        "description": "Deaktiviere die Optionen für Mitglieder, Workspace-Seiten der obersten Ebene zu erstellen, zu verschieben, neu anzuordnen und zu löschen."
+      },
+      "duplicate": {
+        "title": "Duplizieren von Seiten in andere Workspaces deaktivieren",
+        "description": "Verhindere das Duplizieren von Seiten in andere Workspaces über die Aktion „Verschieben nach“ oder „Duplizieren in“."
+      },
+      "export": {
+        "title": "Export deaktivieren",
+        "description": "Markdown-, CSV- oder PDF-Exporte verhindern."
+      }
+    },
+    "invite": {
+      "title": "Mitglieder und Gäste einladen",
+      "access": {
+        "title": "Seitenzugriffsanfragen von Nicht-Mitgliedern zulassen",
+        "description": "Dadurch kann jede Person, die über den Link zu einer Seite verfügt, Zugriff anfordern. Workspace-Mitglieder können jederzeit Zugriff anfordern."
+      },
+      "invite": {
+        "title": "Das Einladen von Gästen durch Mitglieder deaktivieren",
+        "description": "Aktuell befindet sich {{guests}} Gäste in deinem Workspace."
+      },
+      "guest": {
+        "title": "Mitglieder können die Aufnahme von Gästen anfragen",
+        "description": "Anfragen müssen durch Workspace-Besitzer/-innen genehmigt werden."
+      },
+      "member": {
+        "title": "Erlaubt Mitgliedern, die Aufnahme anderer Mitglieder zu beantragen",
+        "description": "Mitglieder können Anfragen an Admins senden, weitere Mitglieder hinzuzufügen"
+      },
+      "user": {
+        "title": "Anfragen auf Aufnahme in den Workspace für alle Benutzer/-innen zulassen",
+        "description": "Ist diese Option aktiviert, können Personen, die einen Einladungslink zu einem Teamspace besitzen, Aufnahmeanfragen an Admins senden"
+      }
+    }
+  },
+  "identity": {
+    "title": "Identität & Bereitstellung",
+    "domain": {
+      "title": "Domain-Verwaltung",
+      "domains": {
+        "title": "Verifizierte Domains",
+        "description": "Bestätige den Besitz einer E-Mail-Domain, um auf erweiterte Sicherheitsfunktionen wie Single-Sign-On zuzugreifen."
+      },
+      "creation": {
+        "title": "Workspace-Erstellung",
+        "description": "Passe an, wer neue Workspaces erstellen kann."
+      },
+      "claim": {
+        "title": "Workspaces beanspruchen",
+        "description": "Beanspruche mit einer verifizierten Domain erstellte Workspaces oder fordere von Besitzer/-innen die Verwendung externer Domains"
+      }
+    },
+    "user": {
+      "title": "Verwaltung der Benutzer/-innen",
+      "description": "Diese Einstellungen gelten für alle Personen mit einer verifizierten Domain, selbst wenn sie kein Mitglied dieses Workspaces sind.",
+      "buttons": {
+        "hint": "Informationen zu verwalteten Benutzer/-innen"
+      },
+      "dashboard": {
+        "title": "Dashboard für verwaltete Benutzer/-innen",
+        "description": "Verwalte und zeige Mitglieder an, die deine verifizierten Domains verwenden"
+      },
+      "profile": {
+        "title": "Verwalteten Benutzer/-innen erlauben, Profilinformationen zu ändern",
+        "description": "Lege fest, ob verwaltete Benutzer/-innen ihren bevorzugten Namen, ihre E-Mail-Adresse und das Profilfoto ändern können."
+      },
+      "external": {
+        "title": "Zugriff auf externe Workspaces",
+        "description": "Lege fest, ob verwaltete Benutzer/-innen Workspaces beitreten können, die nicht deiner Organisation gehören."
+      },
+      "support": {
+        "title": "Verhindere, dass verwaltete Benutzer/-innen Support-Zugriff gewähren können",
+        "description": "Steuer, ob verwaltete Benutzer/-innen Support-Zugriff für ihre Konten aktivieren können."
+      },
+      "session": {
+        "title": "Sitzungsdauer",
+        "description": "Lege fest, wir lange von dir verwaltete Benutzer/-innen angemeldet sein können, ehe sie sich neu authentifizieren müssen."
+      },
+      "logout": {
+        "title": "Alle Benutzer/-innen abmelden",
+        "description": "Alle verwalteten Benutzer/-innen zur Abmeldung zwingen und eine erneute Authentifizierung verlangen."
+      },
+      "password": {
+        "title": "Passwörter von allen Benutzer/-innen zurücksetzen",
+        "description": "Setze die Passwörter aller verwalteten Benutzer/-innen zurück und fordere sie bei der nächsten Anmeldung zur Eingabe eines neuen Passworts auf."
+      }
+    },
+    "saml": {
+      "title": "SAML Single Sign-On (SSO)",
+      "buttons": {
+        "hint": "Informationen zu SAML SSO"
+      },
+      "saml": {
+        "title": "SAML SSO aktivieren",
+        "description": "Workspace-Mitglieder können sich über SAML SSO anmelden, wenn ihre E-Mail-Adresse eine verifizierte Domain verwendet."
+      },
+      "login": {
+        "title": "Anmelde-Methode",
+        "description": "Stelle individuell ein, wie Nutzer/-innen auf Workspaces zugreifen, bei denen SAML SSO aktiviert ist. Workspace-Besitzer/-innen können sich jederzeit mit einem Passwort anmelden."
+      },
+      "creation": {
+        "title": "Automatische Kontoerstellung",
+        "description": "Automatisch erstellte Notion-Konten für neue Benutzer/-innen, die sich über SSO anmelden."
+      },
+      "linked": {
+        "title": "Verknüpfte Workspaces",
+        "description": "Diese SSO-Konfiguration gilt für die folgenden anderen Workspaces. Wenn dich an den Support, um einen Workspace hinzuzufügen oder zu entfernen."
+      }
+    },
+    "scim": {
+      "title": "SCIM-Bereitstellung",
+      "scim": {
+        "title": "SCIM-Token",
+        "description": "Generiere ein Token, um SCIM zu konfigurieren."
+      }
+    },
+    "setup": {
+      "title": "Informationen zur Einrichtung",
+      "workspace-id": {
+        "description": "Workspace-ID",
+        "tooltip": "Zum Kopieren der ID klicken"
+      }
+    }
+  },
   "connections": { "title": "Verbindungen" },
   "import": { "title": "Importieren" }
 }
