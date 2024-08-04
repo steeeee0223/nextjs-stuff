@@ -1,32 +1,37 @@
-import { NextResponse } from "next/server";
-import { authMiddleware, redirectToSignIn } from "@clerk/nextjs";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-// This example protects all routes including api/trpc routes
-// Please edit this to allow other routes to be public as needed.
-// See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
-export default authMiddleware({
-  publicRoutes: ["/", "/api/webhook"],
-  afterAuth(auth, req) {
-    // After sign up
-    if (req.url.startsWith("/sign-up")) {
-      return NextResponse.redirect("/onboarding");
-    }
+const isPublicRoute = createRouteMatcher(["/", "/public(.*)"]);
+const isProtectedRoute = createRouteMatcher([
+  // API
+  "/api(.*)",
+  // Clerk
+  "/onboarding",
+  "/select-role",
+  // Tools
+  "/documents(.*)",
+  "/kanban(.*)",
+  "/whiteboard(.*)",
+  "/workflows(.*)",
+  "/workspace(.*)",
+]);
 
-    if (auth.userId && auth.isPublicRoute) {
-      // const path = auth.orgId
-      //   ? `/organization/${auth.orgId}`
-      //   : `/personal/${auth.userId}`;
-      const url = new URL(`/`, req.url);
-      return NextResponse.redirect(url);
-    }
-
-    if (!auth.userId && !auth.isPublicRoute) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return redirectToSignIn({ returnBackUrl: req.url });
-    }
+export default clerkMiddleware(
+  (auth, req) => {
+    const authObj = auth();
+    if (isPublicRoute(req)) return;
+    if (!authObj.userId && isProtectedRoute(req)) authObj.protect();
   },
-});
+  {
+    afterSignUpUrl: "/select-role",
+    afterSignInUrl: "/select-role",
+  },
+);
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Always run for API routes
+    "/(api|trpc)(.*)",
+  ],
 };

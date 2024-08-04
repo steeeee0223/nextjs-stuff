@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { Liveblocks } from "@liveblocks/node";
 
 import { env } from "~/env";
