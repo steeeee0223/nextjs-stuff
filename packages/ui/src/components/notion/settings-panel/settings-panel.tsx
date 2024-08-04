@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { useTranslation } from "@acme/i18n";
+
 import SettingsBody from "./settings-body";
 import { useSettings } from "./settings-context";
 import { account, Tab, User, workspace, type TabType } from "./sidebar";
@@ -19,17 +21,18 @@ const styles = {
 export const SettingsPanel = () => {
   const [activeTab, setActiveTab] = useState<TabType>("my-settings");
   const { settings } = useSettings();
+  const { t } = useTranslation();
 
   return (
     <div className="flex w-full">
       <div className={styles.sidebar}>
         <div className={styles.sidebarSection}>
-          <div className={styles.title}>Account</div>
+          <div className={styles.title}>{t("common.account")}</div>
           <User settings={settings} />
-          {account.map(({ name, value, Icon }, i) => (
+          {account.map(({ value, Icon }, i) => (
             <Tab
               key={i}
-              name={name}
+              name={t(`${value}.title`)}
               isActive={activeTab === value}
               Icon={Icon}
               onClick={() => setActiveTab(value)}
@@ -37,11 +40,11 @@ export const SettingsPanel = () => {
           ))}
         </div>
         <div className={styles.sidebarSection}>
-          <div className={styles.title}>Workspace</div>
-          {workspace.map(({ name, value, Icon }, i) => (
+          <div className={styles.title}>{t("common.workspace")}</div>
+          {workspace.map(({ value, Icon }, i) => (
             <Tab
               key={i}
-              name={name}
+              name={t(`${value}.title`)}
               isActive={activeTab === value}
               Icon={Icon}
               onClick={() => setActiveTab(value)}

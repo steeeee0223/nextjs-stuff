@@ -1,3 +1,5 @@
+import { LOCALE } from "@acme/i18n";
+
 import type { IconInfo } from "@/components/custom/icon-block";
 import type { ModalData } from "@/components/custom/modal-provider";
 
@@ -15,6 +17,7 @@ export interface AccountStore {
   preferredName: string;
   email: string;
   hasPassword?: boolean;
+  language?: LOCALE;
 }
 
 export interface SettingsStore extends ModalData {
