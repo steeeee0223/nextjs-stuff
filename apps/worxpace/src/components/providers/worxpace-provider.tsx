@@ -18,19 +18,23 @@ export const WorxpaceProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<UserState>({ id: "", name, email });
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
 
-  const { workspaceId, update } = usePlatform();
-
+  const platform = usePlatform();
   useEffect(() => {
     if (params.workspaceId) {
-      update((prev) => ({ ...prev, workspaceId: params.workspaceId! }));
+      platform.update((prev) => ({
+        ...prev,
+        clerkId,
+        workspaceId: params.workspaceId!,
+      }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [params.workspaceId]);
+  }, [clerkId, params.workspaceId]);
 
   const { accountMemberships } = useSetup({ clerkId });
   useEffect(() => {
     if (!accountMemberships) return;
     const { name, email, id, memberships } = accountMemberships;
+    platform.update((prev) => ({ ...prev, accountId: id }));
     setUser({ id, name, email });
     setWorkspaces(
       memberships.map<Workspace>(({ workspace, role }) => ({
@@ -42,6 +46,7 @@ export const WorxpaceProvider = ({ children }: PropsWithChildren) => {
         plan: "Free Plan",
       })),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountMemberships]);
 
   return (
@@ -49,7 +54,7 @@ export const WorxpaceProvider = ({ children }: PropsWithChildren) => {
       className="h-full"
       user={user}
       workspaces={workspaces}
-      initial={workspaceId}
+      initial={platform.workspaceId}
     >
       {children}
     </WorkspaceProvider>

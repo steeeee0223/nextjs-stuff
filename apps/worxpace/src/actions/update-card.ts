@@ -18,7 +18,7 @@ import {
 const handler = createMutationFetcher(UpdateCard, async (_key, { arg }) => {
   const { boardId, ...data } = arg;
   try {
-    fetchClient();
+    await fetchClient();
     const result = await kanban.updateCard(data);
     /** Activity Log */
     await auditLogs.create({

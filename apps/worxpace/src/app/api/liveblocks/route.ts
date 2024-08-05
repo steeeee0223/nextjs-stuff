@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { Liveblocks } from "@liveblocks/node";
 
 import { env } from "~/env";
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   const page = await documents.getById(room);
   if (!page) return new NextResponse("Not Found", { status: 404 });
   /** Verify account & workspace */
-  const { clerkId } = fetchClient();
+  const { clerkId } = await fetchClient();
   const acc = await account.get(clerkId);
   const inWorkspace = await account.isInWorkspace({
     clerkId,

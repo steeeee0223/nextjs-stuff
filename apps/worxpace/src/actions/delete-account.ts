@@ -15,7 +15,7 @@ import {
 
 const handler = createMutationFetcher(DeleteAccount, async (_key, { arg }) => {
   try {
-    const cli = fetchClient();
+    const cli = await fetchClient();
     if (arg.clerkId !== cli.clerkId) throw new Error("Account not match.");
 
     const result = await account.delete(arg);

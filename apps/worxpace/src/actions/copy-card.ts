@@ -18,7 +18,7 @@ import {
 const handler = createMutationFetcher(CopyCard, async (_key, { arg }) => {
   const { src, dest, boardId, accountId } = arg;
   try {
-    fetchClient();
+    await fetchClient();
     const srcCard = await kanban.getCard(src.id);
     if (!srcCard) throw new Error("Not found");
 

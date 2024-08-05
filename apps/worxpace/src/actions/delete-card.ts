@@ -18,7 +18,7 @@ import {
 const handler = createMutationFetcher(DeleteCard, async (boardId, { arg }) => {
   const { id, accountId } = arg;
   try {
-    fetchClient();
+    await fetchClient();
     const result = await kanban.deleteCard({ id });
     /** Activity Log */
     await auditLogs.create({

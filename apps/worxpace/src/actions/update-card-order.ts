@@ -18,7 +18,7 @@ const handler = createMutationFetcher(
   UpdateCardOrder,
   async (_key, { arg }) => {
     try {
-      fetchClient();
+      await fetchClient();
       const result = await kanban.updateCardsOrder(arg);
       revalidatePath(`/kanban/${arg.boardId}`);
       return result;

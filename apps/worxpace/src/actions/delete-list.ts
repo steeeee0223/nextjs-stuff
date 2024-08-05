@@ -18,7 +18,7 @@ import {
 const handler = createMutationFetcher(DeleteList, async (boardId, { arg }) => {
   const { accountId, ...data } = arg;
   try {
-    fetchClient();
+    await fetchClient();
     const result = await kanban.deleteList(data);
     /** Activity Log */
     await auditLogs.create({
