@@ -17,7 +17,7 @@ import {
 
 const handler = createMutationFetcher(CreateList, async (boardId, { arg }) => {
   try {
-    fetchClient();
+    await fetchClient();
     const result = await kanban.createList(arg);
     /** Activity Log */
     await auditLogs.create({

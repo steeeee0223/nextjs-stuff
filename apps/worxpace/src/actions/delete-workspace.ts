@@ -16,7 +16,7 @@ const handler = createMutationFetcher(
   DeleteWorkspace,
   async (_key, { arg }) => {
     try {
-      fetchClient();
+      await fetchClient();
       return await workspace.delete(arg.id);
     } catch (error) {
       if (error instanceof UnauthorizedError) throw error;

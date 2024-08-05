@@ -1,46 +1,8 @@
-import { auth } from "@clerk/nextjs";
 import type * as z from "zod";
 
 import { COLORS } from "~/constants/theme";
-import { UnauthorizedError } from "./errors";
-import type { Action, Client } from "./types";
+import type { Action } from "./types";
 
-export function isAuthenticated(): boolean {
-  const { userId } = auth();
-  return !!userId;
-}
-
-/**
- * Utility for authorization
- */
-export function fetchClient(): Client {
-  const { userId, orgId, user, organization } = auth();
-  if (!userId) throw new UnauthorizedError();
-
-  if (!orgId) {
-    /** @todo Admin role */
-    /** User role */
-    return {
-      type: "personal",
-      userId,
-      orgId: null,
-      clerkId: userId,
-      name: `${user?.firstName} ${user?.lastName}`,
-      email: user?.emailAddresses[0]?.emailAddress ?? "",
-      avatarUrl: user?.imageUrl ?? "",
-    };
-  } else {
-    return {
-      type: "organization",
-      userId,
-      orgId,
-      clerkId: orgId,
-      name: organization?.name ?? "Organization",
-      email: "",
-      avatarUrl: organization?.imageUrl ?? "",
-    };
-  }
-}
 /**
  * Utility for fetching url
  */

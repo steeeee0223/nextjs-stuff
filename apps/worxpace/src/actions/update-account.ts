@@ -16,7 +16,7 @@ const handler = createMutationFetcher(
   UpdateAccount,
   async (clerkId, { arg }) => {
     try {
-      fetchClient();
+      await fetchClient();
       const { id, name, avatarUrl, email, preferredName, hasPassword } =
         await account.update(clerkId, arg);
       return { id, name, avatarUrl, email, preferredName, hasPassword };

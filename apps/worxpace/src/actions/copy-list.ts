@@ -18,7 +18,7 @@ import {
 const handler = createMutationFetcher(CopyList, async (_key, { arg }) => {
   const { boardId, srcId, destId, accountId } = arg;
   try {
-    fetchClient();
+    await fetchClient();
     const srcList = await kanban.getListById({ boardId, id: srcId });
     if (!srcList) throw new Error("Not found");
 

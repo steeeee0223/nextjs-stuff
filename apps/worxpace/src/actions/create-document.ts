@@ -23,7 +23,7 @@ const handler = createMutationFetcher(
   CreateDocument,
   async (workspaceId, { arg }) => {
     try {
-      const { clerkId } = fetchClient();
+      const { clerkId } = await fetchClient();
       const inWorkspace = await account.isInWorkspace({ clerkId, workspaceId });
       if (!inWorkspace) throw new UnauthorizedError();
       const icon = toIcon(generateDefaultIcon(arg.type));

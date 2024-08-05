@@ -5,9 +5,9 @@ import type { Fetcher } from "swr";
 import * as account from "./account";
 import * as documents from "./documents";
 import { NotFound, UnauthorizedError } from "./errors";
+import { fetchClient } from "./server";
 import type { DocumentKey } from "./swr";
 import type { DetailedDocument } from "./types";
-import { fetchClient } from "./utils";
 
 export const documentFetcher: Fetcher<DetailedDocument, DocumentKey> = async ({
   documentId,
@@ -21,7 +21,7 @@ export const documentFetcher: Fetcher<DetailedDocument, DocumentKey> = async ({
   // Public, but either archived or not published
   if (preview) throw new NotFound();
   // Verify user if not preview
-  const { clerkId } = fetchClient();
+  const { clerkId } = await fetchClient();
   const inWorkspace = await account.isInWorkspace({
     clerkId,
     workspaceId: document.workspaceId,

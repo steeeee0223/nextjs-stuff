@@ -18,7 +18,7 @@ const handler = createMutationFetcher(
   UpdateWorkspace,
   async (workspaceId, { arg }) => {
     try {
-      fetchClient();
+      await fetchClient();
       const { id, name, icon, domain } = await workspace.update(
         workspaceId,
         arg,
