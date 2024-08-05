@@ -5,10 +5,10 @@ import { useAuth, useOrganization, useUser } from "@clerk/nextjs";
 import type { Client } from "~/lib";
 
 export const useClient = (): Client => {
-  const { userId, orgId } = useAuth();
+  const { isLoaded, userId, orgId } = useAuth();
   const { user } = useUser();
   const { organization } = useOrganization();
-  if (!userId || !user)
+  if (!isLoaded || !userId || !user)
     return {
       type: "personal",
       userId: "unknown",

@@ -21,7 +21,7 @@ import {
 const handler = createMutationFetcher(UpdateDocument, async (_key, { arg }) => {
   const { log, id, ...updateData } = arg;
   try {
-    const { clerkId } = fetchClient();
+    const { clerkId } = await fetchClient();
     const inWorkspace = await account.isInWorkspace({
       clerkId,
       workspaceId: arg.workspaceId,

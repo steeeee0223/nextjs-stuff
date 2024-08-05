@@ -21,7 +21,7 @@ const handler = createMutationFetcher(
   DeleteDocument,
   async (workspaceId, { arg }) => {
     try {
-      const { clerkId } = fetchClient();
+      const { clerkId } = await fetchClient();
       const inWorkspace = await account.isInWorkspace({ clerkId, workspaceId });
       if (!inWorkspace) throw new UnauthorizedError();
       const result = await documents.remove(arg);

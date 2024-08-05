@@ -1,11 +1,15 @@
-import { type PropsWithChildren } from "react";
-import { redirect } from "next/navigation";
+"use client";
 
-import { isAuthenticated } from "~/lib";
+import { type PropsWithChildren } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
+
 import DocsProvider from "./_components/docs-provider";
 
 const ToolsLayout = ({ children }: PropsWithChildren) => {
-  if (!isAuthenticated()) redirect("/select-role");
+  const router = useRouter();
+  const { isSignedIn } = useAuth();
+  if (!isSignedIn) router.push("/select-role");
 
   return <DocsProvider>{children}</DocsProvider>;
 };

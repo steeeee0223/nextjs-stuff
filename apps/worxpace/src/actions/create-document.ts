@@ -23,7 +23,7 @@ const handler = createMutationFetcher(
   CreateDocument,
   async (workspaceId, { arg }) => {
     try {
-      const { clerkId } = fetchClient();
+      const { clerkId } = await fetchClient();
       const inWorkspace = await account.isInWorkspace({ clerkId, workspaceId });
       if (!inWorkspace) throw new UnauthorizedError();
       const icon = toIcon(generateDefaultIcon(arg.type));
@@ -39,7 +39,7 @@ const handler = createMutationFetcher(
       return result;
     } catch (error) {
       if (error instanceof UnauthorizedError) throw error;
-      throw new Error("Failed to archive document.");
+      throw new Error("Failed to create document.");
     }
   },
 );
