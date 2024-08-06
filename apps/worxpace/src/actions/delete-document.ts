@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
 import type { Document } from "@acme/prisma";
@@ -27,7 +26,6 @@ const handler = createMutationFetcher(
       const result = await documents.remove(arg);
       /** Activity Log */
       await auditLogs.remove(arg.id);
-      revalidatePath(`/workspace/${workspaceId}`);
       return result;
     } catch (error) {
       if (error instanceof UnauthorizedError) throw error;

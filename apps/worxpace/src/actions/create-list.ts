@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
 import type { List } from "@acme/prisma";
@@ -25,7 +24,6 @@ const handler = createMutationFetcher(CreateList, async (boardId, { arg }) => {
       action: "CREATE",
       accountId: arg.accountId,
     });
-    revalidatePath(`/kanban/${boardId}`);
     return result;
   } catch (error) {
     if (error instanceof UnauthorizedError) throw error;
