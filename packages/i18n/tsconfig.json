@@ -2,9 +2,8 @@
   "extends": "@acme/tsconfig/base.json",
   "compilerOptions": {
     "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
-    "types": ["vitest/globals", "../i18n/src/types/i18next.d.ts"],
-    "paths": { "@/*": ["./src/*"] }
+    "types": ["./src/types/i18next.d.ts"]
   },
-  "include": ["*.ts", "src", "__test__"],
+  "include": ["*.ts", "*.d.ts", "src"],
   "exclude": ["node_modules"]
 }

@@ -4,6 +4,8 @@ import { useRef, type ChangeEvent } from "react";
 import { ChevronRight, X } from "lucide-react";
 import { useHover } from "usehooks-ts";
 
+import { useTranslation } from "@acme/i18n";
+
 import { Hint } from "@/components/custom/hint";
 import { useModal } from "@/components/custom/modal-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,7 +17,6 @@ import { cn } from "@/lib/utils";
 import { Section, SectionItem, SectionSeparator } from "../_components";
 import { DeleteAccount, EmailSettings, PasswordForm } from "../modals";
 import { useSettings } from "../settings-context";
-import { myAccount } from "./account.data";
 
 export const Account = () => {
   const avatarInputRef = useRef<HTMLInputElement>(null);
@@ -23,6 +24,11 @@ export const Account = () => {
   const avatarIsHover = useHover(avatarRef);
   const avatarCancelRef = useRef<HTMLDivElement>(null);
   const avatarCancelIsHover = useHover(avatarCancelRef);
+  /** i18n */
+  const { t } = useTranslation("settings", { keyPrefix: "my-account" });
+  const myProfile = t("my-profile", { returnObjects: true });
+  const accSec = t("account-security", { returnObjects: true });
+  const support = t("support", { returnObjects: true });
   /** Handlers */
   const {
     settings: { account },
@@ -65,13 +71,15 @@ export const Account = () => {
 
   return (
     <>
-      <Section title="My profile">
+      <Section title={myProfile.title}>
         <div className="flex flex-col">
           <div className="flex items-center">
             <div className="relative">
               <Hint
                 description={
-                  avatarCancelIsHover ? "Remove photo" : "Replace photo"
+                  myProfile[
+                    avatarCancelIsHover ? "remove-photo" : "replace-photo"
+                  ]
                 }
                 variant="notion"
                 size="sm"
@@ -112,7 +120,7 @@ export const Account = () => {
                 className="mb-1 block text-xs text-primary/65"
                 htmlFor="username"
               >
-                Preferred name
+                {myProfile["preferred-name"]}
               </Label>
               <Input
                 variant="notion"
@@ -126,17 +134,17 @@ export const Account = () => {
         </div>
       </Section>
       <SectionSeparator />
-      <Section title="Account security">
-        <SectionItem title={myAccount.email.title} description={account.email}>
+      <Section title={accSec.title}>
+        <SectionItem title={accSec.email.title} description={account.email}>
           <Button variant="notion" size="sm" onClick={handleEmailSettings}>
-            Change email
+            {accSec.email.button}
           </Button>
         </SectionItem>
         <SectionSeparator size="sm" />
-        <SectionItem {...myAccount.password}>
+        <SectionItem {...accSec.password}>
           {account.hasPassword ? (
             <Button variant="notion" size="sm" onClick={handlePasswordForm}>
-              Change password
+              {accSec.password.button}
             </Button>
           ) : (
             <Switch
@@ -147,23 +155,23 @@ export const Account = () => {
           )}
         </SectionItem>
         <SectionSeparator size="sm" />
-        <SectionItem {...myAccount.verification}>
+        <SectionItem {...accSec.verification}>
           <Switch size="sm" disabled />
         </SectionItem>
       </Section>
       <SectionSeparator />
-      <Section title="Support">
-        <SectionItem {...myAccount.support}>
+      <Section title={support.title}>
+        <SectionItem {...support.support}>
           <Switch size="sm" />
         </SectionItem>
         <SectionSeparator size="sm" />
-        <SectionItem {...myAccount.logout}>
+        <SectionItem {...support.logout}>
           <Button variant="ghost" size="icon-sm" className="text-primary/35">
             <ChevronRight className="h-4 w-4" />
           </Button>
         </SectionItem>
         <SectionSeparator size="sm" />
-        <SectionItem {...myAccount.del} titleProps="text-[#eb5757]">
+        <SectionItem {...support.delete} titleProps="text-[#eb5757]">
           <Button
             variant="ghost"
             size="icon-sm"

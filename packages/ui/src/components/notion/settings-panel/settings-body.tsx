@@ -1,3 +1,5 @@
+import { useTranslation } from "@acme/i18n";
+
 import { NotImplemented, Section } from "./_components";
 import {
   Account,
@@ -16,6 +18,7 @@ interface SettingsBodyProps {
 }
 
 const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
+  const { t } = useTranslation();
   const tab = workspace.find(({ value }) => value === activeTab)!;
 
   switch (activeTab) {
@@ -29,7 +32,7 @@ const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
       return <Connections />;
     case "language-region":
       return <Region />;
-    case "settings":
+    case "workspace-settings":
       return <Settings2 />;
     case "security":
       return <Security />;
@@ -37,7 +40,7 @@ const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
       return <Identity />;
     default:
       return (
-        <Section title={tab.name}>
+        <Section title={t(`${tab.value}.title`)}>
           <NotImplemented />
         </Section>
       );
