@@ -14,6 +14,7 @@ export const PasswordSuccess = () => {
         className="z-[99999] w-[280px] gap-0 rounded-sm p-4 text-sm"
         onClick={(e) => e.stopPropagation()}
         hideClose
+        noTitle
       >
         <div className="my-4 flex justify-center">
           <CheckIcon className="size-[27px] flex-shrink-0 fill-primary/85" />

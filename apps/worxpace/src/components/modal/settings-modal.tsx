@@ -74,6 +74,7 @@ export const SettingsModal = () => {
     <Dialog open={isOpen} onOpenChange={setClose}>
       <DialogContent
         forceMount
+        noTitle
         className="z-[99999] flex h-[calc(100vh-100px)] max-h-[720px] w-[calc(100vw-100px)] max-w-[1150px] rounded border-none p-0 shadow"
         onClick={(e) => e.stopPropagation()}
       >
