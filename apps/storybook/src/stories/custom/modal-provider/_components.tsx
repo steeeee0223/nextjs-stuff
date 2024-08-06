@@ -5,7 +5,7 @@ export const Modal = () => {
   const { isOpen, setClose } = useModal();
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
-      <DialogContent className="flex items-center text-2xl font-bold">
+      <DialogContent noTitle className="flex items-center text-2xl font-bold">
         Modal
         <DialogClose />
       </DialogContent>

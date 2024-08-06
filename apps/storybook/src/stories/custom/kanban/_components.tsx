@@ -13,7 +13,7 @@ export const CardModal = () => {
   if (!activeItem) return null;
   return (
     <Dialog open={activeItem !== null} onOpenChange={onClose}>
-      <DialogContent ref={ref}>
+      <DialogContent ref={ref} noTitle>
         <h3 className="text-lg font-medium">Item - {activeItem.title}</h3>
       </DialogContent>
     </Dialog>

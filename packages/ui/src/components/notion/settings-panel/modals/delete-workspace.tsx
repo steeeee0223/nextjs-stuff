@@ -50,6 +50,7 @@ export const DeleteWorkspace = ({
         className="z-[99999] w-[420px] space-y-6 rounded-sm p-5"
         onClick={(e) => e.stopPropagation()}
         hideClose
+        noTitle
       >
         <div className="relative flex w-full flex-col items-center gap-2 self-stretch">
           <div className="flex items-center">

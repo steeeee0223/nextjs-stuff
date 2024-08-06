@@ -23,3 +23,4 @@ export * from "./theme";
 export * from "./toast";
 export * from "./toggle";
 export * from "./tooltip";
+export * from "./visually-hidden";

@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { VisuallyHidden } from "./visually-hidden";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -32,12 +33,13 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 interface DialogContentProps
   extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   hideClose?: boolean;
+  noTitle?: boolean;
 }
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
->(({ className, children, hideClose = false, ...props }, ref) => (
+>(({ className, children, hideClose = false, noTitle, ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
@@ -47,7 +49,13 @@ const DialogContent = React.forwardRef<
         className,
       )}
       {...props}
+      {...(noTitle && { "aria-describedby": undefined })}
     >
+      {noTitle && (
+        <VisuallyHidden asChild>
+          <DialogTitle />
+        </VisuallyHidden>
+      )}
       {children}
       {!hideClose && (
         <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
