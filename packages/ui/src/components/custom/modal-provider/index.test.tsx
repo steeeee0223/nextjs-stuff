@@ -9,7 +9,7 @@ const Modal = () => {
   const { isOpen, setClose } = useModal();
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
-      <DialogContent>
+      <DialogContent noTitle>
         Modal
         <DialogClose />
       </DialogContent>

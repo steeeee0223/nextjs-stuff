@@ -68,6 +68,7 @@ export const PasswordForm = ({
         className="z-[99999] w-[350px] rounded-sm p-6"
         onClick={(e) => e.stopPropagation()}
         hideClose
+        noTitle
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="relative">

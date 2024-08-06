@@ -3,6 +3,7 @@ import type { LucideIcon } from "lucide-react";
 import { Construction } from "lucide-react";
 
 import { Hint } from "@/components/custom/hint";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 interface HintButtonProps {
@@ -38,9 +39,9 @@ export const PlanLink = ({ plan, onClick }: PlanLinkProps) => {
         className="ml-2 flex cursor-pointer select-none items-center rounded-sm hover:bg-primary/10"
         onClick={onClick}
       >
-        <div className="whitespace-nowrap rounded-sm bg-button/10 px-1.5 py-0.5 text-[9px] font-medium uppercase leading-none text-button">
+        <Badge variant="blue" size="sm" className="whitespace-nowrap uppercase">
           {plan} ↗
-        </div>
+        </Badge>
       </div>
     </Hint>
   );

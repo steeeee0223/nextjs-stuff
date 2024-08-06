@@ -18,6 +18,7 @@ export const EmailSettings = ({ email }: EmailSettingsProps) => {
         className="z-[99999] w-[460px] rounded-sm p-8 text-sm"
         onClick={(e) => e.stopPropagation()}
         hideClose
+        noTitle
       >
         <p className="my-0">
           Your current email is <span className="font-bold">{email}</span>.
