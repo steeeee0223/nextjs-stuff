@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
 import type { WorkspaceStore } from "@acme/ui/notion";
@@ -23,7 +22,6 @@ const handler = createMutationFetcher(
         workspaceId,
         arg,
       );
-      revalidatePath(`/workspace/${id}`);
       return { id, name, icon: toIconInfo(icon), domain };
     } catch (error) {
       if (error instanceof UnauthorizedError) throw error;

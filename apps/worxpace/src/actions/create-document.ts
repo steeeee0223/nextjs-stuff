@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
 import type { ENTITY_TYPE } from "@acme/prisma";
@@ -35,7 +34,6 @@ const handler = createMutationFetcher(
         action: "CREATE",
         accountId: arg.accountId,
       });
-      revalidatePath(`/workspace/${workspaceId}`);
       return result;
     } catch (error) {
       if (error instanceof UnauthorizedError) throw error;
