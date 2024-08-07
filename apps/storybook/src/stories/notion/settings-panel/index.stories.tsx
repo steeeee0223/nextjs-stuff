@@ -28,6 +28,7 @@ const mockSettings: SettingsStore = {
     email: "johndoe@example.com",
     id: "fake-account-id-123",
     name: "John Wick",
+    language: "en",
   },
 };
 
