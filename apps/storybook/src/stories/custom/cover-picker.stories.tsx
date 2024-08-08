@@ -22,7 +22,7 @@ export const Default: Story = {
     onUrlChange: async (url) => console.log(`Uploading url: ${url}`),
     children: (
       <>
-        <Button variant="outline">
+        <Button variant="notion">
           <ImageIcon className="mr-2 h-4 w-4" />
           Change cover
         </Button>

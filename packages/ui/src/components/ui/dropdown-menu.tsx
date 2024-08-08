@@ -60,7 +60,7 @@ const contentVariants = cva(  "z-50 min-w-[8rem] overflow-hidden rounded-md bord
   variants: {
     variant: {
       default: "bg-popover text-popover-foreground", 
-      notion: "border-primary/15 dark:bg-[#252525]"
+      notion: "border-primary/15 dark:bg-[#252525] bg-white"
     },
   },
   defaultVariants: {variant: "default"}
