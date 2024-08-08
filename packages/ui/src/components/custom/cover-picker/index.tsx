@@ -64,6 +64,7 @@ export const CoverPicker = ({
     <Popover>
       <PopoverTrigger asChild={asChild}>{children}</PopoverTrigger>
       <PopoverContent
+      variant="notion"
         align="start"
         className="z-[99999] w-[520px] p-0 shadow-none"
       >

@@ -39,7 +39,7 @@ const ColorPicker = forwardRef(function ColorPicker(
           <Circle size={16} color={defaultColor} fill={defaultColor} />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="z-[99999] grid w-[180px] grid-cols-5 gap-0 p-2">
+      <PopoverContent variant="notion" className="z-[99999] grid w-[180px] grid-cols-5 gap-0 p-2">
         {Object.entries(colors).map(([name, color], i) => (
           <Hint asChild key={i} description={name} variant="notion" size="sm">
             <Button

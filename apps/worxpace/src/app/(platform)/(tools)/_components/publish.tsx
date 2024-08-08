@@ -58,6 +58,7 @@ const Publish = ({ page, onUpdate }: PublishProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent
+      variant="notion"
         className="z-99999 w-72"
         align="end"
         alignOffset={8}

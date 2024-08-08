@@ -213,6 +213,7 @@ export const Sidebar = forwardRef(function Sidebar(
             </Hint>
           </PopoverTrigger>
           <PopoverContent
+          variant="notion"
             className="z-[99999] w-72 p-0"
             side={isMobile ? "bottom" : "right"}
           >

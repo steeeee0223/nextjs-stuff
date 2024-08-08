@@ -103,7 +103,7 @@ export const IconBlock = ({
         />
       </PopoverTrigger>
       {editable && (
-        <PopoverContent className="z-[99999] h-[356px] w-[408px] p-0 shadow-none">
+        <PopoverContent  variant="notion" className="z-[99999] h-[356px] w-[408px] p-0 shadow-none">
           <Tabs defaultValue="emoji" className="relative mt-1 w-full">
             <TabsList variant="notion">
               <div className="grow">

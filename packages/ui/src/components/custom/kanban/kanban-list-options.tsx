@@ -54,7 +54,7 @@ export const KanbanListOptions = ({
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="px-0 pb-3 pt-3" side="bottom" align="start">
+      <PopoverContent variant="notion" className="px-0 pb-3 pt-3" side="bottom" align="start">
         <div className="pb-4 text-center text-sm font-medium text-muted-foreground">
           List actions
         </div>

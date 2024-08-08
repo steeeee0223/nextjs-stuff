@@ -53,6 +53,7 @@ export const KanbanItemOptions = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent
+      variant="notion"
         className="px-0 pb-3 pt-3"
         side="bottom"
         align="start"
