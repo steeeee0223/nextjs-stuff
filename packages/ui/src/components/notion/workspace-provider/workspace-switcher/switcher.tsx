@@ -17,9 +17,8 @@ import HeaderDropdown from "./header-dropdown";
 import WorkspaceList from "./workspace-list";
 
 const styles = {
-  seperator: "bg-primary/15",
   action:
-    "focus:bg-primary/5 w-full cursor-pointer text-xs text-primary/55 rounded-sm",
+    "w-full cursor-pointer text-xs text-primary/55",
 };
 
 export interface WorkspaceSwitcherProps {
@@ -68,7 +67,8 @@ export const WorkspaceSwitcher = ({
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="z-[99999] w-80 border-primary/15"
+      variant="notion"
+        className="z-[99999] w-80"
         align="start"
         alignOffset={11}
         forceMount
@@ -87,16 +87,16 @@ export const WorkspaceSwitcher = ({
             <WorkspaceList onSelect={onSelect} />
           </div>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator className={styles.seperator} />
-        <DropdownMenuGroup className="">
-          <DropdownMenuItem className={styles.action} onClick={onCreateAccount}>
+        <DropdownMenuSeparator variant="notion" />
+        <DropdownMenuGroup>
+          <DropdownMenuItem variant="notion" className={styles.action} onClick={onCreateAccount}>
             Add another account
           </DropdownMenuItem>
-          <DropdownMenuItem className={styles.action} onClick={handleLogout}>
+          <DropdownMenuItem variant="notion" className={styles.action} onClick={handleLogout}>
             Log out
           </DropdownMenuItem>
-          <DropdownMenuSeparator className={styles.seperator} />
-          <DropdownMenuItem className={styles.action} onClick={handleGetMac}>
+          <DropdownMenuSeparator variant="notion" />
+          <DropdownMenuItem variant="notion" className={styles.action} onClick={handleGetMac}>
             Get Mac App
           </DropdownMenuItem>
         </DropdownMenuGroup>

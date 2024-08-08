@@ -98,7 +98,8 @@ const WorkspaceList = ({ onSelect }: WorkspaceListProps) => {
       {workspaces?.map((workspace, i) => (
         <DropdownMenuItem
           key={i}
-          className="flex h-11 items-center rounded-sm px-0 py-1 text-sm/[120%] focus:bg-primary/5"
+          variant="notion"
+          className="h-11 px-0 py-1 text-sm/[120%]"
           draggable
           onDragStart={() => (dragItem.current = i)}
           onDragEnter={() => (dragOverItem.current = i)}

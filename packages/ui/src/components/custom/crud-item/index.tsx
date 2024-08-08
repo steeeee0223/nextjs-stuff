@@ -127,19 +127,17 @@ export const CRUDItem = ({
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="z-[99999] w-60 border-primary/10"
+            variant="notion"
+              className="z-[99999] w-60"
               align="start"
               side="right"
               forceMount
             >
-              <DropdownMenuItem
-                className="focus:bg-primary/10"
-                onClick={handleDelete}
-              >
+              <DropdownMenuItem variant="notion"onClick={handleDelete}>
                 <Trash className="mr-2 size-4" />
                 Delete
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-primary/10" />
+              <DropdownMenuSeparator variant="notion" />
               <div className="flex flex-col items-center px-2 py-1">
                 <div className="w-full text-xs text-primary/50">
                   Last edited by: {lastEditedBy}
