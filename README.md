@@ -21,7 +21,7 @@
 
 ![](./docs/img/whiteboard.png)
 
-##### 🚀 Workspace switcher: personal & organizations
+##### 🚀 Workspace switcher: Create a new workspace
 
 ![](./docs/img/workspace-switcher.png)
 
@@ -52,6 +52,14 @@
 ##### 🕑 Page histories
 
 ![](./docs/img/history.png)
+
+##### ⚙️ Settings panel
+
+![](./docs/img/settings-panel.png)
+
+##### 🌎 (Partially) Support locales: EN/DE/ES
+
+![](./docs/img/i18n.png)
 
 ### TODO
 
