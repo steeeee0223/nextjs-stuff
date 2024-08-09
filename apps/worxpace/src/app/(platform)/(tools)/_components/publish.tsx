@@ -50,15 +50,15 @@ const Publish = ({ page, onUpdate }: PublishProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button size="sm" variant="ghost" disabled={page.type !== "document"}>
+        <Button size="sm" variant="hint" disabled={page.type !== "document"}>
           Publish
           {isPublished && (
-            <Globe className={cn(theme.size.icon, "ml-2 text-sky-500")} />
+            <Globe className={cn(theme.size.icon, "ml-2 text-button")} />
           )}
         </Button>
       </PopoverTrigger>
       <PopoverContent
-      variant="notion"
+        variant="notion"
         className="z-99999 w-72"
         align="end"
         alignOffset={8}
@@ -68,9 +68,9 @@ const Publish = ({ page, onUpdate }: PublishProps) => {
           <div className="space-y-4">
             <div className={theme.flex.gap2}>
               <Globe
-                className={cn(theme.size.icon, "animate-pulse text-sky-500")}
+                className={cn(theme.size.icon, "animate-pulse text-button")}
               />
-              <p className="text-xs font-medium text-sky-500">
+              <p className="text-xs font-medium text-button">
                 This note is live on web.
               </p>
             </div>
@@ -94,6 +94,7 @@ const Publish = ({ page, onUpdate }: PublishProps) => {
             </div>
             <Button
               size="sm"
+              variant="warning"
               className="w-full text-xs"
               disabled={isSubmitting}
               onClick={handlePublish}
@@ -109,6 +110,7 @@ const Publish = ({ page, onUpdate }: PublishProps) => {
               Share your work with others.
             </span>
             <Button
+              variant="blue"
               disabled={isSubmitting || page.isArchived}
               onClick={handlePublish}
               className="w-full text-xs"

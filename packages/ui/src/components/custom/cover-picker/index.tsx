@@ -15,10 +15,10 @@ import { UrlForm } from "./url-form";
 
 /** Styles */
 const styles = {
-  tabTrigger:"p-1",
+  tabTrigger: "p-1",
   tabTriggerText: "rounded-sm py-1 px-2 hover:bg-primary/5",
   tabRemove: "mx-2 border-none py-1 px-2 shadow-none hover:bg-primary/5",
-  tabContent:"px-4 py-2",
+  tabContent: "px-4 py-2",
 };
 
 export interface CoverPickerProps extends PropsWithChildren {
@@ -64,20 +64,32 @@ export const CoverPicker = ({
     <Popover>
       <PopoverTrigger asChild={asChild}>{children}</PopoverTrigger>
       <PopoverContent
-      variant="notion"
+        variant="notion"
         align="start"
         className="z-[99999] w-[520px] p-0 shadow-none"
       >
         <Tabs defaultValue="upload" className="relative mt-1 w-full">
           <TabsList variant="notion">
             <div className="grow">
-              <TabsTrigger value="upload" variant="notion" className={styles.tabTrigger}>
+              <TabsTrigger
+                value="upload"
+                variant="notion"
+                className={styles.tabTrigger}
+              >
                 <p className={styles.tabTriggerText}>Upload</p>
               </TabsTrigger>
-              <TabsTrigger value="link" variant="notion" className={styles.tabTrigger}>
+              <TabsTrigger
+                value="link"
+                variant="notion"
+                className={styles.tabTrigger}
+              >
                 <p className={styles.tabTriggerText}>Link</p>
               </TabsTrigger>
-              <TabsTrigger value="unsplash" variant="notion" className={styles.tabTrigger}>
+              <TabsTrigger
+                value="unsplash"
+                variant="notion"
+                className={styles.tabTrigger}
+              >
                 <p className={styles.tabTriggerText}>Unsplash</p>
               </TabsTrigger>
             </div>
@@ -92,7 +104,11 @@ export const CoverPicker = ({
               </Button>
             </div>
           </TabsList>
-          <TabsContent value="upload" variant="notion" className={styles.tabContent}>
+          <TabsContent
+            value="upload"
+            variant="notion"
+            className={styles.tabContent}
+          >
             <SingleImageDropzone
               className="w-full outline-none"
               disabled={isSubmitting}
@@ -103,13 +119,21 @@ export const CoverPicker = ({
               Images wider than 1500 pixels work best.
             </p>
           </TabsContent>
-          <TabsContent value="link" variant="notion" className={styles.tabContent}>
+          <TabsContent
+            value="link"
+            variant="notion"
+            className={styles.tabContent}
+          >
             <UrlForm disabled={isSubmitting} onUrlSubmit={onUrlSubmit} />
             <p className="p-4 text-center text-xs text-muted-foreground">
               Works with any image form the web.
             </p>
           </TabsContent>
-          <TabsContent value="unsplash" variant="notion" className={styles.tabContent}>
+          <TabsContent
+            value="unsplash"
+            variant="notion"
+            className={styles.tabContent}
+          >
             <Unsplash
               className="overflow-y-scroll p-0"
               apiKey={unsplashAPIKey}

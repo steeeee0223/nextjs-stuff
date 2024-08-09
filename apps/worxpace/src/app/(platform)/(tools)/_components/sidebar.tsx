@@ -127,7 +127,8 @@ export const Sidebar = forwardRef(function Sidebar(
         <Hint
           side="right"
           description="Search and quickly jump to a page"
-          className={theme.tooltip}
+          variant="notion"
+          size="sm"
           triggerProps="min-w-full"
         >
           <Item
@@ -140,7 +141,8 @@ export const Sidebar = forwardRef(function Sidebar(
         <Hint
           side="right"
           description="Manage your account and settings"
-          className={theme.tooltip}
+          variant="notion"
+          size="sm"
           triggerProps="min-w-full"
         >
           <Item
@@ -153,7 +155,8 @@ export const Sidebar = forwardRef(function Sidebar(
         <Hint
           side="right"
           description="Manage your workflows"
-          className={theme.tooltip}
+          variant="notion"
+          size="sm"
           triggerProps="min-w-full"
         >
           <Item
@@ -165,7 +168,8 @@ export const Sidebar = forwardRef(function Sidebar(
         <Hint
           side="right"
           description="Create a new document"
-          className={theme.tooltip}
+          variant="notion"
+          size="sm"
           triggerProps="min-w-full"
         >
           <Item
@@ -204,16 +208,17 @@ export const Sidebar = forwardRef(function Sidebar(
         <Popover>
           <PopoverTrigger className="mt-4 w-full">
             <Hint
+              variant="notion"
+              size="sm"
               side="right"
               description="Restore deleted pages"
-              className={theme.tooltip}
               triggerProps="min-w-full"
             >
               <Item label="Trash" icon={{ type: "lucide", name: "trash" }} />
             </Hint>
           </PopoverTrigger>
           <PopoverContent
-          variant="notion"
+            variant="notion"
             className="z-[99999] w-72 p-0"
             side={isMobile ? "bottom" : "right"}
           >

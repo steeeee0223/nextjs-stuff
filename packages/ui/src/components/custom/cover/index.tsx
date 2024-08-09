@@ -12,7 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
 /** Styles */
-const buttonProps: ButtonProps = {variant: "notion",size: "xs"};
+const buttonProps: ButtonProps = { variant: "notion", size: "xs" };
 
 export interface CoverImageProps extends Omit<CoverPickerProps, "asChild"> {
   url: string | null;

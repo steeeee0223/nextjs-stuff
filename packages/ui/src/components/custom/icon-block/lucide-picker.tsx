@@ -28,11 +28,7 @@ const Icon = ({ name, onClick }: IconProps) => {
 
   return (
     <Hint asChild side="top" description={name} variant="notion" size="sm">
-      <Button
-        variant="outline"
-        onClick={handleClick}
-        className={styles.gridItem}
-      >
+      <Button variant="hint" onClick={handleClick} className={styles.gridItem}>
         <LucideIcon name={name} size={20} />
       </Button>
     </Hint>
@@ -100,9 +96,9 @@ const LucidePicker = ({ onSelect, onColorChange }: LucidePickerProps) => {
         </div>
         <Hint asChild description="Random" variant="notion" size="sm">
           <Button
-            variant="outline"
+            variant="notion"
             size="icon-md"
-            className={styles.button}
+            className="rounded-sm"
             onClick={handleRandom}
           >
             <Shuffle size={16} />

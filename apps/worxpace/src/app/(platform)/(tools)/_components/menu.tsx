@@ -32,7 +32,7 @@ const Menu = ({ accountId, workspaceId, documentId }: MenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="icon-nav" variant="ghost">
+        <Button size="icon-nav" variant="hint">
           <MoreHorizontal className={theme.size.icon} />
         </Button>
       </DropdownMenuTrigger>

@@ -28,11 +28,19 @@ const HeaderDropdown = ({
         <MoreHorizontal className={styles.icon} />
       </DropdownMenuTrigger>
       <DropdownMenuContent variant="notion" className="z-[99999]">
-        <DropdownMenuItem variant="notion" className={styles.item} onClick={onCreateWorkspace}>
+        <DropdownMenuItem
+          variant="notion"
+          className={styles.item}
+          onClick={onCreateWorkspace}
+        >
           <PlusSquare className={styles.icon} />
           <p>Join or create workspace</p>
         </DropdownMenuItem>
-        <DropdownMenuItem variant="notion" className={styles.item} onClick={onLogout}>
+        <DropdownMenuItem
+          variant="notion"
+          className={styles.item}
+          onClick={onLogout}
+        >
           <XCircle className={styles.icon} />
           <p>Log out</p>
         </DropdownMenuItem>

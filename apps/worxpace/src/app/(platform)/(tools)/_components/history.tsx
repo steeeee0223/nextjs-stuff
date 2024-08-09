@@ -29,7 +29,7 @@ const History = ({ pageId }: HistoryProps) => {
 
   return (
     <Drawer direction="right" open={open} onOpenChange={setOpen}>
-      <Hint description={hint} className={theme.tooltip}>
+      <Hint description={hint} variant="notion" size="sm">
         <DrawerTrigger asChild onClick={handleClick}>
           <Button variant="ghost" size="icon-nav">
             <HistoryIcon className={theme.size.icon} />

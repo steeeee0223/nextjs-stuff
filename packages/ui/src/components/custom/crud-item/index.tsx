@@ -8,6 +8,7 @@ import stableHash from "stable-hash";
 import { useHover } from "usehooks-ts";
 
 import { IconBlock, type IconInfo } from "@/components/custom/icon-block";
+import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -76,8 +77,10 @@ export const CRUDItem = ({
       role="button"
       style={{ paddingLeft: `${((level ?? 0) + 1) * 12}px` }}
       className={cn(
-        "flex items-center",
-        "group min-h-[27px] w-full py-1 pr-3 text-sm font-medium text-primary/50 hover:bg-primary/10",
+        buttonVariants({
+          variant: "hint",
+          className: "group min-h-[27px] w-full py-1 pr-3",
+        }),
         active && "bg-primary/5 text-primary",
       )}
     >
@@ -121,19 +124,25 @@ export const CRUDItem = ({
             <DropdownMenuTrigger onClick={(e) => e.stopPropagation()} asChild>
               <div
                 role="button"
-                className="ml-auto h-full rounded-sm p-0.5 opacity-0 hover:bg-primary/10 group-hover:opacity-100"
+                className={cn(
+                  buttonVariants({
+                    variant: "hint",
+                    className:
+                      "ml-auto h-full rounded-sm p-0.5 opacity-0 group-hover:opacity-100",
+                  }),
+                )}
               >
-                <MoreHorizontal className="size-4 text-primary/50" />
+                <MoreHorizontal className="size-4" />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-            variant="notion"
+              variant="notion"
               className="z-[99999] w-60"
               align="start"
               side="right"
               forceMount
             >
-              <DropdownMenuItem variant="notion"onClick={handleDelete}>
+              <DropdownMenuItem variant="notion" onClick={handleDelete}>
                 <Trash className="mr-2 size-4" />
                 Delete
               </DropdownMenuItem>
@@ -152,9 +161,15 @@ export const CRUDItem = ({
             <div
               role="button"
               onClick={handleCreate}
-              className="ml-auto h-full rounded-sm p-0.5 opacity-0 hover:bg-primary/10 group-hover:opacity-100"
+              className={cn(
+                buttonVariants({
+                  variant: "hint",
+                  className:
+                    "ml-auto h-full rounded-sm p-0.5 opacity-0 group-hover:opacity-100",
+                }),
+              )}
             >
-              <Plus className="size-4 text-primary/50" />
+              <Plus className="size-4" />
             </div>
           )}
         </div>

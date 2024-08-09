@@ -41,7 +41,8 @@ const DocList = ({
           <Hint
             side="top"
             description="Click to hide section"
-            className={theme.tooltip}
+            variant="notion"
+            size="sm"
           >
             <div
               role="button"
@@ -59,7 +60,9 @@ const DocList = ({
         <Hint
           side="right"
           description={`Add a ${group}`}
-          className={cn(theme.tooltip, "hover:opacity-100")}
+          variant="notion"
+          size="sm"
+          className="hover:opacity-100"
         >
           <div
             role="button"
