@@ -1,5 +1,9 @@
 # Changelog
 
+## Version `1.0.3`
+
+- `ui` Update components: `Tabs`, `DropdownMenu`, `Popover`
+
 ## Version `1.0.2`
 
 - `repo` Upgrade packages: `clerk`

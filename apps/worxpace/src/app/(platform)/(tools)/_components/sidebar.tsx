@@ -111,23 +111,26 @@ export const Sidebar = forwardRef(function Sidebar(
         isMobile && "w-0",
       )}
     >
-      <div
-        onClick={collapse}
-        role="button"
-        className={cn(
-          theme.bg.hover,
-          "absolute right-2 top-3 h-6 w-6 rounded-sm text-muted-foreground opacity-0 transition group-hover/sidebar:opacity-100",
-          isMobile && "opacity-100",
-        )}
-      >
-        <ChevronsLeft className="h-6 w-6" />
+      <div className="flex h-12 flex-shrink-0 flex-grow-0 items-center justify-between">
+        <WorkspaceSwitcher {...switcherHandlers} />
+        <div
+          onClick={collapse}
+          role="button"
+          className={cn(
+            theme.bg.hover,
+            "absolute right-2 h-6 w-6 rounded-sm text-muted-foreground opacity-0 transition group-hover/sidebar:opacity-100",
+            isMobile && "opacity-100",
+          )}
+        >
+          <ChevronsLeft className="h-6 w-6" />
+        </div>
       </div>
       <div>
-        <WorkspaceSwitcher {...switcherHandlers} />
         <Hint
           side="right"
           description="Search and quickly jump to a page"
-          className={theme.tooltip}
+          variant="notion"
+          size="sm"
           triggerProps="min-w-full"
         >
           <Item
@@ -140,7 +143,8 @@ export const Sidebar = forwardRef(function Sidebar(
         <Hint
           side="right"
           description="Manage your account and settings"
-          className={theme.tooltip}
+          variant="notion"
+          size="sm"
           triggerProps="min-w-full"
         >
           <Item
@@ -153,7 +157,8 @@ export const Sidebar = forwardRef(function Sidebar(
         <Hint
           side="right"
           description="Manage your workflows"
-          className={theme.tooltip}
+          variant="notion"
+          size="sm"
           triggerProps="min-w-full"
         >
           <Item
@@ -165,7 +170,8 @@ export const Sidebar = forwardRef(function Sidebar(
         <Hint
           side="right"
           description="Create a new document"
-          className={theme.tooltip}
+          variant="notion"
+          size="sm"
           triggerProps="min-w-full"
         >
           <Item
@@ -204,15 +210,17 @@ export const Sidebar = forwardRef(function Sidebar(
         <Popover>
           <PopoverTrigger className="mt-4 w-full">
             <Hint
+              variant="notion"
+              size="sm"
               side="right"
               description="Restore deleted pages"
-              className={theme.tooltip}
               triggerProps="min-w-full"
             >
               <Item label="Trash" icon={{ type: "lucide", name: "trash" }} />
             </Hint>
           </PopoverTrigger>
           <PopoverContent
+            variant="notion"
             className="z-[99999] w-72 p-0"
             side={isMobile ? "bottom" : "right"}
           >

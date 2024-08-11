@@ -25,10 +25,8 @@ import { UrlForm } from "./url-form";
 const styles = {
   popoverTrigger:
     "flex items-center rounded-sm text-muted-foreground hover:bg-primary/5 cursor-pointer",
-  tabTrigger:
-    "relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 py-2 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none",
-  tabContent:
-    "relative px-5 py-2 [&_h3.font-heading]:text-base [&_h3.font-heading]:font-semibold",
+  tabTrigger: "px-4 py-2",
+  tabContent: "px-5 py-2",
 };
 
 const iconBlockVariants = cva("", {
@@ -107,32 +105,47 @@ export const IconBlock = ({
         />
       </PopoverTrigger>
       {editable && (
-        <PopoverContent className="z-[99999] h-[356px] w-[408px] p-0 shadow-none">
+        <PopoverContent
+          variant="notion"
+          className="z-[99999] h-[356px] w-[408px] p-0 shadow-none"
+        >
           <Tabs defaultValue="emoji" className="relative mt-1 w-full">
-            <TabsList className="flex w-full justify-start rounded-none border-b bg-transparent p-0">
+            <TabsList variant="notion">
               <div className="grow">
-                <TabsTrigger value="emoji" className={styles.tabTrigger}>
+                <TabsTrigger
+                  value="emoji"
+                  variant="notion"
+                  className={styles.tabTrigger}
+                >
                   Emojis
                 </TabsTrigger>
-                <TabsTrigger value="lucide" className={styles.tabTrigger}>
+                <TabsTrigger
+                  value="lucide"
+                  variant="notion"
+                  className={styles.tabTrigger}
+                >
                   Icons
                 </TabsTrigger>
-                <TabsTrigger value="file" className={styles.tabTrigger}>
+                <TabsTrigger
+                  value="file"
+                  variant="notion"
+                  className={styles.tabTrigger}
+                >
                   Upload
                 </TabsTrigger>
               </div>
               <div className="grow-0">
                 <Button
                   onClick={remove}
+                  variant="hint"
                   size="sm"
-                  className="mx-2 my-1 border-none p-1 shadow-none hover:bg-primary/5"
-                  variant="outline"
+                  className="mx-2 my-1 p-1"
                 >
                   Remove
                 </Button>
               </div>
             </TabsList>
-            <TabsContent value="emoji" className={cn(styles.tabContent, "p-0")}>
+            <TabsContent value="emoji" variant="notion" className="p-0">
               <EmojiPicker
                 height="300px"
                 width="406px"
@@ -141,13 +154,21 @@ export const IconBlock = ({
                 onEmojiClick={handleEmojiSelect}
               />
             </TabsContent>
-            <TabsContent value="lucide" className={styles.tabContent}>
+            <TabsContent
+              value="lucide"
+              variant="notion"
+              className={styles.tabContent}
+            >
               <LucidePicker
                 onSelect={handleLucideSelect}
                 onColorChange={setColor}
               />
             </TabsContent>
-            <TabsContent value="file" className={styles.tabContent}>
+            <TabsContent
+              value="file"
+              variant="notion"
+              className={styles.tabContent}
+            >
               <UrlForm disabled={isPending} onUrlSubmit={handleUrlSubmit} />
               <ImageDropzone
                 className="mt-6 w-full border-solid border-primary/10"

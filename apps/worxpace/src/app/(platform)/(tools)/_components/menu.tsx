@@ -32,7 +32,7 @@ const Menu = ({ accountId, workspaceId, documentId }: MenuProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="icon-nav" variant="ghost">
+        <Button size="icon-nav" variant="hint" className="text-inherit">
           <MoreHorizontal className={theme.size.icon} />
         </Button>
       </DropdownMenuTrigger>
@@ -42,11 +42,11 @@ const Menu = ({ accountId, workspaceId, documentId }: MenuProps) => {
         alignOffset={8}
         forceMount
       >
-        <DropdownMenuItem onClick={onArchive}>
+        <DropdownMenuItem variant="notion" onClick={onArchive}>
           <Trash className={cn(theme.size.icon, "mr-2")} />
           Delete
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator variant="notion" />
         <div className="p-2 text-xs text-muted-foreground">
           Last edited by: {lastEditedBy}
         </div>

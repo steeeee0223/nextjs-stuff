@@ -10,18 +10,11 @@ import { stableHash } from "swr/_internal";
 import type { CoverImage, Document } from "@acme/prisma";
 import { Cover, CoverPicker, IconBlock, type IconInfo } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
-import { Button, Skeleton, type ButtonProps } from "@acme/ui/shadcn";
+import { Button, Skeleton } from "@acme/ui/shadcn";
 
 import { theme } from "~/constants/theme";
 import { useEdgeStore } from "~/hooks";
 import { toIcon, toIconInfo, UpdateDocumentHandler } from "~/lib";
-
-/** Styles */
-const buttonProps: ButtonProps = {
-  className: "text-muted-foreground text-xs",
-  variant: "outline",
-  size: "sm",
-};
 
 interface DocHeaderProps {
   document: Document;
@@ -153,7 +146,7 @@ const DocHeader = ({ document, preview, onUpdate }: DocHeaderProps) => {
                 onUrlChange={onUploadUrl}
                 onRemove={onRemoveCover}
               >
-                <Button {...buttonProps}>
+                <Button variant="hint" size="sm">
                   <ImageIcon className="mr-2 h-4 w-4" />
                   Add cover
                 </Button>

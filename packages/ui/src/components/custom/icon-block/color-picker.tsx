@@ -34,16 +34,19 @@ const ColorPicker = forwardRef(function ColorPicker(
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild className={styles.button} ref={ref}>
-        <Button variant="outline" size="icon-md">
+      <PopoverTrigger asChild ref={ref}>
+        <Button variant="notion" size="icon-md">
           <Circle size={16} color={defaultColor} fill={defaultColor} />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="z-[99999] grid w-[180px] grid-cols-5 gap-0 p-2">
+      <PopoverContent
+        variant="notion"
+        className="z-[99999] grid w-[180px] grid-cols-5 gap-0 p-2"
+      >
         {Object.entries(colors).map(([name, color], i) => (
           <Hint asChild key={i} description={name} variant="notion" size="sm">
             <Button
-              variant="outline"
+              variant="hint"
               size="icon-md"
               onClick={() => handleSelect(color)}
               className={styles.gridItem}
