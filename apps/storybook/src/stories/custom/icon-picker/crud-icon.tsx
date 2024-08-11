@@ -20,22 +20,18 @@ const CrudIcon = () => {
           </IconPicker>
           <Button
             onClick={onRemoveIcon}
-            className="rounded-full text-xs text-muted-foreground opacity-0 transition group-hover/icon:opacity-100"
-            variant="outline"
+            className="rounded-full text-xs text-primary/50 opacity-0 transition group-hover/icon:opacity-100"
+            variant="notion"
             size="icon"
           >
-            <X className="w04 h-4" />
+            <X className="size-4" />
           </Button>
         </div>
       ) : (
         <div className="flex items-center gap-x-2 py-4">
           <IconPicker asChild onChange={onUpdateIcon}>
-            <Button
-              className="text-xs text-muted-foreground"
-              variant="ghost"
-              size="sm"
-            >
-              <Smile className="mr-2 h-4 w-4" />
+            <Button className="text-xs" variant="hint" size="sm">
+              <Smile className="mr-2 size-4" />
               Add icon
             </Button>
           </IconPicker>

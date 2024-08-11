@@ -4,6 +4,7 @@ import { ChevronsUpDown } from "lucide-react";
 import stableHash from "stable-hash";
 
 import { IconBlock } from "@/components/custom/icon-block";
+import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,14 +13,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import { useWorkspace } from "../workspace-context";
 import HeaderDropdown from "./header-dropdown";
 import WorkspaceList from "./workspace-list";
 
 const styles = {
-  seperator: "bg-primary/15",
-  action:
-    "focus:bg-primary/5 w-full cursor-pointer text-xs text-primary/55 rounded-sm",
+  action: "w-full cursor-pointer text-xs text-primary/55",
 };
 
 export interface WorkspaceSwitcherProps {
@@ -49,7 +49,12 @@ export const WorkspaceSwitcher = ({
       <DropdownMenuTrigger asChild>
         <div
           role="button"
-          className="flex w-full items-center p-3 text-sm hover:rounded-sm hover:bg-primary/5"
+          className={cn(
+            buttonVariants({
+              variant: "hint",
+              className: "w-full justify-normal rounded-sm p-3",
+            }),
+          )}
         >
           <div className="flex max-w-[150px] items-center gap-x-2">
             <IconBlock
@@ -60,7 +65,7 @@ export const WorkspaceSwitcher = ({
               }
               key={stableHash(activeWorkspace?.icon)}
             />
-            <span className="line-clamp-1 text-start font-medium">
+            <span className="overflow-hidden text-ellipsis text-start font-medium text-primary">
               {activeWorkspace?.name}
             </span>
           </div>
@@ -68,7 +73,8 @@ export const WorkspaceSwitcher = ({
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="z-[99999] w-80 border-primary/15"
+        variant="notion"
+        className="z-[99999] w-80"
         align="start"
         alignOffset={11}
         forceMount
@@ -87,16 +93,28 @@ export const WorkspaceSwitcher = ({
             <WorkspaceList onSelect={onSelect} />
           </div>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator className={styles.seperator} />
-        <DropdownMenuGroup className="">
-          <DropdownMenuItem className={styles.action} onClick={onCreateAccount}>
+        <DropdownMenuSeparator variant="notion" />
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            variant="notion"
+            className={styles.action}
+            onClick={onCreateAccount}
+          >
             Add another account
           </DropdownMenuItem>
-          <DropdownMenuItem className={styles.action} onClick={handleLogout}>
+          <DropdownMenuItem
+            variant="notion"
+            className={styles.action}
+            onClick={handleLogout}
+          >
             Log out
           </DropdownMenuItem>
-          <DropdownMenuSeparator className={styles.seperator} />
-          <DropdownMenuItem className={styles.action} onClick={handleGetMac}>
+          <DropdownMenuSeparator variant="notion" />
+          <DropdownMenuItem
+            variant="notion"
+            className={styles.action}
+            onClick={handleGetMac}
+          >
             Get Mac App
           </DropdownMenuItem>
         </DropdownMenuGroup>

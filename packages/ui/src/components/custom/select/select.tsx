@@ -64,7 +64,7 @@ const CustomSelect = ({
         )}
       </SelectTrigger>
       <SelectContent
-        className="z-[99999]"
+        className="z-[99999] border-primary/10"
         position="popper"
         side={side}
         align={align}

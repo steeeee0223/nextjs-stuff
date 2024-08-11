@@ -8,6 +8,7 @@ import stableHash from "stable-hash";
 import { useHover } from "usehooks-ts";
 
 import { IconBlock, type IconInfo } from "@/components/custom/icon-block";
+import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -76,9 +77,11 @@ export const CRUDItem = ({
       role="button"
       style={{ paddingLeft: `${((level ?? 0) + 1) * 12}px` }}
       className={cn(
-        "flex items-center",
-        "group min-h-[27px] w-full py-1 pr-3 text-sm font-medium text-primary/50 hover:bg-primary/10",
-        active && "bg-primary/5 text-primary",
+        buttonVariants({
+          variant: "hint",
+          className: "group h-[27px] w-full justify-normal py-1 pr-3",
+        }),
+        active && "bg-primary/10 text-primary",
       )}
     >
       <div ref={hoverRef}>
@@ -121,25 +124,29 @@ export const CRUDItem = ({
             <DropdownMenuTrigger onClick={(e) => e.stopPropagation()} asChild>
               <div
                 role="button"
-                className="ml-auto h-full rounded-sm p-0.5 opacity-0 hover:bg-primary/10 group-hover:opacity-100"
+                className={cn(
+                  buttonVariants({
+                    variant: "hint",
+                    className:
+                      "ml-auto h-full rounded-sm p-0.5 opacity-0 group-hover:opacity-100",
+                  }),
+                )}
               >
-                <MoreHorizontal className="size-4 text-primary/50" />
+                <MoreHorizontal className="size-4" />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="z-[99999] w-60 border-primary/10"
+              variant="notion"
+              className="z-[99999] w-60"
               align="start"
               side="right"
               forceMount
             >
-              <DropdownMenuItem
-                className="focus:bg-primary/10"
-                onClick={handleDelete}
-              >
+              <DropdownMenuItem variant="notion" onClick={handleDelete}>
                 <Trash className="mr-2 size-4" />
                 Delete
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-primary/10" />
+              <DropdownMenuSeparator variant="notion" />
               <div className="flex flex-col items-center px-2 py-1">
                 <div className="w-full text-xs text-primary/50">
                   Last edited by: {lastEditedBy}
@@ -154,9 +161,15 @@ export const CRUDItem = ({
             <div
               role="button"
               onClick={handleCreate}
-              className="ml-auto h-full rounded-sm p-0.5 opacity-0 hover:bg-primary/10 group-hover:opacity-100"
+              className={cn(
+                buttonVariants({
+                  variant: "hint",
+                  className:
+                    "ml-auto h-full rounded-sm p-0.5 opacity-0 group-hover:opacity-100",
+                }),
+              )}
             >
-              <Plus className="size-4 text-primary/50" />
+              <Plus className="size-4" />
             </div>
           )}
         </div>
@@ -168,13 +181,11 @@ export const CRUDItem = ({
 CRUDItem.Skeleton = function ItemSkeleton({ level }: { level?: number }) {
   return (
     <div
-      style={{
-        paddingLeft: level ? `${level * 12 + 25}px` : "12px",
-      }}
+      style={{ paddingLeft: level ? `${level * 12 + 25}px` : "12px" }}
       className="flex gap-x-2 px-2 py-1.5"
     >
-      <Skeleton className={cn("h-4 w-4", "w-[18px] bg-primary/5")} />
-      <Skeleton className="h-4 w-full bg-primary/5" />
+      <Skeleton className="h-4 w-[18px] bg-primary/10" />
+      <Skeleton className="h-4 w-full bg-primary/10" />
     </div>
   );
 };

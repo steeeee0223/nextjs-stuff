@@ -39,22 +39,23 @@ export const KanbanListOptions = ({
   };
 
   const buttonProps: ButtonProps = {
-    className:
-      "rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm",
-    variant: "ghost",
+    className: "rounded-none w-full h-auto p-2 px-5 justify-start font-normal",
+    variant: "hint",
   };
 
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          className="h-auto w-auto p-2 text-muted-foreground"
-          variant="ghost"
-        >
+        <Button className="h-auto w-auto p-2" variant="hint">
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="px-0 pb-3 pt-3" side="bottom" align="start">
+      <PopoverContent
+        variant="notion"
+        className="px-0 pb-3 pt-3"
+        side="bottom"
+        align="start"
+      >
         <div className="pb-4 text-center text-sm font-medium text-muted-foreground">
           List actions
         </div>

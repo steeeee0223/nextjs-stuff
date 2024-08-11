@@ -20,20 +20,17 @@ import { styles } from "./styles";
 interface IconProps {
   onClick?: (name: LucideName) => void;
   name: LucideName;
+  color: string;
 }
 
-const Icon = ({ name, onClick }: IconProps) => {
+const Icon = ({ name, color, onClick }: IconProps) => {
   const LucideIcon = dynamic(dynamicIconImports[name], { ssr: false });
   const handleClick = () => onClick?.(name);
 
   return (
     <Hint asChild side="top" description={name} variant="notion" size="sm">
-      <Button
-        variant="outline"
-        onClick={handleClick}
-        className={styles.gridItem}
-      >
-        <LucideIcon name={name} size={20} />
+      <Button variant="hint" onClick={handleClick} className={styles.gridItem}>
+        <LucideIcon name={name} color={color} size={20} strokeWidth={2.2} />
       </Button>
     </Hint>
   );
@@ -99,12 +96,7 @@ const LucidePicker = ({ onSelect, onColorChange }: LucidePickerProps) => {
           />
         </div>
         <Hint asChild description="Random" variant="notion" size="sm">
-          <Button
-            variant="outline"
-            size="icon-md"
-            className={styles.button}
-            onClick={handleRandom}
-          >
+          <Button variant="notion" size="icon-md" onClick={handleRandom}>
             <Shuffle size={16} />
           </Button>
         </Hint>
@@ -137,6 +129,7 @@ const LucidePicker = ({ onSelect, onColorChange }: LucidePickerProps) => {
                 <Icon
                   key={i}
                   name={name}
+                  color={color}
                   onClick={(name) => onSelect?.(name, color)}
                 />
               ))}
