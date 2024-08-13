@@ -9,6 +9,7 @@
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
+    "coverage": "turbo coverage",
     "db:push": "pnpm -F prisma push",
     "db:studio": "pnpm -F prisma dev",
     "dev": "turbo dev --parallel",
@@ -22,14 +23,16 @@
     "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
+    "test": "turbo test",
+    "test:watch": "turbo test:watch",
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:*",
-    "@turbo/gen": "^1.13.3",
+    "@turbo/gen": "^2.0.12",
     "prettier": "^3.2.5",
-    "turbo": "^1.13.3",
-    "typescript": "^5.4.5"
+    "turbo": "^2.0.12",
+    "typescript": "^5.5.4"
   },
   "prettier": "@acme/prettier-config"
 }

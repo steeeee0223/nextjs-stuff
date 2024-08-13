@@ -1,7 +1,7 @@
 {
   "name": "@acme/i18n",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "exports": {
     ".": "./src/index.tsx"
@@ -22,7 +22,7 @@
     "eslint": "^8.56.0",
     "i18next-resources-for-ts": "^1.5.0",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.4"
   },
   "eslintConfig": {
     "extends": [

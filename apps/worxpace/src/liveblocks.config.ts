@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
 import { createClient } from "@liveblocks/client";
 import { createRoomContext } from "@liveblocks/react";

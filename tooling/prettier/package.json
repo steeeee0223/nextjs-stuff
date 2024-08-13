@@ -1,7 +1,7 @@
 {
   "name": "@acme/prettier-config",
   "private": true,
-  "version": "0.2.0",
+  "version": "1.0.3",
   "type": "module",
   "exports": {
     ".": "./index.js"
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@acme/tsconfig": "workspace:*",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.4"
   },
   "prettier": "@acme/prettier-config"
 }
