@@ -16,7 +16,7 @@ const fetcher: Fetcher<Log[], HistoryKey> = async ({ pageId }) => {
       entity,
       createdAt,
     }));
-  } catch (e) {
+  } catch {
     throw new Error("History not found");
   }
 };

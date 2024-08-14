@@ -1,7 +1,7 @@
 {
   "name": "@acme/prisma",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.3",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
@@ -27,7 +27,7 @@
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
     "prisma": "^5.13.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.5.4"
   },
   "eslintConfig": {
     "extends": [

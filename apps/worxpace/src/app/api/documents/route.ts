@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     if (!result) return new NextResponse("Unauthorized", { status: 401 });
     const documents = await db.getByWorkspace({ workspaceId, isArchived });
     return NextResponse.json(documents);
-  } catch (e) {
+  } catch {
     return new NextResponse("Internal Service Error", { status: 500 });
   }
 }
