@@ -24,7 +24,7 @@ import {
 const fetcher = async ({ workspaceId }: DocumentsKey) => {
   try {
     return await fetchUrl<DetailedDocument[]>(
-      `/api/documents?workspaceId=${workspaceId}`,
+      `/api/trpc/documents?workspaceId=${workspaceId}`,
     );
   } catch (error) {
     console.log(error);

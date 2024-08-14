@@ -16,6 +16,7 @@
   "dependencies": {
     "@acme/i18n": "workspace:*",
     "@acme/prisma": "workspace:*",
+    "@acme/trpc": "workspace:*",
     "@acme/ui": "workspace:*",
     "@acme/validators": "workspace:*",
     "@blocknote/core": "^0.15.0",
@@ -30,6 +31,7 @@
     "@liveblocks/react": "^1.12.0",
     "@liveblocks/yjs": "^1.12.0",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "@trpc/server": "next",
     "lucide-react": "^0.408.0",
     "next": "^14.2.3",
     "react": "18.3.1",
