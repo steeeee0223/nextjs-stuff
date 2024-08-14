@@ -6,7 +6,6 @@
 import {
   forwardRef,
   useCallback,
-  useEffect,
   type ForwardedRef,
   type MouseEventHandler,
 } from "react";
@@ -14,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 // import { useAuth, useOrganizationList } from "@clerk/nextjs";
 import { ChevronsLeft } from "lucide-react";
+import { useHotkeys } from "react-hotkeys-hook";
 
 import { Hint, CRUDItem as Item, useModal } from "@acme/ui/custom";
 import { cn } from "@acme/ui/lib";
@@ -22,7 +22,12 @@ import {
   WorkspaceSwitcher,
   type WorkspaceSwitcherProps,
 } from "@acme/ui/notion";
-import { Popover, PopoverContent, PopoverTrigger } from "@acme/ui/shadcn";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  useTheme,
+} from "@acme/ui/shadcn";
 
 import { SearchCommand, SettingsModal } from "~/components/modal";
 import { theme } from "~/constants/theme";
@@ -89,18 +94,20 @@ export const Sidebar = forwardRef(function Sidebar(
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [fetchSearchData],
   );
-
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        handleSearch();
-      }
-    };
-
-    addEventListener("keydown", down);
-    return () => removeEventListener("keydown", down);
-  }, [handleSearch]);
+  /** Key events */
+  const { theme: activeTheme, setTheme } = useTheme();
+  const shortcutOptions = { preventDefault: true };
+  useHotkeys(["meta+k", "shift+meta+k"], handleSearch, shortcutOptions);
+  useHotkeys(
+    ["meta+comma", "shift+meta+comma"],
+    handleSettings,
+    shortcutOptions,
+  );
+  useHotkeys(
+    "shift+meta+l",
+    () => setTheme(activeTheme === "dark" ? "light" : "dark"),
+    shortcutOptions,
+  );
 
   return (
     <aside
