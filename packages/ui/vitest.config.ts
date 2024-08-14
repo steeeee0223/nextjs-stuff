@@ -10,6 +10,10 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./__test__/setup.ts",
+    coverage: {
+      enabled: true,
+      reporter: ["text", "json", "html"],
+    },
   },
   resolve: {
     alias: [

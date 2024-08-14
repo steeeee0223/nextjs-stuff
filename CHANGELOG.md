@@ -3,6 +3,8 @@
 ## Version `1.0.3`
 
 - `ui` Update components: `Tabs`, `DropdownMenu`, `Popover`
+- `repo` Upgrade packages: `react`, `typescript`, `turbo`, `vitest`, `testing-library`, `eslint` plugins
+- `repo` Setup test coverage
 
 ## Version `1.0.2`
 
