@@ -2,6 +2,7 @@
 
 ## Version `1.0.3`
 
+- `worxpace` Add keyboard shortcuts: settings panel, search palate, theme toggle
 - `ui` Update components: `Tabs`, `DropdownMenu`, `Popover`
 - `repo` Upgrade packages: `react`, `typescript`, `turbo`, `vitest`, `testing-library`, `eslint` plugins
 - `repo` Setup test coverage
