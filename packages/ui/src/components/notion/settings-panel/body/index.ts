@@ -13,4 +13,4 @@ export { Identity } from "./identity";
 /** @todo Connections */
 /** @todo Import */
 /** @todo Billing */
-/** @todo Plans */
+export { Plans } from "./plans";

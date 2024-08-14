@@ -11,6 +11,7 @@ import {
   Settings,
   Settings2,
 } from "./body";
+import { Plans } from "./body/plans";
 import { workspace, type TabType } from "./sidebar";
 
 interface SettingsBodyProps {
@@ -38,6 +39,8 @@ const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
       return <Security />;
     case "identity":
       return <Identity />;
+    case "plans":
+      return <Plans />;
     default:
       return (
         <Section title={t(`${tab.value}.title`)}>
