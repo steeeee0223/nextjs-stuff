@@ -32,6 +32,7 @@ const config = {
     "**/.eslintrc.cjs",
     ".next",
     "dist",
+    "coverage",
     "storybook-static",
     "pnpm-lock.yaml",
   ],

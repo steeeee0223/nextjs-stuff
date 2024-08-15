@@ -15,6 +15,7 @@
         ".output/**",
         ".vercel/output/**",
         "dist/**",
+        "coverage/**",
         "storybook-static/**",
         ".generated/**"
       ]
