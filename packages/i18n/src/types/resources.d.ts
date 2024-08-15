@@ -46,7 +46,7 @@ interface Resources {
       };
     };
     "my-settings": {
-      title: "My Settings";
+      title: "My settings";
       "my-settings": {
         appearance: {
           title: "Appearance";
@@ -142,6 +142,14 @@ interface Resources {
     };
     "my-connections": {
       title: "My connections";
+      discover: {
+        title: "Discover new connections";
+        buttons: {
+          connect: "Connect";
+          more: "See all";
+          less: "Show less";
+        };
+      };
       buttons: {
         browse: "Browse connections in Gallery";
         integrations: "Develop or manage integrations";

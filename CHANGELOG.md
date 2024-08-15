@@ -3,6 +3,8 @@
 ## Version `1.0.3`
 
 - `worxpace` Add keyboard shortcuts: settings panel, search palate, theme toggle
+- `worxpace` Implement setting panels: My connections & support slack connections
+- `ui` Add components: `(Data) Table`
 - `ui` Update components: `Tabs`, `DropdownMenu`, `Popover`
 - `repo` Upgrade packages: `react`, `typescript`, `turbo`, `vitest`, `testing-library`, `eslint` plugins
 - `repo` Setup test coverage

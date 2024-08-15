@@ -15,6 +15,13 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const mockConnections = [
+  {
+    id: "connection-id",
+    connection: { type: "github", account: "shadcn-ui" },
+    scopes: ["Can preview links", "Can content"],
+  },
+];
 const mockSettings: SettingsStore = {
   workspace: {
     id: "fake-workspace-id-12345",
@@ -33,7 +40,10 @@ const mockSettings: SettingsStore = {
 };
 
 export const Default: Story = {
-  args: { settings: mockSettings },
+  args: {
+    settings: mockSettings,
+    onFetchConnections: async () => mockConnections,
+  },
   render: (props) => (
     <div className="flex h-[calc(100vh-100px)] max-h-[720px] w-[calc(100vw-100px)] max-w-[1150px] rounded border-solid p-0 shadow">
       <SettingsPanel {...props} />

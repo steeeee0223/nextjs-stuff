@@ -87,29 +87,32 @@ const DropdownMenuContent = React.forwardRef<
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
 const itemVariants = cva(
-  "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+  "relative flex select-none items-center rounded-sm px-2 py-1.5 transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
   {
     variants: {
       variant: {
-        default: "focus:bg-accent focus:text-accent-foreground",
-        notion: "focus:bg-primary/5 ",
+        default:
+          "cursor-default text-sm outline-none focus:bg-accent focus:text-accent-foreground",
+        notion:
+          "min-h-7 cursor-pointer text-sm/[1.2] hover:bg-primary/5 focus-visible:outline-none",
+        warning:
+          "min-h-7 text-sm/[1.2] text-warning hover:bg-primary/5 focus-visible:outline-none",
       },
+      inset: { true: "pl-8" },
     },
     defaultVariants: { variant: "default" },
   },
 );
 export interface DropdownMenuItemProps
   extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>,
-    VariantProps<typeof itemVariants> {
-  inset?: boolean;
-}
+    VariantProps<typeof itemVariants> {}
 const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   DropdownMenuItemProps
 >(({ className, variant, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
-    className={cn(itemVariants({ variant, className }), inset && "pl-8")}
+    className={cn(itemVariants({ variant, inset, className }))}
     {...props}
   />
 ));

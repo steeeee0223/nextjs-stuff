@@ -6,7 +6,12 @@ import { useTheme } from "next-themes";
 import { I18nProvider } from "@acme/i18n";
 
 import { ModalProvider } from "@/components/custom/modal-provider";
-import type { SettingsStore, UpdateSettings } from "./index.types";
+import type { Connection } from "../tables";
+import type {
+  ConnectionStrategy,
+  SettingsStore,
+  UpdateSettings,
+} from "./index.types";
 import {
   SettingsContext,
   type SettingsContextInterface,
@@ -29,6 +34,9 @@ export interface SettingsProviderProps {
     email: string;
   }) => Promise<void>;
   onDeleteWorkspace?: (workspaceId: string) => Promise<void>;
+  /** Connections */
+  onFetchConnections?: () => Promise<Connection[]>;
+  onConnectAccount?: (strategy: ConnectionStrategy) => Promise<void>;
 }
 
 export function SettingsProvider({
@@ -37,6 +45,8 @@ export function SettingsProvider({
   onUploadFile,
   onDeleteAccount,
   onDeleteWorkspace,
+  onFetchConnections,
+  onConnectAccount,
 }: SettingsProviderProps) {
   const { theme, setTheme } = useTheme();
   const { update, account, workspace } = useSettingsStore();
@@ -55,6 +65,10 @@ export function SettingsProvider({
     uploadFile: onUploadFile,
     deleteAccount: onDeleteAccount,
     deleteWorkspace: onDeleteWorkspace,
+    connections: {
+      load: onFetchConnections,
+      add: onConnectAccount,
+    },
     theme,
     setTheme,
   };

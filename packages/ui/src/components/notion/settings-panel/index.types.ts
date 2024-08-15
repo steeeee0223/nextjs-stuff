@@ -29,3 +29,12 @@ export type UpdateSettings = (data: {
   workspace?: Partial<WorkspaceStore>;
   account?: Partial<AccountStore>;
 }) => Promise<void>;
+
+export type ConnectionStrategy =
+  | "slack"
+  | "google-drive"
+  | "figma"
+  | "github"
+  | "gitlab"
+  | "grid"
+  | "jira";

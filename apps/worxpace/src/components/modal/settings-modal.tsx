@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 import { useModal } from "@acme/ui/custom";
 import { SettingsPanel, useSettingsStore, useWorkspace } from "@acme/ui/notion";
@@ -14,7 +14,10 @@ import { toIcon } from "~/lib";
 export const SettingsModal = () => {
   /** Route */
   const router = useRouter();
+  /** Clerk */
   const { signOut } = useAuth();
+  const { user } = useUser();
+  /** Platform */
   const platform = usePlatform();
   const store = useSettingsStore();
   const { activeWorkspace, select } = useWorkspace();
@@ -68,6 +71,34 @@ export const SettingsModal = () => {
       store.reset();
       router.push("/select-role");
     },
+    onConnectAccount: async (strategy) => {
+      if (strategy === "slack") {
+        const res = await user?.createExternalAccount({
+          strategy: "oauth_slack",
+          redirectUrl: `/workspace/${platform.workspaceId}`,
+        });
+        console.log(res);
+        const url = res?.verification?.externalVerificationRedirectURL;
+        const status = res?.verification?.status;
+        if (status !== "verified" && url) router.push(url.href);
+      }
+    },
+    onFetchConnections: async () =>
+      user?.externalAccounts
+        .filter(({ provider }) => provider !== "google")
+        .map(({ provider, identificationId, ...account }) => ({
+          id: identificationId,
+          connection: {
+            type: provider,
+            account:
+              account.username ?? `${account.firstName} ${account.lastName}`,
+          },
+          scopes: ["Can preview links"],
+          onDisconnect:
+            provider === "github" || provider === "google"
+              ? false
+              : account.destroy,
+        })) ?? [],
   };
 
   return (

@@ -26,7 +26,8 @@ const buttonVariants = cva(
         notion:
           "select-none border border-primary/10 bg-background font-normal shadow-none hover:bg-[#e1e1e1] dark:hover:bg-[#2f2f2f]",
         blue: "border border-primary/10 bg-button text-white shadow-sm hover:bg-[#0077d4] hover:text-white",
-        hint: "select-none text-primary/50 shadow-none hover:bg-primary/10",
+        "soft-blue": "bg-button/5 text-button shadow-sm hover:bg-button/15",
+        hint: "select-none text-primary/50 shadow-none hover:bg-primary/10 focus-visible:ring-0",
         warning:
           "select-none border border-warning/50 bg-background font-normal text-warning shadow-none hover:bg-warning/10",
       },
