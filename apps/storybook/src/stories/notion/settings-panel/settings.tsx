@@ -17,6 +17,13 @@ const Panel = () => {
     onUpdate: async ({ account }) => {
       console.log(`mutating`, { account });
     },
+    onFetchConnections: async () => [
+      {
+        id: "connection-id",
+        connection: { type: "github", account: "shadcn-ui" },
+        scopes: ["Can preview links", "Can content"],
+      },
+    ],
   };
 
   return (

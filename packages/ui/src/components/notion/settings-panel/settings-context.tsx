@@ -3,7 +3,12 @@
 import { createContext, useContext } from "react";
 import type { UseThemeProps } from "next-themes/dist/types";
 
-import type { SettingsStore, UpdateSettings } from "./index.types";
+import type { Connection } from "../tables";
+import type {
+  ConnectionStrategy,
+  SettingsStore,
+  UpdateSettings,
+} from "./index.types";
 
 export interface SettingsContextInterface
   extends Pick<UseThemeProps, "theme" | "setTheme"> {
@@ -15,6 +20,11 @@ export interface SettingsContextInterface
   ) => Promise<{ url: string }>;
   deleteAccount?: (data: { accountId: string; email: string }) => Promise<void>;
   deleteWorkspace?: (workspaceId: string) => Promise<void>;
+  /** Connections */
+  connections: {
+    load?: () => Promise<Connection[]>;
+    add?: (strategy: ConnectionStrategy) => Promise<void>;
+  };
 }
 
 export const SettingsContext = createContext<SettingsContextInterface | null>(

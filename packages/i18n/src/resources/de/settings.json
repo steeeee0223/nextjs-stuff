@@ -136,6 +136,14 @@
   },
   "my-connections": {
     "title": "Meine Verbindungen",
+    "discover": {
+      "title": "Neue Verbindungen entdecken",
+      "buttons": {
+        "connect": "Verbinden",
+        "more": "Alle anzeigen",
+        "less": "Weniger anzeigen"
+      }
+    },
     "buttons": {
       "browse": "Verbindungen in der Galerie durchsuchen",
       "integrations": "Eigene Einbindungen entwickeln oder verwalten",

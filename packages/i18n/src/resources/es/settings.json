@@ -139,6 +139,14 @@
   },
   "my-connections": {
     "title": "Mis conexiones",
+    "discover": {
+      "title": "Descubre nuevas conexiones",
+      "buttons": {
+        "connect": "Conectar",
+        "more": "Ver todo",
+        "less": "Mostrar menos"
+      }
+    },
     "buttons": {
       "browse": "Examinar conexiones en la Galería",
       "integrations": "Desarrollar o gestionar las integraciones",
