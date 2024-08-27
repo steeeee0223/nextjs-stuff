@@ -3,13 +3,12 @@
 import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
-import type { WorkspaceStore } from "@acme/ui/notion";
+import type { Workspace } from "@acme/prisma";
 import { UpdateWorkspace, type UpdateWorkspaceInput } from "@acme/validators";
 
 import {
   createMutationFetcher,
   fetchClient,
-  toIconInfo,
   UnauthorizedError,
   workspace,
 } from "~/lib";
@@ -19,12 +18,9 @@ const handler = createMutationFetcher(
   async (workspaceId, { arg }) => {
     try {
       await fetchClient();
-      const { id, name, icon, domain } = await workspace.update(
-        workspaceId,
-        arg,
-      );
-      revalidatePath(`/workspace/${id}`);
-      return { id, name, icon: toIconInfo(icon), domain };
+      const result = await workspace.update(workspaceId, arg);
+      revalidatePath(`/workspace/${result.id}`);
+      return result;
     } catch (error) {
       if (error instanceof UnauthorizedError) throw error;
       throw new Error("Failed to update workspace.");
@@ -33,7 +29,7 @@ const handler = createMutationFetcher(
 );
 
 export const updateWorkspace: MutationFetcher<
-  WorkspaceStore,
+  Workspace,
   { type: "settings"; clerkId: string; workspaceId: string },
   UpdateWorkspaceInput
 > = ({ workspaceId }, data) => handler(workspaceId, data);

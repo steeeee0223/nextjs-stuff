@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { useTranslation } from "@acme/i18n";
 
+import { Scope } from "../types";
 import SettingsBody from "./settings-body";
 import { useSettings } from "./settings-context";
 import { account, Tab, User, workspace, type TabType } from "./sidebar";
@@ -20,8 +21,11 @@ const styles = {
 
 export const SettingsPanel = () => {
   const [activeTab, setActiveTab] = useState<TabType>("my-settings");
-  const { settings } = useSettings();
+  const { settings, scopes } = useSettings();
   const { t } = useTranslation();
+  const workspaceTabs = workspace.filter(
+    (tab) => tab.value !== "people" || scopes.has(Scope.MemberRead),
+  );
 
   return (
     <div className="flex w-full">
@@ -41,7 +45,7 @@ export const SettingsPanel = () => {
         </div>
         <div className={styles.sidebarSection}>
           <div className={styles.title}>{t("common.workspace")}</div>
-          {workspace.map(({ value, Icon }, i) => (
+          {workspaceTabs.map(({ value, Icon }, i) => (
             <Tab
               key={i}
               name={t(`${value}.title`)}

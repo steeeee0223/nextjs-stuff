@@ -4,6 +4,11 @@ import { ArrowUpRight, CircleHelp } from "lucide-react";
 
 import { useTranslation } from "@acme/i18n";
 
+import {
+  MyConnections,
+  myConnectionsColumns,
+} from "@/components/notion/tables";
+import type { ConnectionStrategy } from "@/components/notion/types";
 import { Button } from "@/components/ui/button";
 import {
   ConnectionCard,
@@ -11,8 +16,6 @@ import {
   Section,
   SectionSeparator,
 } from "../_components";
-import { MyConnections, myConnectionsColumns } from "../../tables";
-import type { ConnectionStrategy } from "../index.types";
 import { useSettings } from "../settings-context";
 import { useConnections } from "./use-connections";
 

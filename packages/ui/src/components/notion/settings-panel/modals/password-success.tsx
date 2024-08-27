@@ -11,7 +11,7 @@ export const PasswordSuccess = () => {
     <Dialog open={isOpen} onOpenChange={setClose}>
       <DialogContent
         forceMount
-        className="z-[99999] w-[280px] gap-0 rounded-sm p-4 text-sm"
+        className="w-[280px] gap-0 p-4 text-sm"
         onClick={(e) => e.stopPropagation()}
         hideClose
         noTitle

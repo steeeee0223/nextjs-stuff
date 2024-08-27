@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
+import { Plan, Role } from "../types";
 import type { SettingsStore as Settings, UpdateSettings } from "./index.types";
 
 interface SettingsStore extends Settings {
@@ -16,6 +17,8 @@ const initialSettings: Settings = {
     name: "",
     icon: { type: "lucide", name: "user" },
     domain: "",
+    plan: Plan.FREE,
+    role: Role.GUEST,
   },
   account: {
     id: "",

@@ -9,5 +9,6 @@ export * from "./icon-picker";
 export * from "./modal-provider";
 export * from "./select";
 export * from "./spinner";
+export * from "./tag-input";
 export * from "./tree";
 export * from "./unsplash";

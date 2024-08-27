@@ -8,3 +8,5 @@ export * from "./card";
 export * from "./account";
 /** Workspace */
 export * from "./workspace";
+/** Member */
+export * from "./member";

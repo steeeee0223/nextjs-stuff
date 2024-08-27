@@ -7,13 +7,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 interface HintButtonProps {
+  className?: string;
   icon: LucideIcon;
   label: string;
 }
 
-export const HintButton = ({ icon: Icon, label }: HintButtonProps) => {
+export const HintButton = ({
+  icon: Icon,
+  label,
+  className,
+}: HintButtonProps) => {
   return (
-    <Button variant="hint" size="xs">
+    <Button variant="hint" size="xs" className={className}>
       <Icon className="mr-1.5 h-3.5 w-3.5" />
       {label}
     </Button>

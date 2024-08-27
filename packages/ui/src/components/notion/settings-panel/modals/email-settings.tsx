@@ -15,7 +15,7 @@ export const EmailSettings = ({ email }: EmailSettingsProps) => {
     <Dialog open={isOpen} onOpenChange={setClose}>
       <DialogContent
         forceMount
-        className="z-[99999] w-[460px] rounded-sm p-8 text-sm"
+        className="w-[460px] p-8 text-sm"
         onClick={(e) => e.stopPropagation()}
         hideClose
         noTitle

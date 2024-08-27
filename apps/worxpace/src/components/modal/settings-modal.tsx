@@ -8,7 +8,13 @@ import { SettingsPanel, useSettingsStore, useWorkspace } from "@acme/ui/notion";
 import type { SettingsPanelProps, SettingsStore } from "@acme/ui/notion";
 import { Dialog, DialogContent } from "@acme/ui/shadcn";
 
-import { useEdgeStore, usePlatform, useSettings, useSetup } from "~/hooks";
+import {
+  useEdgeStore,
+  usePeopleSettings,
+  usePlatform,
+  useSettings,
+  useSetup,
+} from "~/hooks";
 import { toIcon } from "~/lib";
 
 export const SettingsModal = () => {
@@ -18,7 +24,7 @@ export const SettingsModal = () => {
   const { signOut } = useAuth();
   const { user } = useUser();
   /** Platform */
-  const platform = usePlatform();
+  const { clerkId, workspaceId, ...platform } = usePlatform();
   const store = useSettingsStore();
   const { activeWorkspace, select } = useWorkspace();
   const { isOpen, setClose } = useModal<SettingsStore>();
@@ -30,12 +36,10 @@ export const SettingsModal = () => {
     updateWorkspace,
     deleteAccount,
     deleteWorkspace,
-  } = useSettings(
-    activeWorkspace
-      ? { clerkId: platform.clerkId, workspaceId: activeWorkspace.id }
-      : null,
-  );
-  const { fetchData } = useSetup({ clerkId: platform.clerkId });
+  } = useSettings(activeWorkspace ? { clerkId, workspaceId } : null);
+  const { fetchMemberships, addMembers, updateMember, deleteMember } =
+    usePeopleSettings(activeWorkspace ? { clerkId, workspaceId } : null);
+  const { fetchData } = useSetup({ clerkId });
   /** Settings handlers */
   const settingsProps: SettingsPanelProps = {
     settings,
@@ -54,7 +58,7 @@ export const SettingsModal = () => {
       return { url };
     },
     onDeleteAccount: async ({ accountId }) => {
-      await deleteAccount({ id: accountId, clerkId: platform.clerkId });
+      await deleteAccount({ id: accountId, clerkId });
       setClose();
       select();
       await signOut(() => {
@@ -75,7 +79,7 @@ export const SettingsModal = () => {
       if (strategy === "slack") {
         const res = await user?.createExternalAccount({
           strategy: "oauth_slack",
-          redirectUrl: `/workspace/${platform.workspaceId}`,
+          redirectUrl: `/workspace/${workspaceId}`,
         });
         console.log(res);
         const url = res?.verification?.externalVerificationRedirectURL;
@@ -99,6 +103,15 @@ export const SettingsModal = () => {
               ? false
               : account.destroy,
         })) ?? [],
+    onFetchMemberships: fetchMemberships,
+    onAddMemberships: async (emails, role) =>
+      void (await addMembers({ workspaceId, emails, role })),
+    onUpdateMembership: async (accountId, role) =>
+      void (await updateMember({ accountId, workspaceId, role })),
+    onDeleteMembership: async (accountId) => {
+      await deleteMember({ accountId, workspaceId });
+      if (accountId === platform.accountId) router.push("/workspace");
+    },
   };
 
   return (

@@ -13,7 +13,7 @@ const listVariants = cva("inline-flex h-10 items-center", {
     variant: {
       default: "justify-center rounded-md bg-muted p-1 text-muted-foreground",
       notion:
-        "flex w-full justify-start rounded-none border-b bg-transparent p-0 text-primary/50",
+        "flex w-full justify-start rounded-none border-b border-primary/10 bg-transparent p-0 text-primary/50",
     },
   },
   defaultVariants: { variant: "default" },
@@ -34,12 +34,12 @@ const TabsList = React.forwardRef<
 TabsList.displayName = TabsPrimitive.List.displayName;
 
 const triggerVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background ",
+  "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background",
   {
     variants: {
       variant: {
         default:
-          "rounded-sm px-3 py-1.5 ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=active]:text-foreground data-[state=active]:shadow-sm",
+          "rounded-sm px-3 py-1.5 ring-offset-background transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 data-[state=active]:text-foreground data-[state=active]:shadow-sm",
         notion:
           "relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent text-primary/50 shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-primary data-[state=active]:shadow-none",
       },

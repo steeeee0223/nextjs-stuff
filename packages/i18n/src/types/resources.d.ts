@@ -4,6 +4,8 @@ interface Resources {
     common: {
       account: "Account";
       workspace: "Workspace";
+      upgrade: "Upgrade";
+      more: "Learn more";
     };
     "my-account": {
       title: "My account";
@@ -231,6 +233,22 @@ interface Resources {
     };
     people: {
       title: "People";
+      invite: {
+        title: "Invite link to add members";
+        description: "Only people with permission to invite members can see this. You can also generate a new link";
+        button: "Copy link";
+      };
+      tabs: {
+        members: "Members";
+        guests: "Guests";
+        groups: "Groups";
+        search: "Type to search...";
+        "add-members": "Add members";
+      };
+      upgrade: {
+        title: "Upgrade to create groups";
+        description: "Upgrade to the Plus Plan to set up groups and control permissions from the share menu.";
+      };
     };
     plans: {
       title: "Plans";

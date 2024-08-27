@@ -65,7 +65,7 @@ export const PasswordForm = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         forceMount
-        className="z-[99999] w-[350px] rounded-sm p-6"
+        className="w-[350px] p-6"
         onClick={(e) => e.stopPropagation()}
         hideClose
         noTitle

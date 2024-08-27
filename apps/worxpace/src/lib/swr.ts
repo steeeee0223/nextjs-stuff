@@ -4,6 +4,12 @@ export interface SettingsKey {
   workspaceId?: string;
 }
 
+export interface SettingsPeopleKey {
+  type: "settings:people";
+  clerkId: string;
+  workspaceId: string;
+}
+
 export interface DocumentKey {
   type: "document";
   documentId: string;

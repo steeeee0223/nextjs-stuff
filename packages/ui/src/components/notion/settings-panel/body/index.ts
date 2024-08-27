@@ -6,7 +6,7 @@ export { Connections } from "./connections";
 export { Region } from "./region";
 /** Workspace */
 export { Settings2 } from "./settings2";
-/** @todo People */
+export { People } from "./people";
 /** @todo Sites */
 export { Security } from "./security";
 export { Identity } from "./identity";

@@ -15,6 +15,14 @@ export type AccountMemberships = Account & {
   memberships: WorkspaceMembership[];
 };
 
+const byEmails = async (
+  emails: string[],
+): Promise<Pick<Account, "id" | "email">[]> =>
+  await db.account.findMany({
+    where: { email: { in: emails } },
+    select: { id: true, email: true },
+  });
+
 const create = async (data: CreateAccountInput): Promise<Account> =>
   await db.account.create({
     data: { ...data, preferredName: data.name, hasPassword: false },
@@ -41,22 +49,6 @@ const isInWorkspace = async ({
   return !!membership;
 };
 
-const joinWorkspace = async ({
-  role,
-  accountId,
-  workspaceId,
-}: Pick<
-  Membership,
-  "role" | "accountId" | "workspaceId"
->): Promise<Membership> =>
-  await db.membership.create({
-    data: {
-      role,
-      account: { connect: { id: accountId } },
-      workspace: { connect: { id: workspaceId } },
-    },
-  });
-
 /**
  * Delete Account
  *
@@ -78,4 +70,4 @@ const update = async (
 ): Promise<Account> =>
   await db.account.update({ where: { clerkId }, data: { ...data } });
 
-export { create, get, isInWorkspace, joinWorkspace, update, remove as delete };
+export { byEmails, create, get, isInWorkspace, update, remove as delete };
