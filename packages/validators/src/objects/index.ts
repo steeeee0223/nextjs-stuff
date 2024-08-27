@@ -15,3 +15,5 @@ export const CoverImage = z.object({
   type: z.enum(["file", "url"]),
   url: z.string(),
 });
+
+export const Role = z.enum(["owner", "member", "guest"]);

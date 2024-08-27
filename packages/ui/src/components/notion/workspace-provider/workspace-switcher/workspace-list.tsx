@@ -7,10 +7,12 @@ import { Check } from "lucide-react";
 import stableHash from "stable-hash";
 
 import { IconBlock } from "@/components/custom/icon-block";
+import { Role } from "@/components/notion/types";
 import { Badge } from "@/components/ui/badge";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import type { Workspace } from "../index.types";
 import { useWorkspace } from "../workspace-context";
+import { planTitle } from "./constant";
 import { DragHandle, Globe } from "./icons";
 
 interface TitleProps {
@@ -19,7 +21,7 @@ interface TitleProps {
 }
 const Title = ({ workspace, onClick }: TitleProps) => {
   switch (workspace.role) {
-    case "guest":
+    case Role.GUEST:
       return (
         <div className="mx-2 min-w-0">
           <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-primary">
@@ -49,7 +51,7 @@ const Title = ({ workspace, onClick }: TitleProps) => {
             {workspace.name}
           </div>
           <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs text-primary/65">
-            {workspace.plan} · {workspace.members} members
+            {planTitle[workspace.plan]} · {workspace.members} members
           </div>
         </div>
       );

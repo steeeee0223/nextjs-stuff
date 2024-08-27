@@ -4,5 +4,6 @@ export * from "./use-documents";
 export * from "./use-edgestore";
 export * from "./use-history";
 export * from "./use-kanban";
+export * from "./use-people-settings";
 export * from "./use-platform";
 export * from "./use-settings";

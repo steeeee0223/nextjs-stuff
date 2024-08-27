@@ -184,6 +184,8 @@ model Account {
   x_auditLog            AuditLog[]
   x_document_created_by Document[]   @relation("createdBy")
   x_document_updated_by Document[]   @relation("updatedBy")
+
+  @@index([email])
 }
 
 model Workspace {

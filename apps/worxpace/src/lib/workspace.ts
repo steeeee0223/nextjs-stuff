@@ -31,10 +31,10 @@ const create = async (data: CreateWorkspaceInput): Promise<Workspace> =>
     },
   });
 
-const get = async (workspaceId: string): Promise<WorkspaceMemberships | null> =>
+const get = async (workspaceId: string): Promise<Workspace | null> =>
   await db.workspace.findUnique({
     where: { id: workspaceId },
-    include: { memberships: true },
+    // include: { memberships: true },
   });
 
 /**

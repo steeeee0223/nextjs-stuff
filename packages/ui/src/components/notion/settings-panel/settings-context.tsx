@@ -3,16 +3,18 @@
 import { createContext, useContext } from "react";
 import type { UseThemeProps } from "next-themes/dist/types";
 
-import type { Connection } from "../tables";
+import type { Connection } from "@/components/notion/tables";
+import { ConnectionStrategy, Role, Scope } from "@/components/notion/types";
 import type {
-  ConnectionStrategy,
   SettingsStore,
   UpdateSettings,
+  WorkspaceMemberships,
 } from "./index.types";
 
 export interface SettingsContextInterface
   extends Pick<UseThemeProps, "theme" | "setTheme"> {
   settings: SettingsStore;
+  scopes: Set<Scope>;
   updateSettings: UpdateSettings;
   uploadFile?: (
     file: File,
@@ -24,6 +26,13 @@ export interface SettingsContextInterface
   connections: {
     load?: () => Promise<Connection[]>;
     add?: (strategy: ConnectionStrategy) => Promise<void>;
+  };
+  /** People */
+  people: {
+    load?: () => Promise<WorkspaceMemberships>;
+    add?: (emails: string[], role: Role) => Promise<void>;
+    update?: (id: string, role: Role) => Promise<void>;
+    delete?: (id: string) => Promise<void>;
   };
 }
 

@@ -1,4 +1,5 @@
 import type { IconInfo } from "@/components/custom/icon-block";
+import { Plan, Role } from "@/components/notion/types";
 
 export interface UserState {
   id: string;
@@ -8,9 +9,9 @@ export interface UserState {
 
 export interface Workspace {
   id: string;
-  role: "owner" | "member" | "guest";
+  role: Role;
   name: string;
   icon: IconInfo;
   members: number;
-  plan: string;
+  plan: Plan;
 }

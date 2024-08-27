@@ -2,7 +2,9 @@
   "settings": "Einstellungen",
   "common": {
     "account": "Konto",
-    "workspace": "Workspace"
+    "workspace": "Workspace",
+    "upgrade": "Upgraden",
+    "more": "Weitere Informationen"
   },
   "my-account": {
     "title": "Mein Konto",
@@ -214,7 +216,25 @@
       }
     }
   },
-  "people": { "title": "Personen" },
+  "people": {
+    "title": "Personen",
+    "invite": {
+      "title": "Einladungslink zum Hinzufügen von Mitgliedern",
+      "description": "Nur Personen, die Mitglieder einladen können, sehen den Link. Du kannst auch einen neuen Link generieren",
+      "button": "Link kopieren"
+    },
+    "tabs": {
+      "members": "Mitglieder",
+      "guests": "Gäste",
+      "groups": "Gruppen",
+      "search": "Schribe zum Suchen...",
+      "add-members": "Mitglieder hinzuzufügen"
+    },
+    "upgrade": {
+      "title": "Upgrade, um Gruppen zu erstellen",
+      "description": "Führe ein Upgrade auf den Plus Plan durch, um Gruppen einzurichten und Berechtigungen über das Menü „Teilen“ zu steuern."
+    }
+  },
   "plans": { "title": "Tarife anzeigen" },
   "billing": { "title": "Abrechnung" },
   "sites": { "title": "Websites" },

@@ -6,6 +6,7 @@ import {
   Connections,
   Identity,
   Notifications,
+  People,
   Region,
   Security,
   Settings,
@@ -34,6 +35,8 @@ const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
       return <Region />;
     case "workspace-settings":
       return <Settings2 />;
+    case "people":
+      return <People />;
     case "security":
       return <Security />;
     case "identity":

@@ -4,6 +4,8 @@ import { useEffect, useState, type PropsWithChildren } from "react";
 import { useParams } from "next/navigation";
 
 import {
+  Plan,
+  Role,
   WorkspaceProvider,
   type UserState,
   type Workspace,
@@ -41,9 +43,9 @@ export const WorxpaceProvider = ({ children }: PropsWithChildren) => {
         id: workspace.id,
         name: workspace.name,
         icon: toIconInfo(workspace.icon),
-        role: role.toLowerCase() as Workspace["role"],
+        role: role.toLowerCase() as Role,
         members: 1,
-        plan: "Free Plan",
+        plan: Plan.FREE,
       })),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

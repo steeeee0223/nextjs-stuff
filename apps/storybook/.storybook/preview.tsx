@@ -17,6 +17,14 @@ const preview: Preview = {
     docs: { toc: true },
   },
   decorators: [
+    (Story) => (
+      <>
+        <Toaster />
+        <Story />
+      </>
+    ),
+    // this should be placed at the end, otherwise
+    // CANNOT RENDER HOOKS in STORIES
     withThemeByClassName<ReactRenderer>({
       themes: {
         light: "light",
@@ -24,12 +32,6 @@ const preview: Preview = {
       },
       defaultTheme: "light",
     }),
-    (Story) => (
-      <>
-        <Toaster />
-        <Story />
-      </>
-    ),
   ],
 };
 

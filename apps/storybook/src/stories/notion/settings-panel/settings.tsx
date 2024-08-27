@@ -10,20 +10,14 @@ import {
 } from "@acme/ui/notion";
 import { Button, Dialog, DialogContent } from "@acme/ui/shadcn";
 
+import { mockConnections } from "../__mock__";
+
 const Panel = () => {
   const { data, isOpen, setClose } = useModal<SettingsStore>();
   const props: SettingsPanelProps = {
     settings: data,
-    onUpdate: async ({ account }) => {
-      console.log(`mutating`, { account });
-    },
-    onFetchConnections: async () => [
-      {
-        id: "connection-id",
-        connection: { type: "github", account: "shadcn-ui" },
-        scopes: ["Can preview links", "Can content"],
-      },
-    ],
+    onUpdate: async ({ account }) => console.log(`mutating`, { account }),
+    onFetchConnections: async () => mockConnections,
   };
 
   return (

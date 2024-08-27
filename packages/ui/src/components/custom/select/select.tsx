@@ -27,7 +27,9 @@ export interface CustomSelectProps
   options: Record<string, string | Option>;
   onChange?: (value: string) => void;
   defaultValue?: string;
+  placeholder?: string;
   disabled?: boolean;
+  hideCheck?: boolean;
   customDisplay?: React.FC<{ option?: Option | string }>;
 }
 
@@ -35,9 +37,11 @@ const CustomSelect = ({
   className,
   options,
   defaultValue,
+  placeholder,
   side = "bottom",
   align = "end",
   disabled,
+  hideCheck,
   onChange,
   customDisplay: Display,
 }: CustomSelectProps) => {
@@ -55,16 +59,17 @@ const CustomSelect = ({
           className,
         )}
       >
-        {Display ? (
-          <SelectValue aria-label={value}>
-            <Display option={options[value]} />
-          </SelectValue>
-        ) : (
-          <SelectValue />
-        )}
+        <SelectValue
+          aria-disabled={disabled}
+          placeholder={placeholder}
+          {...(Display && {
+            "aira-label": value,
+            children: <Display option={options[value]} />,
+          })}
+        />
       </SelectTrigger>
       <SelectContent
-        className="z-[99999] border-primary/10"
+        className="z-[99999] border-primary/10 dark:bg-[#252525]"
         position="popper"
         side={side}
         align={align}
@@ -75,6 +80,7 @@ const CustomSelect = ({
               className="min-h-7 min-w-0 flex-shrink flex-grow basis-auto justify-between gap-x-6 py-1 text-sm focus:bg-primary/5"
               value={key}
               key={key}
+              hideCheck={hideCheck}
             >
               <div className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap">
                 {typeof option === "string" ? option : option.label}
