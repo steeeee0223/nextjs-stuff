@@ -163,6 +163,9 @@ importers:
       '@acme/prisma':
         specifier: workspace:*
         version: link:../../packages/prisma
+      '@acme/trpc':
+        specifier: workspace:*
+        version: link:../../packages/trpc
       '@acme/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -205,6 +208,9 @@ importers:
       '@t3-oss/env-nextjs':
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.5.4)(zod@3.23.8)
+      '@trpc/server':
+        specifier: next
+        version: 11.0.0-rc.477
       lucide-react:
         specifier: ^0.408.0
         version: 0.408.0(react@18.3.1)
@@ -457,6 +463,52 @@ importers:
       prisma:
         specifier: ^5.13.0
         version: 5.17.0
+      typescript:
+        specifier: ^5.5.4
+        version: 5.5.4
+
+  packages/trpc:
+    dependencies:
+      '@acme/prisma':
+        specifier: workspace:*
+        version: link:../prisma
+      '@acme/validators':
+        specifier: workspace:*
+        version: link:../validators
+      '@clerk/nextjs':
+        specifier: ^5.2.12
+        version: 5.2.12(next@14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@t3-oss/env-nextjs':
+        specifier: ^0.10.1
+        version: 0.10.1(typescript@5.5.4)(zod@3.23.8)
+      '@trpc/client':
+        specifier: next
+        version: 11.0.0-rc.477(@trpc/server@11.0.0-rc.477)
+      '@trpc/server':
+        specifier: next
+        version: 11.0.0-rc.477
+      superjson:
+        specifier: 2.2.1
+        version: 2.2.1
+      zod:
+        specifier: ^3.23.7
+        version: 3.23.8
+    devDependencies:
+      '@acme/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@acme/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@acme/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.0
+      prettier:
+        specifier: ^3.2.5
+        version: 3.3.3
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
