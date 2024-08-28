@@ -8,12 +8,15 @@ import type {
   UpdateAccountInput,
 } from "@acme/validators";
 
-type WorkspaceMembership = Membership & {
-  workspace: Workspace;
-};
 export type AccountMemberships = Account & {
-  memberships: WorkspaceMembership[];
+  memberships: Membership[];
 };
+
+const byClerkId = async (clerkId: string): Promise<AccountMemberships | null> =>
+  await db.account.findUnique({
+    where: { clerkId },
+    include: { memberships: true },
+  });
 
 const byEmails = async (
   emails: string[],
@@ -28,11 +31,42 @@ const create = async (data: CreateAccountInput): Promise<Account> =>
     data: { ...data, preferredName: data.name, hasPassword: false },
   });
 
-const get = async (clerkId: string): Promise<AccountMemberships | null> =>
-  await db.account.findUnique({
-    where: { clerkId },
-    include: { memberships: { include: { workspace: true } } },
+export interface WorkspaceMembership {
+  accountId: string;
+  name: string;
+  email: string;
+  workspaces: {
+    workspace: Pick<Workspace, "id" | "name" | "icon" | "plan"> & {
+      memberships: { accountId: string; role: Membership["role"] }[];
+    };
+  }[];
+}
+const joinedWorkspaces = async (
+  clerkId: string,
+): Promise<WorkspaceMembership | null> => {
+  const account = await byClerkId(clerkId);
+  if (!account) return null;
+  const workspaces = await db.membership.findMany({
+    where: { accountId: account.id },
+    select: {
+      workspace: {
+        select: {
+          id: true,
+          name: true,
+          icon: true,
+          plan: true,
+          memberships: { select: { accountId: true, role: true } },
+        },
+      },
+    },
   });
+  return {
+    accountId: account.id,
+    name: account.name,
+    email: account.email,
+    workspaces,
+  };
+};
 
 const isInWorkspace = async ({
   clerkId,
@@ -41,7 +75,7 @@ const isInWorkspace = async ({
   clerkId: string;
   workspaceId: string;
 }): Promise<boolean> => {
-  const account = await get(clerkId);
+  const account = await byClerkId(clerkId);
   if (!account) return false;
   const membership = await db.membership.findUnique({
     where: { accountId_workspaceId: { accountId: account.id, workspaceId } },
@@ -70,4 +104,12 @@ const update = async (
 ): Promise<Account> =>
   await db.account.update({ where: { clerkId }, data: { ...data } });
 
-export { byEmails, create, get, isInWorkspace, update, remove as delete };
+export {
+  byClerkId,
+  byEmails,
+  create,
+  isInWorkspace,
+  joinedWorkspaces,
+  update,
+  remove as delete,
+};

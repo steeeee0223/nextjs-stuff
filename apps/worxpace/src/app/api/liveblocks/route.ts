@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   if (!page) return new NextResponse("Not Found", { status: 404 });
   /** Verify account & workspace */
   const { clerkId } = await fetchClient();
-  const acc = await account.get(clerkId);
+  const acc = await account.byClerkId(clerkId);
   const inWorkspace = await account.isInWorkspace({
     clerkId,
     workspaceId: page?.workspaceId,
