@@ -16,7 +16,7 @@ const styles = {
     "grow-0 flex-shrink-0 w-[240px] rounded-tl-sm rounded-bl-sm bg-primary/5 p-1 overflow-y-auto",
   sidebarSection: "py-2 text-primary",
   title: "px-4 py-1 text-xs font-extrabold text-primary/65",
-  body: "grow-1 overflow-y-scroll w-full px-[60px] py-9",
+  body: "grow-1 overflow-y-scroll w-full px-[60px] py-9 bg-main dark:bg-main-dark",
 };
 
 export const SettingsPanel = () => {

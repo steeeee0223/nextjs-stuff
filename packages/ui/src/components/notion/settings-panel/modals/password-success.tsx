@@ -1,8 +1,8 @@
 "use client";
 
 import { useModal } from "@/components/custom/modal-provider";
+import * as Icon from "@/components/notion/icons";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { CheckIcon } from "../_components";
 
 export const PasswordSuccess = () => {
   const { isOpen, setClose } = useModal();
@@ -17,7 +17,7 @@ export const PasswordSuccess = () => {
         noTitle
       >
         <div className="my-4 flex justify-center">
-          <CheckIcon className="size-[27px] flex-shrink-0 fill-primary/85" />
+          <Icon.Check className="size-[27px] flex-shrink-0 fill-primary/85" />
         </div>
         <h2 className="mb-1 px-2.5 text-center text-sm/tight font-medium text-primary">
           Your password has been saved

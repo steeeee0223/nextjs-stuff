@@ -235,7 +235,58 @@
       "description": "Führe ein Upgrade auf den Plus Plan durch, um Gruppen einzurichten und Berechtigungen über das Menü „Teilen“ zu steuern."
     }
   },
-  "plans": { "title": "Tarife anzeigen" },
+  "plans": {
+    "title": "Tarife anzeigen",
+    "active": {
+      "title": "Aktiver Plan",
+      "plan": {
+        "free": {
+          "title": "Free",
+          "description": "Für die Organisation aller Bereiche deines Lebens – ob Arbeit oder Freizeit",
+          "comment": "0 $ pro Mitglied und Monat"
+        },
+        "education": {
+          "title": "Education Plus",
+          "description": "Für Studierende und Lehrpersonen",
+          "comment": "0 $ pro Mitglied und Monat"
+        },
+        "plus": {
+          "title": "Plus",
+          "description": "Ein Ort zum Planen und Organisieren für kleine Gruppen",
+          "comment": "0 $ pro Mitglied und Monat"
+        },
+        "business": {
+          "title": "Business",
+          "description": "",
+          "comment": ""
+        },
+        "enterprise": {
+          "title": "Enterprise",
+          "description": "",
+          "comment": ""
+        }
+      },
+      "ai": {
+        "title": "Notion-KI",
+        "description": "Unbegrenzte KI-Nutzung für Q&A, Autofill, Writer und mehr",
+        "button": "Zum plan hinzuzufügen"
+      }
+    },
+    "all-plans": {
+      "title": "Planauswahl",
+      "description": "Du hast Fragen zu unseren Tarifen? <Link>Kontaktiere das Vertriebsteam</Link>"
+    },
+    "education": {
+      "title": "Studierende und Lehrkräfte",
+      "description": "Studierende und Lehrer/-innen können kostenlos auf die Funktionen des Plus Plans zugreifen (begrenzt auf 1 Mitglied). Melde dich einfach mit der E-Mail-Adresse der Hochschule an oder ändere deine bestehende E-Mail-Adresse im „Mein Konto“-Tab. <Link>Weitere Informationen findest du unter notion.com/students.</Link>",
+      "button": "Abonniere den Education Plan"
+    },
+    "faq": {
+      "title": "FAQ",
+      "description": "Pläne, Abrechnung und Zahlung",
+      "button": "Frag unseren Support"
+    }
+  },
   "billing": { "title": "Abrechnung" },
   "sites": { "title": "Websites" },
   "security": {

@@ -2,12 +2,12 @@
 
 import React, { useEffect, useMemo } from "react";
 import type { CustomTypeOptions } from "i18next";
-import { I18nextProvider, useTranslation } from "react-i18next";
+import { I18nextProvider, Trans, useTranslation } from "react-i18next";
 
 import { createI18n, setupLanguage } from "./config";
 
 export type LOCALE = "en" | "de" | "es" | "fr";
-export { useTranslation, createI18n, setupLanguage };
+export { Trans, useTranslation, createI18n, setupLanguage };
 
 export interface I18nProviderProps extends React.PropsWithChildren {
   language?: string;

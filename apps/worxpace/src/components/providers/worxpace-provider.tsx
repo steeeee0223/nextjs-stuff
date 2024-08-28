@@ -4,15 +4,12 @@ import { useEffect, useState, type PropsWithChildren } from "react";
 import { useParams } from "next/navigation";
 
 import {
-  Plan,
-  Role,
   WorkspaceProvider,
   type UserState,
   type Workspace,
 } from "@acme/ui/notion";
 
 import { useClient, usePlatform, useSetup } from "~/hooks";
-import { toIconInfo } from "~/lib";
 
 export const WorxpaceProvider = ({ children }: PropsWithChildren) => {
   const { name, email, clerkId } = useClient();
@@ -35,19 +32,10 @@ export const WorxpaceProvider = ({ children }: PropsWithChildren) => {
   const { accountMemberships } = useSetup({ clerkId });
   useEffect(() => {
     if (!accountMemberships) return;
-    const { name, email, id, memberships } = accountMemberships;
-    platform.update((prev) => ({ ...prev, accountId: id }));
-    setUser({ id, name, email });
-    setWorkspaces(
-      memberships.map<Workspace>(({ workspace, role }) => ({
-        id: workspace.id,
-        name: workspace.name,
-        icon: toIconInfo(workspace.icon),
-        role: role.toLowerCase() as Role,
-        members: 1,
-        plan: Plan.FREE,
-      })),
-    );
+    const { name, email, accountId, workspaces } = accountMemberships;
+    platform.update((prev) => ({ ...prev, accountId }));
+    setUser({ id: accountId, name, email });
+    setWorkspaces(workspaces);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accountMemberships]);
 

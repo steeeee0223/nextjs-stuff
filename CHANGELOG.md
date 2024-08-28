@@ -4,9 +4,10 @@
 
 - `worxpace`
   - Manage role: add, upgrade, downgrade, remove
+  - Display current plan
 - `ui`
   - Add components: `Checkbox`, `TagInput`
-  - Implement settings panel: People
+  - Implement settings panel: People & Plan
   - Configure user scopes for each role & plan
 
 ## Version `1.0.3`
@@ -39,7 +40,7 @@
 - `repo`
   - Remove unused apps: `nextjs`, `dev`
   - Upgrade packages: `lucide-react`, `uuid`, `blocknote`
-  
+
 ## Version `1.0.0`
 
 - `prisma` Implement new collections: `account`/`workspace`

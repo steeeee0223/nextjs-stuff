@@ -35,4 +35,5 @@ export {
   ACTION,
   ENTITY_TYPE,
   WORKSPACE_ROLE,
+  PLAN,
 } from ".prisma/client/worxpace";

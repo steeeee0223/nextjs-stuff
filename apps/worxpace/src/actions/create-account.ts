@@ -11,7 +11,7 @@ const handler = createMutationFetcher(
   CreateAccount,
   async (clerkId, { arg }) => {
     try {
-      const data = await account.get(clerkId);
+      const data = await account.byClerkId(clerkId);
       if (data) return data;
       return await account.create(arg);
     } catch (error) {

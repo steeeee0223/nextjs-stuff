@@ -6,9 +6,10 @@ import { Plan, Role } from "@acme/ui/notion";
 import type {
   WorkspaceMemberships as PeopleData,
   SettingsStore,
+  Workspace as WorkspaceData,
 } from "@acme/ui/notion";
 
-import { AccountMemberships } from "./account";
+import { AccountMemberships, WorkspaceMembership } from "./account";
 import type { DetailedDocument } from "./types";
 
 export function generateDefaultIcon(group?: string): IconInfo {
@@ -66,6 +67,24 @@ export function toTreeItem(doc: DetailedDocument): TreeItem {
   };
 }
 
+export function toWorkspaceList(
+  workspaceMembership: WorkspaceMembership,
+): WorkspaceData[] {
+  const { accountId, workspaces } = workspaceMembership;
+  return workspaces.map(({ workspace }) => ({
+    id: workspace.id,
+    name: workspace.name,
+    icon: toIconInfo(workspace.icon),
+    role: Role[
+      workspace.memberships.find(
+        (membership) => membership.accountId === accountId,
+      )!.role
+    ],
+    plan: Plan[workspace.plan],
+    members: workspace.memberships.length,
+  }));
+}
+
 export function toSettingsStore(
   account: AccountMemberships,
   workspace: Workspace,
@@ -81,7 +100,7 @@ export function toSettingsStore(
       role: Role[membership!.role],
       icon: toIconInfo(workspace.icon),
       domain: workspace.domain,
-      plan: Plan.FREE,
+      plan: Plan[workspace.plan],
     },
   };
 }

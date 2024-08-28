@@ -8,7 +8,7 @@ const Workspace = async () => {
   if (!user) redirect(`/select-role`);
 
   console.log(`[*] fetching workspaces for ${user.id}`);
-  const acc = await account.get(user.id);
+  const acc = await account.byClerkId(user.id);
   if (!acc || acc.memberships.length < 1) redirect(`/onboarding`);
 
   const workspaceId = acc.memberships[0]!.workspaceId;

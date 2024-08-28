@@ -188,6 +188,14 @@ model Account {
   @@index([email])
 }
 
+enum PLAN {
+  FREE
+  EDUCATION
+  PLUS
+  BUSINESS
+  ENTERPRISE
+}
+
 model Workspace {
   id          String       @id @default(uuid()) @map("_id")
   createdBy   String
@@ -197,6 +205,8 @@ model Workspace {
   name        String
   icon        Icon?
   domain      String
+  // Plan
+  plan        PLAN         @default(FREE)
   // Relations
   x_document  Document[]
 
