@@ -16,6 +16,10 @@ export default {
       colors: {
         button: "rgb(35, 131, 226)",
         warning: "rgb(235, 87, 87)",
+        main: {
+          DEFAULT: "rgb(255, 255, 255)",
+          dark: "rgb(25, 25, 25)",
+        },
         modal: {
           DEFAULT: "rgb(255, 255, 255)",
           dark: "rgb(32, 32, 32)",
@@ -48,6 +52,7 @@ export default {
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
+          dark: "rgb(37, 37, 37)",
         },
         card: {
           DEFAULT: "hsl(var(--card))",

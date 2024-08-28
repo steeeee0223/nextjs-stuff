@@ -20,6 +20,7 @@ import {
   NotFound,
   toIconInfo,
   toSettingsStore,
+  toWorkspaceList,
   workspace,
   type SettingsKey,
 } from "~/lib";
@@ -31,9 +32,10 @@ export const useSetup = ({ clerkId }: { clerkId: string }) => {
   /** Fetcher */
   const key: SettingsKey = { type: "settings", clerkId };
   const { data, isLoading, mutate } = useSWR(key, async ({ clerkId }) => {
-    const data = await account.get(clerkId);
+    const data = await account.joinedWorkspaces(clerkId);
     if (!data) throw new NotFound();
-    return data;
+    const workspaces = toWorkspaceList(data);
+    return { ...data, workspaces };
   });
   /** Mutations */
   const onError = (e: Error) => toast.error(e.message);
@@ -69,7 +71,7 @@ export const useSettings = (
     key,
     async ({ clerkId, workspaceId }) => {
       console.log(`[settings] `, { clerkId, workspaceId });
-      const $account = await account.get(clerkId);
+      const $account = await account.byClerkId(clerkId);
       const $workspace = await workspace.get(workspaceId);
       if (!$account || !$workspace) throw new Error("Not found!");
       return toSettingsStore($account, $workspace);

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { useModal } from "@/components/custom/modal-provider";
+import * as Icon from "@/components/notion/icons";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
@@ -15,7 +16,6 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { PasswordIcon } from "../_components/icons";
 import { PasswordSuccess } from "./password-success";
 
 const message = "Please include additional unique characters.";
@@ -73,7 +73,7 @@ export const PasswordForm = ({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="relative">
             <div className="my-4 flex justify-center">
-              <PasswordIcon className="size-[27px] flex-shrink-0 fill-primary/85" />
+              <Icon.Password className="size-[27px] flex-shrink-0 fill-primary/85" />
             </div>
             <h2 className="mb-1 px-2.5 text-center text-sm/tight font-medium text-primary">
               {hasPassword ? "Change password" : "Set a password"}

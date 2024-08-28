@@ -238,7 +238,58 @@
       "description": "Mejora al plan Plus para configurar los grupos y controlar los permisos desde el menú «Compartir»."
     }
   },
-  "plans": { "title": "Planes" },
+  "plans": {
+    "title": "Planes",
+    "active": {
+      "title": "Plan activo",
+      "plan": {
+        "free": {
+          "title": "Gratuito",
+          "description": "Para organizar cada aspecto de tu vida personal y profesional",
+          "comment": "0 US$ por miembro al mes"
+        },
+        "education": {
+          "title": "Educación Plus",
+          "description": "Para estudiantes y docentes",
+          "comment": "0 US$ por miembro al mes"
+        },
+        "plus": {
+          "title": "Plus",
+          "description": "Un lugar para que los grupos pequeños hagan planes y se organicen",
+          "comment": "0 US$ por miembro al mes"
+        },
+        "business": {
+          "title": "Business",
+          "description": "",
+          "comment": ""
+        },
+        "enterprise": {
+          "title": "Enterprise",
+          "description": "",
+          "comment": ""
+        }
+      },
+      "ai": {
+        "title": "IA de Notion",
+        "description": "Uso ilimitado de la IA para funciones como Q&A, Autocompletado, Escritor y más",
+        "button": "Añadir al plan"
+      }
+    },
+    "all-plans": {
+      "title": "Todos los planes",
+      "description": "¿Tienes preguntas sobre nuestros planes? <Link>Contacta con el equipo comercial</Link>"
+    },
+    "education": {
+      "title": "Estudiantes y docentes",
+      "description": "Los estudiantes y docentes pueden acceder de forma gratuita a las funciones del plan Plus (con un límite de 1 miembro). Solo tienes que registrarte con tu dirección de correo electrónico de la institución educativa o cambiar tu correo electrónico actual en la pestaña «Mi cuenta». <Link>Para obtener más información, visita notion.com/students.</Link>",
+      "button": "Obtener el plan Education"
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "description": "Planes, facturación y pago",
+      "button": "Escribir a Soporte técnico"
+    }
+  },
   "billing": { "title": "Facturación" },
   "sites": { "title": "Sitios" },
   "security": {

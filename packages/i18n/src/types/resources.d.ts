@@ -252,6 +252,55 @@ interface Resources {
     };
     plans: {
       title: "Plans";
+      active: {
+        title: "Active plan";
+        plan: {
+          free: {
+            title: "Free";
+            description: "For organizing every corner of your work and life";
+            comment: "$0 per member / month";
+          };
+          education: {
+            title: "Education Plus";
+            description: "For students & educators";
+            comment: "$0 per member / month";
+          };
+          plus: {
+            title: "Plus";
+            description: "A place for small groups to plan & get organized";
+            comment: "$0 per member / month";
+          };
+          business: {
+            title: "Business";
+            description: "";
+            comment: "";
+          };
+          enterprise: {
+            title: "Enterprise";
+            description: "";
+            comment: "";
+          };
+        };
+        ai: {
+          title: "Notion AI";
+          description: "Unlimited use of AI for Q&A, Autofill, Writer, and more";
+          button: "Add to plan";
+        };
+      };
+      "all-plans": {
+        title: "All plans";
+        description: "Questions about our plans? <Link>Contact Sales</Link>";
+      };
+      education: {
+        title: "Students & educators";
+        description: "Students and educators can get access to the Plus Plan features (with a 1-member limit) for free! Just sign up with your school email address, or change your existing email in the 'My account' tab. <Link>For more info, go to notion.com/students.</Link>";
+        button: "Get the Education Plan";
+      };
+      faq: {
+        title: "FAQ";
+        description: "Plans, Billing & Payment";
+        button: "Message support";
+      };
     };
     billing: {
       title: "Billing";
