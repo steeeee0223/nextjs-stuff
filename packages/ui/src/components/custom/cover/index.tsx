@@ -1,20 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import { ImageIcon, X } from "lucide-react";
 
 import {
   CoverPicker,
   type CoverPickerProps,
 } from "@/components/custom/cover-picker";
-import { Button, type ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
-/** Styles */
-const buttonProps: ButtonProps = { variant: "notion", size: "sm" };
-
-export interface CoverImageProps extends Omit<CoverPickerProps, "asChild"> {
+export interface CoverImageProps extends CoverPickerProps {
   url: string | null;
   preview?: boolean;
 }
@@ -23,38 +19,33 @@ export const Cover = ({ url, preview, ...props }: CoverImageProps) => {
   return (
     <div
       className={cn(
-        "group relative h-[35vh] w-full",
-        url ? "bg-muted" : "h-[12vh]",
+        "group relative h-[30vh] max-h-[280px] w-full",
+        url ? "bg-main" : "h-[12vh]",
       )}
     >
       {!!url && (
-        <Image
+        <img
           src={url}
-          fill
-          sizes="100%"
-          priority
           alt="Cover"
-          className="object-cover"
-          unoptimized
+          className="block size-full object-cover object-center"
         />
       )}
       {url && !preview && (
-        <div
-          className={cn(
-            "flex items-center gap-x-2",
-            "absolute bottom-5 right-5 opacity-0 group-hover:opacity-100",
-          )}
-        >
-          <CoverPicker asChild {...props}>
-            <Button {...buttonProps}>
-              <ImageIcon className="mr-2 h-4 w-4" />
-              Change cover
+        <div className="absolute bottom-5 right-5 flex items-center gap-x-2 opacity-0 group-hover:opacity-100">
+          <div className="rounded-sm bg-popover">
+            <CoverPicker {...props}>
+              <Button size="sm">
+                <ImageIcon className="mr-2 size-4" />
+                Change cover
+              </Button>
+            </CoverPicker>
+          </div>
+          <div className="rounded-sm bg-popover">
+            <Button onClick={props.onRemove} size="sm">
+              <X className="mr-2 size-4" />
+              Remove
             </Button>
-          </CoverPicker>
-          <Button onClick={props.onRemove} {...buttonProps}>
-            <X className="mr-2 h-4 w-4" />
-            Remove
-          </Button>
+          </div>
         </div>
       )}
     </div>

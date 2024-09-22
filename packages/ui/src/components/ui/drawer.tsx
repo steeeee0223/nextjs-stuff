@@ -4,6 +4,8 @@ import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
 
 import { cn } from "@/lib/utils";
+import { contentVariants } from "./variants";
+import { VisuallyHidden } from "./visually-hidden";
 
 const Drawer = ({
   shouldScaleBackground = true,
@@ -37,23 +39,31 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 interface DrawerContentProps
   extends React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> {
   showBar?: boolean;
+  noTitle?: boolean;
 }
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   DrawerContentProps
->(({ className, children, showBar = true, ...props }, ref) => (
+>(({ className, children, showBar = true, noTitle = false, ...props }, ref) => (
   <DrawerPortal>
-    <DrawerOverlay />
+    <DrawerOverlay className="z-0 bg-transparent" />
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-[10px] border bg-background",
+        "fixed inset-x-0 bottom-0 z-50 mt-24 flex flex-col rounded-t-[10px]",
+        contentVariants({ variant: "default" }),
         className,
       )}
       {...props}
+      {...(noTitle && { "aria-describedby": undefined })}
     >
       {showBar && (
         <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      )}
+      {noTitle && (
+        <VisuallyHidden asChild>
+          <DrawerTitle />
+        </VisuallyHidden>
       )}
       {children}
     </DrawerPrimitive.Content>
@@ -104,7 +114,7 @@ const DrawerDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-muted dark:text-muted-dark", className)}
     {...props}
   />
 ));

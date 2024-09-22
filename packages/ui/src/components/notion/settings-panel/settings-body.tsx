@@ -7,12 +7,12 @@ import {
   Identity,
   Notifications,
   People,
+  Plans,
   Region,
   Security,
   Settings,
   Settings2,
 } from "./body";
-import { Plans } from "./body/plans";
 import { workspace, type TabType } from "./sidebar";
 
 interface SettingsBodyProps {

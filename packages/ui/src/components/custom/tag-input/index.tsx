@@ -68,9 +68,9 @@ const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
       <div
         className={cn(
           // caveat: :has() variant requires tailwind v3.4 or above: https://tailwindcss.com/blog/tailwindcss-v3-4#new-has-variant
-          "flex min-h-10 w-full flex-wrap gap-2 rounded-sm border border-primary/10 bg-primary/5 px-3 py-2 text-sm",
+          "flex min-h-10 w-full flex-wrap gap-2 rounded-sm border border-border bg-primary/5 px-3 py-2 text-sm",
           "disabled:cursor-not-allowed disabled:opacity-50",
-          "placeholder:text-primary/50",
+          "placeholder:text-muted dark:placeholder:text-muted-dark",
           "has-[:focus-visible]:outline-none",
           className,
         )}
@@ -84,13 +84,11 @@ const TagInput = forwardRef<HTMLInputElement, TagInputProps>(
             size="sm"
             className="h-5 min-w-0 max-w-full flex-shrink-0 rounded pr-0 text-sm leading-[120%]"
           >
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-              {item}
-            </span>
+            <span className="truncate">{item}</span>
             <Button
               variant="hint"
               size="icon-sm"
-              className="flex-shrink-0 hover:bg-transparent hover:text-primary/85"
+              className="flex-shrink-0 hover:bg-transparent hover:text-icon"
               tabIndex={0}
               onClick={() => onDeleteTag(item)}
             >

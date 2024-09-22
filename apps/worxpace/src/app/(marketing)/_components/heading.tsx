@@ -5,8 +5,6 @@ import { ArrowRight } from "lucide-react";
 
 import { Button } from "@acme/ui/shadcn";
 
-import { theme } from "~/constants/theme";
-
 const Heading = () => {
   return (
     <div className="max-w-3xl space-y-4">
@@ -20,7 +18,7 @@ const Heading = () => {
       </h3>
       <Link href="/select-role">
         <Button className="mt-4">
-          Get Started <ArrowRight className={`${theme.size.icon} ml-2`} />
+          Get Started <ArrowRight className="ml-2 size-4" />
         </Button>
       </Link>
     </div>

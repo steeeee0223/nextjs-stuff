@@ -5,8 +5,11 @@ import { devtools, persist } from "zustand/middleware";
 
 import { Plan, Role } from "../types";
 import type { SettingsStore as Settings, UpdateSettings } from "./index.types";
+import { TabType } from "./sidebar";
 
 interface SettingsStore extends Settings {
+  tab: TabType;
+  setTab: (tab: TabType) => void;
   update: (...params: Parameters<UpdateSettings>) => void;
   reset: () => void;
 }
@@ -35,12 +38,14 @@ export const useSettingsStore = create<SettingsStore>()(
     persist(
       (set) => ({
         ...initialSettings,
+        tab: "my-settings",
+        setTab: (tab) => set((state) => ({ ...state, tab })),
         update: ({ workspace, account }) =>
           set((state) => ({
             workspace: { ...state.workspace, ...workspace },
             account: { ...state.account, ...account },
           })),
-        reset: () => set(initialSettings),
+        reset: () => set({ ...initialSettings, tab: "my-settings" }),
       }),
       { name: "settings" },
     ),

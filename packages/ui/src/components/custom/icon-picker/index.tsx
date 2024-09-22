@@ -32,10 +32,7 @@ export const IconPicker = ({
   return (
     <Popover>
       <PopoverTrigger asChild={asChild}>{children}</PopoverTrigger>
-      <PopoverContent
-        variant="notion"
-        className="z-[99999] w-full p-0 shadow-none"
-      >
+      <PopoverContent className="w-full">
         <EmojiPicker
           height={350}
           theme={theme}

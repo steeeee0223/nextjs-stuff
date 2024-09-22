@@ -75,10 +75,10 @@ export const PasswordForm = ({
             <div className="my-4 flex justify-center">
               <Icon.Password className="size-[27px] flex-shrink-0 fill-primary/85" />
             </div>
-            <h2 className="mb-1 px-2.5 text-center text-sm/tight font-medium text-primary">
+            <h2 className="mb-1 px-2.5 text-center text-sm/tight font-medium">
               {hasPassword ? "Change password" : "Set a password"}
             </h2>
-            <div className="mb-4 text-center text-xs/snug text-primary/65">
+            <div className="mb-4 text-center text-xs/snug text-secondary dark:text-secondary-dark">
               Use a password at least 15 letters long, or at least 8 characters
               long with both letters and numbers. If you lose access to your
               school email address, you&apos;ll be able to log in using your
@@ -90,13 +90,10 @@ export const PasswordForm = ({
                 name="currentPassword"
                 render={({ field }) => (
                   <FormItem className="mb-2 space-y-[1px]">
-                    <FormLabel className="text-xs text-primary/65">
-                      Enter your current password
-                    </FormLabel>
+                    <FormLabel>Enter your current password</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
-                        variant="notion"
                         placeholder="Current password"
                         {...field}
                       />
@@ -110,13 +107,10 @@ export const PasswordForm = ({
               name="password"
               render={({ field }) => (
                 <FormItem className="mb-2 space-y-[1px]">
-                  <FormLabel className="text-xs text-primary/65">
-                    Enter a new password
-                  </FormLabel>
+                  <FormLabel>Enter a new password</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      variant="notion"
                       placeholder="New password"
                       {...field}
                     />
@@ -129,13 +123,10 @@ export const PasswordForm = ({
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem className="space-y-[1px]">
-                  <FormLabel className="text-xs text-primary/65">
-                    Confirm your new password
-                  </FormLabel>
+                  <FormLabel>Confirm your new password</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      variant="notion"
                       placeholder="Confirm password"
                       {...field}
                     />

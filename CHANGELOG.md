@@ -1,5 +1,30 @@
 # Changelog
 
+## Version `1.1.0`
+
+### 🆕 Core Updates
+
+- `storybook`
+  - Remove unused package: `@storybook/addon-onboarding`
+  - Remove introduction documents
+  - Add stories: workspace layout & navbar
+- `worxpace`
+  - Move components to `ui` package: `Navbar`, `Sidebar`, `DocsHeader`
+  - Change routes:
+    1. `/documents/*` to `/document/*`
+    2. `/workflows/*` to `/workflow/*`
+- `ui`
+  - Remove `shadcn`'s default styles
+  - Unify variants: button, content, input & separator
+  - Add shadcn component: `Resizable`
+  - Add notion components: `PageProvider`, `Navbar`, `Sidebar`, `PageHeader` (from `DocsHeader`)
+- `tailwind-config`
+  - Unify color, theming & styles
+
+### 🚧 Known Issues
+
+- Wrapping `PageProvider` with `Room` will crash!
+
 ## Version `1.0.4`
 
 - `worxpace`

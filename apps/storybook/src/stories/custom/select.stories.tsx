@@ -23,7 +23,7 @@ export const Default: Story = {
 };
 
 const Custom: SelectProps["customDisplay"] = ({ option }) => (
-  <div className="overflow-hidden text-ellipsis whitespace-nowrap text-primary/65">
+  <div className="truncate text-secondary dark:text-secondary-dark">
     {typeof option === "string" ? option : option?.label}
   </div>
 );

@@ -103,9 +103,6 @@ importers:
       '@storybook/addon-links':
         specifier: ^8.0.10
         version: 8.2.4(react@18.3.1)(storybook@8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.9)))
-      '@storybook/addon-onboarding':
-        specifier: ^8.0.10
-        version: 8.2.4(react@18.3.1)(storybook@8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.9)))
       '@storybook/addon-themes':
         specifier: ^8.0.10
         version: 8.2.4(storybook@8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.9)))
@@ -289,10 +286,10 @@ importers:
         version: link:../validators
       '@trpc/client':
         specifier: next
-        version: 11.0.0-rc.485(@trpc/server@11.0.0-rc.485)
+        version: 11.0.0-rc.502(@trpc/server@11.0.0-rc.502)
       '@trpc/server':
         specifier: next
-        version: 11.0.0-rc.485
+        version: 11.0.0-rc.502
       superjson:
         specifier: 2.2.1
         version: 2.2.1
@@ -518,7 +515,7 @@ importers:
         specifier: ^1.0.3
         version: 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-tooltip':
-        specifier: ^1.0.7
+        specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-visually-hidden':
         specifier: ^1.1.0
@@ -553,9 +550,18 @@ importers:
       react-hook-form:
         specifier: ^7.49.2
         version: 7.52.1(react@18.3.1)
+      react-hotkeys-hook:
+        specifier: ^4.5.0
+        version: 4.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-infinite-scroll-component:
         specifier: ^6.1.0
         version: 6.1.0(react@18.3.1)
+      react-resizable-panels:
+        specifier: ^2.1.2
+        version: 2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-textarea-autosize:
+        specifier: ^8.5.3
+        version: 8.5.3(@types/react@18.3.3)(react@18.3.1)
       sonner:
         specifier: ^1.3.1
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3907,11 +3913,6 @@ packages:
     peerDependencies:
       storybook: ^8.2.4
 
-  '@storybook/addon-onboarding@8.2.4':
-    resolution: {integrity: sha512-guFRNPoNpLTR6hReGClUZasyMstGR2XmM4fjKg1iVvodw0nI/sZE/8eG2J2pWUGnp5YzFYirLuIZ03QO7edEMg==}
-    peerDependencies:
-      storybook: ^8.2.4
-
   '@storybook/addon-outline@8.2.4':
     resolution: {integrity: sha512-1C6NrvSDREgCZ7o/1n7Ca81uDDzrSrzWiOkh4OeA7PPQ/445cAOX2OMvxzNkKDIT9GLCLNi9M5XIVyGxJVS4dQ==}
     peerDependencies:
@@ -4303,13 +4304,13 @@ packages:
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
-  '@trpc/client@11.0.0-rc.485':
-    resolution: {integrity: sha512-Ld1gQjdYyrku0rjP/4QMg/SdsKgujr0P5XNoWkCyPRjdw3PuJbZFebauQPRC17cbbqGcpJrR+T3vnkhjMb1sgw==}
+  '@trpc/client@11.0.0-rc.502':
+    resolution: {integrity: sha512-ysFQ3wHnjzLcAqeuwx9/B/YV+2XN/kmfAdTUG+O/SUAdP2wAwo6XbhOxlHw0HWS5pDCsTfJkxDr1nMVkuFM07Q==}
     peerDependencies:
-      '@trpc/server': 11.0.0-rc.485+1c1d824cd
+      '@trpc/server': 11.0.0-rc.502+2a8c56027
 
-  '@trpc/server@11.0.0-rc.485':
-    resolution: {integrity: sha512-U9SK9jbqCjR8S9wGSe4UBu2e0fqxhQWriZiDb5BLzdxXzls4Jv+XhAkI65yBzlcTbt6VqXegZDAXB3IARPhUCg==}
+  '@trpc/server@11.0.0-rc.502':
+    resolution: {integrity: sha512-n6B8Q/UqF+hFXyCTXq9AWSn6EkXBbVo/Bs7/QzZxe5KD5CdnBomC7A1y6Qr+i0eiOWwTHJZQ0az+gJetb2fdxw==}
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -8421,12 +8422,6 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  react-confetti@6.1.0:
-    resolution: {integrity: sha512-7Ypx4vz0+g8ECVxr88W9zhcQpbeujJAVqL14ZnXJ3I23mOI9/oBVTQ3dkJhUmB0D6XOtCZEM6N0Gm9PMngkORw==}
-    engines: {node: '>=10.18'}
-    peerDependencies:
-      react: ^16.3.0 || ^17.0.1 || ^18.0.0
-
   react-docgen-typescript@2.2.2:
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
     peerDependencies:
@@ -8570,6 +8565,12 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  react-resizable-panels@2.1.2:
+    resolution: {integrity: sha512-Ku2Bo7JvE8RpHhl4X1uhkdeT9auPBoxAOlGTqomDUUrBAX2mVGuHYZTcWvlnJSgx0QyHIxHECgGB5XVPUbUOkQ==}
+    peerDependencies:
+      react: ^16.14.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0
 
   react-style-singleton@2.2.1:
     resolution: {integrity: sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g==}
@@ -9476,9 +9477,6 @@ packages:
   turbo@2.0.12:
     resolution: {integrity: sha512-8s2KwqjwQj7z8Z53SUZSKVkQOZ2/Sl4D2F440oaBY/k2lGju60dW6srEpnn8/RIDeICZmQn3pQHF79Jfnc5Skw==}
     hasBin: true
-
-  tween-functions@1.2.0:
-    resolution: {integrity: sha512-PZBtLYcCLtEcjL14Fzb1gSxPBeL7nWvGhO5ZFPGqziCcr8uvHp0NDmdjBchp6KHL+tExcg0m3NISmKxhU394dA==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -13715,13 +13713,6 @@ snapshots:
       storybook: 8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.9))
       tiny-invariant: 1.3.3
 
-  '@storybook/addon-onboarding@8.2.4(react@18.3.1)(storybook@8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.9)))':
-    dependencies:
-      react-confetti: 6.1.0(react@18.3.1)
-      storybook: 8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.9))
-    transitivePeerDependencies:
-      - react
-
   '@storybook/addon-outline@8.2.4(storybook@8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.9)))':
     dependencies:
       '@storybook/global': 5.0.0
@@ -14282,11 +14273,11 @@ snapshots:
 
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
-  '@trpc/client@11.0.0-rc.485(@trpc/server@11.0.0-rc.485)':
+  '@trpc/client@11.0.0-rc.502(@trpc/server@11.0.0-rc.502)':
     dependencies:
-      '@trpc/server': 11.0.0-rc.485
+      '@trpc/server': 11.0.0-rc.502
 
-  '@trpc/server@11.0.0-rc.485': {}
+  '@trpc/server@11.0.0-rc.502': {}
 
   '@tsconfig/node10@1.0.11': {}
 
@@ -19326,11 +19317,6 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  react-confetti@6.1.0(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-      tween-functions: 1.2.0
-
   react-docgen-typescript@2.2.2(typescript@5.5.4):
     dependencies:
       typescript: 5.5.4
@@ -19467,6 +19453,11 @@ snapshots:
       use-sidecar: 1.1.2(@types/react@18.3.3)(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.3.3
+
+  react-resizable-panels@2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-style-singleton@2.2.1(@types/react@18.3.3)(react@18.3.1):
     dependencies:
@@ -20560,8 +20551,6 @@ snapshots:
       turbo-linux-arm64: 2.0.12
       turbo-windows-64: 2.0.12
       turbo-windows-arm64: 2.0.12
-
-  tween-functions@1.2.0: {}
 
   type-check@0.4.0:
     dependencies:

@@ -2,9 +2,13 @@
 import type { LucideIcon } from "lucide-react";
 import { Construction } from "lucide-react";
 
+import { Trans, TransProps } from "@acme/i18n";
+
 import { Hint } from "@/components/custom/hint";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/variants";
+import { cn } from "@/lib/utils";
 
 interface HintButtonProps {
   className?: string;
@@ -34,14 +38,15 @@ export const PlanLink = ({ plan, onClick }: PlanLinkProps) => {
   return (
     <Hint
       description="Upgrade to use this feature. Click to learn more."
-      variant="notion"
-      size="sm"
       className="w-[174px]"
     >
       <div
         role="button"
         tabIndex={0}
-        className="ml-2 flex cursor-pointer select-none items-center rounded-sm hover:bg-primary/10"
+        className={cn(
+          buttonVariants({ variant: "hint" }),
+          "ml-2 flex size-auto p-0",
+        )}
         onClick={onClick}
       >
         <Badge variant="blue" size="sm" className="whitespace-nowrap uppercase">
@@ -49,6 +54,38 @@ export const PlanLink = ({ plan, onClick }: PlanLinkProps) => {
         </Badge>
       </div>
     </Hint>
+  );
+};
+
+interface TextLinkProps
+  extends Pick<TransProps, "i18nKey" | "values">,
+    React.DetailedHTMLProps<
+      React.AnchorHTMLAttributes<HTMLAnchorElement>,
+      HTMLAnchorElement
+    > {}
+
+export const TextLink = ({
+  i18nKey,
+  values,
+  children = "-",
+  ...props
+}: TextLinkProps) => {
+  return (
+    <Trans
+      i18nKey={i18nKey}
+      values={values}
+      components={{
+        Link: (
+          <a
+            rel="noopener noreferrer"
+            className="cursor-pointer select-none underline transition hover:text-red"
+            {...props}
+          >
+            {children}
+          </a>
+        ),
+      }}
+    />
   );
 };
 

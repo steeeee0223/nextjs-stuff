@@ -38,17 +38,10 @@ export const getHighlightColumns = (
       >
         <Hint
           description="Only workspace owners can perform this action."
-          variant="notion"
-          size="sm"
           className={canUpgrade ? "hidden" : "w-[174px]"}
           triggerProps={cn(!canUpgrade && "cursor-default")}
         >
-          <Button
-            variant="notion"
-            size="sm"
-            className="h-7"
-            disabled={!canUpgrade}
-          >
+          <Button size="sm" className="h-7" disabled={!canUpgrade}>
             Upgrade
           </Button>
         </Hint>
@@ -66,8 +59,6 @@ export const getHighlightColumns = (
       >
         <Hint
           description="Only workspace owners can perform this action."
-          variant="notion"
-          size="sm"
           className={canUpgrade ? "hidden" : "w-[174px]"}
           triggerProps={cn(!canUpgrade && "cursor-default")}
         >
@@ -93,17 +84,10 @@ export const getHighlightColumns = (
       >
         <Hint
           description="Only workspace owners can perform this action."
-          variant="notion"
-          size="sm"
           className={canUpgrade ? "hidden" : "w-[174px]"}
           triggerProps={cn(!canUpgrade && "cursor-default")}
         >
-          <Button
-            variant="notion"
-            size="sm"
-            className="h-7"
-            disabled={!canUpgrade}
-          >
+          <Button size="sm" className="h-7" disabled={!canUpgrade}>
             Contact sales
           </Button>
         </Hint>

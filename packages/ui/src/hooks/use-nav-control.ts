@@ -3,6 +3,9 @@
 import { useRef, useState, type ElementRef } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
+/**
+ * @deprecated Will use `useSidebarLayout` in future
+ */
 export function useNavControl() {
   const isMobile = useMediaQuery("(max-width: 768px)");
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, type PropsWithChildren } from "react";
+import { useMemo, useReducer, type PropsWithChildren } from "react";
 
 import type { TreeItem } from "./index.types";
 import { treeReducer, type TreeReducer } from "./tree-actions";
@@ -24,33 +24,36 @@ export function TreeProvider({
   isItemActive,
   onClickItem,
 }: TreeProviderProps) {
-  const initializer = (init: TreeItem[]) => {
-    const e = init.reduce((acc, item) => ({ ...acc, [item.id]: item }), {});
-    return { ids: Object.keys(e), entities: e };
-  };
   const [state, dispatch] = useReducer<TreeReducer, TreeItem[]>(
     treeReducer,
     initialItems,
-    initializer,
+    (init) => {
+      const entities = init.reduce(
+        (acc, item) => ({ ...acc, [item.id]: item }),
+        {},
+      );
+      return { ids: Object.keys(entities), entities };
+    },
   );
 
-  const getChildren = ($parentId: string | null, $group: string | null) =>
-    Object.values(state.entities).filter(
-      ({ parentId, group }) => $group === group && $parentId === parentId,
-    );
-  const getGroup = ($group: string) =>
-    Object.values(state.entities).filter(({ group }) => group === $group);
-
-  const treeContextValues: TreeContextInterface = {
-    isLoading: isLoading || !initialItems,
-    groups,
-    treeItems: Object.values(state.entities),
-    dispatch,
-    getGroup,
-    getChildren,
-    isItemActive,
-    onClickItem,
-  };
+  const treeContextValues: TreeContextInterface = useMemo(
+    () => ({
+      isLoading: isLoading || !initialItems,
+      groups,
+      treeItems: Object.values(state.entities),
+      dispatch,
+      getGroup: ($group) =>
+        Object.values(state.entities).filter(({ group }) => group === $group),
+      getChildren: ($parentId, $group) =>
+        Object.values(state.entities).filter(
+          ({ parentId, group }) => $group === group && $parentId === parentId,
+        ),
+      isItemActive,
+      onClickItem,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [groups, initialItems, isLoading, state.entities],
+  );
 
   return (
     <TreeContext.Provider value={treeContextValues}>

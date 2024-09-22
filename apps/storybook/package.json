@@ -1,6 +1,6 @@
 {
   "name": "@acme/storybook",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -31,7 +31,6 @@
     "@storybook/addon-essentials": "^8.0.10",
     "@storybook/addon-interactions": "^8.0.10",
     "@storybook/addon-links": "^8.0.10",
-    "@storybook/addon-onboarding": "^8.0.10",
     "@storybook/addon-themes": "^8.0.10",
     "@storybook/blocks": "^8.0.10",
     "@storybook/nextjs": "^8.0.10",

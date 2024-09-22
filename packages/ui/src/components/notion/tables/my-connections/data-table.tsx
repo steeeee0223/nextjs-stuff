@@ -19,13 +19,11 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  variant?: "default" | "notion";
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  variant,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -34,14 +32,13 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <Table variant={variant}>
-      <TableHeader variant={variant}>
+    <Table>
+      <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
-          <TableRow key={headerGroup.id} variant={variant}>
+          <TableRow key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <TableHead
                 key={header.id}
-                variant={variant}
                 className={header.id === "actions" ? "w-[5%]" : "w-2/5"}
               >
                 {header.isPlaceholder
@@ -55,27 +52,25 @@ export function DataTable<TData, TValue>({
           </TableRow>
         ))}
       </TableHeader>
-      <TableBody variant={variant}>
+      <TableBody>
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
-              variant={variant}
               data-state={row.getIsSelected() && "selected"}
             >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id} variant={variant}>
+                <TableCell key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
             </TableRow>
           ))
         ) : (
-          <TableRow variant={variant}>
+          <TableRow>
             <TableCell
-              variant={variant}
               colSpan={columns.length}
-              className="h-6 text-center"
+              className="h-6 text-start text-secondary dark:text-secondary-dark"
             >
               No results.
             </TableCell>

@@ -28,7 +28,12 @@ export const PlanHeader = ({
         <div className={cn(styles.title, "flex w-full gap-1.5")}>{title}</div>
         <div className={cn(styles.layout, "gap-3")}>
           <div className={cn(styles.layout, "gap-1")}>
-            <div className={cn(styles.desc, "text-primary/65")}>
+            <div
+              className={cn(
+                styles.desc,
+                "text-secondary dark:text-secondary-dark",
+              )}
+            >
               {description}
             </div>
             <div className={cn(styles.desc, "text-[#acaba9]")}>{subtext}</div>
@@ -65,13 +70,17 @@ export const ContentCell = (props: ContentCellProps) => {
   return (
     <div className={cn(styles.item, "py-3")}>
       {props.type === "value" && (
-        <>{props.value ?? <div className="text-primary/50">&ndash;</div>}</>
+        <>
+          {props.value ?? (
+            <div className="text-muted dark:text-muted-dark">&ndash;</div>
+          )}
+        </>
       )}
       {props.type === "check" &&
         (props.checked ? (
           <Icon.Check className="size-[14px] flex-shrink-0 fill-primary/85" />
         ) : (
-          <div className="text-primary/50">&ndash;</div>
+          <div className="text-muted dark:text-muted-dark">&ndash;</div>
         ))}
     </div>
   );

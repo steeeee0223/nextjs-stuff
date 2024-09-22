@@ -1,14 +1,7 @@
-import { Role } from "@/components/notion/types";
-
-export interface Account {
-  id: string;
-  name: string;
-  avatarUrl: string;
-  email: string;
-}
+import { Role, User } from "@/components/notion/types";
 
 export interface MemberRow {
-  account: Account;
+  user: User;
   teamspaces: {
     current: string | null;
     options: GroupRow[];
@@ -21,7 +14,7 @@ export interface MemberRow {
 }
 
 export interface GuestRow {
-  account: Account;
+  user: User;
   access: PageAccess[];
 }
 

@@ -1,3 +1,13 @@
+import { IconInfo } from "@/components/custom/icon-block";
+
+export type UploadFile = (
+  file: File,
+  options?: {
+    /** @params replaceTargetUrl: provide the URL to replaced with */
+    replaceTargetUrl?: string;
+  },
+) => Promise<{ url: string }>;
+
 export type ConnectionStrategy =
   | "slack"
   | "google-drive"
@@ -31,4 +41,32 @@ export enum Scope {
   GroupEnable = "people:group:enable", // ❌ plan: education, free
   /** Plans */
   Upgrade = "plan:upgrade", // ✅ owner
+}
+
+export interface User {
+  id: string;
+  name: string;
+  avatarUrl: string;
+  email: string;
+}
+
+export interface CoverImageInfo {
+  type: "file" | "url";
+  url: string;
+}
+
+export interface Page {
+  id: string;
+  title: string;
+  type: string;
+  isArchived: boolean;
+  coverImage: CoverImageInfo | null;
+  icon: IconInfo | null;
+  // parentId: string | null;
+  // content: string | null;
+  isPublished: boolean;
+  createdAt: string;
+  lastEditedAt: string;
+  createdBy: string;
+  lastEditedBy: string;
 }

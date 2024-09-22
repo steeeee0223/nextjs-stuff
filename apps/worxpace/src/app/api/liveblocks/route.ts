@@ -4,6 +4,7 @@ import { Liveblocks } from "@liveblocks/node";
 
 import { env } from "~/env";
 import { account, documents, fetchClient } from "~/lib";
+import { UserInfo } from "~/liveblocks.config";
 
 const liveblocks = new Liveblocks({ secret: env.LIVEBLOCKS_SECRET_KEY });
 
@@ -26,7 +27,11 @@ export async function POST(req: NextRequest) {
   if (!acc || !inWorkspace)
     return new NextResponse("Unauthorized", { status: 403 });
   /** Liveblocks data */
-  const userInfo = { name: acc.preferredName, picture: acc.avatarUrl };
+  const userInfo: UserInfo["info"] = {
+    name: acc.preferredName,
+    email: acc.email,
+    avatarUrl: acc.avatarUrl,
+  };
   console.log(userInfo);
   const session = liveblocks.prepareSession(acc.id, { userInfo });
 

@@ -31,13 +31,13 @@ export const Region = () => {
             side="bottom"
             align="end"
             customDisplay={({ option }) => (
-              <div className="overflow-hidden text-ellipsis whitespace-nowrap text-primary/65">
+              <div className="truncate text-secondary dark:text-secondary-dark">
                 {typeof option === "string" ? option : option?.label}
               </div>
             )}
           />
         </SectionItem>
-        <Separator className="my-4 bg-primary/15" />
+        <Separator className="my-4" />
         <SectionItem {...region["start-week"]}>
           <Switch size="sm" defaultChecked />
         </SectionItem>

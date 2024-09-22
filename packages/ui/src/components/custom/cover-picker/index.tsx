@@ -15,23 +15,19 @@ import { UrlForm } from "./url-form";
 
 /** Styles */
 const styles = {
-  tabTrigger: "p-1",
-  tabTriggerText: "rounded-sm py-1 px-2 hover:bg-primary/5",
-  tabContent: "px-4 py-2",
+  tabContent: "p-4 pb-2",
 };
 
 export interface CoverPickerProps extends PropsWithChildren {
   /** @param unsplashAPIKey - Unsplash Access Key */
   unsplashAPIKey: string;
-  asChild?: boolean;
-  onUploadChange?: (file: File) => Promise<void>;
-  onUrlChange?: (url: string) => Promise<void>;
-  onRemove?: () => Promise<void>;
+  onUploadChange?: (file: File) => void;
+  onUrlChange?: (url: string) => void;
+  onRemove?: () => void;
 }
 
 export const CoverPicker = ({
   children,
-  asChild,
   unsplashAPIKey,
   onUploadChange,
   onUrlChange,
@@ -44,11 +40,11 @@ export const CoverPicker = ({
     setFile(undefined);
     setIsSubmitting(false);
   };
-  const handleUpload = async (file?: File) => {
+  const handleUpload = (file?: File) => {
     if (file) {
       setIsSubmitting(true);
       setFile(file);
-      await onUploadChange?.(file);
+      onUploadChange?.(file);
     }
     onClose();
   };
@@ -61,78 +57,44 @@ export const CoverPicker = ({
 
   return (
     <Popover>
-      <PopoverTrigger asChild={asChild}>{children}</PopoverTrigger>
-      <PopoverContent
-        variant="notion"
-        align="start"
-        className="z-[99999] w-[520px] p-0 shadow-none"
-      >
-        <Tabs defaultValue="upload" className="relative mt-1 w-full">
-          <TabsList variant="notion">
+      <PopoverTrigger asChild>{children}</PopoverTrigger>
+      <PopoverContent align="start" className="w-[520px]">
+        <Tabs defaultValue="upload" className="relative my-0.5 w-full">
+          <TabsList>
             <div className="grow">
-              <TabsTrigger
-                value="upload"
-                variant="notion"
-                className={styles.tabTrigger}
-              >
-                <p className={styles.tabTriggerText}>Upload</p>
-              </TabsTrigger>
-              <TabsTrigger
-                value="link"
-                variant="notion"
-                className={styles.tabTrigger}
-              >
-                <p className={styles.tabTriggerText}>Link</p>
-              </TabsTrigger>
-              <TabsTrigger
-                value="unsplash"
-                variant="notion"
-                className={styles.tabTrigger}
-              >
-                <p className={styles.tabTriggerText}>Unsplash</p>
-              </TabsTrigger>
+              <TabsTrigger value="upload">Upload</TabsTrigger>
+              <TabsTrigger value="link">Link</TabsTrigger>
+              <TabsTrigger value="unsplash">Unsplash</TabsTrigger>
             </div>
             <div className="grow-0">
               <Button
                 onClick={onRemove}
                 size="sm"
-                className="mx-2 px-2 py-1"
+                className="px-2 py-1"
                 variant="hint"
               >
                 Remove
               </Button>
             </div>
           </TabsList>
-          <TabsContent
-            value="upload"
-            variant="notion"
-            className={styles.tabContent}
-          >
+          <TabsContent value="upload" className={styles.tabContent}>
             <SingleImageDropzone
-              className="w-full border-solid border-primary/10"
+              className="w-full"
               disabled={isSubmitting}
               value={file}
               onChange={handleUpload}
             />
-            <p className="p-4 text-center text-xs text-muted-foreground">
+            <p className="p-4 text-center text-xs text-muted dark:text-muted-dark">
               Images wider than 1500 pixels work best.
             </p>
           </TabsContent>
-          <TabsContent
-            value="link"
-            variant="notion"
-            className={styles.tabContent}
-          >
+          <TabsContent value="link" className={styles.tabContent}>
             <UrlForm disabled={isSubmitting} onUrlSubmit={onUrlSubmit} />
-            <p className="p-4 text-center text-xs text-muted-foreground">
+            <p className="p-4 text-center text-xs text-muted dark:text-muted-dark">
               Works with any image form the web.
             </p>
           </TabsContent>
-          <TabsContent
-            value="unsplash"
-            variant="notion"
-            className={styles.tabContent}
-          >
+          <TabsContent value="unsplash" className={styles.tabContent}>
             <Unsplash
               className="overflow-y-scroll p-0"
               apiKey={unsplashAPIKey}

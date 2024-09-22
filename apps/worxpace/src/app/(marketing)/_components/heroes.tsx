@@ -1,13 +1,9 @@
 import Image from "next/image";
 
-import { cn } from "@acme/ui/lib";
-
-import { theme } from "~/constants/theme";
-
 export default function Heroes() {
   return (
-    <div className={cn(theme.flex.center, "max-w-5xl flex-col justify-center")}>
-      <div className={theme.flex.center}>
+    <div className="flex max-w-5xl flex-col items-center justify-center">
+      <div className="flex items-center">
         <div className="relative h-[300px] w-[300px] sm:h-[350px] sm:w-[350px] md:h-[400px] md:w-[400px] ">
           <Image
             src="/documents.png"

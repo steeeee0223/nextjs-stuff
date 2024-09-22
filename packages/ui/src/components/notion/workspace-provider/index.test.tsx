@@ -1,7 +1,8 @@
 import { render } from "@testing-library/react";
 
-import { WorkspaceProvider, WorkspaceSwitcher } from ".";
+import { WorkspaceProvider } from ".";
 import { user, workspaces } from "../__mock__";
+import { WorkspaceSwitcher } from "../workspace-switcher";
 
 describe("<WorkspaceSwitcher />", () => {
   it("should render the default workspace", () => {
@@ -9,11 +10,11 @@ describe("<WorkspaceSwitcher />", () => {
       <WorkspaceProvider
         user={user}
         workspaces={workspaces}
-        initial="dummy-workspace-personal"
+        initial="workspace-0"
       >
         <WorkspaceSwitcher />
       </WorkspaceProvider>,
     );
-    expect(getByText("John's Workspace")).toBeDefined();
+    expect(getByText("John's Private")).toBeDefined();
   });
 });

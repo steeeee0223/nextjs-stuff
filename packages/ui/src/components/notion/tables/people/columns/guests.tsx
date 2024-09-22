@@ -17,8 +17,8 @@ export const getGuestColumns = (
   onDelete?: (id: string, name: string) => void,
 ): ColumnDef<GuestRow, GuestRow>[] => [
   {
-    id: "account",
-    accessorKey: "account",
+    id: "user",
+    accessorKey: "user",
     header: ({ table, column }) => {
       const isSorted = column.getIsSorted();
       return (
@@ -50,12 +50,12 @@ export const getGuestColumns = (
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
         />
-        <UserCell user={row.getValue("account")} />
+        <UserCell user={row.getValue("user")} />
       </div>
     ),
     filterFn: (row, _columnId, filterValue) =>
       row
-        .getValue<GuestRow["account"]>("account")
+        .getValue<GuestRow["user"]>("user")
         .email.trim()
         .toLowerCase()
         .includes(filterValue as string),
@@ -73,7 +73,7 @@ export const getGuestColumns = (
         {
           id: "actions",
           cell: ({ row }: { row: Row<GuestRow> }) => {
-            const { id, name: preferredName } = row.original.account;
+            const { id, name: preferredName } = row.original.user;
             return (
               <div className="flex min-w-[52px] items-center justify-end">
                 <GuestActionCell

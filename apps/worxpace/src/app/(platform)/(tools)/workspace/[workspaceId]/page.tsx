@@ -3,11 +3,9 @@
 import Image from "next/image";
 import { PlusCircle } from "lucide-react";
 
-import { cn } from "@acme/ui/lib";
 import { useWorkspace } from "@acme/ui/notion";
 import { Button } from "@acme/ui/shadcn";
 
-import { theme } from "~/constants/theme";
 import { useDocuments, usePlatform } from "~/hooks";
 
 interface Params {
@@ -29,12 +27,7 @@ const Workspace = ({ params: { workspaceId } }: Params) => {
     });
 
   return (
-    <div
-      className={cn(
-        theme.flex.center,
-        "h-full flex-col justify-center space-y-4",
-      )}
-    >
+    <div className="flex h-full flex-col items-center justify-center space-y-4">
       <Image
         src="/empty.png"
         height="300"
@@ -54,7 +47,7 @@ const Workspace = ({ params: { workspaceId } }: Params) => {
       </h2>
       <form action={onSubmit}>
         <Button type="submit">
-          <PlusCircle className={cn(theme.size.icon, "mr-2")} />
+          <PlusCircle className="mr-2 size-4" />
           Create a note
         </Button>
       </form>

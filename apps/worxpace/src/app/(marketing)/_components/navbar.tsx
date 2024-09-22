@@ -4,7 +4,6 @@ import { useScrollTop } from "@acme/ui/hooks";
 import { cn } from "@acme/ui/lib";
 import { ThemeToggle } from "@acme/ui/shadcn";
 
-import { theme } from "~/constants/theme";
 import Logo from "./logo";
 
 export default function Navbar() {
@@ -13,19 +12,12 @@ export default function Navbar() {
   return (
     <div
       className={cn(
-        theme.background.navbar,
-        theme.flex.center,
-        "fixed top-0 z-50 w-full p-6",
+        "fixed top-0 z-50 flex w-full items-center bg-main p-6",
         scrolled && "border-b shadow-sm",
       )}
     >
       <Logo />
-      <div
-        className={cn(
-          theme.flex.gap2,
-          "w-full justify-between md:ml-auto md:justify-end",
-        )}
-      >
+      <div className="flex w-full items-center justify-between gap-x-2 md:ml-auto md:justify-end">
         <ThemeToggle />
       </div>
     </div>

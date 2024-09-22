@@ -46,7 +46,7 @@ export const DeleteGuest = ({ name, onDelete }: DeleteGuestProps) => {
           </DialogTitle>
         </DialogHeader>
         <div className="relative flex w-full flex-col items-center gap-2 self-stretch">
-          <div className="text-md text-wrap text-center text-primary/50">
+          <div className="text-md text-wrap text-center text-muted dark:text-muted-dark">
             They will lose access to all shared pages. To add them as a guest in
             the future, a request must be submitted, or an admin must invite
             them.
@@ -55,7 +55,7 @@ export const DeleteGuest = ({ name, onDelete }: DeleteGuestProps) => {
         <DialogFooter>
           <Button
             onClick={onRemove}
-            variant="warning:fill"
+            variant="red:fill"
             size="sm"
             className="w-full font-semibold"
           >

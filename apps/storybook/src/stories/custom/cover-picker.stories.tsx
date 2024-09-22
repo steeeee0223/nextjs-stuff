@@ -8,6 +8,7 @@ const meta = {
   title: "custom/Cover Picker",
   component: CoverPicker,
   tags: ["autodocs"],
+  argTypes: { children: { control: false } },
 } satisfies Meta<typeof CoverPicker>;
 export default meta;
 
@@ -15,18 +16,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    asChild: false,
     unsplashAPIKey: "UNSPLASH_ACCESS_KEY",
-    onUploadChange: async (file) => console.log(`Uploading file: ${file.name}`),
-    onRemove: async () => console.log(`Removing file`),
-    onUrlChange: async (url) => console.log(`Uploading url: ${url}`),
+    onUploadChange: (file) => console.log(`Uploading file: ${file.name}`),
+    onRemove: () => console.log(`Removing file`),
+    onUrlChange: (url) => console.log(`Uploading url: ${url}`),
     children: (
-      <>
-        <Button variant="notion">
-          <ImageIcon className="mr-2 h-4 w-4" />
-          Change cover
-        </Button>
-      </>
+      <Button>
+        <ImageIcon className="mr-2 h-4 w-4" />
+        Change cover
+      </Button>
     ),
   },
 };

@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
 import type { ENTITY_TYPE } from "@acme/prisma";
@@ -37,7 +36,6 @@ const handler = createMutationFetcher(UpdateDocument, async (_key, { arg }) => {
         accountId: arg.accountId,
       });
     }
-    revalidatePath(`/documents/${arg.id}`);
     return result;
   } catch (error) {
     if (error instanceof UnauthorizedError) throw error;

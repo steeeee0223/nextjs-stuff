@@ -4,12 +4,15 @@ import type { Account, Icon, Membership, Workspace } from "@acme/prisma";
 import type { IconInfo, TreeItem } from "@acme/ui/custom";
 import { Plan, Role } from "@acme/ui/notion";
 import type {
+  Page,
   WorkspaceMemberships as PeopleData,
   SettingsStore,
+  User as UserData,
   Workspace as WorkspaceData,
 } from "@acme/ui/notion";
 
-import { AccountMemberships, WorkspaceMembership } from "./account";
+import type { UserInfo } from "~/liveblocks.config";
+import type { AccountMemberships, WorkspaceMembership } from "./account";
 import type { DetailedDocument } from "./types";
 
 export function generateDefaultIcon(group?: string): IconInfo {
@@ -67,6 +70,24 @@ export function toTreeItem(doc: DetailedDocument): TreeItem {
   };
 }
 
+export function toPage(doc?: DetailedDocument): Page | null {
+  return doc
+    ? {
+        id: doc.id,
+        title: doc.title,
+        type: doc.type,
+        isArchived: doc.isArchived,
+        isPublished: doc.isPublished,
+        icon: toIconInfo(doc.icon),
+        coverImage: doc.coverImage,
+        createdBy: doc.createdBy.preferredName,
+        lastEditedBy: doc.updatedBy.preferredName,
+        createdAt: toDateString(doc.createdAt),
+        lastEditedAt: toDateString(doc.updatedAt),
+      }
+    : null;
+}
+
 export function toWorkspaceList(
   workspaceMembership: WorkspaceMembership,
 ): WorkspaceData[] {
@@ -112,7 +133,7 @@ export function toPeopleData(
   members.forEach(({ role, account }) =>
     role === "GUEST"
       ? data.guests.push({
-          account: {
+          user: {
             id: account.id,
             name: account.preferredName,
             avatarUrl: account.avatarUrl,
@@ -122,7 +143,7 @@ export function toPeopleData(
           access: [],
         })
       : data.members.push({
-          account: {
+          user: {
             id: account.id,
             name: account.preferredName,
             avatarUrl: account.avatarUrl,
@@ -140,4 +161,10 @@ export function toPeopleData(
         }),
   );
   return data;
+}
+
+export function toUser({ id, info }: UserInfo): UserData {
+  return !id || !info
+    ? { id: "", name: "", avatarUrl: "", email: "" }
+    : { id: id ?? "", ...info };
 }
