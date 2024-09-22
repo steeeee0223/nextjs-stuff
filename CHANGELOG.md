@@ -13,6 +13,7 @@
   - Change routes:
     1. `/documents/*` to `/document/*`
     2. `/workflows/*` to `/workflow/*`
+  - Remove `revalidatePath` from server actions
 - `ui`
   - Remove `shadcn`'s default styles
   - Unify variants: button, content, input & separator
