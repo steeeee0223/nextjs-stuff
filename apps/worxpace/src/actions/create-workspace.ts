@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
 import type { Workspace } from "@acme/prisma";
@@ -12,9 +11,7 @@ const handler = createMutationFetcher(
   CreateWorkspace,
   async (_key, { arg }) => {
     try {
-      const result = await workspace.create(arg);
-      revalidatePath(`/workspace/${result.id}`);
-      return result;
+      return await workspace.create(arg);
     } catch (error) {
       if (error instanceof UnauthorizedError) throw error;
       throw new Error("Failed to create workspace.");
