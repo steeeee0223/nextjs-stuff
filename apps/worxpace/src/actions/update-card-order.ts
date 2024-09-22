@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
 import type { Card } from "@acme/prisma";
@@ -19,9 +18,7 @@ const handler = createMutationFetcher(
   async (_key, { arg }) => {
     try {
       await fetchClient();
-      const result = await kanban.updateCardsOrder(arg);
-      revalidatePath(`/kanban/${arg.boardId}`);
-      return result;
+      return await kanban.updateCardsOrder(arg);
     } catch (error) {
       if (error instanceof UnauthorizedError) throw error;
       throw new Error("Failed to reorder cards.");

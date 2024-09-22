@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import type { MutationFetcher } from "swr/mutation";
 
 import type { List } from "@acme/prisma";
@@ -19,9 +18,7 @@ const handler = createMutationFetcher(
   async (boardId, { arg }) => {
     try {
       await fetchClient();
-      const result = await kanban.updateListsOrder(arg);
-      revalidatePath(`/kanban/${boardId}`);
-      return result;
+      return await kanban.updateListsOrder(arg);
     } catch (error) {
       if (error instanceof UnauthorizedError) throw error;
       throw new Error("Failed to reorder lists.");
