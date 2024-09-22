@@ -15,13 +15,13 @@ type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
-  args: { children: "Button" },
+  args: { children: "Notion style" },
 };
 export const Blue: Story = {
   args: { variant: "blue", children: "Upgrade" },
 };
 export const Warning: Story = {
-  args: { variant: "warning", children: "Delete this project" },
+  args: { variant: "red", children: "Delete this project" },
 };
 export const Hint: Story = {
   args: {
@@ -35,24 +35,22 @@ export const Hint: Story = {
     ),
   },
 };
-export const Notion: Story = {
-  args: { variant: "notion", children: "Notion Style" },
-};
 export const Link: Story = {
   args: { variant: "link", children: "Link" },
 };
-export const Icon: Story = {
+export const Nav: Story = {
   args: {
-    variant: "outline",
+    variant: "nav",
     size: "icon",
-    children: <ChevronRight className="h-4 w-4" />,
+    children: <ChevronRight className="size-4" />,
   },
 };
-export const WithIcon: Story = {
+export const Item: Story = {
   args: {
+    variant: "item",
     children: (
       <>
-        <MailOpen className="mr-2 h-4 w-4" /> Login with Email
+        <MailOpen className="mr-2 size-4" /> Login with Email
       </>
     ),
   },
@@ -62,7 +60,7 @@ export const Loading: Story = {
     disabled: true,
     children: (
       <>
-        <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> Please wait
+        <RefreshCw className="mr-2 size-4 animate-spin" /> Please wait
       </>
     ),
   },

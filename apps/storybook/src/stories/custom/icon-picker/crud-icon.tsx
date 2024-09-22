@@ -20,8 +20,7 @@ const CrudIcon = () => {
           </IconPicker>
           <Button
             onClick={onRemoveIcon}
-            className="rounded-full text-xs text-primary/50 opacity-0 transition group-hover/icon:opacity-100"
-            variant="notion"
+            className="rounded-full text-xs text-muted opacity-0 transition group-hover/icon:opacity-100 dark:text-muted-dark"
             size="icon"
           >
             <X className="size-4" />

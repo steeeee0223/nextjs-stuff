@@ -6,6 +6,7 @@
   },
   "packageManager": "pnpm@9.1.4",
   "scripts": {
+    "add:ui": "pnpm dlx shadcn@latest add -c ./packages/ui",
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",

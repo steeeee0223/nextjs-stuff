@@ -8,10 +8,10 @@ const isProtectedRoute = createRouteMatcher([
   "/onboarding",
   "/select-role",
   // Tools
-  "/documents(.*)",
+  "/document(.*)",
   "/kanban(.*)",
   "/whiteboard(.*)",
-  "/workflows(.*)",
+  "/workflow(.*)",
   "/workspace(.*)",
 ]);
 

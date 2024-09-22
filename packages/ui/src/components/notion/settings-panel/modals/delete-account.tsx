@@ -60,12 +60,12 @@ export const DeleteAccount = ({
       >
         <div className="relative flex w-full flex-col items-center gap-2 self-stretch">
           <div className="flex items-center">
-            <CircleAlert className="size-9 flex-shrink-0 p-1 text-warning" />
+            <CircleAlert className="size-9 flex-shrink-0 p-1 text-red" />
           </div>
-          <div className="text-center text-lg/[22px] font-semibold text-primary">
+          <div className="text-center text-lg/[22px] font-semibold">
             Delete your entire account permanently?
           </div>
-          <div className="text-wrap text-center text-xs/4 text-primary/65">
+          <div className="text-wrap text-center text-xs/4 text-secondary dark:text-secondary-dark">
             This action cannot be undone. This will permanently delete your
             entire account. All private workspaces will be deleted, and you will
             be removed from all shared workspaces.
@@ -82,13 +82,10 @@ export const DeleteAccount = ({
               name="email"
               render={({ field }) => (
                 <FormItem className="space-y-3">
-                  <FormLabel className="text-sm text-primary">
-                    Please type in your email to confirm.
-                  </FormLabel>
+                  <FormLabel>Please type in your email to confirm.</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      variant="notion"
                       placeholder={email}
                       {...field}
                       className="h-9"
@@ -98,13 +95,13 @@ export const DeleteAccount = ({
               )}
             />
             {form.formState.errors && (
-              <div className="mt-1 text-xs/5 text-warning">
+              <div className="mt-1 text-xs/5 text-red">
                 {`Please type "${email}" to continue`}
               </div>
             )}
             <Button
               type="submit"
-              variant="warning:fill"
+              variant="red:fill"
               size="sm"
               className="mt-6 w-full"
             >

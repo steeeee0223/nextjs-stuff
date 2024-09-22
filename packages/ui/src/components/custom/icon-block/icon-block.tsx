@@ -21,14 +21,6 @@ import { useIconBlock } from "./icon-block-context";
 import type { LucideName } from "./index.types";
 import { UrlForm } from "./url-form";
 
-/** Styles */
-const styles = {
-  popoverTrigger:
-    "flex items-center rounded-sm text-muted-foreground hover:bg-primary/5 cursor-pointer",
-  tabTrigger: "px-4 py-2",
-  tabContent: "px-5 py-2",
-};
-
 const iconBlockVariants = cva("", {
   variants: {
     size: {
@@ -94,58 +86,41 @@ export const IconBlock = ({
   );
   return (
     <Popover>
-      <PopoverTrigger
-        className={styles.popoverTrigger}
-        disabled={!editable && !onClick}
-        onClick={!editable ? onClick : undefined}
-      >
-        <IconDisplay
-          iconInfo={currentIcon}
-          className={cn(iconBlockVariants({ size, className }))}
-        />
+      <PopoverTrigger asChild>
+        <Button
+          variant="subitem"
+          className={cn(
+            "p-0 disabled:opacity-100",
+            iconBlockVariants({ size }),
+            className,
+          )}
+          disabled={!editable && !onClick}
+          onClick={!editable ? onClick : undefined}
+        >
+          <IconDisplay iconInfo={currentIcon} className="size-full" />
+        </Button>
       </PopoverTrigger>
       {editable && (
-        <PopoverContent
-          variant="notion"
-          className="z-[99999] h-[356px] w-[408px] p-0 shadow-none"
-        >
-          <Tabs defaultValue="emoji" className="relative mt-1 w-full">
-            <TabsList variant="notion">
-              <div className="grow">
-                <TabsTrigger
-                  value="emoji"
-                  variant="notion"
-                  className={styles.tabTrigger}
-                >
-                  Emojis
-                </TabsTrigger>
-                <TabsTrigger
-                  value="lucide"
-                  variant="notion"
-                  className={styles.tabTrigger}
-                >
-                  Icons
-                </TabsTrigger>
-                <TabsTrigger
-                  value="file"
-                  variant="notion"
-                  className={styles.tabTrigger}
-                >
-                  Upload
-                </TabsTrigger>
+        <PopoverContent className="h-[356px] w-[408px]">
+          <Tabs defaultValue="emoji" className="relative my-0.5 w-full">
+            <TabsList>
+              <div className="flex grow">
+                <TabsTrigger value="emoji">Emojis</TabsTrigger>
+                <TabsTrigger value="lucide">Icons</TabsTrigger>
+                <TabsTrigger value="file">Upload</TabsTrigger>
               </div>
-              <div className="grow-0">
+              <div className="flex grow-0">
                 <Button
                   onClick={remove}
                   variant="hint"
                   size="sm"
-                  className="mx-2 my-1 p-1"
+                  className="my-1 p-1"
                 >
                   Remove
                 </Button>
               </div>
             </TabsList>
-            <TabsContent value="emoji" variant="notion" className="p-0">
+            <TabsContent value="emoji" className="p-0 pt-3">
               <EmojiPicker
                 height="300px"
                 width="406px"
@@ -154,29 +129,21 @@ export const IconBlock = ({
                 onEmojiClick={handleEmojiSelect}
               />
             </TabsContent>
-            <TabsContent
-              value="lucide"
-              variant="notion"
-              className={styles.tabContent}
-            >
+            <TabsContent value="lucide" className="px-5 pb-2 pt-4">
               <LucidePicker
                 onSelect={handleLucideSelect}
                 onColorChange={setColor}
               />
             </TabsContent>
-            <TabsContent
-              value="file"
-              variant="notion"
-              className={styles.tabContent}
-            >
+            <TabsContent value="file" className="px-5 pb-2 pt-4">
               <UrlForm disabled={isPending} onUrlSubmit={handleUrlSubmit} />
               <ImageDropzone
-                className="mt-6 w-full border-solid border-primary/10"
+                className="mt-6 w-full"
                 disabled={isPending}
                 value={file}
                 onChange={handleUpload}
               />
-              <p className="p-4 text-center text-xs text-muted-foreground">
+              <p className="p-4 text-center text-xs text-muted dark:text-muted-dark">
                 Recommended size is 280 × 280 pixels
               </p>
             </TabsContent>

@@ -45,7 +45,6 @@ export const UrlForm = ({ onUrlSubmit, disabled }: UrlFormProps) => {
                 <Input
                   disabled={disabled}
                   type="url"
-                  variant="notion"
                   placeholder="Paste link to an image..."
                   {...field}
                 />

@@ -29,7 +29,7 @@ export const Card = ({
       tabIndex={0}
       className={cn(
         "relative m-3 h-[280px] w-[230px] cursor-pointer select-none items-center justify-center whitespace-normal rounded-md border border-primary/20 bg-white py-10 text-center text-sm/[1.2] opacity-70 hover:opacity-100",
-        checked && "border-2 border-button opacity-100",
+        checked && "border-2 border-blue opacity-100",
       )}
       onClick={onClick}
     >

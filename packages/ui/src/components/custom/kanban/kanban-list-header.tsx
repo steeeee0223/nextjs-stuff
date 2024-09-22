@@ -8,7 +8,6 @@ import type * as z from "zod";
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import type { KanbanList } from "./index.types";
 import { TitleSchema } from "./utils";
 
@@ -76,15 +75,7 @@ export const KanbanListHeader = ({
                   disabled={isPending}
                   ref={inputRef}
                   onBlur={onBlur}
-                  placeholder="Enter list title.."
-                  className={cn(
-                    "border-transparent hover:border-input focus:border-input",
-                    "text-neutral-700",
-                    "text-sm font-medium",
-                    "h-auto px-[7px]",
-                    "bg-transparent focus:bg-white",
-                    "truncate transition",
-                  )}
+                  placeholder="Enter list title..."
                 />
               </FormControl>
             </FormItem>

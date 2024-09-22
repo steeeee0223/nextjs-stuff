@@ -20,8 +20,8 @@ export const getMemberColumns = (
   onDelete?: (id: string) => void,
 ): ColumnDef<MemberRow, MemberRow>[] => [
   {
-    id: "account",
-    accessorKey: "account",
+    id: "user",
+    accessorKey: "user",
     header: ({ column }) => {
       const isSorted = column.getIsSorted();
       return (
@@ -32,10 +32,10 @@ export const getMemberColumns = (
         />
       );
     },
-    cell: ({ row }) => <UserCell user={row.getValue("account")} />,
+    cell: ({ row }) => <UserCell user={row.getValue("user")} />,
     filterFn: (row, _columnId, filterValue) =>
       row
-        .getValue<MemberRow["account"]>("account")
+        .getValue<MemberRow["user"]>("user")
         .email.trim()
         .toLowerCase()
         .includes(filterValue as string),
@@ -53,7 +53,7 @@ export const getMemberColumns = (
     accessorKey: "groups",
     header: () => <Header title="Groups" className="min-w-[120px] text-sm" />,
     cell: () => (
-      <div className="min-w-[120px] cursor-default text-sm text-primary/50">
+      <div className="min-w-[120px] cursor-default text-sm text-muted dark:text-muted-dark">
         None
       </div>
     ),
@@ -74,7 +74,7 @@ export const getMemberColumns = (
       <RoleCell
         scopes={scopes}
         role={row.getValue("role")}
-        onSelect={(role) => onUpdate?.(row.original.account.id, role)}
+        onSelect={(role) => onUpdate?.(row.original.user.id, role)}
       />
     ),
   },
@@ -83,7 +83,7 @@ export const getMemberColumns = (
         {
           id: "actions",
           cell: ({ row }: { row: Row<MemberRow> }) => {
-            const id = row.original.account.id;
+            const id = row.original.user.id;
             return (
               <div className="flex min-w-[52px] items-center justify-end">
                 <MemberActionCell

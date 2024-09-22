@@ -15,9 +15,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: { placeholder: "Type your name" },
 };
-export const Notion: Story = {
-  args: { variant: "notion", placeholder: "Paste a link" },
-};
 export const Search: Story = {
   args: { variant: "search", placeholder: "Search a website" },
+};
+export const Shadcn: Story = {
+  args: { variant: "shadcn", placeholder: "Paste a link" },
 };

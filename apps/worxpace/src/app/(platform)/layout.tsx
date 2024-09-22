@@ -4,17 +4,17 @@ import { Toaster } from "sonner";
 
 import { ModalProvider } from "@acme/ui/custom";
 
-import { WorxpaceProvider } from "~/components/providers";
 import { EdgeStoreProvider } from "~/hooks";
+import { WorkspaceProvider } from "./_components/workspace-provider";
 
 export default function PlatformLayout({ children }: PropsWithChildren) {
   return (
     <ClerkProvider>
       <EdgeStoreProvider>
         <Toaster />
-        <WorxpaceProvider>
+        <WorkspaceProvider>
           <ModalProvider>{children}</ModalProvider>
-        </WorxpaceProvider>
+        </WorkspaceProvider>
       </EdgeStoreProvider>
     </ClerkProvider>
   );

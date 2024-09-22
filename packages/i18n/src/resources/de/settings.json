@@ -66,7 +66,7 @@
       },
       "open-links": {
         "title": "Links in Desktop-App öffnen",
-        "description": "Du musst die macOS-App installiert haben."
+        "description": "Du musst die <Link>macOS-App</Link> installiert haben."
       }
     },
     "date-time": {
@@ -84,11 +84,11 @@
       "title": "Datenschutz",
       "cookie": {
         "title": "Cookie-Einstellungen",
-        "description": "Passe Cookies an. Weitere Informationen findest du unter Hinweis zu Cookies."
+        "description": "Passe Cookies an. Weitere Informationen findest du unter <Link>Hinweis zu Cookies</Link>."
       },
       "view-history": {
         "title": "Meine Ansichtshistorie anzeigen",
-        "description": "Benutzer/-innen mit Bearbeitungs- oder Vollzugriff können sehen, wann du eine Seite angesehen hast. Mehr erfahren.",
+        "description": "Benutzer/-innen mit Bearbeitungs- oder Vollzugriff können sehen, wann du eine Seite angesehen hast. <Link>Mehr erfahren</Link>.",
         "options": {
           "yes": "Aufzeichnen",
           "no": "Nicht aufzeichnen"
@@ -96,7 +96,7 @@
       },
       "discover-profile": {
         "title": "Auffindbarkeit des Profils",
-        "description": "Mitglieder mit deiner E-Mail-Adresse können deinen Namen und dein Profilbild sehen, wenn sie dich zu einem neuen Workspace einladen. Weitere Informationen"
+        "description": "Mitglieder mit deiner E-Mail-Adresse können deinen Namen und dein Profilbild sehen, wenn sie dich zu einem neuen Workspace einladen. <Link>Weitere Informationen</Link>."
       }
     }
   },
@@ -187,11 +187,11 @@
       "title": "Öffentliche Einstellungen",
       "domain": {
         "title": "Domain",
-        "description": "Pages shared to web will be under {{site}}. Anyone with an allowed email domain can join this workspace via {{link}}."
+        "description": "Pages shared to web will be under <Link>{{site}}</Link>. Anyone with an allowed email domain can join this workspace via <Link>{{link}}</Link>."
       },
       "public": {
         "title": "Public home page",
-        "description": "Access your public home page via {{site}}."
+        "description": "Access your public home page via <Link>{{site}}</Link>."
       },
       "content": {
         "title": "Inhalt exportieren",
@@ -206,7 +206,7 @@
       "analytics": {
         "head": "Analysen",
         "title": "Seitenaufruf-Analysen speichern und anzeigen",
-        "description": "Personen mit Bearbeitungs- oder Vollzugriff können sehen, wie viele Aufrufe eine Seite hat. Ist diese Funktion deaktiviert, werden die Seitenaufrufe nicht für alle Seiten in {{workspace}} gespeichert.",
+        "description": "Personen mit Bearbeitungs- oder Vollzugriff können sehen, wie viele Aufrufe eine Seite hat. Ist diese Funktion deaktiviert, werden die Seitenaufrufe nicht für alle Seiten in <Link>{{workspace}}</Link> gespeichert.",
         "hint": "Erfahre mehr über Workspace-Analysen."
       },
       "danger": {
@@ -283,7 +283,7 @@
     },
     "faq": {
       "title": "FAQ",
-      "description": "Pläne, Abrechnung und Zahlung",
+      "description": "<Link>Pläne, Abrechnung und Zahlung</Link>",
       "button": "Frag unseren Support"
     }
   },
@@ -332,7 +332,7 @@
       },
       "invite": {
         "title": "Das Einladen von Gästen durch Mitglieder deaktivieren",
-        "description": "Aktuell befindet sich {{guests}} Gäste in deinem Workspace."
+        "description": "Aktuell befindet sich <Link>{{guests}} Gäste</Link> in deinem Workspace."
       },
       "guest": {
         "title": "Mitglieder können die Aufnahme von Gästen anfragen",

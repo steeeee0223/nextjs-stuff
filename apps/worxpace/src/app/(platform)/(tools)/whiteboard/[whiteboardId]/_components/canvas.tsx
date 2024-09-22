@@ -19,13 +19,8 @@ interface CanvasProps {
 
 const SaveButton = ({ onClick }: Pick<ButtonProps, "onClick">) => {
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      className="rounded-lg"
-      onClick={onClick}
-    >
-      <SaveIcon className="h-4 w-4" />
+    <Button size="icon" className="rounded-lg" onClick={onClick}>
+      <SaveIcon className="size-4" />
     </Button>
   );
 };

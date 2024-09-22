@@ -50,10 +50,10 @@ export default function Page() {
       <div className="flex min-h-screen flex-col justify-center">
         <div className="relative mx-auto max-w-[520px] py-8 text-center">
           <div>
-            <div className="font-sans text-3xl/tight font-semibold text-primary">
+            <div className="font-sans text-3xl/tight font-semibold">
               How are you planning to use Notion?
             </div>
-            <div className="pt-0.5 text-lg/tight font-normal text-primary/65">
+            <div className="pt-0.5 text-lg/tight font-normal text-secondary dark:text-secondary-dark">
               We’ll streamline your setup experience accordingly.
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function Page() {
         variant="hint"
         size="sm"
         tabIndex={0}
-        className="absolute right-[18px] top-[18px] text-primary"
+        className="absolute right-[18px] top-[18px] text-primary dark:text-primary/80"
         onClick={() => router.push("/select-role")}
       >
         Cancel

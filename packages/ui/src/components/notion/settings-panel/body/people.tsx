@@ -24,11 +24,6 @@ import { AddMembers, DeleteGuest, DeleteMember } from "../modals";
 import { useSettings } from "../settings-context";
 import { usePeople } from "./use-people";
 
-const styles = {
-  tabsTrigger: "py-1",
-  tabsTriggerText: "rounded-sm py-1 px-2 hover:bg-primary/5",
-};
-
 export const People = () => {
   const {
     scopes,
@@ -71,8 +66,8 @@ export const People = () => {
     setOpen(
       <AddMembers
         invitedMembers={[
-          ...members.map(({ account }) => account),
-          ...guests.map(({ account }) => account),
+          ...members.map(({ user }) => user),
+          ...guests.map(({ user }) => user),
         ]}
         onAdd={people.add}
       />,
@@ -94,39 +89,25 @@ export const People = () => {
               <Switch disabled size="sm" />
             </div>
           </SectionItem>
-          <Separator className="my-4 bg-primary/10" />
+          <Separator className="my-4" />
         </>
       )}
       <Tabs defaultValue="members" className="relative mt-1 w-full">
-        <TabsList variant="notion" className="overflow-y-auto">
+        <TabsList className="gap-3 overflow-y-auto p-0">
           <div className="flex grow">
-            <TabsTrigger
-              variant="notion"
-              value="members"
-              className={styles.tabsTrigger}
-            >
-              <p className={styles.tabsTriggerText}>
-                {tabs.members}{" "}
-                <span className="text-primary/50">{members.length}</span>
-              </p>
+            <TabsTrigger value="members">
+              {tabs.members}{" "}
+              <span className="text-muted dark:text-muted-dark">
+                {members.length}
+              </span>
             </TabsTrigger>
-            <TabsTrigger
-              variant="notion"
-              value="guests"
-              className={styles.tabsTrigger}
-            >
-              <p className={styles.tabsTriggerText}>
-                {tabs.guests}{" "}
-                <span className="text-primary/50">{guests.length}</span>
-              </p>
+            <TabsTrigger value="guests">
+              {tabs.guests}{" "}
+              <span className="text-muted dark:text-muted-dark">
+                {guests.length}
+              </span>
             </TabsTrigger>
-            <TabsTrigger
-              variant="notion"
-              value="groups"
-              className={styles.tabsTrigger}
-            >
-              <p className={styles.tabsTriggerText}>{tabs.groups}</p>
-            </TabsTrigger>
+            <TabsTrigger value="groups">{tabs.groups}</TabsTrigger>
           </div>
           <div className="flex items-center justify-end gap-1.5">
             <Input
@@ -149,7 +130,7 @@ export const People = () => {
             </Button>
           </div>
         </TabsList>
-        <TabsContent value="members" variant="notion" className="mt-0">
+        <TabsContent value="members" className="mt-0">
           <MembersTable
             search={search}
             columns={memberColumns}
@@ -157,7 +138,7 @@ export const People = () => {
             emptyResult="No members"
           />
         </TabsContent>
-        <TabsContent value="guests" variant="notion" className="mt-0">
+        <TabsContent value="guests" className="mt-0">
           <GuestsTable
             search={search}
             columns={guestColumns}
@@ -165,7 +146,7 @@ export const People = () => {
             emptyResult="No guests"
           />
         </TabsContent>
-        <TabsContent value="groups" variant="notion" className="mt-0">
+        <TabsContent value="groups" className="mt-0">
           {scopes.has(Scope.Upgrade) &&
             (workspace.plan === Plan.FREE ||
               workspace.plan === Plan.EDUCATION) && (
@@ -173,23 +154,19 @@ export const People = () => {
                 <section className="max-w-[300px] text-sm">
                   <Icon.Group className="mb-2 h-auto w-8 flex-shrink-0 fill-primary/45" />
                   <header className="font-semibold">{upgrade.title}</header>
-                  <p className="mb-4 mt-1 text-primary/65">
+                  <p className="mb-4 mt-1 text-secondary dark:text-secondary-dark">
                     {upgrade.description}
                   </p>
                   <footer className="mb-4 flex flex-wrap gap-x-3 gap-y-2">
                     <Button variant="blue" size="sm">
                       {common.upgrade}
                     </Button>
-                    <Button
-                      variant="notion"
-                      size="sm"
-                      onClick={onGroupsLearnMore}
-                    >
+                    <Button size="sm" onClick={onGroupsLearnMore}>
                       {common.more}
                     </Button>
                   </footer>
                 </section>
-                <Separator className="bg-primary/10" />
+                <Separator />
               </>
             )}
           <GroupsTable

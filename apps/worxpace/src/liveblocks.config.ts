@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/consistent-type-definitions */
-import { createClient } from "@liveblocks/client";
+import { createClient, type User } from "@liveblocks/client";
 import { createRoomContext } from "@liveblocks/react";
 
 const client = createClient({
@@ -68,8 +68,9 @@ type Storage = {
 type UserMeta = {
   id?: string; // Accessible through `user.id`
   info?: {
-    name?: string;
-    picture?: string;
+    name: string;
+    email: string;
+    avatarUrl: string;
   }; // Accessible through `user.info`
 };
 
@@ -125,3 +126,5 @@ export const {
 } = createRoomContext<Presence, Storage, UserMeta, RoomEvent, ThreadMetadata>(
   client,
 );
+
+export type UserInfo = User<Presence, UserMeta>;

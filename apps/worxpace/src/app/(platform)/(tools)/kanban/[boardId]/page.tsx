@@ -2,9 +2,9 @@
 
 import { redirect } from "next/navigation";
 
-import { DocHeader, DocHeaderSkeleton } from "~/components";
-import { useDocument, usePlatform } from "~/hooks";
-import { type UpdateDocumentHandler } from "~/lib";
+import { PageHeader } from "@acme/ui/notion";
+
+import { useDocument, useEdgeStore, usePlatform } from "~/hooks";
 import Error from "../../error";
 import KanbanBoard from "./_component/kanban-board";
 
@@ -14,31 +14,31 @@ interface Params {
 
 const KanbanPage = ({ params: { boardId } }: Params) => {
   const { accountId, workspaceId } = usePlatform();
+  const { uploadFile } = useEdgeStore();
   const {
     page: board,
     isLoading,
     error,
-    update,
   } = useDocument({ documentId: boardId, preview: false });
-  const onUpdate: UpdateDocumentHandler = async (data) => {
-    await update({ accountId, workspaceId, ...data });
-  };
 
   if (error) {
     switch (error.message) {
       case "Unauthorized":
         return redirect("/select-role");
       default:
-        return <Error />;
+        return <Error error={error} />;
     }
   }
   return (
     <div className="pb-40">
       {isLoading || !board ? (
-        <DocHeaderSkeleton />
+        <PageHeader.Skeleton />
       ) : (
         <>
-          <DocHeader document={board} onUpdate={onUpdate} />
+          <PageHeader
+            unsplashAPIKey={process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}
+            onUpload={uploadFile}
+          />
           <KanbanBoard
             accountId={accountId}
             workspaceId={workspaceId}

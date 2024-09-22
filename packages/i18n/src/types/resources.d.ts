@@ -70,7 +70,7 @@ interface Resources {
         };
         "open-links": {
           title: "Open links in desktop app";
-          description: "You must have the Mac or Windows app installed";
+          description: "You must have the <Link>macOS app</Link> installed";
         };
       };
       "date-time": {
@@ -88,11 +88,11 @@ interface Resources {
         title: "Privacy";
         cookie: {
           title: "Cookie settings";
-          description: "Customize cookies. See Cookie Notice for details.";
+          description: "Customize cookies. See <Link>Cookie Notice</Link> for details.";
         };
         "view-history": {
           title: "Show my view history";
-          description: "People with edit or full access will be able to see when you've viewed a page. Leran more.";
+          description: "People with edit or full access will be able to see when you've viewed a page. <Link>Leran more</Link>.";
           options: {
             yes: "Record";
             no: "Don't record";
@@ -100,7 +100,7 @@ interface Resources {
         };
         "discover-profile": {
           title: "Profile discoverability";
-          description: "Users with your email can see your name and profile picture when inviting you to a new workspace. Learn more.";
+          description: "Users with your email can see your name and profile picture when inviting you to a new workspace. <Link>Learn more</Link>.";
         };
       };
     };
@@ -202,11 +202,11 @@ interface Resources {
         title: "Public settings";
         domain: {
           title: "Domain";
-          description: "Pages shared to web will be under {{site}}. Anyone with an allowed email domain can join this workspace via {{link}}.";
+          description: "Pages shared to web will be under <Link>{{site}}</Link>. Anyone with an allowed email domain can join this workspace via <Link>{{link}}</Link>.";
         };
         public: {
           title: "Public home page";
-          description: "Access your public home page via {{site}}.";
+          description: "Access your public home page via </Link>{{site}}</Link>.";
         };
         content: {
           title: "Export content";
@@ -221,7 +221,7 @@ interface Resources {
         analytics: {
           head: "Analytics";
           title: "Save and display page view analytics";
-          description: "People with edit or full access will be able to see how many views a page has. If this is turned off, page views will not be stored for all pages in {{workspace}}.";
+          description: "People with edit or full access will be able to see how many views a page has. If this is turned off, page views will not be stored for all pages in <Link>{{workspace}}</Link>.";
           hint: "Learn about workspace analytics.";
         };
         danger: {
@@ -298,7 +298,7 @@ interface Resources {
       };
       faq: {
         title: "FAQ";
-        description: "Plans, Billing & Payment";
+        description: "<Link>Plans, Billing & Payment</Link>";
         button: "Message support";
       };
     };
@@ -351,7 +351,7 @@ interface Resources {
         };
         invite: {
           title: "Disable members inviting guests to pages";
-          description: "Your workspace currently has {{guests}} guest.";
+          description: "Your workspace currently has <Link>{{guests}} guests</Link>.";
         };
         guest: {
           title: "Allow members to request adding guests";

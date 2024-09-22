@@ -5,10 +5,8 @@ import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 
 import { Cover, IconBlock } from "@acme/ui/custom";
-import { cn } from "@acme/ui/lib";
+import { PageHeader } from "@acme/ui/notion";
 
-import { DocHeaderSkeleton } from "~/components";
-import { theme } from "~/constants/theme";
 import { useDocument } from "~/hooks";
 import { toIconInfo } from "~/lib";
 
@@ -27,14 +25,10 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
   );
 
   if (error) return notFound();
-  if (!page || isLoading) return <DocHeaderSkeleton />;
+  if (!page || isLoading) return <PageHeader.Skeleton />;
   return (
-    <div className="pb-40 dark:bg-[#1F1F1F]">
-      <Cover
-        preview
-        unsplashAPIKey={process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY!}
-        url={page.coverImage?.url ?? null}
-      />
+    <div className="bg-main pb-40">
+      <Cover preview unsplashAPIKey="" url={page.coverImage?.url ?? null} />
       <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
         <div className="group relative pl-[54px]">
           {page.icon && (
@@ -44,12 +38,7 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
               size="lg"
             />
           )}
-          <div
-            className={cn(
-              theme.flex.gap1,
-              "py-4 opacity-0 group-hover:opacity-100",
-            )}
-          />
+          <div className="flex items-center gap-x-1 py-4 opacity-0 group-hover:opacity-100" />
           <div className="break-words pb-[11.5px] text-5xl font-bold text-[#3F3F3F] outline-none dark:text-[#CFCFCF]">
             {page.title}
           </div>

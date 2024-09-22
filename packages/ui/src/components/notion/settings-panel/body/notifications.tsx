@@ -5,12 +5,7 @@ import { useTranslation } from "@acme/i18n";
 import { Select } from "@/components/custom/select";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import {
-  HintButton,
-  Section,
-  SectionItem,
-  SectionSeparator,
-} from "../_components";
+import { HintButton, Section, SectionItem, Spacing } from "../_components";
 
 export const Notifications = () => {
   /** i18n */
@@ -29,7 +24,7 @@ export const Notifications = () => {
         <SectionItem {...myNotifications.mobile}>
           <Switch size="sm" />
         </SectionItem>
-        <SectionSeparator size="sm" />
+        <Spacing size="sm" />
         <SectionItem {...slackNotifications.slack}>
           <Select
             options={slackNotifications.slack.options}
@@ -37,24 +32,24 @@ export const Notifications = () => {
           />
         </SectionItem>
       </Section>
-      <SectionSeparator />
+      <Spacing />
       <Section title={emailNotifications.title}>
         <SectionItem {...emailNotifications.activity}>
           <Switch size="sm" />
         </SectionItem>
-        <SectionSeparator size="sm" />
+        <Spacing size="sm" />
         <SectionItem {...emailNotifications.digests}>
           <Switch size="sm" />
         </SectionItem>
-        <SectionSeparator size="sm" />
+        <Spacing size="sm" />
         <SectionItem {...emailNotifications.announcements}>
-          <Button variant="notion" size="sm">
+          <Button size="sm">
             <ArrowUpRight className="mr-2 size-4" />
             {emailNotifications.announcements.button}
           </Button>
         </SectionItem>
       </Section>
-      <SectionSeparator />
+      <Spacing />
       <HintButton icon={CircleHelp} label={buttons.more} />
     </>
   );

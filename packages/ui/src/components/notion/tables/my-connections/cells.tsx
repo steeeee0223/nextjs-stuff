@@ -1,4 +1,4 @@
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontalIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,7 @@ import { cards } from "../../settings-panel/body/connections.data";
 
 export const Header = ({ title }: { title: string }) => {
   return (
-    <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs text-primary/65">
+    <div className="truncate text-xs text-secondary dark:text-secondary-dark">
       {title}
     </div>
   );
@@ -30,10 +30,10 @@ export const ConnectionCell = ({ type, account }: ConnectionCellProps) => {
     <div className="mr-3 flex items-center">
       <img src={connection.imageUrl} alt={type} className="size-7" />
       <div className="ml-[15px]">
-        <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-primary">
+        <div className="truncate text-sm text-primary dark:text-primary/80">
           {connection.title}
         </div>
-        <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs text-primary/65">
+        <div className="truncate text-xs text-secondary dark:text-secondary-dark">
           {account}
         </div>
       </div>
@@ -55,15 +55,11 @@ export const ActionCell = ({ onDisconnect }: ActionCellProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="hint" size="icon-sm">
-          <MoreHorizontal className="size-[14px] flex-shrink-0 fill-primary/45" />
+          <MoreHorizontalIcon className="size-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        variant="notion"
-        align="center"
-        className="z-[99999]"
-      >
-        {/* <DropdownMenuItem variant="notion" onClick={onConnect}>
+      <DropdownMenuContent align="center">
+        {/* <DropdownMenuItem onClick={onConnect}>
           Connect another account
         </DropdownMenuItem> */}
         <DropdownMenuItem

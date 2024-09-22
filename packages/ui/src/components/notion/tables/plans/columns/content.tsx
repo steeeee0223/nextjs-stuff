@@ -16,9 +16,11 @@ export const contentColumns: ColumnDef<ContentPlanRow>[] = [
       <div className="min-w-0 max-w-[118px] p-3">{row.getValue("title")}</div>
     ),
   },
-  ...Object.values(Plan).map<ColumnDef<ContentPlanRow>>((plan) => ({
-    accessorKey: plan,
-    header: () => null,
-    cell: ({ row }) => <ContentCell {...row.getValue(plan)} />,
-  })),
+  ...Object.values(Plan)
+    .filter((plan) => plan !== Plan.EDUCATION)
+    .map<ColumnDef<ContentPlanRow>>((plan) => ({
+      accessorKey: plan,
+      header: () => null,
+      cell: ({ row }) => <ContentCell {...row.getValue(plan)} />,
+    })),
 ];

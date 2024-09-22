@@ -11,7 +11,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
 
 interface KanbanListOptionsProps {
   listId: string;
@@ -39,7 +38,7 @@ export const KanbanListOptions = ({
   };
 
   const buttonProps: ButtonProps = {
-    className: "rounded-none w-full h-auto p-2 px-5 justify-start font-normal",
+    className: "rounded-none w-full h-auto p-2 px-5 justify-start",
     variant: "hint",
   };
 
@@ -47,27 +46,19 @@ export const KanbanListOptions = ({
     <Popover>
       <PopoverTrigger asChild>
         <Button className="h-auto w-auto p-2" variant="hint">
-          <MoreHorizontal className="h-4 w-4" />
+          <MoreHorizontal className="size-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-        variant="notion"
-        className="px-0 pb-3 pt-3"
-        side="bottom"
-        align="start"
-      >
-        <div className="pb-4 text-center text-sm font-medium text-muted-foreground">
+      <PopoverContent className="py-3" side="bottom" align="start">
+        <div className="pb-4 text-center text-sm font-medium ">
           List actions
         </div>
         <PopoverClose ref={closeRef} asChild>
           <Button
-            className={cn(
-              "h-auto w-auto",
-              "absolute right-2 top-2 p-2 text-muted-foreground",
-            )}
-            variant="ghost"
+            className="absolute right-2 top-2 h-auto w-auto p-2"
+            variant="nav"
           >
-            <X className="h-4 w-4" />
+            <X className="size-4" />
           </Button>
         </PopoverClose>
         <Button onClick={handleAddItem} {...buttonProps}>

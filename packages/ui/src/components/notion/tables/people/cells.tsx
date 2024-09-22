@@ -29,7 +29,7 @@ export const Header = ({ title, className }: HeaderProps) => {
   return (
     <div
       className={cn(
-        "overflow-hidden text-ellipsis whitespace-nowrap text-xs font-normal text-primary/65",
+        "truncate text-xs font-normal text-secondary dark:text-secondary-dark",
         className,
       )}
     >
@@ -61,7 +61,7 @@ export const SortingToggle = ({
 );
 
 interface UserCellProps {
-  user: MemberRow["account"];
+  user: MemberRow["user"];
 }
 export const UserCell = ({ user }: UserCellProps) => {
   return (
@@ -71,14 +71,14 @@ export const UserCell = ({ user }: UserCellProps) => {
           <img
             src={user.avatarUrl}
             alt={user.name[0]}
-            className="size-7 rounded-full border border-primary/10"
+            className="size-7 rounded-full border border-border"
           />
         </div>
         <div className="max-w-[164px]">
-          <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm text-primary">
+          <div className="truncate text-sm text-primary dark:text-primary/80">
             {user.name}
           </div>
-          <div className="overflow-hidden text-ellipsis whitespace-nowrap text-xs text-primary/65">
+          <div className="truncate text-xs text-secondary dark:text-secondary-dark">
             {user.email}
           </div>
         </div>
@@ -105,7 +105,7 @@ export const TeamspacesCell = ({ teamspaces }: TeamspacesCellProps) => {
   return (
     <div className="flex items-center">
       {options.length < 1 ? (
-        <div className="w-auto cursor-default p-2 text-sm text-primary/50">
+        <div className="w-auto cursor-default p-2 text-sm text-muted dark:text-muted-dark">
           No access
         </div>
       ) : (
@@ -140,7 +140,7 @@ export const RoleCell = ({ role, scopes, onSelect }: RoleCellProps) => {
           customDisplay={Custom}
         />
       ) : (
-        <div className="w-auto cursor-default text-sm text-primary/65">
+        <div className="w-auto cursor-default text-sm text-secondary dark:text-secondary-dark">
           {roleOptions[role]!.label}
         </div>
       )}
@@ -149,7 +149,7 @@ export const RoleCell = ({ role, scopes, onSelect }: RoleCellProps) => {
 };
 
 const Custom: SelectProps["customDisplay"] = ({ option }) => (
-  <div className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-primary/65">
+  <div className="min-w-0 truncate text-secondary dark:text-secondary-dark">
     {typeof option === "string" ? option : option?.label}
   </div>
 );
@@ -165,12 +165,14 @@ export const MemberActionCell = ({
 }: MemberActionCellProps) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex rounded hover:bg-primary/10 focus-visible:outline-none">
-        <MoreHorizontalIcon className="size-5 text-primary/45" />
+      <DropdownMenuTrigger asChild>
+        <Button variant="hint" size="icon-sm">
+          <MoreHorizontalIcon className="size-5" />
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent variant="notion" className="z-[99999]">
+      <DropdownMenuContent>
         <DropdownMenuItem variant="warning" onClick={onDelete}>
-          <Icon.Bye className="mr-2 size-4 flex-shrink-0 fill-warning" />
+          <Icon.Bye className="mr-2 size-4 flex-shrink-0 fill-red" />
           {isSelf ? "Leave workspace" : "Remove from workspace"}
         </DropdownMenuItem>
       </DropdownMenuContent>
@@ -192,12 +194,12 @@ export const AccessCell = ({ access }: AccessCellProps) => {
   return (
     <div className="flex items-center">
       {access.length < 1 ? (
-        <div className="w-auto cursor-default p-2 text-sm text-primary/50">
+        <div className="w-auto cursor-default p-2 text-sm text-muted dark:text-muted-dark">
           No access
         </div>
       ) : (
         <Select
-          className="m-0 w-auto data-[placeholder]:text-primary/65"
+          className="m-0 w-auto"
           options={options}
           hideCheck
           align="center"
@@ -210,9 +212,7 @@ export const AccessCell = ({ access }: AccessCellProps) => {
 };
 
 const AccessCellDisplay = ({ pages }: { pages: number }) => (
-  <div className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-primary/65">
-    {`${pages} pages`}
-  </div>
+  <div className="min-w-0 truncate text-secondary dark:text-secondary-dark">{`${pages} pages`}</div>
 );
 
 interface GuestActionCellProps {
@@ -226,17 +226,19 @@ export const GuestActionCell = ({
 }: GuestActionCellProps) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex rounded hover:bg-primary/10 focus-visible:outline-none">
-        <MoreHorizontalIcon className="size-5 text-primary/45" />
+      <DropdownMenuTrigger asChild>
+        <Button variant="hint" size="icon-sm">
+          <MoreHorizontalIcon className="size-5" />
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent variant="notion" className="z-[99999]">
-        <DropdownMenuItem variant="notion">
+      <DropdownMenuContent>
+        <DropdownMenuItem>
           <CircleArrowUp className="mr-2 size-4" onClick={onUpdate} />
           Upgrade to member
         </DropdownMenuItem>
-        <DropdownMenuSeparator variant="notion" />
+        <DropdownMenuSeparator />
         <DropdownMenuItem variant="warning" onClick={onDelete}>
-          <Icon.Bye className="mr-2 size-4 flex-shrink-0 fill-warning" />
+          <Icon.Bye className="mr-2 size-4 flex-shrink-0 fill-red" />
           Remove from workspace
         </DropdownMenuItem>
       </DropdownMenuContent>

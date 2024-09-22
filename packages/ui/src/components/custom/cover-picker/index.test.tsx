@@ -7,8 +7,8 @@ import { CoverPicker } from ".";
 describe("<CoverPicker />", () => {
   it("should render the default text", () => {
     const { getByText } = render(
-      <CoverPicker asChild unsplashAPIKey="">
-        <Button variant="outline">Change cover</Button>
+      <CoverPicker unsplashAPIKey="">
+        <Button>Change cover</Button>
       </CoverPicker>,
     );
     expect(getByText("Change cover")).toBeDefined();
@@ -22,8 +22,8 @@ describe("<CoverPicker /> - Menu", () => {
   beforeEach(async () => {
     user = userEvent.setup();
     rendered = render(
-      <CoverPicker asChild unsplashAPIKey="">
-        <Button variant="outline">Change cover</Button>
+      <CoverPicker unsplashAPIKey="">
+        <Button>Change cover</Button>
       </CoverPicker>,
     );
     const display = rendered.getByRole("button", { name: "Change cover" });

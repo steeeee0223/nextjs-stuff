@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import {
   CRUDItem,
+  CRUDItemSkeleton,
   TreeList,
   TreeProvider,
   useTree,
@@ -63,7 +64,7 @@ export const TreeItems = ({
   return (
     <div className="mt-4">
       {title && (
-        <span className="ml-4 text-xs font-semibold text-primary/50">
+        <span className="ml-4 text-xs font-semibold text-muted dark:text-muted-dark">
           {title}
         </span>
       )}
@@ -71,7 +72,7 @@ export const TreeItems = ({
         <>
           <div className="mt-4">
             {Array.from([0, 1, 0, 1, 1]).map((level, i) => (
-              <CRUDItem.Skeleton key={i} level={level} />
+              <CRUDItemSkeleton key={i} level={level} />
             ))}
           </div>
         </>

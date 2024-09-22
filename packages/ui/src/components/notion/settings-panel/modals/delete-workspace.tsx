@@ -54,12 +54,12 @@ export const DeleteWorkspace = ({
       >
         <div className="relative flex w-full flex-col items-center gap-2 self-stretch">
           <div className="flex items-center">
-            <CircleAlert className="size-9 flex-shrink-0 p-1 text-warning" />
+            <CircleAlert className="size-9 flex-shrink-0 p-1 text-red" />
           </div>
-          <div className="text-center text-lg/[22px] font-semibold text-primary">
+          <div className="text-center text-lg/[22px] font-semibold">
             Delete this entire workspace permanently?
           </div>
-          <div className="text-wrap text-center text-xs/4 text-primary/65">
+          <div className="text-wrap text-center text-xs/4 text-secondary dark:text-secondary-dark">
             This action cannot be undone. This will permanently delete the
             workspace, including all pages and files. Please type the name of
             the workspace to confirm.
@@ -77,24 +77,19 @@ export const DeleteWorkspace = ({
               render={({ field }) => (
                 <FormItem className="space-y-3">
                   <FormControl>
-                    <Input
-                      variant="notion"
-                      placeholder={name}
-                      {...field}
-                      className="h-9"
-                    />
+                    <Input placeholder={name} {...field} className="h-9" />
                   </FormControl>
                 </FormItem>
               )}
             />
             {form.formState.errors && (
-              <div className="mt-1 text-xs/5 text-warning">
+              <div className="mt-1 text-xs/5 text-red">
                 {`Please type "${name}" to continue`}
               </div>
             )}
             <Button
               type="submit"
-              variant="warning:fill"
+              variant="red:fill"
               size="sm"
               className="mt-6 w-full"
             >

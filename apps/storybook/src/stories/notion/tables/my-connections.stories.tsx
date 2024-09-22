@@ -19,7 +19,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    variant: "notion",
     columns: myConnectionsColumns,
     data: [
       {
@@ -34,7 +33,6 @@ export const Default: Story = {
 
 export const Empty: Story = {
   args: {
-    variant: "notion",
     columns: myConnectionsColumns,
     data: [],
   },

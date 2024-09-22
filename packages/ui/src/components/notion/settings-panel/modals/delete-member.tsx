@@ -50,7 +50,7 @@ export const DeleteMember = ({ onDelete }: DeleteMemberProps) => {
             We&apos;d love your input to make Notion better
           </DialogDescription>
         </DialogHeader>
-        <Card variant="notion" className="w-full" button={false}>
+        <Card className="w-full" asButton={false}>
           <CardContent className="flex w-full flex-col items-start gap-4 p-4">
             {options.map((option, i) => (
               <div key={i} className="flex items-center gap-2">

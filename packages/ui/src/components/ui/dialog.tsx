@@ -5,6 +5,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { contentVariants } from "./variants";
 import { VisuallyHidden } from "./visually-hidden";
 
 const Dialog = DialogPrimitive.Root;
@@ -35,7 +36,6 @@ interface DialogContentProps
   hideClose?: boolean;
   noTitle?: boolean;
 }
-
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
@@ -45,13 +45,8 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-[50%] top-[50%] z-[99999] grid w-full max-w-lg gap-4 rounded-sm bg-modal p-6 shadow-lg dark:bg-modal-dark",
-        "border border-primary/15 focus-visible:outline-none",
-        "translate-x-[-50%] translate-y-[-50%]",
-        "duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out",
-        "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-        "data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
+        contentVariants({ variant: "modal" }),
+        "rounded-sm",
         className,
       )}
       {...props}
@@ -106,7 +101,7 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      "break-words text-center text-lg font-semibold leading-none tracking-tight text-primary",
+      "break-words text-center text-lg font-semibold leading-none tracking-tight text-primary dark:text-primary/80",
       className,
     )}
     style={{ marginTop: 0 }}
@@ -121,7 +116,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-primary/50", className)}
+    className={cn("text-sm text-muted dark:text-muted-dark", className)}
     {...props}
   />
 ));

@@ -33,7 +33,7 @@ export const Hint = ({
         </TooltipTrigger>
         <TooltipContent
           side={side}
-          className={cn("max-w-[220px] break-words text-xs", className)}
+          className={cn("font-medium", className)}
           {...props}
         >
           {description}

@@ -10,7 +10,7 @@ const meta = {
   argTypes: {},
   render: (args) => {
     return (
-      <div className="group/sidebar relative z-[99999] flex h-full w-60 flex-col overflow-y-auto bg-primary-foreground">
+      <div className="group/sidebar relative flex h-full w-60 flex-col overflow-y-auto bg-sidebar">
         <CRUDItem {...args} />
       </div>
     );

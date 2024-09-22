@@ -1,10 +1,10 @@
-import { type PropsWithChildren } from "react";
+import React from "react";
 
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { PlanLink } from "./helper";
 
-interface SectionProps extends PropsWithChildren {
+interface SectionProps extends React.PropsWithChildren {
   title: string;
   noSeparator?: boolean;
 }
@@ -16,16 +16,16 @@ export const Section = ({
   return (
     <div className="p-0">
       <h3 className="pb-3 text-base font-medium">{title}</h3>
-      {!noSeparator && <Separator className="mb-4 bg-primary/10" />}
+      {!noSeparator && <Separator className="mb-4" />}
       <div>{children}</div>
     </div>
   );
 };
 
-interface SectionSeparatorProps {
+interface SpacingProps {
   size?: "sm" | "md" | "lg";
 }
-export const SectionSeparator = ({ size = "md" }: SectionSeparatorProps) => {
+export const Spacing = ({ size = "md" }: SpacingProps) => {
   const variant: Record<typeof size, string> = {
     sm: "18px",
     md: "48px",
@@ -34,9 +34,9 @@ export const SectionSeparator = ({ size = "md" }: SectionSeparatorProps) => {
   return <div className="w-full" style={{ height: variant[size] }} />;
 };
 
-interface SectionItemProps extends PropsWithChildren {
+interface SectionItemProps extends React.PropsWithChildren {
   title: string;
-  description: string;
+  description: React.ReactNode;
   titleProps?: string;
   plan?: string;
 }
@@ -56,7 +56,9 @@ export const SectionItem = ({
           </h3>
           {!!plan && <PlanLink plan={plan} />}
         </div>
-        <p className="w-4/5 text-xs text-primary/65">{description}</p>
+        <p className="w-4/5 text-xs text-secondary dark:text-secondary-dark">
+          {description}
+        </p>
       </div>
       <div>{children}</div>
     </div>

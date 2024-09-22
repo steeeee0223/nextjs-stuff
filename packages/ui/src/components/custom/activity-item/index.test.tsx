@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 
 import { ActivityItem } from ".";
-import type { Log } from "./index.utils";
+import { generateLogMessage, type Log } from "./index.utils";
 
 const mockData: Log = {
   username: "John Doe",
@@ -12,8 +12,8 @@ const mockData: Log = {
 };
 
 describe("<ActivityItem />", () => {
-  it("should render the username", () => {
-    const { getByText } = render(<ActivityItem data={mockData} />);
-    expect(getByText(mockData.username)).toBeDefined();
+  it("should render the log message", () => {
+    const { container } = render(<ActivityItem data={mockData} />);
+    expect(container).toHaveTextContent(generateLogMessage(mockData));
   });
 });

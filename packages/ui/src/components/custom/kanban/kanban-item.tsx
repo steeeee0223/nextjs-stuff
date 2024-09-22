@@ -2,6 +2,7 @@
 
 import { Draggable } from "@hello-pangea/dnd";
 
+import { buttonVariants } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import type { KanbanItem as Item } from "./index.types";
 import { KanbanItemOptions } from "./kanban-item-options";
@@ -32,13 +33,11 @@ export const KanbanItem = ({
           {...dragHandleProps}
           {...draggableProps}
           className={cn(
-            "truncate rounded-md border-2 border-transparent bg-white shadow-sm hover:border-black",
-            "group flex items-center",
+            buttonVariants({ variant: "item", size: "sm" }),
+            "group truncate border border-border-button shadow-sm",
           )}
         >
-          <div className="flex-1 px-3 text-sm text-neutral-700">
-            {data.title}
-          </div>
+          <div className="flex-1">{data.title}</div>
           <KanbanItemOptions
             itemId={data.id}
             onCopy={onCopy}

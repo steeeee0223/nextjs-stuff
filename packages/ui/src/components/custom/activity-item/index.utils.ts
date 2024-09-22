@@ -13,18 +13,13 @@ export interface Log {
 }
 
 export const generateLogMessage = (log: Log): string => {
-  const {
-    action,
-    entity: { title, type },
-  } = log;
+  const { action, username } = log;
   switch (action.toLowerCase()) {
-    case "update":
-      return `edited ${type.toLowerCase()} "${title}"`;
     case "create":
     case "restore":
     case "delete":
-      return `${action.toLowerCase()}d ${type.toLowerCase()} "${title}"`;
+      return `${username} ${action.toLowerCase()}d `;
     default:
-      return `unknown action ${type.toLowerCase()} "${title}"`;
+      return `${username} edited `;
   }
 };

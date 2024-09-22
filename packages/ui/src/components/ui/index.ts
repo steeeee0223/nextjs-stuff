@@ -1,3 +1,6 @@
+/** Variants */
+export * from "./variants";
+/** UI */
 export * from "./accordion";
 export * from "./alert-dialog";
 export * from "./avatar";
@@ -13,6 +16,7 @@ export * from "./form";
 export * from "./input";
 export * from "./label";
 export * from "./popover";
+export * from "./resizable";
 export * from "./select";
 export * from "./separator";
 export * from "./sheet";
