@@ -1,9 +1,6 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 
 import { Spinner } from "@/components/custom/spinner";
 import { Input } from "@/components/ui/input";
@@ -29,7 +26,6 @@ export const UnsplashPicker = ({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for an image..."
-        variant="notion"
       />
       <div className="mx-0 mt-4 flex items-center justify-center ">
         {isLoading || !images ? (
@@ -39,21 +35,22 @@ export const UnsplashPicker = ({
             {images?.map(({ id, urls, user, description }) => (
               <div
                 key={id}
+                tabIndex={-1}
+                role="button"
                 onClick={() => onSelect?.(urls.regular)}
+                onKeyDown={() => onSelect?.(urls.regular)}
                 className="group relative aspect-video cursor-pointer transition hover:opacity-75"
               >
-                <Image
+                <img
                   src={urls.small}
                   alt={description ?? "Unsplash"}
-                  className="rounded-sm object-cover"
-                  fill
-                  sizes="121px"
+                  className="h-16 w-full rounded-sm object-cover object-center"
                 />
-                <p className="absolute bottom-[-14px] w-full truncate text-[10px] text-primary opacity-100">
+                <p className="absolute bottom-[-14px] w-full truncate text-[10px] opacity-100">
                   by{" "}
                   <a
                     href={user.portfolio_url}
-                    className=" underline opacity-70 group-hover:opacity-100"
+                    className="underline opacity-70 group-hover:opacity-100"
                   >
                     {user.name}
                   </a>

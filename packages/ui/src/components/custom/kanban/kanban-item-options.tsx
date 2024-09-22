@@ -11,7 +11,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
 
 interface KanbanItemOptionsProps {
   itemId: string;
@@ -36,36 +35,35 @@ export const KanbanItemOptions = ({
   };
 
   const buttonProps: ButtonProps = {
-    className: "rounded-none w-full h-auto p-2 px-5 justify-start font-normal",
+    className: "rounded-none w-full h-auto p-2 px-5 justify-start",
     variant: "hint",
   };
 
   return (
     <Popover>
-      <PopoverTrigger asChild onClick={(e) => e.stopPropagation()}>
-        <Button className="h-auto w-auto p-2" size="sm" variant="hint">
-          <MoreHorizontal className="h-4 w-4" />
+      <PopoverTrigger asChild>
+        <Button
+          className="size-auto p-2"
+          size="sm"
+          variant="hint"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <MoreHorizontal className="size-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        variant="notion"
-        className="px-0 pb-3 pt-3"
+        className="py-3"
         side="bottom"
         align="start"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="pb-4 text-center text-sm font-medium text-muted-foreground">
-          Item actions
-        </div>
+        <div className="pb-4 text-center text-sm font-medium">Item actions</div>
         <PopoverClose ref={closeRef} asChild>
           <Button
-            className={cn(
-              "h-auto w-auto",
-              "absolute right-2 top-2 p-2 text-muted-foreground",
-            )}
-            variant="ghost"
+            className="absolute right-2 top-2 size-auto p-2"
+            variant="nav"
           >
-            <X className="h-4 w-4" />
+            <X className="size-4" />
           </Button>
         </PopoverClose>
         <Button onClick={handleCopy} {...buttonProps}>

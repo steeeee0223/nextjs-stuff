@@ -10,6 +10,12 @@ import {
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import {
+  buttonVariants,
+  contentVariants,
+  separatorVariants,
+  type ButtonVariants,
+} from "./variants";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
@@ -40,14 +46,18 @@ const DropdownMenuSubTrigger = React.forwardRef<
 DropdownMenuSubTrigger.displayName =
   DropdownMenuPrimitive.SubTrigger.displayName;
 
+type DropdownMenuSubContentProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.SubContent
+>;
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
+  DropdownMenuSubContentProps
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.SubContent
     ref={ref}
     className={cn(
-      "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      "min-w-[8rem] overflow-hidden p-1",
+      contentVariants({ variant: "popover" }),
       className,
     )}
     {...props}
@@ -56,63 +66,50 @@ const DropdownMenuSubContent = React.forwardRef<
 DropdownMenuSubContent.displayName =
   DropdownMenuPrimitive.SubContent.displayName;
 
-const contentVariants = cva(
-  "z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-  {
-    variants: {
-      variant: {
-        default: "bg-popover text-popover-foreground",
-        notion: "border-primary/15 bg-white dark:bg-[#252525]",
-      },
-    },
-    defaultVariants: { variant: "default" },
-  },
-);
-export interface DropdownMenuContentProps
-  extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>,
-    VariantProps<typeof contentVariants> {}
+export type DropdownMenuContentProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.Content
+>;
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   DropdownMenuContentProps
->(({ className, sideOffset = 4, variant, ...props }, ref) => (
+>(({ className, sideOffset = 4, ...props }, ref) => (
   <DropdownMenuPrimitive.Portal>
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
-      className={cn(contentVariants({ variant, className }))}
+      className={cn(
+        "min-w-[8rem] overflow-hidden p-1",
+        contentVariants({ variant: "popover" }),
+        className,
+      )}
       {...props}
     />
   </DropdownMenuPrimitive.Portal>
 ));
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
-const itemVariants = cva(
-  "relative flex select-none items-center rounded-sm px-2 py-1.5 transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-  {
-    variants: {
-      variant: {
-        default:
-          "cursor-default text-sm outline-none focus:bg-accent focus:text-accent-foreground",
-        notion:
-          "min-h-7 cursor-pointer text-sm/[1.2] hover:bg-primary/5 focus-visible:outline-none",
-        warning:
-          "min-h-7 text-sm/[1.2] text-warning hover:bg-primary/5 focus-visible:outline-none",
-      },
-      inset: { true: "pl-8" },
-    },
-    defaultVariants: { variant: "default" },
+const itemVariants = cva("h-auto min-h-7 px-2 py-1.5 text-sm/[1.2]", {
+  variants: {
+    variant: { warning: "text-red" },
+    inset: { true: "pl-8" },
   },
-);
+  defaultVariants: {},
+});
 export interface DropdownMenuItemProps
   extends React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item>,
+    Omit<ButtonVariants, "variant">,
     VariantProps<typeof itemVariants> {}
 const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   DropdownMenuItemProps
->(({ className, variant, inset, ...props }, ref) => (
+>(({ className, variant, size = "sm", inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
-    className={cn(itemVariants({ variant, inset, className }))}
+    className={cn(
+      buttonVariants({ variant: "item", size }),
+      itemVariants({ variant, inset }),
+      className,
+    )}
     {...props}
   />
 ));
@@ -182,27 +179,16 @@ const DropdownMenuLabel = React.forwardRef<
 ));
 DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 
-const separatorVariants = cva("-mx-1 my-1 h-px", {
-  variants: {
-    variant: {
-      default: "bg-muted",
-      notion: "bg-primary/15",
-    },
-  },
-  defaultVariants: { variant: "default" },
-});
-export interface DropdownMenuSeparatorProps
-  extends React.ComponentPropsWithoutRef<
-      typeof DropdownMenuPrimitive.Separator
-    >,
-    VariantProps<typeof separatorVariants> {}
+type DropdownMenuSeparatorProps = React.ComponentPropsWithoutRef<
+  typeof DropdownMenuPrimitive.Separator
+>;
 const DropdownMenuSeparator = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
   DropdownMenuSeparatorProps
->(({ className, variant, ...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={cn(separatorVariants({ variant, className }))}
+    className={cn(separatorVariants({ variant: "default", className }))}
     {...props}
   />
 ));

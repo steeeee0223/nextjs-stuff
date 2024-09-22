@@ -16,9 +16,5 @@ export const Modal = () => {
 export const Trigger = () => {
   const { setOpen } = useModal();
   const handleClick = () => void setOpen(<Modal />);
-  return (
-    <Button onClick={handleClick} variant="outline">
-      Open
-    </Button>
-  );
+  return <Button onClick={handleClick}>Open</Button>;
 };

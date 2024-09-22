@@ -8,8 +8,7 @@ import { useModal } from "@/components/custom/modal-provider";
 import { Select } from "@/components/custom/select";
 import { Spinner } from "@/components/custom/spinner";
 import { TagInput } from "@/components/custom/tag-input";
-import type { Account } from "@/components/notion/tables";
-import { Role } from "@/components/notion/types";
+import { Role, User } from "@/components/notion/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,9 +28,9 @@ enum Heading {
 
 const emailSchema = z.string().email();
 
-type DetailedAccount = Account & { invited?: boolean };
+type DetailedAccount = User & { invited?: boolean };
 interface AddMembersProps {
-  invitedMembers: Account[];
+  invitedMembers: User[];
   onAdd?: (emails: string[], role: Role) => void;
 }
 
@@ -50,7 +49,7 @@ export const AddMembers = ({ invitedMembers, onAdd }: AddMembersProps) => {
   const updateFilteredItems = (input: string) => {
     const v = input.trim();
     const result = invitedMembers.filter(
-      ({ name, email }: Account) => name.includes(v) || email.includes(v),
+      ({ name, email }: User) => name.includes(v) || email.includes(v),
     );
     setFilteredItems(
       v.length > 0
@@ -96,9 +95,9 @@ export const AddMembers = ({ invitedMembers, onAdd }: AddMembersProps) => {
       className="flex w-[480px] min-w-[180px] flex-col"
       shouldFilter={false}
     >
-      <div className="z-10 max-h-[240px] flex-shrink-0 overflow-hidden overflow-y-auto border-b border-primary/15">
-        <div className="flex min-w-0 flex-[1_1_0%] flex-col items-stretch">
-          <div className="z-10 mb-0 mr-0 flex min-h-[34px] w-full cursor-text flex-nowrap items-start overflow-auto bg-[rgba(242,241,238,0.6)] p-[4px_9px] text-sm dark:bg-modal-dark/5">
+      <div className="z-10 max-h-[240px] flex-shrink-0 overflow-hidden overflow-y-auto border-b border-border">
+        <div className="flex min-w-0 flex-1 flex-col items-stretch">
+          <div className="z-10 mb-0 mr-0 flex min-h-[34px] w-full cursor-text flex-nowrap items-start overflow-auto bg-input/60 p-[4px_9px] text-sm dark:bg-input/5">
             <TagInput
               role="combobox"
               type="email"
@@ -116,7 +115,7 @@ export const AddMembers = ({ invitedMembers, onAdd }: AddMembersProps) => {
                 defaultValue={role}
                 onChange={(value) => setRole(value as Role)}
                 options={{ owner: "Workspace Owner", member: "Member" }}
-                className="m-0 w-fit min-w-0 bg-transparent text-primary/50"
+                className="m-0 w-fit text-muted dark:text-muted-dark"
               />
               <Button
                 tabIndex={0}
@@ -133,14 +132,14 @@ export const AddMembers = ({ invitedMembers, onAdd }: AddMembersProps) => {
           </div>
         </div>
       </div>
-      <CommandList className="min-h-0 flex-grow transform overflow-auto overflow-x-hidden">
+      <CommandList className="max-h-[300px] min-h-0 flex-grow transform overflow-auto overflow-x-hidden">
         <CommandGroup className="min-h-[200px]" style={{ padding: 4 }}>
           <div className="my-1.5 flex select-none fill-current px-2 text-xs font-medium leading-5 text-primary/45">
             <div className="self-center overflow-hidden overflow-ellipsis whitespace-nowrap">
               {heading}
             </div>
           </div>
-          <CommandEmpty className="flex min-h-7 select-none items-center px-2 py-0 leading-[1.2] text-primary/65">
+          <CommandEmpty className="flex min-h-7 select-none items-center px-2 py-0 leading-[1.2] text-secondary dark:text-secondary-dark">
             <span>Type or paste in emails above, separated by commas.</span>
           </CommandEmpty>
           {filteredItems?.map((user) => (
@@ -174,7 +173,7 @@ const Item = ({
 }) => {
   return (
     <CommandItem
-      className="min-h-7 w-full cursor-pointer leading-[1.2] transition"
+      className="h-7 min-h-7 w-full leading-[1.2]"
       style={{ padding: 0 }}
       key={email}
       value={email}
@@ -187,17 +186,15 @@ const Item = ({
             <img
               src={avatarUrl}
               alt={name.at(0)?.toUpperCase()}
-              className="size-5 rounded-full border border-primary/10"
+              className="size-5 rounded-full border border-border"
             />
           </div>
         ) : (
-          <Mail className="size-6 flex-shrink-0 text-primary" />
+          <Mail className="size-5 flex-shrink-0 text-primary" />
         )}
       </div>
       <div className="ml-1.5 mr-3 min-w-0 flex-1">
-        <div className="overflow-hidden overflow-ellipsis whitespace-nowrap">
-          {invited ? name : email}
-        </div>
+        <div className="truncate">{invited ? name : email}</div>
       </div>
       {invited && (
         <Badge

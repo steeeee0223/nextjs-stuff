@@ -2,30 +2,32 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+import { contentVariants, ContentVariants } from "./variants";
 
-const cardVariants = cva("rounded-lg border shadow-sm", {
+const cardVariants = cva("rounded-lg shadow-sm", {
   variants: {
-    variant: {
-      default: "bg-card text-card-foreground",
-      notion: "border-primary/10",
-    },
-    button: {
+    asButton: {
       true: "cursor-pointer select-none hover:bg-primary/5",
     },
   },
-  defaultVariants: { variant: "default", button: true },
+  defaultVariants: { asButton: false },
 });
 
-export type CardProps = React.HTMLAttributes<HTMLDivElement> &
-  VariantProps<typeof cardVariants>;
-
+interface CardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof cardVariants>,
+    ContentVariants {}
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, variant, button, ...props }, ref) => (
+  ({ className, variant = "default", asButton, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(cardVariants({ variant, button, className }))}
-      role={button ? "button" : undefined}
-      tabIndex={button ? 0 : undefined}
+      className={cn(
+        contentVariants({ variant }),
+        cardVariants({ asButton }),
+        className,
+      )}
+      role={asButton ? "button" : undefined}
+      tabIndex={asButton ? 0 : undefined}
       {...props}
     />
   ),
@@ -67,7 +69,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("text-sm text-muted dark:text-muted-dark", className)}
     {...props}
   />
 ));
@@ -77,7 +79,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+  <div ref={ref} className={cn("p-0", className)} {...props} />
 ));
 CardContent.displayName = "CardContent";
 

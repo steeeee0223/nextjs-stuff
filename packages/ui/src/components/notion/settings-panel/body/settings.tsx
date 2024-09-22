@@ -2,7 +2,7 @@ import { useTranslation } from "@acme/i18n";
 
 import { Select } from "@/components/custom/select";
 import { Switch } from "@/components/ui/switch";
-import { Section, SectionItem, SectionSeparator } from "../_components";
+import { Section, SectionItem, Spacing, TextLink } from "../_components";
 import { useSettings } from "../settings-context";
 
 export const Settings = () => {
@@ -27,7 +27,7 @@ export const Settings = () => {
             side="left"
           />
         </SectionItem>
-        <SectionSeparator size="sm" />
+        <Spacing size="sm" />
         <SectionItem {...mySettings["open-on-start"]}>
           <Select
             options={mySettings["open-on-start"].options}
@@ -35,32 +35,64 @@ export const Settings = () => {
             side="left"
           />
         </SectionItem>
-        <SectionSeparator size="sm" />
-        <SectionItem {...mySettings["open-links"]}>
+        <Spacing size="sm" />
+        <SectionItem
+          title={mySettings["open-links"].title}
+          description={
+            <TextLink
+              i18nKey="my-settings.my-settings.open-links.description"
+              href="https://www.notion.so/desktop"
+            />
+          }
+        >
           <Switch size="sm" />
         </SectionItem>
       </Section>
-      <SectionSeparator />
+      <Spacing />
       <Section title="Date & time">
         <SectionItem {...dateTime["set-timezone"]}>
           <Switch size="sm" />
         </SectionItem>
-        <SectionSeparator size="sm" />
+        <Spacing size="sm" />
         <SectionItem {...dateTime.timezone}></SectionItem>
       </Section>
-      <SectionSeparator />
+      <Spacing />
       <Section title="Privacy">
-        <SectionItem {...privacy.cookie}></SectionItem>
-        <SectionSeparator size="sm" />
-        <SectionItem {...privacy["view-history"]}>
+        <SectionItem
+          title={privacy.cookie.title}
+          description={
+            <TextLink
+              i18nKey="my-settings.privacy.cookie.description"
+              href="https://notion.notion.site/Cookie-Notice-bc186044eed5488a8387a9e94b14e58c"
+            />
+          }
+        />
+        <Spacing size="sm" />
+        <SectionItem
+          title={privacy["view-history"].title}
+          description={
+            <TextLink
+              i18nKey="my-settings.privacy.view-history.description"
+              href="https://www.notion.so/help/page-analytics"
+            />
+          }
+        >
           <Select
             options={privacy["view-history"].options}
             defaultValue="yes"
             side="left"
           />
         </SectionItem>
-        <SectionSeparator size="sm" />
-        <SectionItem {...privacy["discover-profile"]}>
+        <Spacing size="sm" />
+        <SectionItem
+          title={privacy["discover-profile"].title}
+          description={
+            <TextLink
+              i18nKey="my-settings.privacy.discover-profile.description"
+              href="https://www.notion.so/help/account-settings#profile-settings"
+            />
+          }
+        >
           <Switch size="sm" />
         </SectionItem>
       </Section>

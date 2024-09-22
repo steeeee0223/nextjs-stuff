@@ -15,7 +15,6 @@ import { COLOR } from "@/constants/colors";
 import { randomItem } from "@/lib/utils";
 import ColorPicker from "./color-picker";
 import type { IconTag, LucideName } from "./index.types";
-import { styles } from "./styles";
 
 interface IconProps {
   onClick?: (name: LucideName) => void;
@@ -28,8 +27,8 @@ const Icon = ({ name, color, onClick }: IconProps) => {
   const handleClick = () => onClick?.(name);
 
   return (
-    <Hint asChild side="top" description={name} variant="notion" size="sm">
-      <Button variant="hint" onClick={handleClick} className={styles.gridItem}>
+    <Hint asChild side="top" description={name}>
+      <Button variant="hint" onClick={handleClick} className="size-[30px] p-0">
         <LucideIcon name={name} color={color} size={20} strokeWidth={2.2} />
       </Button>
     </Hint>
@@ -92,20 +91,14 @@ const LucidePicker = ({ onSelect, onColorChange }: LucidePickerProps) => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter..."
-            variant="notion"
           />
         </div>
-        <Hint asChild description="Random" variant="notion" size="sm">
-          <Button variant="notion" size="icon-md" onClick={handleRandom}>
+        <Hint asChild description="Random">
+          <Button variant="secondary" size="icon-md" onClick={handleRandom}>
             <Shuffle size={16} />
           </Button>
         </Hint>
-        <Hint
-          asChild
-          description="Select icon color"
-          variant="notion"
-          size="sm"
-        >
+        <Hint asChild description="Select icon color">
           <ColorPicker
             defaultColor={color}
             colors={COLOR}
@@ -136,7 +129,7 @@ const LucidePicker = ({ onSelect, onColorChange }: LucidePickerProps) => {
             </div>
           </InfiniteScroll>
         ) : (
-          <p className="hidden py-2 text-center text-xs text-muted-foreground last:block">
+          <p className="hidden py-2 text-center text-xs text-muted last:block dark:text-muted-dark">
             No icons found.
           </p>
         )}

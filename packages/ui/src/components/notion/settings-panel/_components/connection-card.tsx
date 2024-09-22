@@ -36,16 +36,15 @@ export const ConnectionCard = ({
 
   return (
     <Card
-      variant="notion"
-      button
+      asButton
       className="flex min-w-[120px] flex-col justify-between gap-3 overflow-hidden p-3"
     >
-      <CardContent className="flex flex-col items-start gap-2 p-0">
+      <CardContent className="flex flex-col items-start gap-2">
         <CardHeader className="px-0 py-1">
           <img src={imageUrl} alt={id} className="size-7 rounded-md" />
         </CardHeader>
         <CardTitle className="text-sm/[1.3] font-medium">{title}</CardTitle>
-        <CardDescription className="max-h-[72px] overflow-hidden  text-xs/[1.3] text-primary/65">
+        <CardDescription className="max-h-[72px] overflow-hidden  text-xs/[1.3] text-secondary dark:text-secondary-dark">
           {description}
         </CardDescription>
         <div className="flex gap-1">

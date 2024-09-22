@@ -2,7 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-import { DocHeaderSkeleton } from "~/components";
+import { PageHeader } from "@acme/ui/notion";
+
 import { useDocument, usePlatform } from "~/hooks";
 import { type UpdateDocumentHandler } from "~/lib";
 import Error from "../../error";
@@ -29,14 +30,13 @@ const WhiteboardPage = ({ params: { whiteboardId } }: Params) => {
       case "Unauthorized":
         return redirect("/select-role");
       default:
-        return <Error />;
+        return <Error error={error} />;
     }
   }
   return (
     <div>
-      <div className="h-12" />
       {isLoading || !board ? (
-        <DocHeaderSkeleton />
+        <PageHeader.Skeleton />
       ) : (
         <Canvas board={board} onUpdate={onUpdate} />
       )}

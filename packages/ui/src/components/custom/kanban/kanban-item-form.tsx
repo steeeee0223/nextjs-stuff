@@ -83,8 +83,8 @@ export const KanbanItemForm = forwardRef<
           <Button type="submit" disabled={isPending} size="sm">
             Add item
           </Button>
-          <Button onClick={disableEditing} size="sm" variant="ghost">
-            <X className="h-4 w-4" />
+          <Button onClick={disableEditing} size="sm" variant="subitem">
+            <X className="size-4" />
           </Button>
         </div>
       </form>
@@ -93,11 +93,11 @@ export const KanbanItemForm = forwardRef<
     <div className="px-2 pt-2">
       <Button
         onClick={enableEditing}
-        className="h-auto w-full justify-start px-2 py-1.5 text-sm text-muted-foreground"
+        className="h-auto w-full justify-start px-2 py-1.5"
         size="sm"
-        variant="ghost"
+        variant="subitem"
       >
-        <Plus className="mr-2 h-4 w-4" />
+        <Plus className="mr-2 size-4" />
         Add an item
       </Button>
     </div>

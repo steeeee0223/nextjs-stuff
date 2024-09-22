@@ -25,7 +25,7 @@ const Panel = () => {
       <DialogContent
         forceMount
         noTitle
-        className="z-[99999] flex h-[calc(100vh-100px)] max-h-[720px] w-[calc(100vw-100px)] max-w-[1150px] rounded border-none p-0 shadow"
+        className="flex h-[calc(100vh-100px)] max-h-[720px] w-[calc(100vw-100px)] max-w-[1150px] rounded border-none p-0 shadow"
         onClick={(e) => e.stopPropagation()}
       >
         <SettingsPanel {...props} />
@@ -36,11 +36,10 @@ const Panel = () => {
 
 export const Settings = ({ initialData }: { initialData: SettingsStore }) => {
   const { setOpen } = useModal();
-  const handleClick = () =>
-    setOpen<SettingsStore>(<Panel />, async () => initialData);
+  const handleClick = () => setOpen(<Panel />, async () => initialData);
 
   return (
-    <Button variant="outline" size="icon" onClick={handleClick}>
+    <Button size="icon" onClick={handleClick}>
       <SettingsIcon />
     </Button>
   );

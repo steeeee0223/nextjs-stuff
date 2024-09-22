@@ -33,5 +33,10 @@ export const useHistory = (pageId: string | null) => {
     revalidateOnMount: true,
   });
 
-  return { logs: data, isLoading, error, trigger: mutate };
+  return {
+    logs: data,
+    isLoading,
+    error,
+    fetchLogs: async () => (await mutate()) ?? [],
+  };
 };

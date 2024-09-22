@@ -54,27 +54,22 @@ export function DataTable<TData, TValue>({
   });
 
   useEffect(() => {
-    table.getColumn("account")?.setFilterValue(search);
+    table.getColumn("user")?.setFilterValue(search);
   }, [table, search]);
 
   return (
-    <Table variant="notion" className="border-t-0">
-      <TableHeader variant="notion">
+    <Table className="border-t-0">
+      <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
-          <TableRow
-            key={headerGroup.id}
-            variant="notion"
-            className="border-none"
-          >
+          <TableRow key={headerGroup.id} className="border-none">
             {headerGroup.headers.map((header) => (
               <TableHead
                 key={header.id}
-                variant="notion"
                 className={cn(
                   styles.bg,
                   "sticky top-0 h-8 py-0",
-                  header.id === "account" &&
-                    "left-0 z-40 min-w-[220px] border-r border-primary/10",
+                  header.id === "user" &&
+                    "left-0 z-40 min-w-[220px] border-r border-border",
                   header.id === "teamspaces" && "z-30 w-[175px] pl-3 pr-1",
                   header.id === "access" && "z-30 w-[180px] pl-4 pr-1",
                   header.id === "groups" && "w-[120px] px-1",
@@ -93,23 +88,21 @@ export function DataTable<TData, TValue>({
           </TableRow>
         ))}
       </TableHeader>
-      <TableBody variant="notion">
+      <TableBody>
         {table.getRowModel().rows?.length ? (
           table.getRowModel().rows.map((row) => (
             <TableRow
               key={row.id}
-              variant="notion"
               data-state={row.getIsSelected() && "selected"}
             >
               {row.getVisibleCells().map((cell) => (
                 <TableCell
                   key={cell.id}
-                  variant="notion"
                   className={cn(
                     styles.bg,
                     "h-[42px] py-0",
-                    cell.column.id === "account" &&
-                      "sticky left-0 z-20 w-[220px] border-r border-primary/10",
+                    cell.column.id === "user" &&
+                      "sticky left-0 z-20 w-[220px] border-r border-border",
                     cell.column.id === "teamspaces" && "w-[175px] pl-3 pr-1",
                     cell.column.id === "access" && "z-30 w-[180px] pl-4 pr-1",
                     cell.column.id === "groups" && "w-[120px] px-1",
@@ -123,11 +116,10 @@ export function DataTable<TData, TValue>({
             </TableRow>
           ))
         ) : (
-          <TableRow variant="notion">
+          <TableRow>
             <TableCell
-              variant="notion"
               colSpan={columns.length}
-              className="sticky left-0 h-6 text-start text-primary/65"
+              className="sticky left-0 h-6 text-start text-secondary dark:text-secondary-dark"
             >
               {emptyResult ?? "No results."}
             </TableCell>

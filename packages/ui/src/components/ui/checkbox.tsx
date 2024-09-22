@@ -23,7 +23,7 @@ const checkboxVariants = cva(
     variants: {
       variant: {
         default:
-          "border-primary/15 shadow-sm hover:bg-primary/5 data-[state=checked]:border-none data-[state=checked]:bg-button data-[state=checked]:text-white",
+          "border-border-button shadow-sm hover:bg-primary/5 data-[state=checked]:border-none data-[state=checked]:bg-blue data-[state=checked]:text-white",
       },
     },
     defaultVariants: { variant: "default" },

@@ -20,10 +20,7 @@ export const usePlatform = () => {
   /** Routing */
   const router = useRouter();
   const toToolsPage = (id: string, group: string | null) => {
-    if (group === "document") router.push(`/documents/${id}`);
-    if (group === "kanban") router.push(`/kanban/${id}`);
-    if (group === "whiteboard") router.push(`/whiteboard/${id}`);
-    if (group === "workflow") router.push(`/workflows/${id}`);
+    if (group) router.push(`/${group}/${id}`);
   };
   return { toToolsPage, ...value, update, reset: () => update(initial) };
 };

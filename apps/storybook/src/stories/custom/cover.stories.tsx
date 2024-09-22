@@ -17,8 +17,8 @@ export const Default: Story = {
   args: {
     url: image.src,
     unsplashAPIKey: "UNSPLASH_ACCESS_KEY",
-    onUrlChange: async (url) => console.log(`Uploading url: ${url}`),
-    onUploadChange: async (file) => console.log(`Uploading file: ${file.name}`),
-    onRemove: async () => console.log(`Removing file`),
+    onUrlChange: (url) => console.log(`Uploading url: ${url}`),
+    onUploadChange: (file) => console.log(`Uploading file: ${file.name}`),
+    onRemove: () => console.log(`Removing file`),
   },
 };

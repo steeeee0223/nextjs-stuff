@@ -1,13 +1,19 @@
 "use client";
 
 import React, { useEffect, useMemo } from "react";
-import type { CustomTypeOptions } from "i18next";
-import { I18nextProvider, Trans, useTranslation } from "react-i18next";
+import type { CustomTypeOptions, ParseKeys } from "i18next";
+import {
+  I18nextProvider,
+  Trans,
+  useTranslation,
+  type TransProps as TransPrimitiveProps,
+} from "react-i18next";
 
 import { createI18n, setupLanguage } from "./config";
 
 export type LOCALE = "en" | "de" | "es" | "fr";
 export { Trans, useTranslation, createI18n, setupLanguage };
+export type TransProps = TransPrimitiveProps<ParseKeys<"settings">>;
 
 export interface I18nProviderProps extends React.PropsWithChildren {
   language?: string;

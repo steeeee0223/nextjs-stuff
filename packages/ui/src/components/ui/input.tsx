@@ -1,30 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-
-const inputVariants = cva(
-  "flex w-full border px-3 py-1 text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:cursor-not-allowed disabled:opacity-50",
-  {
-    variants: {
-      variant: {
-        default:
-          "h-9 rounded-md border-input bg-transparent shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-        notion:
-          "h-7 rounded-sm border-primary/10 bg-primary/5 text-primary shadow-none placeholder:text-primary/45 focus-visible:outline-none",
-        /** @variant search: Inherit styles from `notion` and add padding for the icon */
-        search:
-          "relative h-7 rounded-sm border-primary/10 bg-primary/5 pl-10 text-primary shadow-none placeholder:text-primary/45 focus-visible:outline-none",
-      },
-    },
-    defaultVariants: { variant: "default" },
-  },
-);
+import { inputVariants, type InputVariants } from "./variants";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
-  VariantProps<typeof inputVariants>;
+  InputVariants;
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, variant, type, ...props }, ref) => {
@@ -53,4 +35,4 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 );
 Input.displayName = "Input";
 
-export { Input, inputVariants };
+export { Input };

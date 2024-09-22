@@ -8,13 +8,14 @@ import { useTranslation } from "@acme/i18n";
 
 import { Hint } from "@/components/custom/hint";
 import { useModal } from "@/components/custom/modal-provider";
+import { buttonVariants } from "@/components/ui";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-import { Section, SectionItem, SectionSeparator } from "../_components";
+import { Section, SectionItem, Spacing } from "../_components";
 import { DeleteAccount, EmailSettings, PasswordForm } from "../modals";
 import { useSettings } from "../settings-context";
 
@@ -81,13 +82,11 @@ export const Account = () => {
                     avatarCancelIsHover ? "remove-photo" : "replace-photo"
                   ]
                 }
-                variant="notion"
-                size="sm"
                 sideOffset={12}
               >
                 <Avatar
                   ref={avatarRef}
-                  className="size-[60px] border-[1px] border-solid border-primary/20"
+                  className="size-[60px] border border-primary/20"
                   onClick={onUpdateAvatar}
                 >
                   <AvatarImage src={account.avatarUrl} />
@@ -100,7 +99,8 @@ export const Account = () => {
                   role="button"
                   onClick={onRemoveAvatar}
                   className={cn(
-                    "absolute right-[-2px] top-[-2px] z-10 hidden rounded-full border border-solid border-primary/10  bg-primary-foreground p-1 text-primary/65 hover:bg-primary/10",
+                    buttonVariants({ variant: "subitem" }),
+                    "absolute -right-0.5 -top-0.5 z-10 hidden size-auto rounded-full border border-border-button bg-main p-1",
                     (avatarIsHover || avatarCancelIsHover) && "block",
                   )}
                 >
@@ -117,13 +117,12 @@ export const Account = () => {
             </div>
             <div className="ml-5 w-[250px]">
               <Label
-                className="mb-1 block text-xs text-primary/65"
+                className="mb-1 block text-xs text-secondary dark:text-secondary-dark"
                 htmlFor="username"
               >
                 {myProfile["preferred-name"]}
               </Label>
               <Input
-                variant="notion"
                 type="username"
                 id="username"
                 value={account.preferredName}
@@ -133,17 +132,17 @@ export const Account = () => {
           </div>
         </div>
       </Section>
-      <SectionSeparator />
+      <Spacing />
       <Section title={accSec.title}>
         <SectionItem title={accSec.email.title} description={account.email}>
-          <Button variant="notion" size="sm" onClick={handleEmailSettings}>
+          <Button size="sm" onClick={handleEmailSettings}>
             {accSec.email.button}
           </Button>
         </SectionItem>
-        <SectionSeparator size="sm" />
+        <Spacing size="sm" />
         <SectionItem {...accSec.password}>
           {account.hasPassword ? (
-            <Button variant="notion" size="sm" onClick={handlePasswordForm}>
+            <Button size="sm" onClick={handlePasswordForm}>
               {accSec.password.button}
             </Button>
           ) : (
@@ -154,31 +153,26 @@ export const Account = () => {
             />
           )}
         </SectionItem>
-        <SectionSeparator size="sm" />
+        <Spacing size="sm" />
         <SectionItem {...accSec.verification}>
           <Switch size="sm" disabled />
         </SectionItem>
       </Section>
-      <SectionSeparator />
+      <Spacing />
       <Section title={support.title}>
         <SectionItem {...support.support}>
           <Switch size="sm" />
         </SectionItem>
-        <SectionSeparator size="sm" />
+        <Spacing size="sm" />
         <SectionItem {...support.logout}>
-          <Button variant="ghost" size="icon-sm" className="text-primary/35">
-            <ChevronRight className="h-4 w-4" />
+          <Button variant="hint" size="icon-sm">
+            <ChevronRight className="size-4 text-primary/35" />
           </Button>
         </SectionItem>
-        <SectionSeparator size="sm" />
+        <Spacing size="sm" />
         <SectionItem {...support.delete} titleProps="text-[#eb5757]">
-          <Button
-            variant="ghost"
-            size="icon-sm"
-            className="text-primary/35"
-            onClick={handleDeleteAccount}
-          >
-            <ChevronRight className="h-4 w-4" />
+          <Button variant="hint" size="icon-sm" onClick={handleDeleteAccount}>
+            <ChevronRight className="size-4 text-primary/35" />
           </Button>
         </SectionItem>
       </Section>

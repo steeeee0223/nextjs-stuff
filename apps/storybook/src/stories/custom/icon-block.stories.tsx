@@ -5,7 +5,6 @@ import { IconBlock } from "@acme/ui/custom";
 const meta = {
   title: "custom/Icon Block",
   component: IconBlock,
-  parameters: { layout: "centered" },
   tags: ["autodocs"],
 } satisfies Meta<typeof IconBlock>;
 export default meta;

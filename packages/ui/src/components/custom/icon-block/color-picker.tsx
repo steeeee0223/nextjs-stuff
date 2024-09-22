@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, Ref, useState } from "react";
+import { forwardRef, useState } from "react";
 import { Circle } from "lucide-react";
 
 import { Hint } from "@/components/custom/hint";
@@ -11,7 +11,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { COLOR } from "@/constants/colors";
-import { styles } from "./styles";
 
 export interface ColorPickerProps {
   defaultColor: string;
@@ -22,41 +21,38 @@ export interface ColorPickerProps {
   onSelect?: (color: string) => void;
 }
 
-const ColorPicker = forwardRef(function ColorPicker(
-  { defaultColor, colors = COLOR, onSelect }: ColorPickerProps,
-  ref: Ref<HTMLButtonElement>,
-) {
-  const [open, setOpen] = useState(false);
-  const handleSelect = (color: string) => {
-    setOpen(false);
-    onSelect?.(color);
-  };
+const ColorPicker = forwardRef<HTMLButtonElement, ColorPickerProps>(
+  function ColorPicker({ defaultColor, colors = COLOR, onSelect }, ref) {
+    const [open, setOpen] = useState(false);
+    const handleSelect = (color: string) => {
+      setOpen(false);
+      onSelect?.(color);
+    };
 
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild ref={ref}>
-        <Button variant="notion" size="icon-md">
-          <Circle size={16} color={defaultColor} fill={defaultColor} />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        variant="notion"
-        className="z-[99999] grid w-[180px] grid-cols-5 gap-0 p-2"
-      >
-        {Object.entries(colors).map(([name, color], i) => (
-          <Hint asChild key={i} description={name} variant="notion" size="sm">
-            <Button
-              variant="hint"
-              size="icon-md"
-              onClick={() => handleSelect(color)}
-              className={styles.gridItem}
-            >
-              <Circle color={color} fill={color} size={16} />
+    return (
+      <Popover open={open} onOpenChange={setOpen}>
+        <Hint asChild description="Select icon color">
+          <PopoverTrigger asChild ref={ref}>
+            <Button variant="secondary" size="icon-md">
+              <Circle size={16} color={defaultColor} fill={defaultColor} />
             </Button>
-          </Hint>
-        ))}
-      </PopoverContent>
-    </Popover>
-  );
-});
+          </PopoverTrigger>
+        </Hint>
+        <PopoverContent className="grid w-[180px] grid-cols-5 gap-0 p-2">
+          {Object.entries(colors).map(([name, color], i) => (
+            <Hint asChild key={i} description={name}>
+              <Button
+                variant="hint"
+                className="size-[30px] p-0"
+                onClick={() => handleSelect(color)}
+              >
+                <Circle color={color} fill={color} size={16} />
+              </Button>
+            </Hint>
+          ))}
+        </PopoverContent>
+      </Popover>
+    );
+  },
+);
 export default ColorPicker;

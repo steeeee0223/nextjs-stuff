@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useMemo } from "react";
+import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import dynamicIconImports from "lucide-react/dynamicIconImports";
 
@@ -13,10 +13,7 @@ export interface IconDisplayProps {
   className?: string;
 }
 
-export default forwardRef(function IconDisplay(
-  { iconInfo, className }: IconDisplayProps,
-  _ref,
-) {
+const IconDisplay = ({ iconInfo, className }: IconDisplayProps) => {
   const LucideIcon = useMemo(
     () =>
       iconInfo.type === "lucide"
@@ -30,7 +27,7 @@ export default forwardRef(function IconDisplay(
       return (
         <LucideIcon
           color={iconInfo.color}
-          className={cn("shrink-0 text-muted-foreground", className)}
+          className={cn("shrink-0", className)}
         />
       );
     case "file":
@@ -42,9 +39,16 @@ export default forwardRef(function IconDisplay(
       );
     case "emoji":
       return (
-        <div className={cn("shrink-0 justify-center", className)}>
+        <div
+          className={cn(
+            "shrink-0 justify-center text-primary dark:text-primary/80",
+            className,
+          )}
+        >
           {iconInfo.emoji}
         </div>
       );
   }
-});
+};
+
+export default IconDisplay;

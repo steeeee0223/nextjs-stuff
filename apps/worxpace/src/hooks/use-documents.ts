@@ -6,6 +6,7 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 import { useTree } from "@acme/ui/custom";
+import type { Page } from "@acme/ui/notion";
 
 import {
   archiveDocument,
@@ -16,6 +17,7 @@ import {
 } from "~/actions";
 import {
   fetchUrl,
+  toPage,
   toTreeItem,
   type DetailedDocument,
   type DocumentsKey,
@@ -53,6 +55,11 @@ export const useDocuments = ({
       dispatch({ type: "set", payload: data.map(toTreeItem) }),
     onError: (e) => console.log(`[swr:workspace]: ${e.message}`),
   });
+  const fetchPages = async (): Promise<Page[]> => {
+    const documents = await mutate();
+    if (!documents) return [];
+    return documents.map((document) => toPage(document)!);
+  };
   /** Mutations */
   const onError = (e: Error) => toast.error(e.message);
   const { trigger: create } = useSWRMutation(key, createDocument, {
@@ -83,7 +90,7 @@ export const useDocuments = ({
     onSuccess: ({ ids, item }) => {
       dispatch({ type: "update:group", payload: { ids, group: item.type } });
       toast.success(`Restored document "${item.title}"`);
-      router.push(`/documents/${item.id}`);
+      router.push(`/document/${item.id}`);
     },
     onError,
   });
@@ -99,7 +106,7 @@ export const useDocuments = ({
     documents,
     isLoading,
     error,
-    fetchData: () => mutate(),
+    fetchPages,
     create,
     update,
     archive,

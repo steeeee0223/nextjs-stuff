@@ -10,12 +10,7 @@ import {
 } from "@/components/notion/tables";
 import type { ConnectionStrategy } from "@/components/notion/types";
 import { Button } from "@/components/ui/button";
-import {
-  ConnectionCard,
-  HintButton,
-  Section,
-  SectionSeparator,
-} from "../_components";
+import { ConnectionCard, HintButton, Section, Spacing } from "../_components";
 import { useSettings } from "../settings-context";
 import { useConnections } from "./use-connections";
 
@@ -34,15 +29,11 @@ export const Connections = () => {
   return (
     <>
       <Section title={title} noSeparator>
-        <MyConnections
-          variant="notion"
-          columns={myConnectionsColumns}
-          data={connections}
-        />
+        <MyConnections columns={myConnectionsColumns} data={connections} />
       </Section>
-      <SectionSeparator />
+      <Spacing />
       <Section title={discover.title} noSeparator>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {displayCards.map((card, i) => (
             <ConnectionCard
               key={i}
@@ -57,7 +48,7 @@ export const Connections = () => {
       <Button variant="hint" size="xs" className="mt-2.5 h-7" onClick={toggle}>
         {discover.buttons[isToggle ? "more" : "less"]}
       </Button>
-      <SectionSeparator size="sm" />
+      <Spacing size="sm" />
       <div className="flex-0 flex flex-col items-start">
         <HintButton icon={ArrowUpRight} label={buttons.browse} />
         <HintButton icon={ArrowUpRight} label={buttons.integrations} />

@@ -1,8 +1,15 @@
 "use client";
 
-import { useEffect, useReducer, useState, type PropsWithChildren } from "react";
+import {
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+  type PropsWithChildren,
+} from "react";
 
-import type { UserState, Workspace } from "./index.types";
+import type { User } from "../types";
+import type { Workspace } from "./index.types";
 import { workspaceReducer, type WorkspaceReducer } from "./workspace-actions";
 import {
   WorkspaceContext,
@@ -10,7 +17,7 @@ import {
 } from "./workspace-context";
 
 export interface WorkspaceProviderProps extends PropsWithChildren {
-  user: UserState;
+  user: User;
   workspaces: Workspace[];
   initial: string;
   className?: string;
@@ -23,10 +30,16 @@ export function WorkspaceProvider({
   initial,
   user,
 }: WorkspaceProviderProps) {
-  const $initialItems = { ids: [], entities: {} };
-  const [state, dispatch] = useReducer<WorkspaceReducer>(
+  const [state, dispatch] = useReducer<WorkspaceReducer, Workspace[]>(
     workspaceReducer,
-    $initialItems,
+    workspaces,
+    (init) => {
+      const entities = init.reduce(
+        (acc, item) => ({ ...acc, [item.id]: item }),
+        {},
+      );
+      return { ids: Object.keys(entities), entities };
+    },
   );
   const [activeWorkspace, setActiveWorkspace] = useState<Workspace | null>(
     null,
@@ -40,14 +53,16 @@ export function WorkspaceProvider({
     setActiveWorkspace(workspaces.find(({ id }) => id === initial) ?? null);
   }, [workspaces, initial]);
 
-  const workspaceContextValues: WorkspaceContextInterface = {
-    user,
-    // isLoading: isLoading || !data,
-    workspaces: Object.values(state.entities),
-    activeWorkspace,
-    dispatch,
-    select: (id) => setActiveWorkspace(id ? state.entities[id]! : null),
-  };
+  const workspaceContextValues: WorkspaceContextInterface = useMemo(
+    () => ({
+      user,
+      workspaces: Object.values(state.entities),
+      activeWorkspace,
+      dispatch,
+      select: (id) => setActiveWorkspace(id ? state.entities[id]! : null),
+    }),
+    [user, state.entities, activeWorkspace],
+  );
 
   return (
     <WorkspaceContext.Provider value={workspaceContextValues}>

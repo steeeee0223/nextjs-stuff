@@ -2,11 +2,12 @@
 
 import { createContext, useContext, type Dispatch } from "react";
 
-import type { UserState, Workspace } from "./index.types";
+import type { User } from "../types";
+import type { Workspace } from "./index.types";
 import type { WorkspaceAction } from "./workspace-actions";
 
 export interface WorkspaceContextInterface {
-  user: UserState;
+  user: User;
   workspaces: Workspace[];
   activeWorkspace: Workspace | null;
   dispatch: Dispatch<WorkspaceAction>;

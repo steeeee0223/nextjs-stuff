@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,8 +8,18 @@ import { Button } from "@acme/ui/shadcn";
 
 import { usePlatform } from "~/hooks";
 
-const Error = () => {
+interface ErrorProps {
+  error: Error & { digest?: string };
+  reset?: () => void;
+}
+
+const Error = ({ error }: ErrorProps) => {
   const { workspaceId } = usePlatform();
+
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
 
   return (
     <div className="flex h-full flex-col items-center justify-center space-y-4">

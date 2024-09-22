@@ -11,7 +11,6 @@ import type * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import type { KanbanList } from "./index.types";
 import { useKanban } from "./kanban-context";
 import { TitleSchema } from "./utils";
@@ -79,16 +78,11 @@ export const KanbanListForm = ({ onCreateList }: ListFormProps) => {
                       disabled={isPending}
                       placeholder="Enter list title..."
                       ref={inputRef}
-                      className={cn(
-                        "border-transparent hover:border-input focus:border-input",
-                        "h-7 px-2 py-1 text-sm font-medium transition",
-                      )}
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
-
             <div className="flex items-center gap-x-1">
               <Button
                 type="submit"
@@ -98,23 +92,21 @@ export const KanbanListForm = ({ onCreateList }: ListFormProps) => {
               >
                 Add List
               </Button>
-              <Button onClick={disableEditing} size="sm" variant="ghost">
-                <X className="h-4 w-4" />
+              <Button onClick={disableEditing} size="sm" variant="subitem">
+                <X className="size-4" />
               </Button>
             </div>
           </form>
         </Form>
       ) : (
-        <button
+        <Button
           onClick={enableEditing}
-          className={cn(
-            "flex items-center text-neutral-700",
-            "w-full rounded-md bg-white/80 p-3 text-sm font-medium transition hover:bg-white/50",
-          )}
+          size="sm"
+          className="w-full p-3 font-medium"
         >
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus className="mr-2 size-4" />
           Add a list
-        </button>
+        </Button>
       )}
     </li>
   );
