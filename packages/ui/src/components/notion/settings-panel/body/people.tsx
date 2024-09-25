@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { useModal } from "@/components/custom/modal-provider";
 import * as Icon from "@/components/notion/icons";

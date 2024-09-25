@@ -1,5 +1,5 @@
-import { useModal } from "@acme/ui/custom";
-import { Button, Dialog, DialogClose, DialogContent } from "@acme/ui/shadcn";
+import { useModal } from "@swy/ui/custom";
+import { Button, Dialog, DialogClose, DialogContent } from "@swy/ui/shadcn";
 
 export const Modal = () => {
   const { isOpen, setClose } = useModal();

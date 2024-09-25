@@ -18,7 +18,7 @@ const tooltipVariants = cva("max-w-[220px] break-words font-medium", {
   variants: {
     size: {
       sm: "rounded-sm px-2 py-1 text-xs/[1.4]",
-      md: "rounded-md px-3 py-1.5 text-sm ",
+      md: "rounded-md px-3 py-1.5 text-sm",
     },
   },
   defaultVariants: { size: "sm" },

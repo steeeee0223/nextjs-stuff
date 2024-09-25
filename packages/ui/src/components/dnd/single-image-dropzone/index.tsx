@@ -95,6 +95,7 @@ const SingleImageDropzone = React.forwardRef<
           isFocused && variants.active,
           disabled && variants.disabled,
           imageUrl && variants.image,
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
           (isDragReject ?? fileRejections[0]) && variants.reject,
           isDragAccept && variants.accept,
           className,

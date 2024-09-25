@@ -5,7 +5,9 @@ import { ns, resources } from "./resources";
 
 const STORAGE_KEY = "i18n_lng";
 
-export const createI18n = () => {
+type CreateI18n = () => i18n;
+
+export const createI18n: CreateI18n = () => {
   const i18n = i18next.createInstance();
   i18n
     .use(initReactI18next) // passes i18n down to react-i18next
@@ -24,6 +26,7 @@ export const createI18n = () => {
     .then(() => console.info("i18n init success"))
     .catch(() => console.error("i18n init failed"));
 
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (globalThis.localStorage) {
     i18n.on("languageChanged", (lng) => {
       localStorage.setItem(STORAGE_KEY, lng);

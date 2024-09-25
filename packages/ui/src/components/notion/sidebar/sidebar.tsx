@@ -34,10 +34,10 @@ export interface SidebarProps {
   pageHandlers: {
     isLoading?: boolean;
     fetchPages?: () => Promise<Page[]>;
-    onCreate?: (type: string, parentId?: string) => Promise<void>;
-    onArchive?: (id: string) => Promise<void>;
-    onRestore?: (id: string) => Promise<void>;
-    onDelete?: (id: string) => Promise<void>;
+    onCreate?: (type: string, parentId?: string) => void;
+    onArchive?: (id: string) => void;
+    onRestore?: (id: string) => void;
+    onDelete?: (id: string) => void;
   };
 }
 
@@ -71,14 +71,10 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(function Sidebar(
     );
   /** Keyboard shortcut */
   const shortcutOptions = { preventDefault: true };
-  useHotkeys(
-    ["meta+k", "shift+meta+k"],
-    () => onOpenSearch?.(),
-    shortcutOptions,
-  );
+  useHotkeys(["meta+k", "shift+meta+k"], onOpenSearch, shortcutOptions);
   useHotkeys(
     ["meta+comma", "shift+meta+comma"],
-    () => onOpenSettings?.(),
+    onOpenSettings,
     shortcutOptions,
   );
   useHotkeys(

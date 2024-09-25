@@ -15,7 +15,7 @@ export const init = {
       type: "input",
       name: "name",
       message:
-        "What is the name of the package? (You can skip the `@acme/` prefix)",
+        "What is the name of the package? (You can skip the `@swy/` prefix)",
     },
     {
       type: "input",
@@ -27,8 +27,8 @@ export const init = {
   actions: [
     (answers) => {
       if ("name" in answers && typeof answers.name === "string") {
-        if (answers.name.startsWith("@acme/")) {
-          answers.name = answers.name.replace("@acme/", "");
+        if (answers.name.startsWith("@swy/")) {
+          answers.name = answers.name.replace("@swy/", "");
         }
       }
       return "Config sanitized";

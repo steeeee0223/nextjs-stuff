@@ -2,8 +2,8 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { WORKSPACE_ROLE } from "@acme/prisma";
-import { CreateMembers, type CreateMembersInput } from "@acme/validators";
+import type { WORKSPACE_ROLE } from "@swy/prisma";
+import { CreateMembers, type CreateMembersInput } from "@swy/validators";
 
 import {
   account,

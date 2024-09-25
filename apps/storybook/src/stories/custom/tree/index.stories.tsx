@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { TreeProvider } from "@acme/ui/custom";
+import { TreeProvider } from "@swy/ui/custom";
 
 import { AddItem, Provider, TreeItems } from "./_components";
 import { folderSystemItems, groupFolderItems } from "./utils";

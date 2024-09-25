@@ -94,7 +94,7 @@ export const DeleteAccount = ({
                 </FormItem>
               )}
             />
-            {form.formState.errors && (
+            {form.formState.errors.email && (
               <div className="mt-1 text-xs/5 text-red">
                 {`Please type "${email}" to continue`}
               </div>

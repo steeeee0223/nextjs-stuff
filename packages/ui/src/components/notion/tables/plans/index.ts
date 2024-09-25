@@ -1,6 +1,12 @@
+import React from "react";
+
 import type { ContentPlanRow, HighlightPlanRow } from "./columns";
-import { DataTable } from "./data-table";
+import { DataTable, type DataTableProps } from "./data-table";
 
 export * from "./columns";
-export const HighlightTable = DataTable<HighlightPlanRow, HighlightPlanRow>;
-export const ContentTable = DataTable<ContentPlanRow, ContentPlanRow>;
+export const HighlightTable: React.FC<
+  DataTableProps<HighlightPlanRow, HighlightPlanRow>
+> = DataTable;
+export const ContentTable: React.FC<
+  DataTableProps<ContentPlanRow, ContentPlanRow>
+> = DataTable;

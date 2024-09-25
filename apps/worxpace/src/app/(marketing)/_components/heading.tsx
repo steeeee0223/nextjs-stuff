@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { Button } from "@acme/ui/shadcn";
+import { Button } from "@swy/ui/shadcn";
 
 const Heading = () => {
   return (

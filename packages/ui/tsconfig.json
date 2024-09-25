@@ -1,7 +1,9 @@
 {
-  "extends": "@acme/tsconfig/base.json",
+  "extends": "@swy/tsconfig/internal-package.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "lib": ["ES2022", "dom", "dom.iterable"],
+    "jsx": "preserve",
+    "rootDir": ".",
     "types": ["vitest/globals", "../i18n/src/types/i18next.d.ts"],
     "paths": { "@/*": ["./src/*"] }
   },

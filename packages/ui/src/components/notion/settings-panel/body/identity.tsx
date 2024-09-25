@@ -5,7 +5,7 @@ import { CircleHelp } from "lucide-react";
 import { toast } from "sonner";
 import { useCopyToClipboard } from "usehooks-ts";
 
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { Hint } from "@/components/custom/hint";
 import { HintButton, Section, SectionItem, Spacing } from "../_components";

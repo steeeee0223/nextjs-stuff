@@ -1,4 +1,4 @@
-import { LOCALE } from "@acme/i18n";
+import { LOCALE } from "@swy/i18n";
 
 import type { IconInfo } from "@/components/custom/icon-block";
 import type { ModalData } from "@/components/custom/modal-provider";
@@ -34,7 +34,7 @@ export interface SettingsStore extends ModalData {
 export type UpdateSettings = (data: {
   workspace?: Partial<WorkspaceStore>;
   account?: Partial<AccountStore>;
-}) => Promise<void>;
+}) => void;
 
 export interface WorkspaceMemberships {
   members: MemberRow[];

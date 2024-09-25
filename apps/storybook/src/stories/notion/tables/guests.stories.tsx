@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { getGuestColumns, GuestsTable, Scope } from "@acme/ui/notion";
+import { getGuestColumns, GuestsTable, Scope } from "@swy/ui/notion";
 
 import { mockMemberships } from "../__mock__";
 

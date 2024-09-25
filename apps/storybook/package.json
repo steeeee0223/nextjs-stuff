@@ -1,6 +1,6 @@
 {
-  "name": "@acme/storybook",
-  "version": "1.1.0",
+  "name": "@swy/storybook",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,26 +8,22 @@
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "storybook dev -p 6006",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint .",
-    "start": "serve storybook-static",
+    "lint": "eslint",
+    "start": "pnpx http-server storybook-static",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/ui": "workspace:*",
-    "lucide-react": "^0.408.0",
-    "next": "^14.2.3",
-    "next-themes": "^0.3.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "@swy/ui": "workspace:*",
+    "lucide-react": "catalog:ui",
+    "next": "catalog:next14",
+    "next-themes": "catalog:ui",
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18",
     "swr": "^2.2.5",
     "usehooks-ts": "^2.9.1",
-    "uuid": "^10.0.0"
+    "uuid": "catalog:uuid"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
-    "@acme/prettier-config": "workspace:*",
-    "@acme/tailwind-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
     "@storybook/addon-essentials": "^8.0.10",
     "@storybook/addon-interactions": "^8.0.10",
     "@storybook/addon-links": "^8.0.10",
@@ -36,26 +32,20 @@
     "@storybook/nextjs": "^8.0.10",
     "@storybook/react": "^8.0.10",
     "@storybook/test": "^8.0.10",
-    "@types/node": "^20.10.6",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@types/uuid": "^10.0.0",
-    "eslint": "^8.56.0",
-    "eslint-plugin-storybook": "^0.6.15",
-    "prettier": "^3.2.5",
-    "sonner": "^1.3.1",
+    "@swy/eslint-config": "workspace:*",
+    "@swy/prettier-config": "workspace:*",
+    "@swy/tailwind-config": "workspace:*",
+    "@swy/tsconfig": "workspace:*",
+    "@types/node": "catalog:node20",
+    "@types/react": "catalog:react18",
+    "@types/react-dom": "catalog:react18",
+    "@types/uuid": "catalog:uuid",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "sonner": "catalog:ui",
     "storybook": "^8.0.10",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.5.4"
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "plugin:storybook/recommended",
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/nextjs",
-      "@acme/eslint-config/react"
-    ]
-  },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@swy/prettier-config"
 }

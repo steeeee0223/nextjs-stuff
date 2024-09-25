@@ -2,8 +2,8 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Card } from "@acme/prisma";
-import { UpdateCardOrder, type UpdateCardOrderInput } from "@acme/validators";
+import type { Card } from "@swy/prisma";
+import { UpdateCardOrder, type UpdateCardOrderInput } from "@swy/validators";
 
 import {
   createMutationFetcher,

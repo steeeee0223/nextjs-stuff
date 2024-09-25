@@ -1,9 +1,14 @@
-import { DataTable } from "./data-table";
+import React from "react";
+
+import { DataTable, type DataTableProps } from "./data-table";
 import type { GroupRow, GuestRow, MemberRow } from "./types";
 
-export const MembersTable = DataTable<MemberRow, MemberRow>;
-export const GuestsTable = DataTable<GuestRow, GuestRow>;
-export const GroupsTable = DataTable<GroupRow, GroupRow>;
+export const MembersTable: React.FC<DataTableProps<MemberRow, MemberRow>> =
+  DataTable;
+export const GuestsTable: React.FC<DataTableProps<GuestRow, GuestRow>> =
+  DataTable;
+export const GroupsTable: React.FC<DataTableProps<GroupRow, GroupRow>> =
+  DataTable;
 
 export * from "./columns";
 export * from "./types";

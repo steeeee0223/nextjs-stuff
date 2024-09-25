@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ChevronRight, CircleHelp, MailOpen, RefreshCw } from "lucide-react";
 
-import { Button } from "@acme/ui/shadcn";
+import { Button } from "@swy/ui/shadcn";
 
 const meta = {
   title: "Shadcn/Button",

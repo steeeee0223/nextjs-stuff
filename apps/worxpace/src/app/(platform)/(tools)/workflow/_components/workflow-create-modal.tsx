@@ -2,7 +2,7 @@
 
 import type { FC, ReactNode } from "react";
 
-import { useModal } from "@acme/ui/custom";
+import { useModal } from "@swy/ui/custom";
 import {
   Button,
   Drawer,
@@ -13,7 +13,7 @@ import {
   DrawerHeader,
   DrawerPortal,
   DrawerTitle,
-} from "@acme/ui/shadcn";
+} from "@swy/ui/shadcn";
 
 export interface WorkflowModalProps {
   title: string;

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { ModalProvider } from "@acme/ui/custom";
+import { ModalProvider } from "@swy/ui/custom";
 
 import { Trigger } from "./_components";
 

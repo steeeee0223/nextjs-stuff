@@ -2,3 +2,46 @@ packages:
   - apps/*
   - packages/*
   - tooling/*
+
+catalog:
+  "@tanstack/react-query": ^5.51.23
+  "@trpc/client": ^11.0.0-rc.477
+  "@trpc/react-query": ^11.0.0-rc.477
+  "@trpc/server": ^11.0.0-rc.477
+  "@t3-oss/env-nextjs": "^0.11.1"
+  eslint: ^9.9.0
+  prettier: ^3.3.3
+  tailwindcss: ^3.4.10
+  typescript: ^5.5.4
+  zod: ^3.23.8
+
+catalogs:
+  node20:
+    "@types/node": "^20.16.0"
+  react18:
+    react: 18.3.1
+    react-dom: 18.3.1
+    "@types/react": ^18.3.3
+    "@types/react-dom": ^18.3.0
+  next14:
+    "next": "^14.2.5"
+  prisma:
+    "prisma": "^5.13.0"
+    "@prisma/client": "^5.13.0"
+    "@prisma/nextjs-monorepo-workaround-plugin": "^5.13.0"
+  vitest:
+    "vitest": "^2.0.5"
+    "@vitest/coverage-v8": "^2.0.5"
+    "@vitest/ui": "^2.0.5"
+  rtl:
+    "jsdom": "^24.0.0"
+    "@testing-library/jest-dom": "^6.4.5"
+    "@testing-library/react": "^16.0.0"
+    "@testing-library/user-event": "^14.5.2"
+  ui:
+    "lucide-react": "^0.445.0"
+    "next-themes": "^0.3.0"
+    "sonner": "^1.3.1"
+  uuid:
+    "uuid": "^10.0.0"
+    "@types/uuid": "^10.0.0"

@@ -1,15 +1,15 @@
 import { format } from "date-fns";
 
-import type { Account, Icon, Membership, Workspace } from "@acme/prisma";
-import type { IconInfo, TreeItem } from "@acme/ui/custom";
-import { Plan, Role } from "@acme/ui/notion";
+import type { Account, Icon, Membership, Workspace } from "@swy/prisma";
+import type { IconInfo, TreeItem } from "@swy/ui/custom";
+import { Plan, Role } from "@swy/ui/notion";
 import type {
   Page,
   WorkspaceMemberships as PeopleData,
   SettingsStore,
   User as UserData,
   Workspace as WorkspaceData,
-} from "@acme/ui/notion";
+} from "@swy/ui/notion";
 
 import type { UserInfo } from "~/liveblocks.config";
 import type { AccountMemberships, WorkspaceMembership } from "./account";
@@ -166,5 +166,5 @@ export function toPeopleData(
 export function toUser({ id, info }: UserInfo): UserData {
   return !id || !info
     ? { id: "", name: "", avatarUrl: "", email: "" }
-    : { id: id ?? "", ...info };
+    : { id, ...info };
 }

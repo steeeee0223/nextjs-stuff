@@ -1,8 +1,8 @@
 "use client";
 
-import { useScrollTop } from "@acme/ui/hooks";
-import { cn } from "@acme/ui/lib";
-import { ThemeToggle } from "@acme/ui/shadcn";
+import { useScrollTop } from "@swy/ui/hooks";
+import { cn } from "@swy/ui/lib";
+import { ThemeToggle } from "@swy/ui/shadcn";
 
 import Logo from "./logo";
 

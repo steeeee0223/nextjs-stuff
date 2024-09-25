@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Unsplash } from "@acme/ui/custom";
+import { Unsplash } from "@swy/ui/custom";
 
 const meta = {
   title: "custom/Unsplash",

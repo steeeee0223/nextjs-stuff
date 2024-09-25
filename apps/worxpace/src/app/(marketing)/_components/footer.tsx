@@ -1,4 +1,4 @@
-import { Button } from "@acme/ui/shadcn";
+import { Button } from "@swy/ui/shadcn";
 
 import Logo from "./logo";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useMemo, useState } from "react";
 
 import { ModalContext } from "./modal-context";
 import type { ModalContextInterface, ModalData } from "./modal-context";
@@ -15,27 +15,29 @@ export function ModalProvider<T extends ModalData>({
   const [showingModal, setShowingModal] = useState<React.ReactNode>(null);
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setIsMounted(true);
   }, []);
 
-  const contextValue: ModalContextInterface<ModalData> = {
-    data,
-    isOpen,
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    setOpen: async (modal, fetchData) => {
-      if (modal) {
-        const newData = (await fetchData?.()) ?? {};
-        setData({ ...data, ...newData });
+  const contextValue = useMemo<ModalContextInterface<ModalData>>(
+    () => ({
+      data,
+      isOpen,
+      setOpen: (modal, fetchData) => {
+        if (!modal) return;
+        fetchData?.()
+          .then((newData) => setData({ ...data, ...newData }))
+          .catch(() => console.log("[modal] Error while fetching modal data"));
         setShowingModal(modal);
         setIsOpen(true);
-      }
-    },
-    setClose: () => {
-      setIsOpen(false);
-      setData({} as T);
-    },
-  };
+      },
+      setClose: () => {
+        setIsOpen(false);
+        setData({} as T);
+      },
+    }),
+    [data, isOpen],
+  );
 
   if (!isMounted) return null;
   return (

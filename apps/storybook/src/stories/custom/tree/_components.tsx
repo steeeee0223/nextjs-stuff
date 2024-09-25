@@ -11,7 +11,7 @@ import {
   TreeProvider,
   useTree,
   type TreeProviderProps,
-} from "@acme/ui/custom";
+} from "@swy/ui/custom";
 
 import { delay } from "./utils";
 

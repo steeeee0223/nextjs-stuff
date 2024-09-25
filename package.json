@@ -2,26 +2,26 @@
   "name": "next-stuff",
   "private": true,
   "engines": {
-    "node": ">=20.10"
+    "node": ">=20.16.0"
   },
-  "packageManager": "pnpm@9.1.4",
+  "packageManager": "pnpm@9.7.1",
   "scripts": {
     "add:ui": "pnpm dlx shadcn@latest add -c ./packages/ui",
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
     "coverage": "turbo coverage",
-    "db:push": "pnpm -F prisma push",
+    "db:push": "pnpm -F prisma db:push",
     "db:studio": "pnpm -F prisma dev",
     "dev": "turbo dev --parallel",
     "gen:action": "turbo gen next-action",
     "gen:package": "turbo gen init",
     "gen:story": "turbo gen story",
     "gen:ui": "turbo gen component",
-    "format": "turbo format --continue -- --cache --cache-location node_modules/.cache/.prettiercache",
-    "format:fix": "turbo format --continue -- --write --cache --cache-location node_modules/.cache/.prettiercache",
-    "lint": "turbo lint --continue -- --cache --cache-location node_modules/.cache/.eslintcache",
-    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache",
+    "format": "turbo format --continue -- --cache --cache-location .cache/.prettiercache",
+    "format:fix": "turbo format --continue -- --write --cache --cache-location .cache/.prettiercache",
+    "lint": "turbo lint --continue -- --cache --cache-location .cache/.eslintcache",
+    "lint:fix": "turbo lint --continue -- --fix --cache --cache-location .cache/.eslintcache",
     "lint:ws": "pnpm dlx sherif@latest",
     "postinstall": "pnpm lint:ws",
     "test": "turbo test",
@@ -29,11 +29,11 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "@acme/prettier-config": "workspace:*",
-    "@turbo/gen": "^2.0.12",
-    "prettier": "^3.2.5",
-    "turbo": "^2.0.12",
-    "typescript": "^5.5.4"
+    "@swy/prettier-config": "workspace:*",
+    "@turbo/gen": "^2.1.1",
+    "prettier": "catalog:",
+    "turbo": "^2.1.1",
+    "typescript": "catalog:"
   },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@swy/prettier-config"
 }

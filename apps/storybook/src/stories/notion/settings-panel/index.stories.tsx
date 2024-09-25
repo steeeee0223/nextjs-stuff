@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { ModalProvider } from "@acme/ui/custom";
-import { SettingsPanel } from "@acme/ui/notion";
+import { ModalProvider } from "@swy/ui/custom";
+import { SettingsPanel } from "@swy/ui/notion";
 
 import { mockConnections, mockMemberships, mockSettings } from "../__mock__";
 import { Settings } from "./settings";
@@ -19,8 +19,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     settings: mockSettings,
-    onFetchConnections: async () => mockConnections,
-    onFetchMemberships: async () => mockMemberships,
+    onFetchConnections: () => Promise.resolve(mockConnections),
+    onFetchMemberships: () => Promise.resolve(mockMemberships),
   },
   render: (props) => (
     <div className="flex h-[calc(100vh-100px)] max-h-[720px] w-[calc(100vw-100px)] max-w-[1150px] rounded border-solid p-0 shadow">

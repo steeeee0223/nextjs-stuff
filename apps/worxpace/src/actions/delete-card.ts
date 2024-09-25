@@ -2,8 +2,8 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Card } from "@acme/prisma";
-import { DeleteCard, type DeleteCardInput } from "@acme/validators";
+import type { Card } from "@swy/prisma";
+import { DeleteCard, type DeleteCardInput } from "@swy/validators";
 
 import {
   auditLogs,

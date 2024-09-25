@@ -25,8 +25,8 @@ export interface SettingsContextInterface
   setTab: (tab: TabType) => void;
   updateSettings: UpdateSettings;
   uploadFile?: UploadFile;
-  deleteAccount?: (data: { accountId: string; email: string }) => Promise<void>;
-  deleteWorkspace?: (workspaceId: string) => Promise<void>;
+  deleteAccount?: (data: { accountId: string; email: string }) => void;
+  deleteWorkspace?: (workspaceId: string) => void;
   /** Connections */
   connections: {
     load?: () => Promise<Connection[]>;
@@ -35,9 +35,9 @@ export interface SettingsContextInterface
   /** People */
   people: {
     load?: () => Promise<WorkspaceMemberships>;
-    add?: (emails: string[], role: Role) => Promise<void>;
-    update?: (id: string, role: Role) => Promise<void>;
-    delete?: (id: string) => Promise<void>;
+    add?: (emails: string[], role: Role) => void;
+    update?: (id: string, role: Role) => void;
+    delete?: (id: string) => void;
   };
 }
 

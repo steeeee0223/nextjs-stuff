@@ -2,8 +2,8 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Account } from "@acme/prisma";
-import { CreateAccount, type CreateAccountInput } from "@acme/validators";
+import type { Account } from "@swy/prisma";
+import { CreateAccount, type CreateAccountInput } from "@swy/validators";
 
 import { account, createMutationFetcher, UnauthorizedError } from "~/lib";
 

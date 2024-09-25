@@ -1,13 +1,13 @@
 "use server";
 
-import { worxpace as db } from "@acme/prisma";
-import type { Document } from "@acme/prisma";
-import type { Modified } from "@acme/ui/lib";
+import { worxpace as db } from "@swy/prisma";
+import type { Document } from "@swy/prisma";
+import type { Modified } from "@swy/ui/lib";
 import type {
   CreateDocumentInput,
   DeleteDocumentInput,
   UpdateDocumentInput,
-} from "@acme/validators";
+} from "@swy/validators";
 
 import type { DetailedDocument } from "./types";
 

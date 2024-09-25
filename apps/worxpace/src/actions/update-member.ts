@@ -2,8 +2,8 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Membership } from "@acme/prisma";
-import { UpdateMember, type UpdateMemberInput } from "@acme/validators";
+import type { Membership } from "@swy/prisma";
+import { UpdateMember, type UpdateMemberInput } from "@swy/validators";
 
 import {
   createMutationFetcher,

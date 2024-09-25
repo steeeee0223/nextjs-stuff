@@ -2,9 +2,9 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Document } from "@acme/prisma";
-import { type Modified } from "@acme/ui/lib";
-import { DeleteDocument, type DeleteDocumentInput } from "@acme/validators";
+import type { Document } from "@swy/prisma";
+import { type Modified } from "@swy/ui/lib";
+import { DeleteDocument, type DeleteDocumentInput } from "@swy/validators";
 
 import {
   account,

@@ -1,14 +1,16 @@
 {
-  "extends": "@acme/tsconfig/base.json",
+  "extends": "@swy/tsconfig/base.json",
   "compilerOptions": {
+    "module": "esnext",
+    "lib": ["ES2022", "dom", "dom.iterable"],
+    "jsx": "preserve",
     "baseUrl": ".",
     "types": ["../../packages/i18n/src/types/i18next.d.ts"],
     "paths": {
       "~/*": ["./src/*"],
       "@/*": ["../../packages/ui/src/*"]
     },
-    "plugins": [{ "name": "next" }],
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
+    "plugins": [{ "name": "next" }]
   },
   "include": [".", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

@@ -25,7 +25,7 @@ export interface WorkspaceSwitcherProps {
   onCreateAccount?: () => void;
   onCreateWorkspace?: () => void;
   onLogout?: () => void;
-  onSelect?: (id: string) => Promise<void>;
+  onSelect?: (id: string) => void;
 }
 
 export const WorkspaceSwitcher = ({

@@ -4,8 +4,8 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
 
-import { useSidebarLayout } from "@acme/ui/hooks";
-import { cn } from "@acme/ui/lib";
+import { useSidebarLayout } from "@swy/ui/hooks";
+import { cn } from "@swy/ui/lib";
 import {
   NavbarSkeleton,
   PageHeader,
@@ -13,12 +13,12 @@ import {
   useSettingsStore,
   useWorkspace,
   type SidebarProps,
-} from "@acme/ui/notion";
+} from "@swy/ui/notion";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@acme/ui/shadcn";
+} from "@swy/ui/shadcn";
 
 import { Room } from "~/components";
 import {
@@ -68,31 +68,30 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
     redirect: (path) => router.push(path),
     settingsProps: {
       settings,
-      onUpdate: async ({ account, workspace }) => {
-        account && (await updateAccount(account));
+      onUpdate: ({ account, workspace }) => {
+        if (account) void updateAccount(account);
         if (workspace) {
-          await updateWorkspace({
+          void updateWorkspace({
             ...workspace,
             icon: workspace.icon ? toIcon(workspace.icon) : undefined,
-          });
-          await fetchData();
+          }).then(() => fetchData());
         }
       },
       onUploadFile: async (file, options) => {
         const { url } = await edgestore.publicFiles.upload({ file, options });
         return { url };
       },
-      onDeleteAccount: async ({ accountId }) => {
-        await deleteAccount({ id: accountId, clerkId });
-        select();
-        await signOut(() => {
-          platform.reset();
-          store.reset();
-          router.push("/sign-in");
-        });
-      },
-      onDeleteWorkspace: async (id) => {
-        await deleteWorkspace({ id });
+      onDeleteAccount: ({ accountId }) =>
+        void deleteAccount({ id: accountId, clerkId }).then(async () => {
+          select();
+          await signOut(() => {
+            platform.reset();
+            store.reset();
+            router.push("/sign-in");
+          });
+        }),
+      onDeleteWorkspace: (id) => {
+        void deleteWorkspace({ id });
         select();
         platform.update((prev) => ({ ...prev, workspaceId: "" }));
         store.reset();
@@ -110,36 +109,39 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
           if (status !== "verified" && url) router.push(url.href);
         }
       },
-      onFetchConnections: async () =>
-        user?.externalAccounts
-          .filter(({ provider }) => provider !== "google")
-          .map(({ provider, identificationId, ...account }) => ({
-            id: identificationId,
-            connection: {
-              type: provider,
-              account:
-                account.username ?? `${account.firstName} ${account.lastName}`,
-            },
-            scopes: ["Can preview links"],
-            onDisconnect:
-              provider === "github" || provider === "google"
-                ? false
-                : account.destroy,
-          })) ?? [],
+      onFetchConnections: () =>
+        Promise.resolve(
+          user?.externalAccounts
+            .filter(({ provider }) => provider !== "google")
+            .map(({ provider, identificationId, ...account }) => ({
+              id: identificationId,
+              connection: {
+                type: provider,
+                account:
+                  account.username ??
+                  `${account.firstName} ${account.lastName}`,
+              },
+              scopes: ["Can preview links"],
+              onDisconnect:
+                provider === "github" || provider === "google"
+                  ? false
+                  : account.destroy,
+            })) ?? [],
+        ),
       onFetchMemberships: fetchMemberships,
-      onAddMemberships: async (emails, role) =>
-        void (await addMembers({ workspaceId, emails, role })),
-      onUpdateMembership: async (userId, role) =>
-        void (await updateMember({ accountId: userId, workspaceId, role })),
-      onDeleteMembership: async (userId) => {
-        await deleteMember({ accountId: userId, workspaceId });
+      onAddMemberships: (emails, role) =>
+        void addMembers({ workspaceId, emails, role }),
+      onUpdateMembership: (userId, role) =>
+        void updateMember({ accountId: userId, workspaceId, role }),
+      onDeleteMembership: (userId) => {
+        void deleteMember({ accountId: userId, workspaceId });
         if (userId === accountId) router.push("/workspace");
       },
     },
     pageHandlers: {
       isLoading,
       fetchPages,
-      onCreate: async (type, parentId) =>
+      onCreate: (type, parentId) =>
         void create({
           type,
           parentId,
@@ -147,12 +149,12 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
           accountId,
           workspaceId,
         }),
-      onArchive: async (id) => void archive({ id, accountId, workspaceId }),
-      onRestore: async (id) => void restore({ id, accountId, workspaceId }),
-      onDelete: async (id) => void remove({ id, accountId, workspaceId }),
+      onArchive: (id) => void archive({ id, accountId, workspaceId }),
+      onRestore: (id) => void restore({ id, accountId, workspaceId }),
+      onDelete: (id) => void remove({ id, accountId, workspaceId }),
     },
     workspaceHandlers: {
-      onSelect: async (id) => {
+      onSelect: (id) => {
         // TODO fix this
         // await setActive?.({ organization: workspaceId });
         platform.update((prev) => ({ ...prev, workspaceId: id }));

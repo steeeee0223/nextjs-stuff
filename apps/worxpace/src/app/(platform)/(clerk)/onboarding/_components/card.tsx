@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 
-import { cn } from "@acme/ui/lib";
+import { cn } from "@swy/ui/lib";
 
 export interface CardProps {
   id: number;

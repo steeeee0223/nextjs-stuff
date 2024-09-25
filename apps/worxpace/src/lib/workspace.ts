@@ -1,11 +1,11 @@
 "use server";
 
-import { worxpace as db, WORKSPACE_ROLE } from "@acme/prisma";
-import type { Membership, Workspace } from "@acme/prisma";
+import { worxpace as db, WORKSPACE_ROLE } from "@swy/prisma";
+import type { Membership, Workspace } from "@swy/prisma";
 import type {
   CreateWorkspaceInput,
   UpdateWorkspaceInput,
-} from "@acme/validators";
+} from "@swy/validators";
 
 export type WorkspaceMemberships = Workspace & { memberships: Membership[] };
 

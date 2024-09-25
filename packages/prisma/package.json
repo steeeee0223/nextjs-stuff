@@ -1,41 +1,40 @@
 {
-  "name": "@acme/prisma",
+  "name": "@swy/prisma",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
   },
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
-    "build": "pnpm db:format && pnpm db:generate",
+    "build": "pnpm db:build && tsc",
+    "clean": "git clean -xdf .cache .turbo node_modules",
+    "db:build": "pnpm db:format && pnpm db:generate",
     "db:format": "bash ./scripts/prisma.sh format",
     "db:generate": "bash ./scripts/prisma.sh generate",
     "db:push": "bash ./scripts/prisma.sh db push --skip-generate",
-    "dev": "prisma studio",
+    "dev": "pnpm dev:worxpace",
     "dev:worxpace": "prisma studio --schema prisma/worxpace.prisma",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@prisma/client": "catalog:prisma"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
-    "@acme/prettier-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
-    "@types/node": "^20.10.6",
-    "eslint": "^8.56.0",
-    "prettier": "^3.2.5",
-    "prisma": "^5.13.0",
-    "typescript": "^5.5.4"
+    "@swy/eslint-config": "workspace:*",
+    "@swy/prettier-config": "workspace:*",
+    "@swy/tsconfig": "workspace:*",
+    "@types/node": "catalog:node20",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "prisma": "catalog:prisma",
+    "typescript": "catalog:"
   },
-  "eslintConfig": {
-    "extends": [
-      "@acme/eslint-config/base"
-    ]
-  },
-  "prettier": "@acme/prettier-config",
-  "dependencies": {
-    "@prisma/client": "^5.13.0"
-  }
+  "prettier": "@swy/prettier-config"
 }

@@ -23,6 +23,7 @@ export function useModal<T extends ModalData>(): ModalContextInterface<T> {
   const object = useContext<ModalContextInterface<T>>(
     ModalContext as unknown as React.Context<ModalContextInterface<T>>,
   );
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!object) throw new Error("useModal must be used within ModalProvider");
   return object;
 }

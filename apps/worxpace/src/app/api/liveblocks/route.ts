@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
   const acc = await account.byClerkId(clerkId);
   const inWorkspace = await account.isInWorkspace({
     clerkId,
-    workspaceId: page?.workspaceId,
+    workspaceId: page.workspaceId,
   });
   if (!acc || !inWorkspace)
     return new NextResponse("Unauthorized", { status: 403 });

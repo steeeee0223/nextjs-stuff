@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@acme/ui/shadcn";
+import { Button } from "@swy/ui/shadcn";
 
 import { useClient, useSetup } from "~/hooks";
 import { Card, type CardProps } from "./_components/card";

@@ -2,7 +2,7 @@
 import type { LucideIcon } from "lucide-react";
 import { Construction } from "lucide-react";
 
-import { Trans, TransProps } from "@acme/i18n";
+import { Trans, TransProps } from "@swy/i18n";
 
 import { Hint } from "@/components/custom/hint";
 import { Badge } from "@/components/ui/badge";

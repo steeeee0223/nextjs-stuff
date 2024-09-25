@@ -2,8 +2,9 @@
 
 import { redirect } from "next/navigation";
 
-import { PageHeader } from "@acme/ui/notion";
+import { PageHeader } from "@swy/ui/notion";
 
+import { env } from "~/env";
 import { useDocument, useEdgeStore, usePlatform } from "~/hooks";
 import type { UpdateDocumentHandler } from "~/lib";
 import Error from "../../error";
@@ -41,7 +42,7 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
       ) : (
         <>
           <PageHeader
-            unsplashAPIKey={process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}
+            unsplashAPIKey={env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}
             onUpload={uploadFile}
           />
           <Editor document={document} onUpdate={onUpdate} />

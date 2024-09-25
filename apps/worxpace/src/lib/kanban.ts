@@ -1,6 +1,6 @@
 "use server";
 
-import { worxpace as db, type Card, type List } from "@acme/prisma";
+import { worxpace as db, type Card, type List } from "@swy/prisma";
 import type {
   CreateCardInput,
   CreateListInput,
@@ -10,7 +10,7 @@ import type {
   UpdateCardOrderInput,
   UpdateListInput,
   UpdateListOrderInput,
-} from "@acme/validators";
+} from "@swy/validators";
 
 type ListWithCards = List & { cards: Card[] };
 type CardWithList = Card & { list: List };

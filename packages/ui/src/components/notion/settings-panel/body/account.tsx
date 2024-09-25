@@ -4,7 +4,7 @@ import { useRef, type ChangeEvent } from "react";
 import { ChevronRight, X } from "lucide-react";
 import { useHover } from "usehooks-ts";
 
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { Hint } from "@/components/custom/hint";
 import { useModal } from "@/components/custom/modal-provider";
@@ -44,9 +44,9 @@ export const Account = () => {
     if (file) {
       const replaceTargetUrl = account.avatarUrl;
       const url = URL.createObjectURL(file);
-      await update({ account: { avatarUrl: url } });
+      update({ account: { avatarUrl: url } });
       const res = await uploadFile?.(file, { replaceTargetUrl });
-      if (res?.url) await update({ account: { avatarUrl: res.url } });
+      if (res?.url) update({ account: { avatarUrl: res.url } });
     }
   };
   const onUpdateName = (e: ChangeEvent<HTMLInputElement>) =>

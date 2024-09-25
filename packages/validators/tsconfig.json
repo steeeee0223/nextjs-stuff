@@ -1,8 +1,5 @@
 {
-  "extends": "@acme/tsconfig/base.json",
-  "compilerOptions": {
-    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json"
-  },
-  "include": ["*.ts", "src"],
+  "extends": "@swy/tsconfig/internal-package.json",
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

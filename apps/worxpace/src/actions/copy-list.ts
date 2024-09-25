@@ -2,8 +2,8 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { List } from "@acme/prisma";
-import { CopyList, type CopyListInput } from "@acme/validators";
+import type { List } from "@swy/prisma";
+import { CopyList, type CopyListInput } from "@swy/validators";
 
 import {
   auditLogs,

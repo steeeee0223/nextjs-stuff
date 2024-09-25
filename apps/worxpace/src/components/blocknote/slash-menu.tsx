@@ -19,15 +19,17 @@ export const CustomSlashMenu = ({ editor }: CustomSlashMenuProps) => {
   return (
     <SuggestionMenuController
       triggerCharacter={"/"}
-      getItems={async (query) =>
-        filterSuggestionItems(
-          [
-            ...getDefaultReactSlashMenuItems(editor),
-            /** Customized items */
-            insertCallout(editor),
-            insertQuote(editor),
-          ],
-          query,
+      getItems={(query) =>
+        Promise.resolve(
+          filterSuggestionItems(
+            [
+              ...getDefaultReactSlashMenuItems(editor),
+              /** Customized items */
+              insertCallout(editor),
+              insertQuote(editor),
+            ],
+            query,
+          ),
         )
       }
     />

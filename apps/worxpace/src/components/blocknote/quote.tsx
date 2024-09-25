@@ -7,7 +7,7 @@ import {
   ReactCustomBlockImplementation,
 } from "@blocknote/react";
 
-import { cn } from "@acme/ui/lib";
+import { cn } from "@swy/ui/lib";
 
 export interface QuoteSpec {
   type: "quote";

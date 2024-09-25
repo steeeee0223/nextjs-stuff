@@ -26,8 +26,8 @@ export const useAction = <TInput, TOutput>(
   const [fieldErrors, setFieldErrors] = useState<
     FieldErrors<TInput> | undefined
   >(undefined);
-  const [error, setError] = useState<string | undefined>(undefined);
-  const [data, setData] = useState<TOutput | undefined>(undefined);
+  const [error, setError] = useState<string>();
+  const [data, setData] = useState<TOutput>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const execute = useCallback(
@@ -35,7 +35,6 @@ export const useAction = <TInput, TOutput>(
       setIsLoading(true);
       try {
         const result = await action(input);
-        if (!result) return;
 
         const { fieldErrors, error, data } = result;
         setFieldErrors(fieldErrors);

@@ -35,23 +35,27 @@ export function KanbanProvider({
   );
 
   useEffect(() => {
-    if (initialLists) dispatch({ type: "set", payload: initialLists });
+    dispatch({ type: "set", payload: initialLists });
   }, [initialLists]);
 
   const kanbanLists = useMemo(() => Object.values(state.entities), [state]);
-  const kanbanContextValues: KanbanContextInterface = {
-    isLoading,
-    kanbanLists,
-    activeItem,
-    dispatch,
-    setActiveItem,
-    getKanbanItem: (listId, itemId) =>
-      state.entities[listId]?.items.find(({ id }) => itemId === id),
-    getKanbanList: (listId) => state.entities[listId],
-    getMaxItemOrder: (listId) => findMaxOrder(state.entities[listId]!.items),
-    getMaxListOrder: () => findMaxOrder(kanbanLists),
-    ...handlers,
-  };
+  const kanbanContextValues = useMemo<KanbanContextInterface>(
+    () => ({
+      isLoading,
+      kanbanLists,
+      activeItem,
+      dispatch,
+      setActiveItem,
+      getKanbanItem: (listId, itemId) =>
+        state.entities[listId]?.items.find(({ id }) => itemId === id),
+      getKanbanList: (listId) => state.entities[listId],
+      getMaxItemOrder: (listId) => findMaxOrder(state.entities[listId]!.items),
+      getMaxListOrder: () => findMaxOrder(kanbanLists),
+      ...handlers,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activeItem, isLoading, kanbanLists, state.entities],
+  );
 
   return (
     <KanbanContext.Provider value={kanbanContextValues}>

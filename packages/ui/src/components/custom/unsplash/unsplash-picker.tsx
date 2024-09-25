@@ -27,12 +27,12 @@ export const UnsplashPicker = ({
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for an image..."
       />
-      <div className="mx-0 mt-4 flex items-center justify-center ">
+      <div className="mx-0 mt-4 flex items-center justify-center">
         {isLoading || !images ? (
           <Spinner />
-        ) : images.length ? (
+        ) : images.length > 0 ? (
           <div className="grid w-full grid-cols-4 gap-x-2 gap-y-6">
-            {images?.map(({ id, urls, user, description }) => (
+            {images.map(({ id, urls, user, description }) => (
               <div
                 key={id}
                 tabIndex={-1}
@@ -43,7 +43,7 @@ export const UnsplashPicker = ({
               >
                 <img
                   src={urls.small}
-                  alt={description ?? "Unsplash"}
+                  alt={description ?? "unsplash"}
                   className="h-16 w-full rounded-sm object-cover object-center"
                 />
                 <p className="absolute bottom-[-14px] w-full truncate text-[10px] opacity-100">

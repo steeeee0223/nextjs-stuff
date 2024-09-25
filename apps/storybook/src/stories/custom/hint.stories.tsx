@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { HelpCircle } from "lucide-react";
 
-import { Hint } from "@acme/ui/custom";
+import { Hint } from "@swy/ui/custom";
 
 const meta = {
   title: "custom/Hint",

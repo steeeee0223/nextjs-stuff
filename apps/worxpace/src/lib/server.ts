@@ -10,13 +10,13 @@ import type { Client } from "./types";
  */
 export async function fetchClient(): Promise<Pick<Client, "type" | "clerkId">> {
   const { userId, orgId } = auth();
-  if (!userId) throw new UnauthorizedError();
+  if (!userId) return Promise.reject(new UnauthorizedError());
 
   if (!orgId) {
     /** @todo Admin role */
     /** User role */
-    return { type: "personal", clerkId: userId };
+    return Promise.resolve({ type: "personal", clerkId: userId });
   } else {
-    return { type: "organization", clerkId: orgId };
+    return Promise.resolve({ type: "organization", clerkId: orgId });
   }
 }

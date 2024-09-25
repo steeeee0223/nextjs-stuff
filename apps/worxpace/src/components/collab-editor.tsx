@@ -39,8 +39,8 @@ export default function CollaborativeEditor(props: EditorProps) {
     setProvider(yProvider);
 
     return () => {
-      yDoc?.destroy();
-      yProvider?.destroy();
+      yDoc.destroy();
+      yProvider.destroy();
     };
   }, [room]);
 
