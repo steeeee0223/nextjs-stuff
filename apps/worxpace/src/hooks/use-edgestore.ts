@@ -2,9 +2,9 @@
 
 import { createEdgeStoreProvider } from "@edgestore/react";
 
-import type { CoverImage } from "@acme/prisma";
-import type { IconInfo } from "@acme/ui/custom";
-import type { UploadFile } from "@acme/ui/notion";
+import type { CoverImage } from "@swy/prisma";
+import type { IconInfo } from "@swy/ui/custom";
+import type { UploadFile } from "@swy/ui/notion";
 
 import { type EdgeStoreRouter } from "~/app/api/edgestore/[...edgestore]/route";
 

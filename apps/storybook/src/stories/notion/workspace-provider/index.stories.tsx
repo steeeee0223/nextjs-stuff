@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { toast } from "sonner";
 
-import { ModalProvider, TreeProvider } from "@acme/ui/custom";
-import { useSidebarLayout } from "@acme/ui/hooks";
-import { cn } from "@acme/ui/lib";
+import { ModalProvider, TreeProvider } from "@swy/ui/custom";
+import { useSidebarLayout } from "@swy/ui/hooks";
+import { cn } from "@swy/ui/lib";
 import {
   Navbar,
   PageHeader,
@@ -11,12 +11,12 @@ import {
   Sidebar,
   WorkspaceProvider,
   WorkspaceSwitcher,
-} from "@acme/ui/notion";
+} from "@swy/ui/notion";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@acme/ui/shadcn";
+} from "@swy/ui/shadcn";
 
 import {
   documents,
@@ -94,8 +94,8 @@ const Layout = () => {
           collapse={collapse}
           settingsProps={{
             settings: mockSettings,
-            onFetchConnections: async () => mockConnections,
-            onFetchMemberships: async () => mockMemberships,
+            onFetchConnections: () => Promise.resolve(mockConnections),
+            onFetchMemberships: () => Promise.resolve(mockMemberships),
           }}
           pageHandlers={{
             fetchPages: () => Promise.resolve(Object.values(mockPages)),

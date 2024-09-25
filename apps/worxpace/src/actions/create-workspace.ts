@@ -2,8 +2,8 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Workspace } from "@acme/prisma";
-import { CreateWorkspace, type CreateWorkspaceInput } from "@acme/validators";
+import type { Workspace } from "@swy/prisma";
+import { CreateWorkspace, type CreateWorkspaceInput } from "@swy/validators";
 
 import { createMutationFetcher, UnauthorizedError, workspace } from "~/lib";
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { ModalProvider, useModal } from "@acme/ui/custom";
+import { ModalProvider, useModal } from "@swy/ui/custom";
 import {
   AddMembers,
   DeleteAccount,
@@ -9,8 +9,8 @@ import {
   DeleteWorkspace,
   EmailSettings,
   PasswordForm,
-} from "@acme/ui/notion";
-import { Button, type ButtonProps } from "@acme/ui/shadcn";
+} from "@swy/ui/notion";
+import { Button, type ButtonProps } from "@swy/ui/shadcn";
 
 import { mockMemberships, user, workspaces } from "../../__mock__";
 

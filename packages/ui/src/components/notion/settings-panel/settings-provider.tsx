@@ -3,7 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { useTheme } from "next-themes";
 
-import { I18nProvider } from "@acme/i18n";
+import { I18nProvider } from "@swy/i18n";
 
 import { ModalProvider } from "@/components/custom/modal-provider";
 import { getScopes } from "../scopes";
@@ -53,15 +53,15 @@ export function SettingsProvider({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings]);
 
-  const context: SettingsContextInterface = useMemo(
+  const context = useMemo<SettingsContextInterface>(
     () => ({
       settings: { account, workspace },
       scopes: getScopes(workspace.plan, workspace.role),
       tab,
       setTab,
-      updateSettings: async (data) => {
+      updateSettings: (data) => {
         update(data);
-        await onUpdate?.(data);
+        void onUpdate?.(data);
       },
       uploadFile: onUploadFile,
       deleteAccount: onDeleteAccount,

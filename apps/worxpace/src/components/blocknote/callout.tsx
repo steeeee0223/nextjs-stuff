@@ -9,7 +9,7 @@ import type {
 } from "@blocknote/core";
 import { createReactBlockSpec } from "@blocknote/react";
 
-import { IconBlock, type IconBlockProps, type IconInfo } from "@acme/ui/custom";
+import { IconBlock, type IconBlockProps, type IconInfo } from "@swy/ui/custom";
 
 import { cn } from "@/lib/utils";
 

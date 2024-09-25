@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { Scope } from "../types";
 import SettingsBody from "./settings-body";

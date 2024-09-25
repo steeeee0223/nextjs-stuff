@@ -36,7 +36,7 @@ export function TreeProvider({
     },
   );
 
-  const treeContextValues: TreeContextInterface = useMemo(
+  const treeContextValues = useMemo<TreeContextInterface>(
     () => ({
       isLoading: isLoading || !initialItems,
       groups,

@@ -1,6 +1,6 @@
 import { ArrowUpRight, CircleHelp } from "lucide-react";
 
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { Select } from "@/components/custom/select";
 import { Button } from "@/components/ui/button";

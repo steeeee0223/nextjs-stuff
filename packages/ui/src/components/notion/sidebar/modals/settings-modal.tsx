@@ -8,13 +8,13 @@ export const SettingsModal = (props: SettingsPanelProps) => {
   const { isOpen, setClose } = useModal();
   const settingsProps: SettingsPanelProps = {
     ...props,
-    onDeleteAccount: async (data) => {
+    onDeleteAccount: (data) => {
       setClose();
-      await props.onDeleteAccount?.(data);
+      props.onDeleteAccount?.(data);
     },
-    onDeleteWorkspace: async (data) => {
+    onDeleteWorkspace: (data) => {
       setClose();
-      await props.onDeleteWorkspace?.(data);
+      props.onDeleteWorkspace?.(data);
     },
   };
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { TagInput } from "@acme/ui/custom";
+import { TagInput } from "@swy/ui/custom";
 
 const meta = {
   title: "custom/Tag Input",

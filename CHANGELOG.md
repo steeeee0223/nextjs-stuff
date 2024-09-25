@@ -1,5 +1,15 @@
 # Changelog
 
+## Version `1.2.0`
+
+### 🆕 Core Updates
+
+- Migrate repo to commit [`create-t3-turbo:86c5f8`](https://github.com/t3-oss/create-t3-turbo/commit/86c5f8898ec67de0c1af6a893f64f1476fb40bb9)
+  - Upgrade `nodejs` from `20.10` to `20.16`
+  - Upgrade `pnpm` from `9.1.x` to `9.7`
+  - Rename `@acme/*` to `@swy/*`
+  - Add more lint rules & fix
+
 ## Version `1.1.0`
 
 ### 🆕 Core Updates

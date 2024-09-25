@@ -1,7 +1,7 @@
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Account, Document, Workspace } from "@acme/prisma";
-import type { UpdateDocumentInput } from "@acme/validators";
+import type { Account, Document, Workspace } from "@swy/prisma";
+import type { UpdateDocumentInput } from "@swy/validators";
 
 export interface Client {
   type: "admin" | "personal" | "organization";

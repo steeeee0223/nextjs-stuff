@@ -41,10 +41,6 @@ export const KanbanContainer = () => {
       const srcList = newOrderedData.find(({ id }) => src.droppableId === id);
       const destList = newOrderedData.find(({ id }) => dest.droppableId === id);
       if (!srcList || !destList) return;
-      /** Check if items exists on the `srcList` */
-      if (!srcList.items) srcList.items = [];
-      /** Check if items exists on the `destList` */
-      if (!destList.items) destList.items = [];
       /** Move the item in the same list */
       if (src.droppableId === dest.droppableId) {
         console.log(`user moved item in the same list`);

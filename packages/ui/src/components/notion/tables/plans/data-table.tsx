@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 
-interface DataTableProps<TData, TValue> {
+export interface DataTableProps<TData, TValue> {
   type: "highlight" | "content";
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -52,7 +52,7 @@ export function DataTable<TData, TValue>({
                 key={header.id}
                 className={cn(
                   "w-full max-w-[150px] py-0",
-                  header.id === "title" && " max-w-[118px]",
+                  header.id === "title" && "max-w-[118px]",
                 )}
               >
                 {header.isPlaceholder
@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
         ))}
       </TableHeader>
       <TableBody>
-        {tableRows?.length ? (
+        {tableRows.length > 0 ? (
           tableRows.map((row, i) => (
             <TableRow
               key={row.id}

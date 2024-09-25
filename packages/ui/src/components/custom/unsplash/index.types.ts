@@ -3,5 +3,5 @@ export interface UnsplashImage {
   user: { name: string; portfolio_url: string };
   links: { html: string };
   urls: { thumb: string; full: string; regular: string; small: string };
-  description: string;
+  description?: string;
 }

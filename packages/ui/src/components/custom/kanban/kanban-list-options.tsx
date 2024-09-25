@@ -50,9 +50,7 @@ export const KanbanListOptions = ({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="py-3" side="bottom" align="start">
-        <div className="pb-4 text-center text-sm font-medium ">
-          List actions
-        </div>
+        <div className="pb-4 text-center text-sm font-medium">List actions</div>
         <PopoverClose ref={closeRef} asChild>
           <Button
             className="absolute right-2 top-2 h-auto w-auto p-2"

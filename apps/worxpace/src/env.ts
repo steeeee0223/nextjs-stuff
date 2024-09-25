@@ -1,16 +1,13 @@
 import { createEnv } from "@t3-oss/env-nextjs";
+import { vercel } from "@t3-oss/env-nextjs/presets";
 import { z } from "zod";
 
 export const env = createEnv({
+  extends: [vercel()],
   shared: {
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
-    VERCEL_ENV: z.enum(["development", "preview", "production"]).optional(),
-    VERCEL_URL: z
-      .string()
-      .optional()
-      .transform((v) => (v ? `https://${v}` : undefined)),
     PORT: z.coerce.number().default(3001),
   },
   /**
@@ -22,6 +19,11 @@ export const env = createEnv({
     DB_WORXPACE: z.string(),
     // LIVEBLOCKS
     LIVEBLOCKS_SECRET_KEY: z.string(),
+    // CLERK
+    CLERK_SECRET_KEY: z.string(),
+    // EDGESTORE
+    EDGE_STORE_ACCESS_KEY: z.string(),
+    EDGE_STORE_SECRET_KEY: z.string(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -30,10 +32,6 @@ export const env = createEnv({
   client: {
     // CLERK
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string(),
-    CLERK_SECRET_KEY: z.string(),
-    // EDGESTORE
-    EDGE_STORE_ACCESS_KEY: z.string(),
-    EDGE_STORE_SECRET_KEY: z.string(),
     // UNSPLASH
     NEXT_PUBLIC_UNSPLASH_ACCESS_KEY: z.string(),
   },
@@ -41,9 +39,9 @@ export const env = createEnv({
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
     // NEXT
     PORT: process.env.PORT,
-    VERCEL_URL: process.env.VERCEL_URL,
     // CLERK
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
@@ -61,7 +59,5 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY,
   },
   skipValidation:
-    !!process.env.CI ||
-    !!process.env.SKIP_ENV_VALIDATION ||
-    process.env.npm_lifecycle_event === "lint",
+    !!process.env.CI || process.env.npm_lifecycle_event === "lint",
 });

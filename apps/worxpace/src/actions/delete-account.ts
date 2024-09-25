@@ -3,8 +3,8 @@
 import { clerkClient } from "@clerk/nextjs/server";
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Account } from "@acme/prisma";
-import { DeleteAccount, type DeleteAccountInput } from "@acme/validators";
+import type { Account } from "@swy/prisma";
+import { DeleteAccount, type DeleteAccountInput } from "@swy/validators";
 
 import {
   account,

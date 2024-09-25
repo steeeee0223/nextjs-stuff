@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, CircleHelp } from "lucide-react";
 
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import {
   MyConnections,

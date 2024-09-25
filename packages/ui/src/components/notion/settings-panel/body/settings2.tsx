@@ -4,7 +4,7 @@ import type { ChangeEvent, PropsWithChildren } from "react";
 import React from "react";
 import { CircleHelp } from "lucide-react";
 
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { IconBlock, type IconInfo } from "@/components/custom/icon-block";
 import { useModal } from "@/components/custom/modal-provider";
@@ -82,10 +82,10 @@ export const Settings2 = () => {
     const replaceTargetUrl =
       workspace.icon.type === "file" ? workspace.icon.url : undefined;
     const url = URL.createObjectURL(file);
-    await update({ workspace: { icon: { type: "file", url } } });
+    update({ workspace: { icon: { type: "file", url } } });
     const res = await uploadFile?.(file, { replaceTargetUrl });
     if (res?.url)
-      await update({ workspace: { icon: { type: "file", url: res.url } } });
+      update({ workspace: { icon: { type: "file", url: res.url } } });
   };
   const onUpdateDomain = (e: ChangeEvent<HTMLInputElement>) =>
     update({ workspace: { domain: e.target.value } });

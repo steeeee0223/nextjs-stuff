@@ -53,7 +53,7 @@ export function WorkspaceProvider({
     setActiveWorkspace(workspaces.find(({ id }) => id === initial) ?? null);
   }, [workspaces, initial]);
 
-  const workspaceContextValues: WorkspaceContextInterface = useMemo(
+  const workspaceContextValues = useMemo<WorkspaceContextInterface>(
     () => ({
       user,
       workspaces: Object.values(state.entities),

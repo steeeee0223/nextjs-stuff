@@ -62,7 +62,7 @@ const Title = ({ workspace, onClick }: TitleProps) => {
 };
 
 interface WorkspaceListProps {
-  onSelect?: (id: string) => Promise<void>;
+  onSelect?: (id: string) => void;
 }
 
 export const WorkspaceList = ({ onSelect }: WorkspaceListProps) => {
@@ -94,13 +94,13 @@ export const WorkspaceList = ({ onSelect }: WorkspaceListProps) => {
   };
 
   useEffect(() => {
-    if (workspaces?.length !== initialWorkspaces?.length)
+    if (workspaces.length !== initialWorkspaces.length)
       setWorkspaces(initialWorkspaces);
   }, [workspaces, initialWorkspaces]);
 
   return (
     <div className="select-none">
-      {workspaces?.map((workspace, i) => (
+      {workspaces.map((workspace, i) => (
         <DropdownMenuItem
           key={i}
           className="h-11 px-0 py-1"

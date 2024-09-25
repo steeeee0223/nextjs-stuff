@@ -1,4 +1,4 @@
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { NotImplemented, Section } from "./_components";
 import {

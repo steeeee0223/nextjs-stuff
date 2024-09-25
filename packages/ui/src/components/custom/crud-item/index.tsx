@@ -78,7 +78,7 @@ export const CRUDItem = forwardRef<HTMLDivElement, CRUDItemProps>(function Item(
       ref={ref}
       onClick={onClick}
       role="button"
-      style={{ paddingLeft: `${((level ?? 0) + 1) * 12}px` }}
+      style={{ paddingLeft: `${(level + 1) * 12}px` }}
       className={cn(
         buttonVariants({ variant: "hint" }),
         "group h-[27px] w-full justify-normal py-1 pr-3 text-secondary dark:text-secondary-dark",

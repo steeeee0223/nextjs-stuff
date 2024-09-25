@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { Hint } from "@/components/custom/hint";
 import * as Icon from "@/components/notion/icons";
@@ -59,7 +59,7 @@ const ActivePlan = ({ activePlan, canUpgrade }: ActivePlanProps) => {
             {active.plan[activePlan].comment}
           </div>
         </CardContent>
-        <Card className="w-full max-w-[300px] flex-1 flex-wrap border-none bg-[#f9f9f8] px-4 py-3.5 dark:bg-modal ">
+        <Card className="w-full max-w-[300px] flex-1 flex-wrap border-none bg-[#f9f9f8] px-4 py-3.5 dark:bg-modal">
           <CardContent
             className={cn(
               "relative flex flex-wrap justify-between gap-1.5",

@@ -4,7 +4,7 @@ import { type PropsWithChildren } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
-import { TreeProvider } from "@acme/ui/custom";
+import { TreeProvider } from "@swy/ui/custom";
 
 import { GROUPS } from "~/constants/site";
 import { usePlatform } from "~/hooks";

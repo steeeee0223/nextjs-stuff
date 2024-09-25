@@ -2,8 +2,8 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { ENTITY_TYPE } from "@acme/prisma";
-import { CreateDocument, type CreateDocumentInput } from "@acme/validators";
+import type { ENTITY_TYPE } from "@swy/prisma";
+import { CreateDocument, type CreateDocumentInput } from "@swy/validators";
 
 import {
   account,

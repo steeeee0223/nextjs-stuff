@@ -2,8 +2,9 @@
 
 import { redirect } from "next/navigation";
 
-import { PageHeader } from "@acme/ui/notion";
+import { PageHeader } from "@swy/ui/notion";
 
+import { env } from "~/env";
 import { useDocument, useEdgeStore, usePlatform } from "~/hooks";
 import Error from "../../error";
 import KanbanBoard from "./_component/kanban-board";
@@ -36,7 +37,7 @@ const KanbanPage = ({ params: { boardId } }: Params) => {
       ) : (
         <>
           <PageHeader
-            unsplashAPIKey={process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}
+            unsplashAPIKey={env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}
             onUpload={uploadFile}
           />
           <KanbanBoard

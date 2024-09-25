@@ -5,8 +5,8 @@ import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-import { useTree } from "@acme/ui/custom";
-import type { Page } from "@acme/ui/notion";
+import { useTree } from "@swy/ui/custom";
+import type { Page } from "@swy/ui/notion";
 
 import {
   archiveDocument,

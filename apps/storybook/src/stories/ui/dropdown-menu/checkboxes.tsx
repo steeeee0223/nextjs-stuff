@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@acme/ui/shadcn";
+} from "@swy/ui/shadcn";
 
 type Checked = boolean; // DropdownMenuCheckboxItemProps["checked"];
 

@@ -1,8 +1,8 @@
 "use server";
 
-import { worxpace as db, WORKSPACE_ROLE } from "@acme/prisma";
-import type { Account, Membership } from "@acme/prisma";
-import type { DeleteMemberInput, UpdateMemberInput } from "@acme/validators";
+import { worxpace as db, WORKSPACE_ROLE } from "@swy/prisma";
+import type { Account, Membership } from "@swy/prisma";
+import type { DeleteMemberInput, UpdateMemberInput } from "@swy/validators";
 
 const createMany = async ({
   workspaceId,

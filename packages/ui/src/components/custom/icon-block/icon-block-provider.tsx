@@ -25,7 +25,7 @@ export function IconBlockProvider({
 }: IconBlockProviderProps) {
   const [icon, setIcon] = useState(defaultIcon);
 
-  const contextValue: IconBlockContextInterface = useMemo(
+  const contextValue = useMemo<IconBlockContextInterface>(
     () => ({
       currentIcon: icon,
       setIcon: (icon) => {

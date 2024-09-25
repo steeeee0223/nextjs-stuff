@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -44,7 +44,7 @@ export const ConnectionCard = ({
           <img src={imageUrl} alt={id} className="size-7 rounded-md" />
         </CardHeader>
         <CardTitle className="text-sm/[1.3] font-medium">{title}</CardTitle>
-        <CardDescription className="max-h-[72px] overflow-hidden  text-xs/[1.3] text-secondary dark:text-secondary-dark">
+        <CardDescription className="max-h-[72px] overflow-hidden text-xs/[1.3] text-secondary dark:text-secondary-dark">
           {description}
         </CardDescription>
         <div className="flex gap-1">

@@ -2,8 +2,8 @@
 
 import { MutationFetcher } from "swr/mutation";
 
-import { Membership } from "@acme/prisma";
-import { DeleteMember, type DeleteMemberInput } from "@acme/validators";
+import { Membership } from "@swy/prisma";
+import { DeleteMember, type DeleteMemberInput } from "@swy/validators";
 
 import {
   createMutationFetcher,

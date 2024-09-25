@@ -1,30 +1,51 @@
 {
-  "name": "@acme/ui",
+  "name": "@swy/ui",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "exports": {
-    "./custom": "./src/components/custom/index.ts",
-    "./dnd": "./src/components/dnd/index.ts",
-    "./form": "./src/components/form/index.ts",
-    "./hooks": "./src/hooks/index.ts",
-    "./notion": "./src/components/notion/index.ts",
-    "./shadcn": "./src/components/ui/index.ts",
-    "./lib": "./src/lib/index.ts"
+    "./custom": {
+      "types": "./dist/src/components/custom/index.d.ts",
+      "default": "./src/components/custom/index.ts"
+    },
+    "./dnd": {
+      "types": "./dist/src/components/dnd/index.d.ts",
+      "default": "./src/components/dnd/index.ts"
+    },
+    "./form": {
+      "types": "./dist/src/components/form/index.d.ts",
+      "default": "./src/components/form/index.ts"
+    },
+    "./hooks": {
+      "types": "./dist/src/hooks/index.d.ts",
+      "default": "./src/hooks/index.ts"
+    },
+    "./notion": {
+      "types": "./dist/src/components/notion/index.d.ts",
+      "default": "./src/components/notion/index.ts"
+    },
+    "./shadcn": {
+      "types": "./dist/src/components/ui/index.d.ts",
+      "default": "./src/components/ui/index.ts"
+    },
+    "./lib": {
+      "types": "./dist/src/lib/index.d.ts",
+      "default": "./src/lib/index.ts"
+    }
   },
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "eslint .",
+    "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
-    "@acme/i18n": "workspace:*",
     "@hello-pangea/dnd": "^16.3.0",
     "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-accordion": "^1.1.2",
@@ -44,60 +65,56 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@radix-ui/react-visually-hidden": "^1.1.0",
+    "@swy/i18n": "workspace:*",
     "@tanstack/react-table": "^8.19.3",
     "class-variance-authority": "^0.7.0",
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "emoji-picker-react": "^4.9.2",
-    "next-themes": "^0.3.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "next-themes": "catalog:ui",
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.49.2",
     "react-hotkeys-hook": "^4.5.0",
     "react-infinite-scroll-component": "^6.1.0",
     "react-resizable-panels": "^2.1.2",
     "react-textarea-autosize": "^8.5.3",
-    "sonner": "^1.3.1",
+    "sonner": "catalog:ui",
     "stable-hash": "^0.0.4",
-    "tailwind-merge": "^2.3.0",
+    "tailwind-merge": "^2.5.2",
     "unsplash-js": "^7.0.19",
     "usehooks-ts": "^2.9.1",
-    "uuid": "^10.0.0",
+    "uuid": "catalog:uuid",
     "vaul": "^0.9.0",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
-    "@acme/prettier-config": "workspace:*",
-    "@acme/tailwind-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
-    "@testing-library/jest-dom": "^6.4.5",
-    "@testing-library/react": "^16.0.0",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/node": "^20.10.6",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@types/uuid": "^10.0.0",
+    "@swy/eslint-config": "workspace:*",
+    "@swy/prettier-config": "workspace:*",
+    "@swy/tailwind-config": "workspace:*",
+    "@swy/tsconfig": "workspace:*",
+    "@testing-library/jest-dom": "catalog:rtl",
+    "@testing-library/react": "catalog:rtl",
+    "@testing-library/user-event": "catalog:rtl",
+    "@types/node": "catalog:node20",
+    "@types/react": "catalog:react18",
+    "@types/react-dom": "catalog:react18",
+    "@types/uuid": "catalog:uuid",
     "@vitejs/plugin-react": "^4.2.1",
-    "@vitest/coverage-v8": "^2.0.5",
-    "@vitest/ui": "^2.0.5",
-    "eslint": "^8.56.0",
-    "jsdom": "^24.0.0",
-    "prettier": "^3.2.5",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.5.4",
-    "vitest": "^2.0.5",
-    "zod": "^3.23.7"
+    "@vitest/coverage-v8": "catalog:vitest",
+    "@vitest/ui": "catalog:vitest",
+    "eslint": "catalog:",
+    "jsdom": "catalog:rtl",
+    "prettier": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:vitest",
+    "zod": "catalog:"
   },
   "peerDependencies": {
-    "zod": "^3.23.7"
+    "react": "catalog:react18",
+    "zod": "catalog:"
   },
-  "eslintConfig": {
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/react"
-    ]
-  },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@swy/prettier-config"
 }

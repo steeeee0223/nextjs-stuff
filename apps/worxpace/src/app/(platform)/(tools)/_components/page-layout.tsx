@@ -8,7 +8,7 @@ import {
   PageProvider,
   type NavbarProps,
   type PageProviderProps,
-} from "@acme/ui/notion";
+} from "@swy/ui/notion";
 
 import {
   useDocument,
@@ -67,7 +67,7 @@ const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
         if (icon !== undefined) void deleteFile(toIconInfo(doc?.icon));
         // if coverImage is updated
         if (coverImage !== undefined) void deleteFile(doc?.coverImage);
-        void update?.({
+        void update({
           id,
           accountId,
           workspaceId,

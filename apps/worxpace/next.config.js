@@ -1,7 +1,9 @@
+import { fileURLToPath } from "url";
 import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin";
+import createJiti from "jiti";
 
-// Importing env files here to validate on build
-import "./src/env.js";
+// Import env files to validate at build time. Use jiti so we can load .ts files in here.
+createJiti(fileURLToPath(import.meta.url))("./src/env");
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -9,9 +11,9 @@ const config = {
 
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
-    "@acme/prisma",
-    "@acme/ui",
-    "@acme/validators",
+    "@swy/prisma",
+    "@swy/ui",
+    "@swy/validators",
     "lucide-react",
   ],
   experimental: {

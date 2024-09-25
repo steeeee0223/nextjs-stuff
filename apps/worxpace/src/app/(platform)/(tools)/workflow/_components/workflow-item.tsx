@@ -2,9 +2,9 @@
 
 import { toast } from "sonner";
 
-import type { Document } from "@acme/prisma";
-import { CRUDItem, CRUDItemSkeleton } from "@acme/ui/custom";
-import { Label, Switch } from "@acme/ui/shadcn";
+import type { Document } from "@swy/prisma";
+import { CRUDItem, CRUDItemSkeleton } from "@swy/ui/custom";
+import { Label, Switch } from "@swy/ui/shadcn";
 
 import { useDocuments, usePlatform } from "~/hooks";
 import { toIconInfo, type WorkflowContent } from "~/lib";

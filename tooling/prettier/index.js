@@ -20,7 +20,7 @@ const config = {
     "^(expo(.*)$)|^(expo$)",
     "<THIRD_PARTY_MODULES>",
     "",
-    "^@acme/(.*)$",
+    "^@swy/(.*)$",
     "",
     "^@/",
     "^~/",
@@ -29,6 +29,20 @@ const config = {
   ],
   importOrderParserPlugins: ["typescript", "jsx", "decorators-legacy"],
   importOrderTypeScriptVersion: "4.4.0",
+  overrides: [
+    {
+      files: "*.json.hbs",
+      options: {
+        parser: "json",
+      },
+    },
+    {
+      files: "*.js.hbs",
+      options: {
+        parser: "babel",
+      },
+    },
+  ],
 };
 
 export default config;

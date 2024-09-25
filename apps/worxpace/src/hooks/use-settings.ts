@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-import { useSettingsStore, useWorkspace } from "@acme/ui/notion";
+import { useSettingsStore, useWorkspace } from "@swy/ui/notion";
 
 import {
   createAccount as $addAccount,

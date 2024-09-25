@@ -82,7 +82,7 @@ export const DeleteWorkspace = ({
                 </FormItem>
               )}
             />
-            {form.formState.errors && (
+            {form.formState.errors.name && (
               <div className="mt-1 text-xs/5 text-red">
                 {`Please type "${name}" to continue`}
               </div>

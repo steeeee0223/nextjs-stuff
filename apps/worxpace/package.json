@@ -1,6 +1,6 @@
 {
-  "name": "@acme/worxpace",
-  "version": "1.1.0",
+  "name": "@swy/worxpace",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,16 +8,12 @@
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev -p 3001",
     "format": "prettier --check . --ignore-path ../../.gitignore",
-    "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
+    "lint": "eslint",
     "start": "pnpm with-env next start",
     "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@acme/i18n": "workspace:*",
-    "@acme/prisma": "workspace:*",
-    "@acme/ui": "workspace:*",
-    "@acme/validators": "workspace:*",
     "@blocknote/core": "^0.15.0",
     "@blocknote/mantine": "^0.15.0",
     "@blocknote/react": "^0.15.0",
@@ -29,40 +25,37 @@
     "@liveblocks/node": "^1.12.0",
     "@liveblocks/react": "^1.12.0",
     "@liveblocks/yjs": "^1.12.0",
-    "@t3-oss/env-nextjs": "^0.10.1",
-    "lucide-react": "^0.408.0",
-    "next": "^14.2.3",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "@swy/i18n": "workspace:*",
+    "@swy/prisma": "workspace:*",
+    "@swy/ui": "workspace:*",
+    "@swy/validators": "workspace:*",
+    "@t3-oss/env-nextjs": "catalog:",
+    "lucide-react": "catalog:ui",
+    "next": "catalog:next14",
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18",
     "react-hotkeys-hook": "^4.5.0",
     "react-textarea-autosize": "^8.5.3",
-    "sonner": "^1.3.1",
+    "sonner": "catalog:ui",
     "swr": "^2.2.5",
     "yjs": "^13.6.15",
-    "zod": "^3.23.7"
+    "zod": "catalog:"
   },
   "devDependencies": {
-    "@acme/eslint-config": "workspace:*",
-    "@acme/prettier-config": "workspace:*",
-    "@acme/tailwind-config": "workspace:*",
-    "@acme/tsconfig": "workspace:*",
-    "@prisma/nextjs-monorepo-workaround-plugin": "^5.13.0",
-    "@types/node": "^20.10.6",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@prisma/nextjs-monorepo-workaround-plugin": "catalog:prisma",
+    "@swy/eslint-config": "workspace:*",
+    "@swy/prettier-config": "workspace:*",
+    "@swy/tailwind-config": "workspace:*",
+    "@swy/tsconfig": "workspace:*",
+    "@types/node": "catalog:node20",
+    "@types/react": "catalog:react18",
+    "@types/react-dom": "catalog:react18",
     "dotenv-cli": "^7.4.2",
-    "eslint": "^8.56.0",
-    "prettier": "^3.2.5",
-    "tailwindcss": "^3.4.3",
-    "typescript": "^5.5.4"
+    "eslint": "catalog:",
+    "jiti": "^1.21.6",
+    "prettier": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@acme/eslint-config/base",
-      "@acme/eslint-config/nextjs",
-      "@acme/eslint-config/react"
-    ]
-  },
-  "prettier": "@acme/prettier-config"
+  "prettier": "@swy/prettier-config"
 }

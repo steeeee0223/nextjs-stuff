@@ -2,7 +2,7 @@
 
 import useSWR, { type Fetcher } from "swr";
 
-import type { Log } from "@acme/ui/custom";
+import type { Log } from "@swy/ui/custom";
 
 import { auditLogs, type HistoryKey } from "~/lib";
 

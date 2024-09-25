@@ -5,8 +5,8 @@ import { ImageIcon } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
 import stableHash from "stable-hash";
 
-import { Cover, CoverPicker, IconBlock, type IconInfo } from "@acme/ui/custom";
-import { Button, Skeleton } from "@acme/ui/shadcn";
+import { Cover, CoverPicker, IconBlock, type IconInfo } from "@swy/ui/custom";
+import { Button, Skeleton } from "@swy/ui/shadcn";
 
 import { generateDefaultIcon } from "@/lib";
 import { PageContextInterface, usePage } from "../page-provider";
@@ -108,7 +108,7 @@ PageHeader.Content = function PageHeaderContent({
           <div className="flex items-center gap-x-1 py-4 opacity-0 group-hover:opacity-100">
             {!page.coverImage && !preview && (
               <CoverPicker
-                unsplashAPIKey={process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY!}
+                unsplashAPIKey={unsplashAPIKey ?? ""}
                 onUploadChange={onCoverUpload}
                 onUrlChange={onCoverUrlChange}
                 onRemove={onCoverRemove}

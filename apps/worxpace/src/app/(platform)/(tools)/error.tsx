@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "@acme/ui/shadcn";
+import { Button } from "@swy/ui/shadcn";
 
 import { usePlatform } from "~/hooks";
 

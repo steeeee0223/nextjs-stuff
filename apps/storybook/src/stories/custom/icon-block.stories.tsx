@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { IconBlock } from "@acme/ui/custom";
+import { IconBlock } from "@swy/ui/custom";
 
 const meta = {
   title: "custom/Icon Block",

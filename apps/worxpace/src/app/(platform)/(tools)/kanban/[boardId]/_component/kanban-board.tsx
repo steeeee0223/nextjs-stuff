@@ -1,7 +1,7 @@
 "use client";
 
-import type { Document } from "@acme/prisma";
-import { KanbanProvider, type KanbanHandlers } from "@acme/ui/custom";
+import type { Document } from "@swy/prisma";
+import { KanbanProvider, type KanbanHandlers } from "@swy/ui/custom";
 
 import { useKanban } from "~/hooks";
 import { CardModal } from "./card-modal";

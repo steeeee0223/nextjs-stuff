@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import useSWR, { type Fetcher } from "swr";
 import useSWRMutation from "swr/mutation";
 
-import { KanbanList } from "@acme/ui/custom";
+import { KanbanList } from "@swy/ui/custom";
 
 import {
   copyCard as _copyCard,

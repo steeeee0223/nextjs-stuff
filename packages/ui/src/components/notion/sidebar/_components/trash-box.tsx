@@ -119,7 +119,7 @@ export const TrashBox = ({
             </div>
           ) : (
             <div className="mt-2 flex w-full flex-col px-1 pb-1 text-sm">
-              {filteredItems?.map(({ id, title, type, icon }) => (
+              {filteredItems.map(({ id, title, type, icon }) => (
                 <div
                   key={id}
                   role="button"

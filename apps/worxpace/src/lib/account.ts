@@ -1,12 +1,12 @@
 "use server";
 
-import { worxpace as db } from "@acme/prisma";
-import type { Account, Membership, Workspace } from "@acme/prisma";
+import { worxpace as db } from "@swy/prisma";
+import type { Account, Membership, Workspace } from "@swy/prisma";
 import type {
   CreateAccountInput,
   DeleteAccountInput,
   UpdateAccountInput,
-} from "@acme/validators";
+} from "@swy/validators";
 
 export type AccountMemberships = Account & {
   memberships: Membership[];

@@ -1,4 +1,4 @@
-import { useTranslation } from "@acme/i18n";
+import { useTranslation } from "@swy/i18n";
 
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";

@@ -7,8 +7,8 @@ import { SaveIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 
-import type { Document } from "@acme/prisma";
-import { Button, type ButtonProps } from "@acme/ui/shadcn";
+import type { Document } from "@swy/prisma";
+import { Button, type ButtonProps } from "@swy/ui/shadcn";
 
 import { type UpdateDocumentHandler } from "~/lib";
 

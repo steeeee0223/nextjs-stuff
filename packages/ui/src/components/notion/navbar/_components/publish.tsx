@@ -41,9 +41,8 @@ export const Publish = ({ page, onUpdate }: PublishProps) => {
       onUpdate?.(page.id, !isPublished);
       setIsPublished((prev) => !prev);
     });
-    !isPublished
-      ? toast.success(`Published Document: "${page.title}"`)
-      : toast.success(`Unpublished Document: "${page.title}"`);
+    if (isPublished) toast.success(`Unpublished Document: "${page.title}"`);
+    else toast.success(`Published Document: "${page.title}"`);
   };
 
   return (

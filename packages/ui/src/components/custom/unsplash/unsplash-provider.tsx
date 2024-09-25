@@ -3,7 +3,10 @@
 import { useMemo } from "react";
 import { createApi } from "unsplash-js";
 
-import { UnsplashContext } from "./unsplash-context";
+import {
+  UnsplashContext,
+  type UnsplashContextInterface,
+} from "./unsplash-context";
 import { UnsplashPicker, type UnsplashPickerProps } from "./unsplash-picker";
 
 export interface UnsplashProps extends UnsplashPickerProps {
@@ -12,11 +15,13 @@ export interface UnsplashProps extends UnsplashPickerProps {
 }
 
 export const Unsplash = ({ apiKey, ...props }: UnsplashProps) => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const unsplash = useMemo(() => createApi({ accessKey: apiKey, fetch }), []);
+  const contextValue = useMemo<UnsplashContextInterface>(
+    () => ({ unsplash: createApi({ accessKey: apiKey, fetch }) }),
+    [apiKey],
+  );
 
   return (
-    <UnsplashContext.Provider value={{ unsplash }}>
+    <UnsplashContext.Provider value={contextValue}>
       <UnsplashPicker {...props} />
     </UnsplashContext.Provider>
   );

@@ -135,7 +135,7 @@ export const RoleCell = ({ role, scopes, onSelect }: RoleCellProps) => {
           className="m-0 w-auto"
           options={roleOptions}
           onChange={(role) => onSelect?.(role as Role)}
-          defaultValue={role ?? undefined}
+          defaultValue={role}
           align="center"
           customDisplay={Custom}
         />

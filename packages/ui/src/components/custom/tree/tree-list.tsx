@@ -42,7 +42,7 @@ export function TreeList({
           style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }}
           className={cn(
             "hidden pl-4 text-sm font-medium text-muted dark:text-muted-dark",
-            expanded && "last:block",
+            !Object.is(expanded, {}) && "last:block",
             level === 0 && "hidden",
           )}
         >

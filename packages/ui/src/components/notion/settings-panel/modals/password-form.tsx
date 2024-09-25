@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -41,13 +42,15 @@ interface PasswordFormProps {
 
 export const PasswordForm = ({
   hasPassword,
-  onSubmit: $onSubmit,
+  onSubmit: __onSubmit,
 }: PasswordFormProps) => {
   const { isOpen, setClose, setOpen } = useModal();
   const form = useForm<z.infer<typeof passwordSchema>>({
     resolver: zodResolver(passwordSchema),
     defaultValues: { password: "", confirmPassword: "" },
   });
+  const newPassword = form.watch("password");
+  const confirmPassword = form.watch("confirmPassword");
   const onClose = () => {
     setClose();
     form.reset();
@@ -56,10 +59,14 @@ export const PasswordForm = ({
     password,
     currentPassword,
   }: z.infer<typeof passwordSchema>) => {
-    $onSubmit?.(password, currentPassword);
+    __onSubmit?.(password, currentPassword);
     onClose();
     setOpen(<PasswordSuccess />);
   };
+
+  useEffect(() => {
+    void form.trigger("confirmPassword");
+  }, [newPassword, confirmPassword, form]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -134,11 +141,9 @@ export const PasswordForm = ({
                 </FormItem>
               )}
             />
-            {form.formState.errors && (
-              <div className="mt-2.5 text-center text-xs/5 text-[#eb5757]">
-                {Object.values(form.formState.errors).at(0)?.message}
-              </div>
-            )}
+            <div className="mt-2.5 text-center text-xs/5 text-[#eb5757]">
+              {Object.values(form.formState.errors).at(0)?.message}
+            </div>
             <Button
               type="submit"
               variant="blue"

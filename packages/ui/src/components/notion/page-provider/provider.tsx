@@ -19,7 +19,7 @@ export function PageProvider({
   otherUsers,
   ...handlers
 }: PageProviderProps) {
-  const pageContextValues: PageContextInterface = useMemo(
+  const pageContextValues = useMemo<PageContextInterface>(
     () => ({
       isLoading,
       page,

@@ -1,4 +1,4 @@
-# @acme/ui - The Component Library
+# @swy/ui - The Component Library
 
 ### Theme
 

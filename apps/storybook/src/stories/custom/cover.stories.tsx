@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Cover } from "@acme/ui/custom";
+import { Cover } from "@swy/ui/custom";
 
 import image from "@/stories/assets/addon-library.png";
 
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    url: image.src,
+    url: image,
     unsplashAPIKey: "UNSPLASH_ACCESS_KEY",
     onUrlChange: (url) => console.log(`Uploading url: ${url}`),
     onUploadChange: (file) => console.log(`Uploading file: ${file.name}`),

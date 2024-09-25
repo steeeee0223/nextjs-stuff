@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 
-import type { Document } from "@acme/prisma";
+import type { Document } from "@swy/prisma";
 
 import { useEdgeStore } from "~/hooks";
 import { type UpdateDocumentHandler } from "~/lib";

@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-import { PageHeader } from "@acme/ui/notion";
+import { PageHeader } from "@swy/ui/notion";
 
 import { useDocument, usePlatform } from "~/hooks";
 import { type UpdateDocumentHandler } from "~/lib";

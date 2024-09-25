@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ImageIcon } from "lucide-react";
 
-import { CoverPicker } from "@acme/ui/custom";
-import { Button } from "@acme/ui/shadcn";
+import { CoverPicker } from "@swy/ui/custom";
+import { Button } from "@swy/ui/shadcn";
 
 const meta = {
   title: "custom/Cover Picker",

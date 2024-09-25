@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Select, type SelectProps } from "@acme/ui/custom";
+import { Select, type SelectProps } from "@swy/ui/custom";
 
 const meta = {
   title: "custom/Select",

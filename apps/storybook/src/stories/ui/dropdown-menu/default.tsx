@@ -12,7 +12,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@acme/ui/shadcn";
+} from "@swy/ui/shadcn";
 
 export function DropdownMenuDemo() {
   return (

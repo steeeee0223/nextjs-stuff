@@ -1,6 +1,6 @@
 "use server";
 
-import { Account, ACTION, AuditLog, Entity, worxpace } from "@acme/prisma";
+import { Account, ACTION, AuditLog, Entity, worxpace } from "@swy/prisma";
 
 export type LogWithAccount = AuditLog & {
   account: Account;

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Smile, X } from "lucide-react";
 
-import { IconPicker } from "@acme/ui/custom";
-import { Button } from "@acme/ui/shadcn";
+import { IconPicker } from "@swy/ui/custom";
+import { Button } from "@swy/ui/shadcn";
 
 const CrudIcon = () => {
   const [icon, setIcon] = useState("");

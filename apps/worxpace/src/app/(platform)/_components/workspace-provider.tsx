@@ -7,7 +7,7 @@ import {
   WorkspaceProvider as Provider,
   type User,
   type Workspace,
-} from "@acme/ui/notion";
+} from "@swy/ui/notion";
 
 import { useClient, usePlatform, useSetup } from "~/hooks";
 

@@ -1,12 +1,12 @@
-import type { Log, TreeItem } from "@acme/ui/custom";
-import { Plan, Role } from "@acme/ui/notion";
+import type { Log, TreeItem } from "@swy/ui/custom";
+import { Plan, Role } from "@swy/ui/notion";
 import type {
   Page,
   SettingsStore,
   User,
   Workspace,
   WorkspaceMemberships,
-} from "@acme/ui/notion";
+} from "@swy/ui/notion";
 
 export const documents: TreeItem[] = [
   {
