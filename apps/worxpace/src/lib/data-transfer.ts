@@ -1,8 +1,14 @@
 import { format } from "date-fns";
 
-import type { Icon } from "@acme/prisma";
+import type { Account, Icon, Membership, Workspace } from "@acme/prisma";
 import type { IconInfo, TreeItem } from "@acme/ui/custom";
+import { Plan, Role } from "@acme/ui/notion";
+import type {
+  WorkspaceMemberships as PeopleData,
+  SettingsStore,
+} from "@acme/ui/notion";
 
+import { AccountMemberships } from "./account";
 import type { DetailedDocument } from "./types";
 
 export function generateDefaultIcon(group?: string): IconInfo {
@@ -58,4 +64,61 @@ export function toTreeItem(doc: DetailedDocument): TreeItem {
     lastEditedBy: doc.updatedBy.preferredName,
     lastEditedAt: toDateString(doc.updatedAt),
   };
+}
+
+export function toSettingsStore(
+  account: AccountMemberships,
+  workspace: Workspace,
+): SettingsStore {
+  const membership = account.memberships.find(
+    ({ workspaceId }) => workspaceId === workspace.id,
+  );
+  return {
+    account,
+    workspace: {
+      id: workspace.id,
+      name: workspace.name,
+      role: Role[membership!.role],
+      icon: toIconInfo(workspace.icon),
+      domain: workspace.domain,
+      plan: Plan.FREE,
+    },
+  };
+}
+
+export function toPeopleData(
+  members: (Membership & { account: Account })[],
+): PeopleData {
+  const data: PeopleData = { members: [], guests: [] };
+  members.forEach(({ role, account }) =>
+    role === "GUEST"
+      ? data.guests.push({
+          account: {
+            id: account.id,
+            name: account.preferredName,
+            avatarUrl: account.avatarUrl,
+            email: account.email,
+          },
+          // TODO page access
+          access: [],
+        })
+      : data.members.push({
+          account: {
+            id: account.id,
+            name: account.preferredName,
+            avatarUrl: account.avatarUrl,
+            email: account.email,
+          },
+          teamspaces: {
+            current: null,
+            options: [],
+          },
+          groups: {
+            current: null,
+            options: [],
+          },
+          role: Role[role],
+        }),
+  );
+  return data;
 }

@@ -15,7 +15,7 @@ const workspaceSchema = z.object({
   name: z.string(),
 });
 
-interface DeleteAccountProps {
+interface DeleteWorkspaceProps {
   name: string;
   onSubmit?: (name: string) => void;
 }
@@ -23,7 +23,7 @@ interface DeleteAccountProps {
 export const DeleteWorkspace = ({
   name,
   onSubmit: $onSubmit,
-}: DeleteAccountProps) => {
+}: DeleteWorkspaceProps) => {
   const { isOpen, setClose } = useModal();
   const form = useForm<z.infer<typeof workspaceSchema>>({
     resolver: zodResolver(workspaceSchema),
@@ -47,7 +47,7 @@ export const DeleteWorkspace = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         forceMount
-        className="z-[99999] w-[420px] space-y-6 rounded-sm p-5"
+        className="w-[420px] space-y-6 p-5"
         onClick={(e) => e.stopPropagation()}
         hideClose
         noTitle
@@ -94,9 +94,9 @@ export const DeleteWorkspace = ({
             )}
             <Button
               type="submit"
-              variant="warning"
+              variant="warning:fill"
               size="sm"
-              className="mt-6 w-full bg-warning text-white hover:bg-warning/65 dark:hover:bg-warning/35"
+              className="mt-6 w-full"
             >
               Permanently delete workspace
             </Button>

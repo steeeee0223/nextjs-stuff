@@ -2,7 +2,9 @@
   "settings": "Configuración",
   "common": {
     "account": "Cuenta",
-    "workspace": "Espacio de trabajo"
+    "workspace": "Espacio de trabajo",
+    "upgrade": "Mejorar plan",
+    "more": "Más información"
   },
   "my-account": {
     "title": "Mi cuenta",
@@ -217,7 +219,25 @@
       }
     }
   },
-  "people": { "title": "Personas" },
+  "people": {
+    "title": "Personas",
+    "invite": {
+      "title": "Enlace de invitación para añadir miembros",
+      "description": "Solo quienes tengan permiso para invitar miembros podrán ver esto. También puedes generar un nuevo enlace",
+      "button": "Copiar enlace"
+    },
+    "tabs": {
+      "members": "Miembros",
+      "guests": "Invitados",
+      "groups": "Grupos",
+      "search": "Escribe para buscar...",
+      "add-members": "Añadir miembros"
+    },
+    "upgrade": {
+      "title": "Mejora tu plan para crear grupos",
+      "description": "Mejora al plan Plus para configurar los grupos y controlar los permisos desde el menú «Compartir»."
+    }
+  },
   "plans": { "title": "Planes" },
   "billing": { "title": "Facturación" },
   "sites": { "title": "Sitios" },

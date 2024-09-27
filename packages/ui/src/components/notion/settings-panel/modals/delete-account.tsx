@@ -53,7 +53,7 @@ export const DeleteAccount = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         forceMount
-        className="z-[99999] w-[420px] space-y-6 rounded-sm p-5"
+        className="w-[420px] space-y-6 p-5"
         onClick={(e) => e.stopPropagation()}
         hideClose
         noTitle
@@ -104,9 +104,9 @@ export const DeleteAccount = ({
             )}
             <Button
               type="submit"
-              variant="warning"
+              variant="warning:fill"
               size="sm"
-              className="mt-6 w-full bg-warning text-white hover:bg-warning/65 dark:hover:bg-warning/35"
+              className="mt-6 w-full"
             >
               Permanently delete account
             </Button>

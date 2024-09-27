@@ -4,3 +4,5 @@ export {
   type SettingsProviderProps as SettingsPanelProps,
 } from "./settings-provider";
 export { useSettingsStore } from "./use-settings";
+
+export * from "./modals";

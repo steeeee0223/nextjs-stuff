@@ -5,6 +5,7 @@ export * from "./errors";
 export * from "./fetchers";
 export * as kanban from "./kanban";
 export * as auditLogs from "./logs";
+export * as membership from "./membership";
 export * from "./server";
 export type * from "./swr";
 export type * from "./types";

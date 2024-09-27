@@ -6,12 +6,8 @@ import { useTheme } from "next-themes";
 import { I18nProvider } from "@acme/i18n";
 
 import { ModalProvider } from "@/components/custom/modal-provider";
-import type { Connection } from "../tables";
-import type {
-  ConnectionStrategy,
-  SettingsStore,
-  UpdateSettings,
-} from "./index.types";
+import { getScopes } from "../scopes";
+import type { SettingsStore, UpdateSettings } from "./index.types";
 import {
   SettingsContext,
   type SettingsContextInterface,
@@ -35,8 +31,13 @@ export interface SettingsProviderProps {
   }) => Promise<void>;
   onDeleteWorkspace?: (workspaceId: string) => Promise<void>;
   /** Connections */
-  onFetchConnections?: () => Promise<Connection[]>;
-  onConnectAccount?: (strategy: ConnectionStrategy) => Promise<void>;
+  onFetchConnections?: SettingsContextInterface["connections"]["load"];
+  onConnectAccount?: SettingsContextInterface["connections"]["add"];
+  /** People */
+  onFetchMemberships?: SettingsContextInterface["people"]["load"];
+  onAddMemberships?: SettingsContextInterface["people"]["add"];
+  onUpdateMembership?: SettingsContextInterface["people"]["update"];
+  onDeleteMembership?: SettingsContextInterface["people"]["delete"];
 }
 
 export function SettingsProvider({
@@ -47,6 +48,10 @@ export function SettingsProvider({
   onDeleteWorkspace,
   onFetchConnections,
   onConnectAccount,
+  onFetchMemberships,
+  onAddMemberships,
+  onUpdateMembership,
+  onDeleteMembership,
 }: SettingsProviderProps) {
   const { theme, setTheme } = useTheme();
   const { update, account, workspace } = useSettingsStore();
@@ -58,6 +63,7 @@ export function SettingsProvider({
 
   const context: SettingsContextInterface = {
     settings: { account, workspace },
+    scopes: getScopes(workspace.plan, workspace.role),
     updateSettings: async (data) => {
       update(data);
       await onUpdate?.(data);
@@ -68,6 +74,12 @@ export function SettingsProvider({
     connections: {
       load: onFetchConnections,
       add: onConnectAccount,
+    },
+    people: {
+      load: onFetchMemberships,
+      add: onAddMemberships,
+      update: onUpdateMembership,
+      delete: onDeleteMembership,
     },
     theme,
     setTheme,

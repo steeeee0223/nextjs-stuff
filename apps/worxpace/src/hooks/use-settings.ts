@@ -6,7 +6,6 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 import { useSettingsStore, useWorkspace } from "@acme/ui/notion";
-import type { SettingsStore } from "@acme/ui/notion";
 
 import {
   createAccount as $addAccount,
@@ -17,10 +16,11 @@ import {
   updateWorkspace as $updWorkspace,
 } from "~/actions";
 import {
-  account as _account,
-  workspace as _workspace,
+  account,
   NotFound,
   toIconInfo,
+  toSettingsStore,
+  workspace,
   type SettingsKey,
 } from "~/lib";
 import { usePlatform } from "./use-platform";
@@ -31,7 +31,7 @@ export const useSetup = ({ clerkId }: { clerkId: string }) => {
   /** Fetcher */
   const key: SettingsKey = { type: "settings", clerkId };
   const { data, isLoading, mutate } = useSWR(key, async ({ clerkId }) => {
-    const data = await _account.get(clerkId);
+    const data = await account.get(clerkId);
     if (!data) throw new NotFound();
     return data;
   });
@@ -61,21 +61,18 @@ export const useSetup = ({ clerkId }: { clerkId: string }) => {
 export const useSettings = (
   info: { clerkId: string; workspaceId: string } | null,
 ) => {
-  const { account, workspace } = useSettingsStore();
+  const settingsStore = useSettingsStore();
   /** Fetcher */
   const key = info ? { type: "settings" as const, ...info } : null;
   const options = { onError: (e: Error) => toast.error(e.message) };
   const { data, isLoading, mutate } = useSWR(
     key,
     async ({ clerkId, workspaceId }) => {
-      console.log(`fetching `, { clerkId, workspaceId });
-      const account = await _account.get(clerkId);
-      const workspace = await _workspace.get(workspaceId);
-      if (!account || !workspace) throw new Error("Not found!");
-      return {
-        account,
-        workspace: { ...workspace, icon: toIconInfo(workspace.icon) },
-      } satisfies SettingsStore;
+      console.log(`[settings] `, { clerkId, workspaceId });
+      const $account = await account.get(clerkId);
+      const $workspace = await workspace.get(workspaceId);
+      if (!$account || !$workspace) throw new Error("Not found!");
+      return toSettingsStore($account, $workspace);
     },
   );
   /** Mutations */
@@ -84,7 +81,10 @@ export const useSettings = (
   const { trigger: updateWorkspace } = useSWRMutation(key, $updWorkspace, {
     ...options,
     onSuccess: ({ id, name, icon }) =>
-      dispatch({ type: "update", payload: { id, name, icon } }),
+      dispatch({
+        type: "update",
+        payload: { id, name, icon: toIconInfo(icon) },
+      }),
   });
   const { trigger: deleteAccount } = useSWRMutation(key, $delAccount, options);
   const { trigger: deleteWorkspace } = useSWRMutation(key, $delWorkspace, {
@@ -93,7 +93,7 @@ export const useSettings = (
   });
 
   return {
-    settings: isLoading || !data ? { account, workspace } : data,
+    settings: isLoading || !data ? settingsStore : data,
     fetchData: () => mutate(),
     updateAccount,
     updateWorkspace,

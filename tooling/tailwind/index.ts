@@ -16,6 +16,10 @@ export default {
       colors: {
         button: "rgb(35, 131, 226)",
         warning: "rgb(235, 87, 87)",
+        modal: {
+          DEFAULT: "rgb(255, 255, 255)",
+          dark: "rgb(32, 32, 32)",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
