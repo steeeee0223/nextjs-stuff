@@ -1,0 +1,16 @@
+{
+  "$schema": "https://platejs.org/schema.json",
+  "aliases": {
+    "components": "@swy/ui/shadcn",
+    "plate-ui": "src/components/plate-ui"
+  },
+  "rsc": true,
+  "style": "default",
+  "tailwind": {
+    "baseColor": "slate",
+    "config": "tailwind.config.ts",
+    "css": "src/styles/globals.css",
+    "cssVariables": true,
+    "prefix": ""
+  }
+}

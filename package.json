@@ -14,6 +14,7 @@
     "db:push": "pnpm -F prisma db:push",
     "db:studio": "pnpm -F prisma dev",
     "dev": "turbo dev --parallel",
+    "dev:plate": "pnpm -F plate-playground dev",
     "gen:action": "turbo gen next-action",
     "gen:package": "turbo gen init",
     "gen:story": "turbo gen story",

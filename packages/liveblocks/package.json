@@ -36,7 +36,7 @@
     "slate-history": "^0.109.0",
     "slate-hyperscript": "^0.100.0",
     "slate-react": "^0.110.1",
-    "yjs": "^13.6.15"
+    "yjs": "catalog:ui"
   },
   "devDependencies": {
     "@swy/eslint-config": "workspace:*",
