@@ -2,7 +2,19 @@
 
 import { worxpace as db, WORKSPACE_ROLE } from "@swy/prisma";
 import type { Account, Membership } from "@swy/prisma";
-import type { DeleteMemberInput, UpdateMemberInput } from "@swy/validators";
+import type {
+  DeleteMemberInput,
+  JoinWorkspaceInput,
+  UpdateMemberInput,
+} from "@swy/validators";
+
+const create = async ({
+  role,
+  ...data
+}: JoinWorkspaceInput): Promise<Membership> =>
+  await db.membership.create({
+    data: { ...data, role: role.toUpperCase() as WORKSPACE_ROLE },
+  });
 
 const createMany = async ({
   workspaceId,
@@ -39,4 +51,4 @@ const update = async ({
     data: { role: role.toUpperCase() as WORKSPACE_ROLE },
   });
 
-export { createMany, get, update, remove as delete };
+export { create, createMany, get, update, remove as delete };

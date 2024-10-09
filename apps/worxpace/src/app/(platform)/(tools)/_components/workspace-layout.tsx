@@ -60,6 +60,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
     updateWorkspace,
     deleteAccount,
     deleteWorkspace,
+    resetLink,
   } = useSettings(activeWorkspace ? { clerkId, workspaceId } : null);
   const { fetchMemberships, addMembers, updateMember, deleteMember } =
     usePeopleSettings(activeWorkspace ? { clerkId, workspaceId } : null);
@@ -97,6 +98,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
         store.reset();
         router.push("/select-role");
       },
+      onResetLink: () => void resetLink(),
       onConnectAccount: async (strategy) => {
         if (strategy === "slack") {
           const res = await user?.createExternalAccount({

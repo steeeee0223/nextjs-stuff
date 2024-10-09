@@ -9,6 +9,9 @@ import type {
 
 export type WorkspaceMemberships = Workspace & { memberships: Membership[] };
 
+const byInviteToken = async (inviteToken: string): Promise<Workspace | null> =>
+  await db.workspace.findUnique({ where: { inviteToken } });
+
 /**
  * Create Workspace
  *
@@ -55,4 +58,4 @@ const update = async (
 ): Promise<Workspace> =>
   await db.workspace.update({ where: { id: workspaceId }, data: { ...data } });
 
-export { create, get, update, remove as delete };
+export { byInviteToken, create, get, update, remove as delete };

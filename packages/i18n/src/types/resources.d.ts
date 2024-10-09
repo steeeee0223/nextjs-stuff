@@ -235,7 +235,7 @@ interface Resources {
       title: "People";
       invite: {
         title: "Invite link to add members";
-        description: "Only people with permission to invite members can see this. You can also generate a new link";
+        description: "Only people with permission to invite members can see this. You can also <Link>generate a new link</Link>";
         button: "Copy link";
       };
       tabs: {
