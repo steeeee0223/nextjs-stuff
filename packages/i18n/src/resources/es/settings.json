@@ -223,7 +223,7 @@
     "title": "Personas",
     "invite": {
       "title": "Enlace de invitación para añadir miembros",
-      "description": "Solo quienes tengan permiso para invitar miembros podrán ver esto. También puedes generar un nuevo enlace",
+      "description": "Solo quienes tengan permiso para invitar miembros podrán ver esto. También puedes <Link>generar un nuevo enlace</Link>",
       "button": "Copiar enlace"
     },
     "tabs": {

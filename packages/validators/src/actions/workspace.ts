@@ -25,6 +25,7 @@ export const UpdateWorkspace = z.object({
   name: z.string().optional(),
   icon: Icon.nullable().optional(),
   domain: z.string().optional(),
+  inviteToken: z.string().optional(),
 });
 
 export type UpdateWorkspaceInput = z.infer<typeof UpdateWorkspace>;

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useTransition } from "react";
 import { ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import { useCopyToClipboard } from "usehooks-ts";
@@ -21,8 +21,8 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Section, SectionItem } from "../_components";
-import { AddMembers, DeleteGuest, DeleteMember } from "../modals";
+import { Section, SectionItem, TextLink } from "../_components";
+import { AddMembers, DeleteGuest, DeleteMember, ResetLink } from "../modals";
 import { useSettings } from "../settings-context";
 import { usePeople } from "./use-people";
 
@@ -31,8 +31,10 @@ export const People = () => {
     scopes,
     settings: { account, workspace },
     people,
+    resetLink,
     updateSettings,
   } = useSettings();
+  const [isUpdating, startTransition] = useTransition();
   /** i18n */
   const { t } = useTranslation("settings");
   const common = t("common", { returnObjects: true });
@@ -69,6 +71,8 @@ export const People = () => {
     await copy(workspace.inviteLink);
     toast.success("Copied link to clipboard");
   };
+  const onResetLink = () =>
+    setOpen(<ResetLink onReset={() => startTransition(() => resetLink?.())} />);
   const onAddMembers = () =>
     setOpen(
       <AddMembers
@@ -88,12 +92,22 @@ export const People = () => {
     <Section title={title}>
       {scopes.has(Scope.MemberInvite) && (
         <>
-          <SectionItem {...invite}>
+          <SectionItem
+            title={invite.title}
+            description={
+              <TextLink
+                i18nKey="people.invite.description"
+                values={{ guests: guests.length }}
+                onClick={onResetLink}
+              />
+            }
+          >
             <div className="flex items-center gap-4">
               <Button
                 variant="soft-blue"
                 size="sm"
                 className="h-7"
+                disabled={isUpdating}
                 onClick={onCopy}
               >
                 {invite.button}
