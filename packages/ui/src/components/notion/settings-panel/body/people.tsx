@@ -1,5 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { toast } from "sonner";
+import { useCopyToClipboard } from "usehooks-ts";
 
 import { useTranslation } from "@swy/i18n";
 
@@ -62,6 +64,11 @@ export const People = () => {
     memberships: { members, guests },
   } = usePeople({ load: people.load });
   /** Handlers */
+  const [, copy] = useCopyToClipboard();
+  const onCopy = async () => {
+    await copy(workspace.inviteLink);
+    toast.success("Copied link to clipboard");
+  };
   const onAddMembers = () =>
     setOpen(
       <AddMembers
@@ -83,7 +90,12 @@ export const People = () => {
         <>
           <SectionItem {...invite}>
             <div className="flex items-center gap-4">
-              <Button variant="soft-blue" size="sm" className="h-7">
+              <Button
+                variant="soft-blue"
+                size="sm"
+                className="h-7"
+                onClick={onCopy}
+              >
                 {invite.button}
               </Button>
               <Switch disabled size="sm" />

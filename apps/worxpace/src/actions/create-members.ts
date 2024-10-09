@@ -37,7 +37,7 @@ const handler = createMutationFetcher(CreateMembers, async (_key, { arg }) => {
     return { existing, nonExistingEmails };
   } catch (error) {
     if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to update member.");
+    throw new Error("Failed to create members.");
   }
 });
 

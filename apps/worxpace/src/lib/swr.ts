@@ -35,3 +35,12 @@ export interface HistoryKey {
   type: "history";
   pageId: string;
 }
+
+export interface InvitationKey {
+  type: "invitation";
+  clerkId?: string | null;
+  token: string;
+}
+export interface StrictedInvitationKey extends InvitationKey {
+  clerkId: string;
+}

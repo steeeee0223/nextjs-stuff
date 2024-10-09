@@ -205,6 +205,8 @@ model Workspace {
   name        String
   icon        Icon?
   domain      String
+  // People
+  inviteToken String       @unique(map: "inviteToken") @default(uuid())
   // Plan
   plan        PLAN         @default(FREE)
   // Relations
