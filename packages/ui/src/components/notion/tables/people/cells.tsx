@@ -67,7 +67,7 @@ export const UserCell = ({ user }: UserCellProps) => {
   return (
     <div className="z-20 flex h-full min-h-[42px] w-[220px] items-center justify-between pr-3">
       <div className="flex w-full items-center gap-2.5">
-        <div className="relative">
+        <div className="relative flex-shrink-0">
           <img
             src={user.avatarUrl}
             alt={user.name[0]}

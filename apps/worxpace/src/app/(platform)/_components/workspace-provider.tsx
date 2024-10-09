@@ -22,12 +22,15 @@ export const WorkspaceProvider = ({ children }: PropsWithChildren) => {
     if (params.workspaceId) {
       platform.update((prev) => ({
         ...prev,
-        clerkId,
         workspaceId: params.workspaceId!,
       }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clerkId, params.workspaceId]);
+  }, [params.workspaceId]);
+  useEffect(() => {
+    platform.update((prev) => ({ ...prev, clerkId }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clerkId]);
 
   const { accountMemberships } = useSetup({ clerkId });
   useEffect(() => {

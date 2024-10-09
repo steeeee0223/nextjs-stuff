@@ -1,5 +1,20 @@
 # Changelog
 
+## Version `1.3.0`
+
+### 🆕 Core Updates
+
+- 🆕 `liveblocks`
+  - New package for managing `liveblocks` setups
+- `worxpace`
+  - Fix collaborative rooms
+  - Fix: `<TreeProvider />` causes infinitly re-renders
+  - Refactor `/workspace` route due to the error: "Rendered more hooks than during the previous render"
+- `storybook`
+  - Add stories with `liveblocks`
+- `ui`
+  - Fix people table: avatar in `UserCell`
+
 ## Version `1.2.0`
 
 ### 🆕 Core Updates

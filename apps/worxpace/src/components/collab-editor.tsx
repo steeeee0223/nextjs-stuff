@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import type { PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
-import LiveblocksProvider from "@liveblocks/yjs";
 import { useTheme } from "next-themes";
 import * as Y from "yjs";
 
@@ -12,9 +11,11 @@ import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 import "@blocknote/mantine/style.css";
 
+import { LiveblocksYjsProvider } from "@swy/liveblocks";
+
 import { schema, type CustomEditor } from "~/components/blocknote";
+import { useRoom, useSelf } from "~/hooks";
 import { connectionIdToColor } from "~/lib";
-import { useRoom, useSelf } from "~/liveblocks.config";
 import { CustomSlashMenu } from "./blocknote";
 
 interface EditorProps {
@@ -28,13 +29,12 @@ interface EditorProps {
 export default function CollaborativeEditor(props: EditorProps) {
   const room = useRoom();
   const [doc, setDoc] = useState<Y.Doc>();
-  const [provider, setProvider] =
-    useState<LiveblocksProvider<never, never, never, never>>();
+  const [provider, setProvider] = useState<LiveblocksYjsProvider>();
 
   // Set up Liveblocks Yjs provider
   useEffect(() => {
     const yDoc = new Y.Doc();
-    const yProvider = new LiveblocksProvider(room, yDoc);
+    const yProvider = new LiveblocksYjsProvider(room, yDoc);
     setDoc(yDoc);
     setProvider(yProvider);
 
@@ -50,7 +50,7 @@ export default function CollaborativeEditor(props: EditorProps) {
 
 interface BlockNoteProps extends EditorProps {
   doc: Y.Doc;
-  provider: LiveblocksProvider<never, never, never, never>;
+  provider: LiveblocksYjsProvider;
 }
 
 function BlockNote({
@@ -62,7 +62,7 @@ function BlockNote({
   onUpload,
 }: BlockNoteProps) {
   // Get user info from Liveblocks authentication endpoint
-  const userInfo = useSelf();
+  const user = useSelf();
 
   const editor: CustomEditor = useCreateBlockNote({
     schema,
@@ -76,8 +76,8 @@ function BlockNote({
       fragment: doc.getXmlFragment("document-store"),
       // Information for this user:
       user: {
-        name: userInfo.info?.name ?? "User",
-        color: connectionIdToColor(userInfo.connectionId),
+        name: user.name,
+        color: connectionIdToColor(user.name.length),
       },
     },
   });

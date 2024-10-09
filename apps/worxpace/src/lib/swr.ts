@@ -1,3 +1,8 @@
+export interface WorkspaceKey {
+  type: "workspace";
+  clerkId: string;
+}
+
 export interface SettingsKey {
   type: "settings";
   clerkId: string;

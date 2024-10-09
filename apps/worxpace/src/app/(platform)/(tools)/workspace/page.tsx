@@ -1,19 +1,20 @@
-import { redirect } from "next/navigation";
-import { currentUser } from "@clerk/nextjs/server";
+"use client";
 
-import { account } from "~/lib";
+import { useEffect } from "react";
 
-const Workspace = async () => {
-  const user = await currentUser();
-  if (!user) redirect(`/select-role`);
+import { useInitialWorkspace } from "~/hooks";
 
-  console.log(`[*] fetching workspaces for ${user.id}`);
-  const acc = await account.byClerkId(user.id);
-  if (!acc || acc.memberships.length < 1) redirect(`/onboarding`);
+const Workspace = () => {
+  const { initialize } = useInitialWorkspace();
 
-  const workspaceId = acc.memberships[0]!.workspaceId;
-  console.log(`[*] redirect to first workspace: ${workspaceId}`);
-  redirect(`/workspace/${workspaceId}`);
+  useEffect(() => {
+    initialize().catch((e) =>
+      console.log(`[/workspace] Unexpected error: ${e}`),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return null;
 };
 
 export default Workspace;

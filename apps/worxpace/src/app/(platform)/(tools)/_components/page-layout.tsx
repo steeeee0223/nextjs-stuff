@@ -12,33 +12,31 @@ import {
 
 import {
   useDocument,
-  useDocuments,
   useEdgeStore,
   useHistory,
+  useOthers,
   usePlatform,
+  useSelf,
 } from "~/hooks";
 import { toIcon, toIconInfo, toPage } from "~/lib";
-
-// import { useOthers, useSelf } from "~/liveblocks.config";
 
 interface PageLayoutProps
   extends React.PropsWithChildren,
     Omit<NavbarProps, "className"> {
   pageId: string | null;
+  onChangeState: (id: string, action: "archive" | "restore" | "delete") => void;
 }
 
 const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
-  ({ children, pageId, ...navProps }, ref) => {
+  ({ children, pageId, onChangeState, ...navProps }, ref) => {
     const { accountId, workspaceId } = usePlatform();
-    /** @warning add these will crash!!! */
-    // const currentUser = useSelf();
-    // const otherUsers = useOthers();
+    const currentUser = useSelf();
+    const otherUsers = useOthers();
     const {
       page: doc,
       isLoading,
       update,
     } = useDocument(pageId ? { documentId: pageId, preview: false } : null);
-    const { archive, restore, remove } = useDocuments({ workspaceId });
     const { fetchLogs } = useHistory(pageId);
     /** Edgestore */
     const { deleteFile } = useEdgeStore();
@@ -46,22 +44,10 @@ const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
     const pageProps: PageProviderProps = {
       isLoading,
       page: toPage(doc),
-      // currentUser: toUser(currentUser),
-      // otherUsers: otherUsers.map(toUser),
+      currentUser,
+      otherUsers,
       fetchLogs,
-      onChangeState: (id, action) => {
-        switch (action) {
-          case "archive":
-            void archive({ id, accountId, workspaceId });
-            break;
-          case "restore":
-            void restore({ id, accountId, workspaceId });
-            break;
-          case "delete":
-            void remove({ id, accountId, workspaceId });
-            break;
-        }
-      },
+      onChangeState,
       onUpdate: (id, { icon, coverImage, ...data }) => {
         // if icon is updated
         if (icon !== undefined) void deleteFile(toIconInfo(doc?.icon));

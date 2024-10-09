@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useReducer, type PropsWithChildren } from "react";
+import { useEffect, useMemo, useReducer, type PropsWithChildren } from "react";
 
 import type { TreeItem } from "./index.types";
 import { treeReducer, type TreeReducer } from "./tree-actions";
@@ -51,9 +51,19 @@ export function TreeProvider({
       isItemActive,
       onClickItem,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [groups, initialItems, isLoading, state.entities],
+    [
+      initialItems,
+      isLoading,
+      groups,
+      state.entities,
+      isItemActive,
+      onClickItem,
+    ],
   );
+
+  useEffect(() => {
+    dispatch({ type: "set", payload: initialItems });
+  }, [initialItems]);
 
   return (
     <TreeContext.Provider value={treeContextValues}>

@@ -70,7 +70,8 @@
     "AUTH_DISCORD_SECRET",
     "AUTH_REDIRECT_PROXY_URL",
     "AUTH_SECRET",
-    "AUTH_URL"
+    "AUTH_URL",
+    "STORYBOOK_LIVEBLOCKS_SECRET_KEY"
   ],
   "globalPassThroughEnv": [
     "NODE_ENV",

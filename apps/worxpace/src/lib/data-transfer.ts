@@ -7,11 +7,9 @@ import type {
   Page,
   WorkspaceMemberships as PeopleData,
   SettingsStore,
-  User as UserData,
   Workspace as WorkspaceData,
 } from "@swy/ui/notion";
 
-import type { UserInfo } from "~/liveblocks.config";
 import type { AccountMemberships, WorkspaceMembership } from "./account";
 import type { DetailedDocument } from "./types";
 
@@ -161,10 +159,4 @@ export function toPeopleData(
         }),
   );
   return data;
-}
-
-export function toUser({ id, info }: UserInfo): UserData {
-  return !id || !info
-    ? { id: "", name: "", avatarUrl: "", email: "" }
-    : { id, ...info };
 }

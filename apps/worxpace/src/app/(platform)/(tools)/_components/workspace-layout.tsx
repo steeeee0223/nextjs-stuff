@@ -4,6 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
 
+import { RoomProvider } from "@swy/liveblocks";
 import { useSidebarLayout } from "@swy/ui/hooks";
 import { cn } from "@swy/ui/lib";
 import {
@@ -20,7 +21,6 @@ import {
   ResizablePanelGroup,
 } from "@swy/ui/shadcn";
 
-import { Room } from "~/components";
 import {
   useDocuments,
   useEdgeStore,
@@ -168,6 +168,23 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
       },
     },
   };
+  /** Page handlers */
+  const onChangeState = (
+    id: string,
+    action: "archive" | "restore" | "delete",
+  ) => {
+    switch (action) {
+      case "archive":
+        void archive({ id, accountId, workspaceId });
+        break;
+      case "restore":
+        void restore({ id, accountId, workspaceId });
+        break;
+      case "delete":
+        void remove({ id, accountId, workspaceId });
+        break;
+    }
+  };
 
   return (
     <ResizablePanelGroup
@@ -197,15 +214,20 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
         order={2}
         className={cn(isResizing && "transition-all duration-300 ease-in-out")}
       >
-        <Room roomId={pageId} fallback={<Skeleton />}>
+        <RoomProvider
+          authEndpoint="/api/liveblocks"
+          roomId={pageId ?? `w_${workspaceId}`}
+          fallback={<Skeleton />}
+        >
           <PageLayout
             pageId={pageId}
             isCollapsed={isCollapsed}
             onResetWidth={expand}
+            onChangeState={onChangeState}
           >
             {children}
           </PageLayout>
-        </Room>
+        </RoomProvider>
       </ResizablePanel>
     </ResizablePanelGroup>
   );

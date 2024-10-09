@@ -1,35 +1,18 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { toast } from "sonner";
 
+import { CollaborativeEditor } from "@swy/liveblocks";
 import { ModalProvider, TreeProvider } from "@swy/ui/custom";
-import { useSidebarLayout } from "@swy/ui/hooks";
-import { cn } from "@swy/ui/lib";
-import {
-  Navbar,
-  PageHeader,
-  PageProvider,
-  Sidebar,
-  WorkspaceProvider,
-  WorkspaceSwitcher,
-} from "@swy/ui/notion";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@swy/ui/shadcn";
+import { WorkspaceProvider, WorkspaceSwitcher } from "@swy/ui/notion";
 
 import {
   documents,
   GROUPS,
-  mockConnections,
-  mockLogs,
-  mockMemberships,
-  mockPages,
-  mockSettings,
-  otherUsers,
+  liveblocksAuth,
   user,
   workspaces,
 } from "../__mock__";
+import { BaseLayout, LayoutWithLiveblocks } from "./_components";
 
 const meta = {
   title: "notion/Workspace",
@@ -50,7 +33,8 @@ export const Swticher: Story = {
   parameters: { layout: "centered" },
 };
 
-const Template: Story["render"] = ({ children, ...props }) => {
+const BaseTemplate: Story["render"] = ({ children, ...props }) => {
+  const [pageId, setPageId] = useState("#");
   return (
     <WorkspaceProvider {...props}>
       <ModalProvider>
@@ -58,74 +42,13 @@ const Template: Story["render"] = ({ children, ...props }) => {
           className="flex h-screen bg-main"
           groups={GROUPS}
           initialItems={documents}
-          onClickItem={(id) => toast.message(`Clicked: ${id}`)}
-          isItemActive={(id) => id === "page-1"}
+          onClickItem={setPageId}
+          isItemActive={(id) => id === pageId}
         >
-          {children}
+          <BaseLayout pageId={pageId}>{children}</BaseLayout>
         </TreeProvider>
       </ModalProvider>
     </WorkspaceProvider>
-  );
-};
-
-const Layout = () => {
-  const { minSize, ref, collapse, expand, isResizing, isMobile } =
-    useSidebarLayout("group", "sidebar", 240);
-
-  return (
-    <ResizablePanelGroup
-      id="group"
-      direction="horizontal"
-      className="h-screen w-screen"
-    >
-      <ResizablePanel
-        id="sidebar"
-        ref={ref}
-        className={cn(isResizing && "transition-all duration-300 ease-in-out")}
-        defaultSize={isMobile ? 0 : undefined}
-        minSize={isMobile ? 0 : minSize}
-        maxSize={isMobile ? 100 : 50}
-        collapsible
-        order={1}
-      >
-        <Sidebar
-          className="w-full"
-          isMobile={isMobile}
-          collapse={collapse}
-          settingsProps={{
-            settings: mockSettings,
-            onFetchConnections: () => Promise.resolve(mockConnections),
-            onFetchMemberships: () => Promise.resolve(mockMemberships),
-          }}
-          pageHandlers={{
-            fetchPages: () => Promise.resolve(Object.values(mockPages)),
-          }}
-          workspaceHandlers={{}}
-        />
-      </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel
-        order={2}
-        className={cn(isResizing && "transition-all duration-300 ease-in-out")}
-      >
-        <PageProvider
-          className="order-3 flex size-full flex-col overflow-hidden"
-          page={mockPages.page1!}
-          currentUser={user}
-          otherUsers={otherUsers}
-          fetchLogs={() => Promise.resolve(mockLogs)}
-        >
-          <Navbar
-            className="w-full"
-            onResetWidth={expand}
-            isCollapsed={ref.current?.isCollapsed()}
-          />
-          <main className="h-full">
-            <PageHeader unsplashAPIKey="UNSPLASH_API_KEY" />
-          </main>
-        </PageProvider>
-      </ResizablePanel>
-    </ResizablePanelGroup>
   );
 };
 
@@ -135,33 +58,44 @@ export const WorkspaceLayout: Story = {
     workspaces,
     initial: "workspace-0",
     className: "h-full",
-    children: <Layout />,
+    children: <div className="p-[54px]">Hi!</div>,
   },
-  render: Template,
+  render: BaseTemplate,
   parameters: { layout: "fullscreen" },
 };
 
-export const WorkspaceNavbar: Story = {
-  name: "Navbar",
+const LiveblocksTemplate: Story["render"] = ({ children, ...props }) => {
+  const [pageId, setPageId] = useState("#");
+  return (
+    <WorkspaceProvider {...props}>
+      <ModalProvider>
+        <TreeProvider
+          className="flex h-screen bg-main"
+          groups={GROUPS}
+          initialItems={documents}
+          onClickItem={setPageId}
+          isItemActive={(id) => id === pageId}
+        >
+          <LayoutWithLiveblocks pageId={pageId}>
+            {children}
+          </LayoutWithLiveblocks>
+        </TreeProvider>
+      </ModalProvider>
+    </WorkspaceProvider>
+  );
+};
+
+export const WithLiveblocks: Story = {
   args: {
     user,
     workspaces,
     initial: "workspace-0",
     className: "h-full",
-    children: <Navbar isCollapsed className="left-0 w-full" />,
+    children: <CollaborativeEditor />,
   },
-  render: ({ children, ...props }) => (
-    <Template {...props}>
-      <PageProvider
-        className="order-3 flex w-full flex-col overflow-hidden"
-        page={mockPages.page1!}
-        currentUser={user}
-        otherUsers={otherUsers}
-        fetchLogs={() => Promise.resolve(mockLogs)}
-      >
-        {children}
-      </PageProvider>
-    </Template>
-  ),
-  parameters: { layout: "fullscreen" },
+  render: LiveblocksTemplate,
+  parameters: {
+    layout: "fullscreen",
+    msw: { handlers: [liveblocksAuth] },
+  },
 };

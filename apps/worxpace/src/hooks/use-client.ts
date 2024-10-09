@@ -11,9 +11,9 @@ export const useClient = (): Client => {
   if (!isLoaded || !userId || !user)
     return {
       type: "personal",
-      userId: "unknown",
+      userId: "",
       orgId: null,
-      clerkId: "unknown",
+      clerkId: "",
       name: "Unknown",
       email: "unknown",
       avatarUrl: "",
