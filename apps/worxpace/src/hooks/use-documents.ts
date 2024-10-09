@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-import { useTree } from "@swy/ui/custom";
 import type { Page } from "@swy/ui/notion";
 
 import {
@@ -18,7 +17,6 @@ import {
 import {
   fetchUrl,
   toPage,
-  toTreeItem,
   type DetailedDocument,
   type DocumentsKey,
 } from "~/lib";
@@ -40,19 +38,14 @@ export const useDocuments = ({
   workspaceId?: string | null;
 }) => {
   const router = useRouter();
-  const { dispatch, onClickItem } = useTree();
   /** Fetcher */
-  const key = workspaceId
-    ? ({ type: "document", workspaceId } as DocumentsKey)
-    : null;
+  const key = workspaceId ? { type: "document" as const, workspaceId } : null;
   const {
     data: documents,
     isLoading,
     error,
     mutate,
   } = useSWR<DetailedDocument[], Error>(key, fetcher, {
-    onSuccess: (data) =>
-      dispatch({ type: "set", payload: data.map(toTreeItem) }),
     onError: (e) => console.log(`[swr:workspace]: ${e.message}`),
   });
   const fetchPages = async (): Promise<Page[]> => {
@@ -64,31 +57,21 @@ export const useDocuments = ({
   const onError = (e: Error) => toast.error(e.message);
   const { trigger: create } = useSWRMutation(key, createDocument, {
     onSuccess: (data) => {
-      dispatch({ type: "add", payload: [toTreeItem(data)] });
       toast.success(`Page Created: ${data.title}`);
-      onClickItem?.(data.id, data.type);
+      router.push(`/${data.type}/${data.id}`);
     },
     onError,
   });
-  const { trigger: update } = useSWRMutation(key, updateDocument, {
-    onSuccess: (data) =>
-      dispatch({ type: "update:item", payload: toTreeItem(data) }),
-    onError,
-  });
+  const { trigger: update } = useSWRMutation(key, updateDocument, { onError });
   const { trigger: archive } = useSWRMutation(key, archiveDocument, {
-    onSuccess: ({ item, ids }) => {
-      dispatch({
-        type: "update:group",
-        payload: { ids, group: `trash:${item.type}` },
-      });
+    onSuccess: ({ item }) => {
       toast.success(`"${item.title}" Moved to Trash`);
       router.push(`/workspace/${workspaceId}`);
     },
     onError,
   });
   const { trigger: restore } = useSWRMutation(key, restoreDocument, {
-    onSuccess: ({ ids, item }) => {
-      dispatch({ type: "update:group", payload: { ids, group: item.type } });
+    onSuccess: ({ item }) => {
       toast.success(`Restored document "${item.title}"`);
       router.push(`/document/${item.id}`);
     },

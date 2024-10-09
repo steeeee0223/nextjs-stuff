@@ -6,7 +6,7 @@ import storybookConfig from "@swy/eslint-config/storybook";
 /** @type {import('typescript-eslint').Config} */
 export default [
   {
-    ignores: [".next/**", "next-env.d.ts"],
+    ignores: [".next/**", "next-env.d.ts", "public/**"],
   },
   ...baseConfig,
   ...reactConfig,

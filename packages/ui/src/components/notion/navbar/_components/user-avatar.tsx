@@ -20,7 +20,7 @@ const UserAvatar = ({ user, borderColor, className }: UserAvatarProps) => {
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>
           <Avatar
-            className={cn("size-6 border-2", className)}
+            className={cn("size-6 select-none border-2", className)}
             style={{ borderColor }}
           >
             <AvatarImage src={user.avatarUrl} />

@@ -1,12 +1,8 @@
 import type { Log, TreeItem } from "@swy/ui/custom";
 import { Plan, Role } from "@swy/ui/notion";
-import type {
-  Page,
-  SettingsStore,
-  User,
-  Workspace,
-  WorkspaceMemberships,
-} from "@swy/ui/notion";
+import type { Page, Workspace } from "@swy/ui/notion";
+
+import { mockUsers } from "./users";
 
 export const documents: TreeItem[] = [
   {
@@ -77,12 +73,7 @@ export const GROUPS = [
   "trash:workflow",
 ];
 
-export const user: User = {
-  id: "123",
-  name: "John Wick",
-  avatarUrl: "https://avatarfiles.alphacoders.com/370/370979.jpg",
-  email: "john-wick@example.com",
-};
+export const user = mockUsers[0]!;
 export const workspaces: Workspace[] = [
   {
     id: "workspace-0",
@@ -118,62 +109,7 @@ export const workspaces: Workspace[] = [
   },
 ];
 
-export const mockConnections = [
-  {
-    id: "connection-1",
-    connection: { type: "github", account: "shadcn-ui" },
-    scopes: ["Can preview links", "Can content"],
-  },
-];
-export const mockSettings: SettingsStore = {
-  workspace: { ...workspaces[0]!, domain: "fake-domain" },
-  account: { ...user, preferredName: "Jonathan", language: "en" },
-};
-
-export const mockMemberships: WorkspaceMemberships = {
-  members: [
-    {
-      user,
-      teamspaces: {
-        current: "1",
-        options: [{ id: "1", name: "General", members: 29 }],
-      },
-      groups: { current: null, options: [] },
-      role: Role.OWNER,
-    },
-    {
-      user: {
-        id: "124",
-        name: "John Cena",
-        avatarUrl: "https://github.com/shadcn.png",
-        email: "john-cena@example.com",
-      },
-      teamspaces: { current: null, options: [] },
-      groups: { current: null, options: [] },
-      role: Role.MEMBER,
-    },
-  ],
-  guests: [
-    {
-      user: {
-        id: "1243",
-        name: "Pong",
-        avatarUrl:
-          "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fpublic.notion-static.com%2Faff7b874-9ce5-41e0-9fb5-c1948d3ba540%2Ffavicon-gopher.png?width=240&userId=27cf0fa7-ae52-4d3f-a8bd-961291ab2a15&cache=v2",
-        email: "pong@example.com",
-      },
-      access: [
-        { id: "page1", name: "Page 1", scope: "Full access" },
-        { id: "page2", name: "Page 2", scope: "Can view" },
-      ],
-    },
-  ],
-};
-
-export const otherUsers: User[] = [
-  mockMemberships.members[1]!.user,
-  mockMemberships.guests[0]!.user,
-];
+export const otherUsers = mockUsers.slice(2, 7);
 
 const createPageData = (treeItem: TreeItem): Page => {
   const res = treeItem.group!.split(":");

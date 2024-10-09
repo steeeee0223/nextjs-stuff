@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
 
@@ -19,8 +20,16 @@ export const usePlatform = () => {
   const [value, update] = useLocalStorage<PlatformStore>("platform", initial);
   /** Routing */
   const router = useRouter();
-  const toToolsPage = (id: string, group: string | null) => {
-    if (group) router.push(`/${group}/${id}`);
+  const toToolsPage = useCallback(
+    (id: string, group: string | null) => {
+      if (group) router.push(`/${group}/${id}`);
+    },
+    [router],
+  );
+  return {
+    toToolsPage,
+    ...value,
+    update,
+    reset: () => update(initial),
   };
-  return { toToolsPage, ...value, update, reset: () => update(initial) };
 };
