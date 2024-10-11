@@ -56,3 +56,9 @@ storybook-static/
 
 # generated
 .generated
+
+# playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
