@@ -10,9 +10,10 @@ import {
   account,
   auditLogs,
   createMutationFetcher,
+  CustomError,
   documents,
   fetchClient,
-  UnauthorizedError,
+  handleError,
   type DetailedDocument,
   type DocumentsKey,
 } from "~/lib";
@@ -23,7 +24,8 @@ const handler = createMutationFetcher(
     try {
       const { clerkId } = await fetchClient();
       const inWorkspace = await account.isInWorkspace({ clerkId, workspaceId });
-      if (!inWorkspace) throw new UnauthorizedError();
+      if (!inWorkspace)
+        throw new CustomError("UNAUTHORIZED", "archiveDocument");
       const result = await documents.archive(arg);
       /** Activity Log */
       const type = result.item.type.toUpperCase() as ENTITY_TYPE;
@@ -34,8 +36,7 @@ const handler = createMutationFetcher(
       });
       return result;
     } catch (error) {
-      if (error instanceof UnauthorizedError) throw error;
-      throw new Error("Failed to archive document.");
+      throw handleError(error, "Failed to archive document.");
     }
   },
 );

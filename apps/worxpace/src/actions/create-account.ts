@@ -8,7 +8,7 @@ import { CreateAccount, type CreateAccountInput } from "@swy/validators";
 import {
   account,
   createMutationFetcher,
-  UnauthorizedError,
+  handleError,
   type SettingsKey,
 } from "~/lib";
 
@@ -16,8 +16,7 @@ const handler = createMutationFetcher(CreateAccount, async (_key, { arg }) => {
   try {
     return await account.createIfNotExist(arg);
   } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to create account.");
+    throw handleError(error, "Failed to create account.");
   }
 });
 

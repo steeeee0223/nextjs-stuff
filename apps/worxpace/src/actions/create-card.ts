@@ -9,8 +9,8 @@ import {
   auditLogs,
   createMutationFetcher,
   fetchClient,
+  handleError,
   kanban,
-  UnauthorizedError,
   type KanbanKey,
 } from "~/lib";
 
@@ -27,8 +27,7 @@ const handler = createMutationFetcher(CreateCard, async (_key, { arg }) => {
     });
     return result;
   } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to create card.");
+    throw handleError(error, "Failed to create card.");
   }
 });
 

@@ -8,7 +8,7 @@ import { DeleteWorkspace, type DeleteWorkspaceInput } from "@swy/validators";
 import {
   createMutationFetcher,
   fetchClient,
-  UnauthorizedError,
+  handleError,
   workspace,
 } from "~/lib";
 
@@ -19,8 +19,7 @@ const handler = createMutationFetcher(
       await fetchClient();
       return await workspace.delete(arg.id);
     } catch (error) {
-      if (error instanceof UnauthorizedError) throw error;
-      throw new Error("Failed to delete workspace.");
+      throw handleError(error, "Failed to delete workspace.");
     }
   },
 );

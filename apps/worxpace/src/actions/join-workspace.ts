@@ -1,6 +1,5 @@
 "use server";
 
-import { ClerkAPIResponseError } from "@clerk/shared";
 import type { MutationFetcher } from "swr/mutation";
 
 import type { Membership } from "@swy/prisma";
@@ -9,9 +8,10 @@ import { JoinWorkspace, type JoinWorkspaceInput } from "@swy/validators";
 import {
   account,
   createMutationFetcher,
+  CustomError,
+  handleError,
   invitation,
   membership,
-  UnauthorizedError,
   type StrictedInvitationKey,
 } from "~/lib";
 
@@ -21,7 +21,8 @@ const handler = createMutationFetcher(
     try {
       const { withClerkTicket, accountId, workspaceId } = arg;
       const acc = await account.byClerkId(clerkId);
-      if (acc?.clerkId !== clerkId) throw new Error("Account not match");
+      if (acc?.clerkId !== clerkId)
+        throw new CustomError("UNEXPECTED", "`clerkId` not matched");
 
       if (!withClerkTicket)
         return await membership.create({
@@ -34,7 +35,7 @@ const handler = createMutationFetcher(
         workspaceId,
         email: acc.email,
       });
-      if (!inviteData) throw new Error("Not Found", { cause: "db.invitation" });
+      if (!inviteData) throw new CustomError("NOT_FOUND", "db.invitation");
 
       return await membership.create({
         accountId,
@@ -42,14 +43,7 @@ const handler = createMutationFetcher(
         role: inviteData.role,
       });
     } catch (error) {
-      if (error instanceof UnauthorizedError) throw error;
-      if (error instanceof ClerkAPIResponseError) {
-        console.log(`[${error.status}] ${error.name} - ${error.message}`);
-      }
-      if (error instanceof Error) {
-        console.log(`[joinWorkspace] ${error.name} - ${error.message}`);
-      }
-      throw new Error("Failed to join workspace.");
+      throw handleError(error, "Failed to join workspace.");
     }
   },
 );

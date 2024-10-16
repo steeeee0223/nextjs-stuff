@@ -7,17 +7,16 @@ import { DeleteMember, type DeleteMemberInput } from "@swy/validators";
 
 import {
   createMutationFetcher,
+  handleError,
   membership,
   SettingsPeopleKey,
-  UnauthorizedError,
 } from "~/lib";
 
 const handler = createMutationFetcher(DeleteMember, async (_key, { arg }) => {
   try {
     return await membership.delete(arg);
   } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to delete member.");
+    throw handleError(error, "Failed to delete member.");
   }
 });
 

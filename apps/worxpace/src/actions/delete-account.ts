@@ -9,14 +9,16 @@ import { DeleteAccount, type DeleteAccountInput } from "@swy/validators";
 import {
   account,
   createMutationFetcher,
+  CustomError,
   fetchClient,
-  UnauthorizedError,
+  handleError,
 } from "~/lib";
 
 const handler = createMutationFetcher(DeleteAccount, async (_key, { arg }) => {
   try {
     const cli = await fetchClient();
-    if (arg.clerkId !== cli.clerkId) throw new Error("Account not match.");
+    if (arg.clerkId !== cli.clerkId)
+      throw new CustomError("UNEXPECTED", "`clerkId` not matched");
 
     const result = await account.delete(arg);
 
@@ -25,8 +27,7 @@ const handler = createMutationFetcher(DeleteAccount, async (_key, { arg }) => {
 
     return result;
   } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to delete account.");
+    throw handleError(error, "Failed to delete account.");
   }
 });
 

@@ -1,7 +1,6 @@
 "use server";
 
 import { clerkClient } from "@clerk/nextjs/server";
-import { ClerkAPIResponseError } from "@clerk/shared";
 import type { MutationFetcher } from "swr/mutation";
 
 import { CreateMembers, type CreateMembersInput } from "@swy/validators";
@@ -9,9 +8,9 @@ import { CreateMembers, type CreateMembersInput } from "@swy/validators";
 import {
   account,
   createMutationFetcher,
+  handleError,
   invitation,
   membership,
-  UnauthorizedError,
   type SettingsPeopleKey,
 } from "~/lib";
 
@@ -44,11 +43,7 @@ const handler = createMutationFetcher(CreateMembers, async (_key, { arg }) => {
     }
     return { existing: [...existing.keys()], nonExistingEmails };
   } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    if (error instanceof ClerkAPIResponseError) {
-      console.log(`[${error.status}] ${error.name} - ${error.message}`);
-    }
-    throw new Error("Failed to create members.");
+    throw handleError(error, "Failed to create members.");
   }
 });
 

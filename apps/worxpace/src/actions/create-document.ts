@@ -9,11 +9,12 @@ import {
   account,
   auditLogs,
   createMutationFetcher,
+  CustomError,
   documents,
   fetchClient,
   generateDefaultIcon,
+  handleError,
   toIcon,
-  UnauthorizedError,
   type DetailedDocument,
   type DocumentsKey,
 } from "~/lib";
@@ -24,7 +25,7 @@ const handler = createMutationFetcher(
     try {
       const { clerkId } = await fetchClient();
       const inWorkspace = await account.isInWorkspace({ clerkId, workspaceId });
-      if (!inWorkspace) throw new UnauthorizedError();
+      if (!inWorkspace) throw new CustomError("UNAUTHORIZED", "createDocument");
       const icon = toIcon(generateDefaultIcon(arg.type));
       const result = await documents.create({ ...arg, icon });
       /** Activity Log */
@@ -36,8 +37,7 @@ const handler = createMutationFetcher(
       });
       return result;
     } catch (error) {
-      if (error instanceof UnauthorizedError) throw error;
-      throw new Error("Failed to create document.");
+      throw handleError(error, "Failed to create document.");
     }
   },
 );

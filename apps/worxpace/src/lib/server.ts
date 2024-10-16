@@ -2,7 +2,7 @@
 
 import { auth } from "@clerk/nextjs/server";
 
-import { UnauthorizedError } from "./errors";
+import { CustomError } from "./errors";
 import type { Client } from "./types";
 
 /**
@@ -10,7 +10,7 @@ import type { Client } from "./types";
  */
 export async function fetchClient(): Promise<Pick<Client, "type" | "clerkId">> {
   const { userId, orgId } = auth();
-  if (!userId) return Promise.reject(new UnauthorizedError());
+  if (!userId) return Promise.reject(new CustomError());
 
   if (!orgId) {
     /** @todo Admin role */

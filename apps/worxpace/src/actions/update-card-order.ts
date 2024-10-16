@@ -8,8 +8,8 @@ import { UpdateCardOrder, type UpdateCardOrderInput } from "@swy/validators";
 import {
   createMutationFetcher,
   fetchClient,
+  handleError,
   kanban,
-  UnauthorizedError,
   type KanbanKey,
 } from "~/lib";
 
@@ -20,8 +20,7 @@ const handler = createMutationFetcher(
       await fetchClient();
       return await kanban.updateCardsOrder(arg);
     } catch (error) {
-      if (error instanceof UnauthorizedError) throw error;
-      throw new Error("Failed to reorder cards.");
+      throw handleError(error, "Failed to reorder cards.");
     }
   },
 );

@@ -9,7 +9,7 @@ import {
   account,
   createMutationFetcher,
   fetchClient,
-  UnauthorizedError,
+  handleError,
 } from "~/lib";
 
 const handler = createMutationFetcher(
@@ -21,8 +21,7 @@ const handler = createMutationFetcher(
         await account.update(clerkId, arg);
       return { id, name, avatarUrl, email, preferredName, hasPassword };
     } catch (error) {
-      if (error instanceof UnauthorizedError) throw error;
-      throw new Error("Failed to update account.");
+      throw handleError(error, "Failed to update account.");
     }
   },
 );

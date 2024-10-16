@@ -7,7 +7,7 @@ import type { Workspace } from "@swy/prisma";
 
 import * as account from "./account";
 import * as documents from "./documents";
-import { NotFound, UnauthorizedError } from "./errors";
+import { CustomError, NotFound } from "./errors";
 import { fetchClient } from "./server";
 import type { DocumentKey, InvitationKey, WorkspaceKey } from "./swr";
 import type { DetailedDocument } from "./types";
@@ -32,7 +32,7 @@ export const documentFetcher: Fetcher<DetailedDocument, DocumentKey> = async ({
     clerkId,
     workspaceId: document.workspaceId,
   });
-  if (!inWorkspace) throw new UnauthorizedError();
+  if (!inWorkspace) throw new CustomError("UNAUTHORIZED");
   // Return authorized document
   return document;
 };

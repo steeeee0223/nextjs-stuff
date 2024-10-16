@@ -8,9 +8,10 @@ import { CopyList, type CopyListInput } from "@swy/validators";
 import {
   auditLogs,
   createMutationFetcher,
+  CustomError,
   fetchClient,
+  handleError,
   kanban,
-  UnauthorizedError,
   type KanbanKey,
 } from "~/lib";
 
@@ -19,7 +20,7 @@ const handler = createMutationFetcher(CopyList, async (_key, { arg }) => {
   try {
     await fetchClient();
     const srcList = await kanban.getListById({ boardId, id: srcId });
-    if (!srcList) throw new Error("Not found");
+    if (!srcList) throw new CustomError("NOT_FOUND", "db.kanban");
 
     const numLists = await kanban.countLists(boardId);
     const cards =
@@ -48,8 +49,7 @@ const handler = createMutationFetcher(CopyList, async (_key, { arg }) => {
     });
     return result;
   } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to copy list.");
+    throw handleError(error, "Failed to copy list.");
   }
 });
 

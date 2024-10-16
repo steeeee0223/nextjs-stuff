@@ -8,9 +8,10 @@ import { CopyCard, type CopyCardInput } from "@swy/validators";
 import {
   auditLogs,
   createMutationFetcher,
+  CustomError,
   fetchClient,
+  handleError,
   kanban,
-  UnauthorizedError,
   type KanbanKey,
 } from "~/lib";
 
@@ -19,7 +20,7 @@ const handler = createMutationFetcher(CopyCard, async (_key, { arg }) => {
   try {
     await fetchClient();
     const srcCard = await kanban.getCard(src.id);
-    if (!srcCard) throw new Error("Not found");
+    if (!srcCard) throw new CustomError("NOT_FOUND", "db.kanban");
 
     const result = await kanban.createCard({
       accountId,
@@ -34,8 +35,7 @@ const handler = createMutationFetcher(CopyCard, async (_key, { arg }) => {
     });
     return result;
   } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to copy card.");
+    throw handleError(error, "Failed to copy card.");
   }
 });
 

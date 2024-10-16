@@ -5,7 +5,7 @@ import type { MutationFetcher } from "swr/mutation";
 import type { Workspace } from "@swy/prisma";
 import { CreateWorkspace, type CreateWorkspaceInput } from "@swy/validators";
 
-import { createMutationFetcher, UnauthorizedError, workspace } from "~/lib";
+import { createMutationFetcher, handleError, workspace } from "~/lib";
 
 const handler = createMutationFetcher(
   CreateWorkspace,
@@ -13,8 +13,7 @@ const handler = createMutationFetcher(
     try {
       return await workspace.create(arg);
     } catch (error) {
-      if (error instanceof UnauthorizedError) throw error;
-      throw new Error("Failed to create workspace.");
+      throw handleError(error, "Failed to create workspace.");
     }
   },
 );

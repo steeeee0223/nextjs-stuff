@@ -9,8 +9,8 @@ import {
   auditLogs,
   createMutationFetcher,
   fetchClient,
+  handleError,
   kanban,
-  UnauthorizedError,
   type KanbanKey,
 } from "~/lib";
 
@@ -28,8 +28,7 @@ const handler = createMutationFetcher(UpdateList, async (boardId, { arg }) => {
       });
     return result;
   } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to update list.");
+    throw handleError(error, "Failed to update list.");
   }
 });
 

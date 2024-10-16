@@ -9,8 +9,8 @@ import {
   auditLogs,
   createMutationFetcher,
   fetchClient,
+  handleError,
   kanban,
-  UnauthorizedError,
   type KanbanKey,
 } from "~/lib";
 
@@ -27,8 +27,7 @@ const handler = createMutationFetcher(DeleteList, async (boardId, { arg }) => {
     });
     return result;
   } catch (error) {
-    if (error instanceof UnauthorizedError) throw error;
-    throw new Error("Failed to delete list.");
+    throw handleError(error, "Failed to delete list.");
   }
 });
 
