@@ -7,13 +7,17 @@
 - 🆕 `liveblocks`
   - New package for managing `liveblocks` setups
 - `worxpace`
-  - Fix collaborative rooms
+  - Fix: collaborative rooms
   - Fix: `<TreeProvider />` causes infinitly re-renders
   - Refactor `/workspace` route due to the error: "Rendered more hooks than during the previous render"
+  - Invite members with email/link
 - `storybook`
   - Add stories with `liveblocks`
 - `ui`
   - Fix people table: avatar in `UserCell`
+- `prisma`
+  - Migrate collection: `Workspace`
+  - Add new collection: `Invitation`
 
 ## Version `1.2.0`
 

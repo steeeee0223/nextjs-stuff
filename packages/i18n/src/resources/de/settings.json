@@ -220,7 +220,7 @@
     "title": "Personen",
     "invite": {
       "title": "Einladungslink zum Hinzufügen von Mitgliedern",
-      "description": "Nur Personen, die Mitglieder einladen können, sehen den Link. Du kannst auch einen neuen Link generieren",
+      "description": "Nur Personen, die Mitglieder einladen können, sehen den Link. Du kannst auch <Link>einen neuen Link generieren</Link>",
       "button": "Link kopieren"
     },
     "tabs": {

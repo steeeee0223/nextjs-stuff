@@ -23,6 +23,7 @@ export * from "./update-account";
 /** Workspace */
 export * from "./create-workspace";
 export * from "./delete-workspace";
+export * from "./join-workspace";
 export * from "./update-workspace";
 /** Member */
 export * from "./create-members";

@@ -118,6 +118,7 @@ export function toSettingsStore(
       name: workspace.name,
       role: Role[membership!.role],
       icon: toIconInfo(workspace.icon),
+      inviteLink: `${window.location.origin}/invite/${workspace.inviteToken}`,
       domain: workspace.domain,
       plan: Plan[workspace.plan],
     },

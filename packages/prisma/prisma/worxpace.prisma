@@ -205,10 +205,24 @@ model Workspace {
   name        String
   icon        Icon?
   domain      String
+  // People
+  inviteToken String       @unique(map: "inviteToken") @default(uuid())
   // Plan
   plan        PLAN         @default(FREE)
   // Relations
   x_document  Document[]
 
   @@index([createdBy])
+}
+
+model Invitation {
+  id            String         @id @default(uuid()) @map("_id")
+  clerkInviteId String
+  email         String
+  role          WORKSPACE_ROLE
+  workspaceId   String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@unique([workspaceId, email], name: "byWorkspaceEmail")
 }

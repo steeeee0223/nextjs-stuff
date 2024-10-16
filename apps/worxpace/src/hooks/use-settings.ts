@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
+import { v4 } from "uuid";
 
 import { useSettingsStore, useWorkspace } from "@swy/ui/notion";
 
@@ -67,16 +68,13 @@ export const useSettings = (
   /** Fetcher */
   const key = info ? { type: "settings" as const, ...info } : null;
   const options = { onError: (e: Error) => toast.error(e.message) };
-  const { data, isLoading, mutate } = useSWR(
-    key,
-    async ({ clerkId, workspaceId }) => {
-      console.log(`[settings] `, { clerkId, workspaceId });
-      const $account = await account.byClerkId(clerkId);
-      const $workspace = await workspace.get(workspaceId);
-      if (!$account || !$workspace) throw new Error("Not found!");
-      return toSettingsStore($account, $workspace);
-    },
-  );
+  const { data, isLoading } = useSWR(key, async ({ clerkId, workspaceId }) => {
+    console.log(`[settings] `, { clerkId, workspaceId });
+    const $account = await account.byClerkId(clerkId);
+    const $workspace = await workspace.get(workspaceId);
+    if (!$account || !$workspace) throw new Error("Not found!");
+    return toSettingsStore($account, $workspace);
+  });
   /** Mutations */
   const { dispatch } = useWorkspace();
   const { trigger: updateAccount } = useSWRMutation(key, $updAccount, options);
@@ -94,12 +92,23 @@ export const useSettings = (
     onSuccess: ({ id }) => dispatch({ type: "delete", payload: [id] }),
   });
 
+  const resetLink = async () => {
+    const inviteToken = v4();
+    await updateWorkspace({ inviteToken });
+    settingsStore.update({
+      workspace: {
+        inviteLink: `${window.location.origin}/invite/${inviteToken}`,
+      },
+    });
+    toast.message("New link generated");
+  };
+
   return {
     settings: isLoading || !data ? settingsStore : data,
-    fetchData: () => mutate(),
     updateAccount,
     updateWorkspace,
     deleteAccount,
     deleteWorkspace,
+    resetLink,
   };
 };

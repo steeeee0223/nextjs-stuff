@@ -6,6 +6,7 @@ export const CreateMembers = z.object({
   workspaceId: z.string(),
   emails: z.array(z.string()),
   role: Role,
+  inviteLink: z.string(),
 });
 
 export type CreateMembersInput = z.infer<typeof CreateMembers>;
