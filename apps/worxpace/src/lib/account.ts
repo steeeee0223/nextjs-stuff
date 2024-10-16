@@ -26,10 +26,16 @@ const byEmails = async (
     select: { id: true, email: true },
   });
 
-const create = async (data: CreateAccountInput): Promise<Account> =>
-  await db.account.create({
+const createIfNotExist = async (
+  data: CreateAccountInput,
+): Promise<AccountMemberships> => {
+  const account = await byClerkId(data.clerkId);
+  if (account) return account;
+  return await db.account.create({
     data: { ...data, preferredName: data.name, hasPassword: false },
+    include: { memberships: true },
   });
+};
 
 export interface WorkspaceMembership {
   accountId: string;
@@ -107,7 +113,7 @@ const update = async (
 export {
   byClerkId,
   byEmails,
-  create,
+  createIfNotExist,
   isInWorkspace,
   joinedWorkspaces,
   update,
