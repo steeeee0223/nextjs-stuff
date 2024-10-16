@@ -87,7 +87,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
           await signOut(() => {
             platform.reset();
             store.reset();
-            router.push("/sign-in");
+            router.push("/select-role");
           });
         }),
       onDeleteWorkspace: (id) => {
