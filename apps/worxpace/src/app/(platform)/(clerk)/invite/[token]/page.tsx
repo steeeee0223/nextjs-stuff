@@ -15,7 +15,7 @@ interface Params {
 
 export default function Page({ params: { token } }: Params) {
   // Get the token from the query params
-  const clerkTicket = useSearchParams().get("__clerk_ticket");
+  const clerkTicket = !!useSearchParams().get("__clerk_ticket");
   const withClerkTicket = parseBool(useSearchParams().get("withClerkTicket"));
 
   const { openSignIn, openSignUp } = useClerk();
@@ -27,14 +27,11 @@ export default function Page({ params: { token } }: Params) {
 
   const login = () => {
     if (clerkTicket) {
-      console.log("open sign up modal");
-      openSignUp({
-        forceRedirectUrl: `/invite/${token}`,
-      });
+      openSignUp({ forceRedirectUrl: `/invite/${token}` });
     } else {
-      console.log("open sign in modal");
       openSignIn({
         forceRedirectUrl: `/invite/${token}`,
+        signUpForceRedirectUrl: `/invite/${token},`,
       });
     }
   };
@@ -63,7 +60,7 @@ export default function Page({ params: { token } }: Params) {
             ) : (
               <Button
                 variant="blue"
-                onClick={() => joinWorkspace(withClerkTicket)}
+                onClick={() => joinWorkspace(withClerkTicket ?? clerkTicket)}
                 className="w-full"
               >
                 Continue
