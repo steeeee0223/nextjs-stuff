@@ -162,8 +162,6 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
     },
     workspaceHandlers: {
       onSelect: (id) => {
-        // TODO fix this
-        // await setActive?.({ organization: workspaceId });
         platform.update((prev) => ({ ...prev, workspaceId: id }));
         store.reset();
         router.push(`/workspace/${id}`);
