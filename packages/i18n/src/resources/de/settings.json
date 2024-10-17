@@ -332,7 +332,8 @@
       },
       "invite": {
         "title": "Das Einladen von Gästen durch Mitglieder deaktivieren",
-        "description": "Aktuell befindet sich <Link>{{guests}} Gäste</Link> in deinem Workspace."
+        "description_one": "Aktuell befindet sich <Link>{{count}} Gast</Link> in deinem Workspace.",
+        "description_other": "Aktuell befindet sich <Link>{{count}} Gäste</Link> in deinem Workspace."
       },
       "guest": {
         "title": "Mitglieder können die Aufnahme von Gästen anfragen",
