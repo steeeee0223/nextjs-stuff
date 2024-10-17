@@ -171,6 +171,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
       onCreateWorkspace: () => router.push("/onboarding"),
       onLogout: () => {
         platform.reset();
+        store.reset();
         void signOut(() => router.push("/select-role"));
       },
     },
