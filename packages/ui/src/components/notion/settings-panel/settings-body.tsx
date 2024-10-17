@@ -35,6 +35,7 @@ const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
     case "language-region":
       return <Region />;
     case "workspace-settings":
+      // TODO apply settings3
       return <Settings2 />;
     case "people":
       return <People />;

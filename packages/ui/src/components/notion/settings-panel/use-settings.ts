@@ -20,6 +20,7 @@ const initialSettings: Settings = {
     name: "",
     icon: { type: "lucide", name: "user" },
     domain: "",
+    inviteLink: "",
     plan: Plan.FREE,
     role: Role.GUEST,
   },

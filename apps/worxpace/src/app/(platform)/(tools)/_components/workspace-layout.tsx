@@ -60,6 +60,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
     updateWorkspace,
     deleteAccount,
     deleteWorkspace,
+    resetLink,
   } = useSettings(activeWorkspace ? { clerkId, workspaceId } : null);
   const { fetchMemberships, addMembers, updateMember, deleteMember } =
     usePeopleSettings(activeWorkspace ? { clerkId, workspaceId } : null);
@@ -97,6 +98,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
         store.reset();
         router.push("/select-role");
       },
+      onResetLink: () => void resetLink(),
       onConnectAccount: async (strategy) => {
         if (strategy === "slack") {
           const res = await user?.createExternalAccount({
@@ -130,7 +132,12 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
         ),
       onFetchMemberships: fetchMemberships,
       onAddMemberships: (emails, role) =>
-        void addMembers({ workspaceId, emails, role }),
+        void addMembers({
+          workspaceId,
+          emails,
+          role,
+          inviteLink: settings.workspace.inviteLink,
+        }),
       onUpdateMembership: (userId, role) =>
         void updateMember({ accountId: userId, workspaceId, role }),
       onDeleteMembership: (userId) => {
@@ -155,8 +162,6 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
     },
     workspaceHandlers: {
       onSelect: (id) => {
-        // TODO fix this
-        // await setActive?.({ organization: workspaceId });
         platform.update((prev) => ({ ...prev, workspaceId: id }));
         store.reset();
         router.push(`/workspace/${id}`);
@@ -164,6 +169,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
       onCreateWorkspace: () => router.push("/onboarding"),
       onLogout: () => {
         platform.reset();
+        store.reset();
         void signOut(() => router.push("/select-role"));
       },
     },

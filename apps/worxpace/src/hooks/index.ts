@@ -5,6 +5,7 @@ export * from "./use-documents";
 export * from "./use-edgestore";
 export * from "./use-history";
 export * from "./use-initial-workspace";
+export * from "./use-invitation";
 export * from "./use-kanban";
 export * from "./use-people-settings";
 export * from "./use-platform";

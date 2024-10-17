@@ -235,7 +235,7 @@ interface Resources {
       title: "People";
       invite: {
         title: "Invite link to add members";
-        description: "Only people with permission to invite members can see this. You can also generate a new link";
+        description: "Only people with permission to invite members can see this. You can also <Link>generate a new link</Link>";
         button: "Copy link";
       };
       tabs: {
@@ -351,7 +351,8 @@ interface Resources {
         };
         invite: {
           title: "Disable members inviting guests to pages";
-          description: "Your workspace currently has <Link>{{guests}} guests</Link>.";
+          description_one: "Your workspace currently has <Link>{{count}} guest</Link>.";
+          description_other: "Your workspace currently has <Link>{{count}} guests</Link>.";
         };
         guest: {
           title: "Allow members to request adding guests";

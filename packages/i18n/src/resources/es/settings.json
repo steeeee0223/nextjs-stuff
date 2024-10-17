@@ -223,7 +223,7 @@
     "title": "Personas",
     "invite": {
       "title": "Enlace de invitación para añadir miembros",
-      "description": "Solo quienes tengan permiso para invitar miembros podrán ver esto. También puedes generar un nuevo enlace",
+      "description": "Solo quienes tengan permiso para invitar miembros podrán ver esto. También puedes <Link>generar un nuevo enlace</Link>",
       "button": "Copiar enlace"
     },
     "tabs": {
@@ -335,7 +335,8 @@
       },
       "invite": {
         "title": "Los miembros no pueden añadir invitados a las páginas",
-        "description": "Tu espacio de trabajo tiene actualmente <Link>{{guests}} invitados</Link>."
+        "description_one": "Tu espacio de trabajo tiene actualmente <Link>{{count}} invitado</Link>.",
+        "description_other": "Tu espacio de trabajo tiene actualmente <Link>{{count}} invitados</Link>."
       },
       "guest": {
         "title": "Permitir que los miembros soliciten que se añadan invitados",

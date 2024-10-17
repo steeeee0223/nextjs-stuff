@@ -4,18 +4,15 @@ import { Toaster } from "sonner";
 
 import { ModalProvider } from "@swy/ui/custom";
 
-import { EdgeStoreProvider } from "~/hooks";
 import { WorkspaceProvider } from "./_components/workspace-provider";
 
 export default function PlatformLayout({ children }: PropsWithChildren) {
   return (
     <ClerkProvider>
-      <EdgeStoreProvider>
-        <Toaster />
-        <WorkspaceProvider>
-          <ModalProvider>{children}</ModalProvider>
-        </WorkspaceProvider>
-      </EdgeStoreProvider>
+      <Toaster />
+      <WorkspaceProvider>
+        <ModalProvider>{children}</ModalProvider>
+      </WorkspaceProvider>
     </ClerkProvider>
   );
 }
