@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { TreeProvider } from "@swy/ui/custom";
 
 import { GROUPS } from "~/constants/site";
-import { useDocuments, usePlatform } from "~/hooks";
+import { EdgeStoreProvider, useDocuments, usePlatform } from "~/hooks";
 import { toTreeItem } from "~/lib";
 import WorkspaceLayout from "./_components/workspace-layout";
 
@@ -33,15 +33,17 @@ const ToolsLayout = ({ children }: PropsWithChildren) => {
   const pages = useMemo(() => documents?.map(toTreeItem) ?? [], [documents]);
 
   return (
-    <TreeProvider
-      className="flex h-screen bg-main"
-      groups={GROUPS}
-      initialItems={pages}
-      onClickItem={toToolsPage}
-      isItemActive={isItemActive}
-    >
-      <WorkspaceLayout pageId={pageId}>{children}</WorkspaceLayout>
-    </TreeProvider>
+    <EdgeStoreProvider>
+      <TreeProvider
+        className="flex h-screen bg-main"
+        groups={GROUPS}
+        initialItems={pages}
+        onClickItem={toToolsPage}
+        isItemActive={isItemActive}
+      >
+        <WorkspaceLayout pageId={pageId}>{children}</WorkspaceLayout>
+      </TreeProvider>
+    </EdgeStoreProvider>
   );
 };
 
