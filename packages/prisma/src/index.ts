@@ -24,6 +24,7 @@ export type {
   Card,
   CoverImage,
   Icon,
+  Invitation,
   Limitation,
   List,
   Membership,

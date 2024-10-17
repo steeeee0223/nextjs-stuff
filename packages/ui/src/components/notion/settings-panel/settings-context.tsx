@@ -27,6 +27,7 @@ export interface SettingsContextInterface
   uploadFile?: UploadFile;
   deleteAccount?: (data: { accountId: string; email: string }) => void;
   deleteWorkspace?: (workspaceId: string) => void;
+  resetLink?: () => void;
   /** Connections */
   connections: {
     load?: () => Promise<Connection[]>;

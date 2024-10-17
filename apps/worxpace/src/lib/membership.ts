@@ -1,8 +1,16 @@
 "use server";
 
-import { worxpace as db, WORKSPACE_ROLE } from "@swy/prisma";
-import type { Account, Membership } from "@swy/prisma";
-import type { DeleteMemberInput, UpdateMemberInput } from "@swy/validators";
+import { worxpace as db } from "@swy/prisma";
+import type { Account, Membership, WORKSPACE_ROLE } from "@swy/prisma";
+import type {
+  DeleteMemberInput,
+  JoinWorkspaceInput,
+  UpdateMemberInput,
+} from "@swy/validators";
+
+const create = async (
+  data: Omit<JoinWorkspaceInput, "clerkTicket"> & { role: WORKSPACE_ROLE },
+): Promise<Membership> => await db.membership.create({ data });
 
 const createMany = async ({
   workspaceId,
@@ -11,10 +19,14 @@ const createMany = async ({
 }: {
   workspaceId: string;
   accountIds: string[];
-  role: Membership["role"];
+  role: Lowercase<WORKSPACE_ROLE>;
 }) =>
   await db.membership.createMany({
-    data: accountIds.map((accountId) => ({ workspaceId, accountId, role })),
+    data: accountIds.map((accountId) => ({
+      workspaceId,
+      accountId,
+      role: role.toUpperCase() as WORKSPACE_ROLE,
+    })),
   });
 
 const get = async (
@@ -39,4 +51,4 @@ const update = async ({
     data: { role: role.toUpperCase() as WORKSPACE_ROLE },
   });
 
-export { createMany, get, update, remove as delete };
+export { create, createMany, get, update, remove as delete };

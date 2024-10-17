@@ -1,4 +1,4 @@
-import type * as z from "zod";
+import * as z from "zod";
 
 import { COLORS } from "~/constants/theme";
 import type { Action } from "./types";
@@ -38,4 +38,14 @@ export function createMutationFetcher<Input, Output>(
     if (!result.success) throw result.error;
     return await handler(key, { arg: result.data });
   };
+}
+
+const EmailToUsername = z
+  .string()
+  .email()
+  .transform((val) => val.split("@")[0] ?? val);
+
+export function emailToUsername(email: string): string {
+  const result = EmailToUsername.safeParse(email);
+  return result.success ? result.data : email;
 }
