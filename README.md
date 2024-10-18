@@ -4,8 +4,8 @@
 
 ### Apps
 
-- [Steeeee WorXpace](https://worxpace.steeeee0223.vercel.app/)
-- [Component Storybook](https://storybook.steeeee0223.vercel.app/)
+-   [Steeeee WorXpace](https://worxpace.steeeee0223.vercel.app/)
+-   [Component Storybook](https://storybook.steeeee0223.vercel.app/)
 
 ### Features & Demo
 
@@ -63,4 +63,4 @@
 
 ### TODO
 
-- [ ] 🗺️ Creating free plan restrictions
+-   [ ] 🗺️ Creating free plan restrictions

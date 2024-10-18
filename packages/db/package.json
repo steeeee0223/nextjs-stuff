@@ -30,8 +30,8 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@vercel/postgres": "^0.9.0",
-    "drizzle-orm": "^0.33.0",
+    "@vercel/postgres": "^0.10.0",
+    "drizzle-orm": "^0.35.1",
     "drizzle-zod": "^0.5.1",
     "zod": "catalog:"
   },
@@ -39,8 +39,8 @@
     "@swy/eslint-config": "workspace:*",
     "@swy/prettier-config": "workspace:*",
     "@swy/tsconfig": "workspace:*",
-    "dotenv-cli": "^7.4.2",
-    "drizzle-kit": "^0.24.2",
+    "dotenv-cli": "catalog:env",
+    "drizzle-kit": "^0.26.2",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"

@@ -16,19 +16,20 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@eslint/compat": "^1.1.1",
-    "@next/eslint-plugin-next": "^14.2.13",
-    "eslint-plugin-import": "^2.30.0",
+    "@eslint/compat": "^1.2.0",
+    "@next/eslint-plugin-next": "^14.2.15",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.0",
-    "eslint-plugin-react": "^7.36.1",
-    "eslint-plugin-react-hooks": "rc",
+    "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-storybook": "^0.8.0",
-    "eslint-plugin-turbo": "^2.1.1",
-    "typescript-eslint": "^8.7.0"
+    "eslint-plugin-turbo": "^2.1.3",
+    "typescript-eslint": "^8.9.0"
   },
   "devDependencies": {
     "@swy/prettier-config": "workspace:*",
     "@swy/tsconfig": "workspace:*",
+    "@types/eslint__js": "8.42.3",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "typescript": "catalog:"
