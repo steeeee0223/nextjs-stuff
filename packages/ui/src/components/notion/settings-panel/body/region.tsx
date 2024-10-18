@@ -15,8 +15,8 @@ export const Region = () => {
   const { t, i18n } = useTranslation("settings");
   const { title, region } = t("language-region", { returnObjects: true });
 
-  const onSwitchLanguage = async (language: string) => {
-    updateSettings({ account: { language: language as LOCALE } });
+  const onSwitchLanguage = async (language: LOCALE) => {
+    updateSettings({ account: { language } });
     await i18n.changeLanguage(language);
   };
 
@@ -26,7 +26,7 @@ export const Region = () => {
         <SectionItem {...region.language}>
           <Select
             options={region.language.options}
-            defaultValue={account.language ?? "en"}
+            value={account.language ?? "en"}
             onChange={onSwitchLanguage}
             side="bottom"
             align="end"
