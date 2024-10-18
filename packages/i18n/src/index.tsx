@@ -11,7 +11,7 @@ import {
 
 import { createI18n, setupLanguage } from "./config";
 
-export type LOCALE = "en" | "de" | "es" | "fr";
+export type LOCALE = "en" | "de" | "es";
 export { Trans, useTranslation, createI18n, setupLanguage };
 export type TransProps = TransPrimitiveProps<ParseKeys<"settings">>;
 

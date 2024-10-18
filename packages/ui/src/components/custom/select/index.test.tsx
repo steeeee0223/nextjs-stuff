@@ -9,7 +9,7 @@ const options = {
 
 describe("<Select />", () => {
   it("should render with default option", () => {
-    const select = render(<Select defaultValue="on" options={options} />);
+    const select = render(<Select value="on" options={options} />);
     expect(select.container).toBeInTheDocument();
 
     const display = select.getByRole("combobox");
@@ -21,11 +21,7 @@ describe("<Select />", () => {
       <div>{`Currently ${typeof option === "string" ? option : option?.label}`}</div>
     );
     const select = render(
-      <Select
-        defaultValue="on"
-        options={options}
-        customDisplay={CustomDisplay}
-      />,
+      <Select value="on" options={options} customDisplay={CustomDisplay} />,
     );
     const display = select.getByRole("combobox");
     expect(display).toHaveTextContent(/^Currently On$/i);

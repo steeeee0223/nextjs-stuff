@@ -26,10 +26,7 @@ export const Notifications = () => {
         </SectionItem>
         <Spacing size="sm" />
         <SectionItem {...slackNotifications.slack}>
-          <Select
-            options={slackNotifications.slack.options}
-            defaultValue="off"
-          />
+          <Select options={slackNotifications.slack.options} value="off" />
         </SectionItem>
       </Section>
       <Spacing />

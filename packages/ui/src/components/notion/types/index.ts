@@ -22,6 +22,7 @@ export enum Role {
   MEMBER = "member",
   GUEST = "guest",
 }
+export type PartialRole = Role.OWNER | Role.MEMBER;
 
 export enum Plan {
   FREE = "free",

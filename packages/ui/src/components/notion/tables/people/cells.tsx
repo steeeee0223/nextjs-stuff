@@ -3,7 +3,7 @@ import { CircleArrowUp, MoreHorizontalIcon } from "lucide-react";
 
 import { Select, type SelectProps } from "@/components/custom/select";
 import * as Icon from "@/components/notion/icons";
-import { Role, Scope } from "@/components/notion/types";
+import { Scope, type PartialRole } from "@/components/notion/types";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -112,7 +112,7 @@ export const TeamspacesCell = ({ teamspaces }: TeamspacesCellProps) => {
         <Select
           className="m-0 w-auto"
           options={$options}
-          defaultValue={current ?? undefined}
+          value={current ?? undefined}
           hideCheck
           align="center"
           customDisplay={Custom}
@@ -123,9 +123,9 @@ export const TeamspacesCell = ({ teamspaces }: TeamspacesCellProps) => {
 };
 
 interface RoleCellProps {
-  role: Role;
+  role: PartialRole;
   scopes: Set<Scope>;
-  onSelect?: (role: Role) => void;
+  onSelect?: (role: PartialRole) => void;
 }
 export const RoleCell = ({ role, scopes, onSelect }: RoleCellProps) => {
   return (
@@ -134,14 +134,14 @@ export const RoleCell = ({ role, scopes, onSelect }: RoleCellProps) => {
         <Select
           className="m-0 w-auto"
           options={roleOptions}
-          onChange={(role) => onSelect?.(role as Role)}
-          defaultValue={role}
+          onChange={onSelect}
+          value={role}
           align="center"
           customDisplay={Custom}
         />
       ) : (
         <div className="w-auto cursor-default text-sm text-secondary dark:text-secondary-dark">
-          {roleOptions[role]!.label}
+          {roleOptions[role].label}
         </div>
       )}
     </div>

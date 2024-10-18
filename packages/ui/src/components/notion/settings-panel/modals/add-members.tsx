@@ -8,7 +8,7 @@ import { useModal } from "@/components/custom/modal-provider";
 import { Select } from "@/components/custom/select";
 import { Spinner } from "@/components/custom/spinner";
 import { TagInput } from "@/components/custom/tag-input";
-import { Role, User } from "@/components/notion/types";
+import { Role, type PartialRole, type User } from "@/components/notion/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,7 +43,7 @@ export const AddMembers = ({ invitedMembers, onAdd }: AddMembersProps) => {
   );
   const [emails, setEmails] = useState<string[]>([]);
   const [input, setInput] = useState("");
-  const [role, setRole] = useState<Role>(Role.OWNER);
+  const [role, setRole] = useState<PartialRole>(Role.OWNER);
   const [loading, startTransition] = useTransition();
 
   const updateFilteredItems = (input: string) => {
@@ -112,8 +112,8 @@ export const AddMembers = ({ invitedMembers, onAdd }: AddMembersProps) => {
             />
             <div className="ml-2 flex flex-shrink-0 items-center gap-2 py-0.5">
               <Select
-                defaultValue={role}
-                onChange={(value) => setRole(value as Role)}
+                value={role}
+                onChange={setRole}
                 options={{ owner: "Workspace Owner", member: "Member" }}
                 className="m-0 w-fit text-muted dark:text-muted-dark"
               />
