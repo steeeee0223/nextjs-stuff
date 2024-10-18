@@ -13,7 +13,7 @@ export const mockConnections = [
   },
 ];
 export const mockSettings: SettingsStore = {
-  workspace: { ...workspaces[0]!, domain: "fake-domain" },
+  workspace: { ...workspaces[0]!, domain: "fake-domain", inviteLink: "#" },
   account: { ...mockUsers[0]!, preferredName: "Jonathan", language: "en" },
 };
 

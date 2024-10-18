@@ -1,8 +1,8 @@
 "use client";
 
 import { useModal } from "@/components/custom/modal-provider";
+import { BaseModal } from "@/components/notion/common";
 import type { PageContextInterface } from "@/components/notion/page-provider";
-import { ConfirmModal } from "@/components/notion/sidebar";
 import { Button } from "@/components/ui/button";
 
 interface BannerProps {
@@ -14,7 +14,12 @@ export const Banner = ({ pageId, onChangeState }: BannerProps) => {
   const { setOpen } = useModal();
   const onDelete = () =>
     setOpen(
-      <ConfirmModal onConfirm={() => onChangeState?.(pageId, "delete")} />,
+      <BaseModal
+        title="Are you sure you want to delete this page from Trash?"
+        primary="Yes. Delete this page"
+        secondary="Cancel"
+        onTrigger={() => onChangeState?.(pageId, "delete")}
+      />,
     );
 
   return (

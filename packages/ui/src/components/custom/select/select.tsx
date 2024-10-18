@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-
 import {
   Select,
   SelectContent,
@@ -17,25 +15,25 @@ export interface Option {
   description?: string;
 }
 
-export interface CustomSelectProps
+export interface CustomSelectProps<T extends string = string>
   extends Pick<SelectContentProps, "side" | "align"> {
   className?: string;
   /**
    * @prop `options` maps `value` to `Option.value`
    */
-  options: Record<string, string | Option>;
-  onChange?: (value: string) => void;
-  defaultValue?: string;
+  options: Record<T, string | Option>;
+  onChange?: (value: T) => void;
+  value?: T;
   placeholder?: string;
   disabled?: boolean;
   hideCheck?: boolean;
   customDisplay?: React.FC<{ option?: Option | string }>;
 }
 
-const CustomSelect = ({
+const CustomSelect = <T extends string = string>({
   className,
   options,
-  defaultValue,
+  value,
   placeholder,
   side = "bottom",
   align = "end",
@@ -43,28 +41,22 @@ const CustomSelect = ({
   hideCheck,
   onChange,
   customDisplay: Display,
-}: CustomSelectProps) => {
-  const [value, setValue] = useState<string>(defaultValue ?? "");
-  const onValueChange = (value: string) => {
-    setValue(value);
-    onChange?.(value);
-  };
-
+}: CustomSelectProps<T>) => {
   return (
-    <Select value={value} onValueChange={onValueChange} disabled={disabled}>
+    <Select value={value} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger className={className}>
         <SelectValue
           aria-disabled={disabled}
           placeholder={placeholder}
           {...(Display && {
             "aira-label": value,
-            children: <Display option={options[value]} />,
+            children: <Display option={value ? options[value] : undefined} />,
           })}
         />
       </SelectTrigger>
       <SelectContent position="popper" side={side} align={align}>
         <SelectGroup>
-          {Object.entries(options).map(([key, option]) => (
+          {Object.entries<string | Option>(options).map(([key, option]) => (
             <SelectItem
               className="min-h-7 min-w-0 flex-auto justify-between gap-x-6"
               value={key}

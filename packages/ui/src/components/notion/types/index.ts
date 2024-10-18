@@ -22,6 +22,7 @@ export enum Role {
   MEMBER = "member",
   GUEST = "guest",
 }
+export type PartialRole = Exclude<Role, Role.GUEST>;
 
 export enum Plan {
   FREE = "free",
@@ -32,6 +33,8 @@ export enum Plan {
 }
 
 export enum Scope {
+  /** Workspace settings */
+  WorkspaceUpdate = "workspace:update", // ✅ owner
   /** People */
   MemberInvite = "people:invite", // ❌ plan: education, role: member
   MemberRead = "people:read", // ❌ guest

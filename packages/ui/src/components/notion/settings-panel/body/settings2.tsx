@@ -1,8 +1,6 @@
 "use client";
 
-import type { ChangeEvent, PropsWithChildren } from "react";
 import React from "react";
-import { CircleHelp } from "lucide-react";
 
 import { useTranslation } from "@swy/i18n";
 
@@ -12,50 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
-import {
-  HintButton,
-  PlanLink,
-  Section,
-  SectionItem,
-  TextLink,
-} from "../_components";
+import { Content, Section, SectionItem, TextLink } from "../_components";
 import { DeleteWorkspace } from "../modals";
 import { useSettings } from "../settings-context";
-
-interface FieldProps extends PropsWithChildren {
-  title: string;
-  description?: React.ReactNode;
-  plan?: string;
-  hint?: string;
-}
-
-export const Field = ({
-  children,
-  title,
-  description,
-  plan,
-  hint,
-}: FieldProps) => {
-  return (
-    <div>
-      <div className="mb-2 flex w-auto items-center text-sm font-normal">
-        {title}
-        {!!plan && <PlanLink plan={plan} />}
-      </div>
-      <div className="flex items-center">{children}</div>
-      {description && (
-        <p className="mt-2 text-xs text-secondary dark:text-secondary-dark">
-          {description}
-        </p>
-      )}
-      {hint && (
-        <div className="mt-3">
-          <HintButton icon={CircleHelp} label={hint} />
-        </div>
-      )}
-    </div>
-  );
-};
 
 export const Settings2 = () => {
   const { setOpen } = useModal();
@@ -74,7 +31,7 @@ export const Settings2 = () => {
     "public-settings": publicSettings,
   } = t("workspace-settings", { returnObjects: true });
   /** Handlers */
-  const onUpdateName = (e: ChangeEvent<HTMLInputElement>) =>
+  const onUpdateName = (e: React.ChangeEvent<HTMLInputElement>) =>
     update({ workspace: { name: e.target.value } });
   const onUpdateIcon = (icon: IconInfo) => update({ workspace: { icon } });
   const onRemoveIcon = () => update({ workspace: { icon: undefined } });
@@ -87,7 +44,7 @@ export const Settings2 = () => {
     if (res?.url)
       update({ workspace: { icon: { type: "file", url: res.url } } });
   };
-  const onUpdateDomain = (e: ChangeEvent<HTMLInputElement>) =>
+  const onUpdateDomain = (e: React.ChangeEvent<HTMLInputElement>) =>
     update({ workspace: { domain: e.target.value } });
   const onDeleteWorkspace = () =>
     setOpen(
@@ -100,11 +57,11 @@ export const Settings2 = () => {
   return (
     <>
       <Section title={workspaceSettings.title}>
-        <Field {...workspaceSettings.name}>
+        <Content {...workspaceSettings.name}>
           <Input value={workspace.name} onChange={onUpdateName} />
-        </Field>
+        </Content>
         <Separator className="my-4" />
-        <Field {...workspaceSettings.icon}>
+        <Content {...workspaceSettings.icon}>
           <div className="rounded-md border border-border p-0.5">
             <IconBlock
               defaultIcon={workspace.icon}
@@ -114,11 +71,11 @@ export const Settings2 = () => {
               onUpload={onUploadIcon}
             />
           </div>
-        </Field>
+        </Content>
       </Section>
       <Separator className="my-4" />
       <Section title={publicSettings.title}>
-        <Field
+        <Content
           title={publicSettings.domain.title}
           description={
             <TextLink
@@ -132,9 +89,9 @@ export const Settings2 = () => {
             value={workspace.domain}
             onChange={onUpdateDomain}
           />
-        </Field>
+        </Content>
         <Separator className="my-4" />
-        <Field
+        <Content
           title={publicSettings.public.title}
           description={
             <TextLink
@@ -144,19 +101,19 @@ export const Settings2 = () => {
           }
         >
           <Input variant="search" placeholder="Select a page shared to web" />
-        </Field>
+        </Content>
         <Separator className="my-4" />
-        <Field title={publicSettings.content.title}>
+        <Content title={publicSettings.content.title}>
           <Button size="sm">{publicSettings.content.button}</Button>
-        </Field>
+        </Content>
         <Separator className="my-4" />
-        <Field title={publicSettings.members.title} plan="business">
+        <Content title={publicSettings.members.title} plan="business">
           <Button size="sm" disabled>
             {publicSettings.members.button}
           </Button>
-        </Field>
+        </Content>
         <Separator className="my-4" />
-        <Field
+        <Content
           title={publicSettings.analytics.head}
           hint={publicSettings.analytics.hint}
         >
@@ -171,13 +128,13 @@ export const Settings2 = () => {
           >
             <Switch size="sm" />
           </SectionItem>
-        </Field>
+        </Content>
         <Separator className="my-4" />
-        <Field title={publicSettings.danger.title}>
+        <Content title={publicSettings.danger.title}>
           <Button variant="red" size="sm" onClick={onDeleteWorkspace}>
-            {publicSettings.danger.button}
+            {publicSettings.danger.delete}
           </Button>
-        </Field>
+        </Content>
       </Section>
     </>
   );

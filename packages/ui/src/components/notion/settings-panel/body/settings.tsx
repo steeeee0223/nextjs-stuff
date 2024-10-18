@@ -22,7 +22,7 @@ export const Settings = () => {
         <SectionItem {...mySettings.appearance}>
           <Select
             options={mySettings.appearance.options}
-            defaultValue={theme ?? "system"}
+            value={theme ?? "system"}
             onChange={setTheme}
             side="left"
           />
@@ -31,7 +31,7 @@ export const Settings = () => {
         <SectionItem {...mySettings["open-on-start"]}>
           <Select
             options={mySettings["open-on-start"].options}
-            defaultValue="top"
+            value="top"
             side="left"
           />
         </SectionItem>
@@ -79,7 +79,7 @@ export const Settings = () => {
         >
           <Select
             options={privacy["view-history"].options}
-            defaultValue="yes"
+            value="yes"
             side="left"
           />
         </SectionItem>

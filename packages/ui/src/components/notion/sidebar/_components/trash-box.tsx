@@ -10,6 +10,7 @@ import stableHash from "stable-hash";
 import { Hint } from "@/components/custom/hint";
 import { IconBlock } from "@/components/custom/icon-block";
 import { useModal } from "@/components/custom/modal-provider";
+import { BaseModal } from "@/components/notion/common";
 import type { Page } from "@/components/notion/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,7 +21,6 @@ import {
 } from "@/components/ui/popover";
 import { buttonVariants } from "@/components/ui/variants";
 import { cn } from "@/lib/utils";
-import { ConfirmModal } from "../modals";
 import { HintItem } from "./hint-item";
 
 interface TrashBoxProps {
@@ -72,7 +72,14 @@ export const TrashBox = ({
   };
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>, id: string) => {
     e.stopPropagation();
-    setOpen(<ConfirmModal onConfirm={() => onDelete?.(id)} />);
+    setOpen(
+      <BaseModal
+        title="Are you sure you want to delete this page from Trash?"
+        primary="Yes. Delete this page"
+        secondary="Cancel"
+        onTrigger={() => onDelete?.(id)}
+      />,
+    );
   };
 
   useEffect(() => {
