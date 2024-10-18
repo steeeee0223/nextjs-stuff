@@ -1,5 +1,6 @@
 import { useTranslation } from "@swy/i18n";
 
+import { Scope } from "../types";
 import { NotImplemented, Section } from "./_components";
 import {
   Account,
@@ -12,18 +13,15 @@ import {
   Security,
   Settings,
   Settings2,
+  Settings3,
 } from "./body";
-import { workspace, type TabType } from "./sidebar";
+import { useSettings } from "./settings-context";
 
-interface SettingsBodyProps {
-  activeTab: TabType;
-}
-
-const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
+const SettingsBody = () => {
+  const { scopes, tab } = useSettings();
   const { t } = useTranslation();
-  const tab = workspace.find(({ value }) => value === activeTab)!;
 
-  switch (activeTab) {
+  switch (tab) {
     case "my-account":
       return <Account />;
     case "my-settings":
@@ -35,7 +33,7 @@ const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
     case "language-region":
       return <Region />;
     case "workspace-settings":
-      return <Settings2 />;
+      return scopes.has(Scope.WorkspaceUpdate) ? <Settings2 /> : <Settings3 />;
     case "people":
       return <People />;
     case "security":
@@ -46,7 +44,7 @@ const SettingsBody = ({ activeTab }: SettingsBodyProps) => {
       return <Plans />;
     default:
       return (
-        <Section title={t(`${tab.value}.title`)}>
+        <Section title={t(`${tab}.title`)}>
           <NotImplemented />
         </Section>
       );

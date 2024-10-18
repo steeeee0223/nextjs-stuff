@@ -3,13 +3,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ModalProvider, useModal } from "@swy/ui/custom";
 import {
   AddMembers,
+  BaseModal,
   DeleteAccount,
   DeleteGuest,
   DeleteMember,
   DeleteWorkspace,
   EmailSettings,
   PasswordForm,
-  ResetLink,
 } from "@swy/ui/notion";
 import { Button, type ButtonProps } from "@swy/ui/shadcn";
 
@@ -42,6 +42,20 @@ const meta = {
 export default meta;
 
 type Story = StoryObj<typeof meta>;
+
+export const Base: Story = {
+  args: {
+    children: (
+      <BaseModal
+        title="This action cannot be undone. This will permanently delete your account and remove your data from our servers."
+        primary="Continue"
+        secondary="Cancel"
+      />
+    ),
+    text: "Open",
+    variant: "soft-blue",
+  },
+};
 
 const { members, guests } = mockMemberships;
 export const AddMembersModal: Story = {
@@ -91,13 +105,6 @@ export const EmailSettingsModal: Story = {
   args: {
     children: <EmailSettings email={user.email} />,
     text: "Update Email",
-  },
-};
-export const ResetLinkModal: Story = {
-  args: {
-    children: <ResetLink />,
-    text: "Generate new link",
-    variant: "soft-blue",
   },
 };
 export const SetPasswordModal: Story = {

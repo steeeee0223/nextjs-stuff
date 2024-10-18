@@ -8,4 +8,3 @@ export { DeleteWorkspace } from "./delete-workspace";
 export { AddMembers } from "./add-members";
 export { DeleteMember } from "./delete-member";
 export { DeleteGuest } from "./delete-guest";
-export { ResetLink } from "./reset-link";

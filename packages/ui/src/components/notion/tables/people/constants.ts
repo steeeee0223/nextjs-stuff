@@ -1,7 +1,7 @@
-import { Role } from "@/components/notion/types";
+import type { PartialRole } from "@/components/notion/types";
 
 export const roleOptions: Record<
-  Role.OWNER | Role.MEMBER,
+  PartialRole,
   { label: string; description: string }
 > = {
   owner: {

@@ -1,5 +1,7 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
+
 import { useModal } from "@/components/custom/modal-provider";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,17 +12,30 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-interface ResetLinkProps {
-  onReset?: () => void;
+interface BaseModalProps {
+  title: string;
+  primary: string;
+  secondary: string;
+  onTrigger?: () => void;
 }
 
-export const ResetLink = ({ onReset }: ResetLinkProps) => {
+export const BaseModal = ({
+  title,
+  primary,
+  secondary,
+  onTrigger,
+}: BaseModalProps) => {
   const { isOpen, setClose } = useModal();
 
   const reset = () => {
-    onReset?.();
+    onTrigger?.();
     setClose();
   };
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  useLayoutEffect(() => {
+    buttonRef.current?.focus();
+  }, []);
 
   return (
     <Dialog open={isOpen} onOpenChange={setClose}>
@@ -32,16 +47,21 @@ export const ResetLink = ({ onReset }: ResetLinkProps) => {
       >
         <DialogHeader>
           <DialogTitle className="text-base font-normal tracking-wide">
-            Are you sure you want to reset the invite link for all space
-            members? Your old one will no longer be able to be used.
+            {title}
           </DialogTitle>
         </DialogHeader>
         <DialogFooter className="py-1.5">
-          <Button onClick={reset} variant="red" size="sm" className="w-full">
-            Reset
+          <Button
+            ref={buttonRef}
+            onClick={reset}
+            variant="red"
+            size="sm"
+            className="w-full"
+          >
+            {primary}
           </Button>
           <Button onClick={setClose} size="sm" className="w-full">
-            Cancel
+            {secondary}
           </Button>
         </DialogFooter>
       </DialogContent>
