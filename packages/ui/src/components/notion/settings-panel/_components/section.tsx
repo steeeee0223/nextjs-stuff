@@ -1,8 +1,9 @@
 import React from "react";
+import { CircleHelp } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { PlanLink } from "./helper";
+import { HintButton, PlanLink } from "./helper";
 
 interface SectionProps extends React.PropsWithChildren {
   title: string;
@@ -61,6 +62,41 @@ export const SectionItem = ({
         </p>
       </div>
       <div>{children}</div>
+    </div>
+  );
+};
+
+interface ContentProps extends React.PropsWithChildren {
+  title: string;
+  description?: React.ReactNode;
+  plan?: string;
+  hint?: string;
+}
+
+export const Content = ({
+  children,
+  title,
+  description,
+  plan,
+  hint,
+}: ContentProps) => {
+  return (
+    <div>
+      <div className="mb-2 flex w-auto items-center text-sm font-normal">
+        {title}
+        {!!plan && <PlanLink plan={plan} />}
+      </div>
+      <div className="flex items-center">{children}</div>
+      {description && (
+        <p className="mt-2 text-xs text-secondary dark:text-secondary-dark">
+          {description}
+        </p>
+      )}
+      {hint && (
+        <div className="mt-3">
+          <HintButton icon={CircleHelp} label={hint} />
+        </div>
+      )}
     </div>
   );
 };

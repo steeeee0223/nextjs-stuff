@@ -53,7 +53,7 @@ export const SettingsPanel = () => {
         </div>
       </div>
       <div className={styles.body}>
-        <SettingsBody activeTab={tab} />
+        <SettingsBody />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
 
 import { RoomProvider } from "@swy/liveblocks";
+import { useModal } from "@swy/ui/custom";
 import { useSidebarLayout } from "@swy/ui/hooks";
 import { cn } from "@swy/ui/lib";
 import {
@@ -41,6 +42,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
   children,
 }) => {
   const router = useRouter();
+  const { setClose } = useModal();
   const { clerkId, accountId, workspaceId, ...platform } = usePlatform();
   const { activeWorkspace, select } = useWorkspace();
   /** Clerk */
@@ -142,7 +144,12 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
         void updateMember({ accountId: userId, workspaceId, role }),
       onDeleteMembership: (userId) => {
         void deleteMember({ accountId: userId, workspaceId });
-        if (userId === accountId) router.push("/workspace");
+        if (userId === accountId) {
+          setClose();
+          platform.update((prev) => ({ ...prev, workspaceId: "" }));
+          store.reset();
+          router.push("/workspace");
+        }
       },
     },
     pageHandlers: {

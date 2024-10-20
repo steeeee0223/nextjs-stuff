@@ -1,6 +1,8 @@
-import { LOCALE, useTranslation } from "@swy/i18n";
+import { useTranslation, type LOCALE } from "@swy/i18n";
 
+import { useModal } from "@/components/custom/modal-provider";
 import { Select } from "@/components/custom/select";
+import { BaseModal } from "@/components/notion/common";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Section, SectionItem } from "../_components";
@@ -13,11 +15,25 @@ export const Region = () => {
   } = useSettings();
   /** i18n */
   const { t, i18n } = useTranslation("settings");
-  const { title, region } = t("language-region", { returnObjects: true });
-
-  const onSwitchLanguage = async (language: LOCALE) => {
-    updateSettings({ account: { language } });
-    await i18n.changeLanguage(language);
+  const { title, region, modals } = t("language-region", {
+    returnObjects: true,
+  });
+  /** Handlers */
+  const { setOpen } = useModal();
+  const onSwitchLanguage = (language: LOCALE) => {
+    const langLabel = region.language.options[language].label;
+    setOpen(
+      <BaseModal
+        {...modals.language}
+        title={t("language-region.modals.language.title", {
+          language: langLabel,
+        })}
+        onTrigger={() => {
+          updateSettings({ account: { language } });
+          void i18n.changeLanguage(language);
+        }}
+      />,
+    );
   };
 
   return (
