@@ -9,6 +9,7 @@ import {
   DeleteWorkspace,
   EmailSettings,
   PasswordForm,
+  ResetLink,
 } from "@swy/ui/notion";
 import { Button, type ButtonProps } from "@swy/ui/shadcn";
 
@@ -90,6 +91,13 @@ export const EmailSettingsModal: Story = {
   args: {
     children: <EmailSettings email={user.email} />,
     text: "Update Email",
+  },
+};
+export const ResetLinkModal: Story = {
+  args: {
+    children: <ResetLink />,
+    text: "Generate new link",
+    variant: "soft-blue",
   },
 };
 export const SetPasswordModal: Story = {

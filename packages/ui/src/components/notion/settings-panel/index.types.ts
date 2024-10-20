@@ -10,6 +10,8 @@ export interface WorkspaceStore {
   name: string;
   icon: IconInfo;
   domain: string;
+  /** People */
+  inviteLink: string;
   /** Plans */
   plan: Plan;
   /** Current account */

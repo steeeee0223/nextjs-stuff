@@ -10,3 +10,5 @@ export * from "./account";
 export * from "./workspace";
 /** Member */
 export * from "./member";
+/** Invitation */
+export * from "./invitation";

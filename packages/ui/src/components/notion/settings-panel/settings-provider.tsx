@@ -22,6 +22,7 @@ export interface SettingsProviderProps {
   onUploadFile?: UploadFile;
   onDeleteAccount?: SettingsContextInterface["deleteAccount"];
   onDeleteWorkspace?: SettingsContextInterface["deleteWorkspace"];
+  onResetLink?: SettingsContextInterface["resetLink"];
   /** Connections */
   onFetchConnections?: SettingsContextInterface["connections"]["load"];
   onConnectAccount?: SettingsContextInterface["connections"]["add"];
@@ -38,6 +39,7 @@ export function SettingsProvider({
   onUploadFile,
   onDeleteAccount,
   onDeleteWorkspace,
+  onResetLink,
   onFetchConnections,
   onConnectAccount,
   onFetchMemberships,
@@ -66,6 +68,7 @@ export function SettingsProvider({
       uploadFile: onUploadFile,
       deleteAccount: onDeleteAccount,
       deleteWorkspace: onDeleteWorkspace,
+      resetLink: onResetLink,
       connections: {
         load: onFetchConnections,
         add: onConnectAccount,
