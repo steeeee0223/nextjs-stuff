@@ -1,66 +1,26 @@
 # Nextjs Stuff
 
-![](./docs/img/landing.png)
+[![](./docs/img/landing.png)](https://storybook.steeeee0223.vercel.app/iframe.html?globals=&args=&id=playground--playground)
 
 ### Apps
 
--   [Steeeee WorXpace](https://worxpace.steeeee0223.vercel.app/)
--   [Component Storybook](https://storybook.steeeee0223.vercel.app/)
+- [Steeeee WorXpace](https://worxpace.steeeee0223.vercel.app/)
+- [Component Storybook](https://storybook.steeeee0223.vercel.app/)
 
 ### Features & Demo
 
-##### 🤑 Custom notion-style rich text editor
+[Live Demo](https://storybook.steeeee0223.vercel.app/iframe.html?globals=&args=&id=playground--playground)
 
-![](./docs/img/notion-editor.png)
-
-##### 🪧 Custom kanban board
-
-![](./docs/img/kanban.png)
-
-##### 💅 Custom whiteboard
-
-![](./docs/img/whiteboard.png)
-
-##### 🚀 Workspace switcher: Create a new workspace
-
-![](./docs/img/workspace-switcher.png)
-
-##### 🗑️ Move-to-trash functionality
-
-![](./docs/img/trash.png)
-
-##### 🔍 Page searching
-
-![](./docs/img/searching.png)
-
-##### 🔗 Page sharing
-
-![](./docs/img/sharing.png)
-
-##### 👨‍👨‍👧‍👦 Real-time collaboration: cursors, text selection, presence
-
-![](./docs/img/collaborative.png)
-
-##### 😜 Custom emoji picker: emoji, lucide icons & custom upload
-
-![](./docs/img/icon-picker.png)
-
-##### 🏙️ Custom cover picker: unsplash & custom upload
-
-![](./docs/img/cover-picker.png)
-
-##### 🕑 Page histories
-
-![](./docs/img/history.png)
-
-##### ⚙️ Settings panel
-
-![](./docs/img/settings-panel.png)
-
-##### 🌎 (Partially) Support locales: EN/DE/ES
-
-![](./docs/img/i18n.png)
-
-### TODO
-
--   [ ] 🗺️ Creating free plan restrictions
+- 🤑 Custom notion-style rich text editor
+- 🪧 Custom kanban board
+- 💅 Custom whiteboard
+- 🚀 Workspace switcher: Create a new workspace
+- 🗑️ Move-to-trash functionality
+- 🔍 Page searching
+- 🔗 Page sharing & members inviting
+- 👨‍👨‍👧‍👦 Real-time collaboration: cursors, text selection, presence
+- 😜 Custom emoji picker: emoji, lucide icons & custom upload
+- 🏙️ Custom cover picker: unsplash & custom upload
+- 🕑 Page histories
+- ⚙️ Settings panel
+- 🌎 (Partially) Support locales: EN/DE/ES
