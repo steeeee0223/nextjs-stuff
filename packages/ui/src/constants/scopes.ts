@@ -29,6 +29,7 @@ export const SCOPES: Record<Role, Record<Plan, Set<Scope>>> = {
   },
   [Role.OWNER]: {
     [Plan.FREE]: new Set([
+      Scope.WorkspaceUpdate,
       Scope.MemberInvite,
       Scope.MemberRead,
       Scope.MemberAdd,
@@ -36,11 +37,13 @@ export const SCOPES: Record<Role, Record<Plan, Set<Scope>>> = {
       Scope.Upgrade,
     ]),
     [Plan.EDUCATION]: new Set([
+      Scope.WorkspaceUpdate,
       Scope.MemberRead,
       Scope.MemberUpdate,
       Scope.Upgrade,
     ]),
     [Plan.PLUS]: new Set([
+      Scope.WorkspaceUpdate,
       Scope.MemberInvite,
       Scope.MemberRead,
       Scope.MemberAdd,
@@ -49,6 +52,7 @@ export const SCOPES: Record<Role, Record<Plan, Set<Scope>>> = {
       Scope.Upgrade,
     ]),
     [Plan.BUSINESS]: new Set([
+      Scope.WorkspaceUpdate,
       Scope.MemberInvite,
       Scope.MemberRead,
       Scope.MemberAdd,
@@ -57,6 +61,7 @@ export const SCOPES: Record<Role, Record<Plan, Set<Scope>>> = {
       Scope.Upgrade,
     ]),
     [Plan.ENTERPRISE]: new Set([
+      Scope.WorkspaceUpdate,
       Scope.MemberInvite,
       Scope.MemberRead,
       Scope.MemberAdd,

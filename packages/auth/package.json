@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@auth/core": "0.34.2",
-    "@auth/drizzle-adapter": "^1.4.2",
+    "@auth/drizzle-adapter": "1.4.2",
     "@swy/db": "workspace:*",
-    "@t3-oss/env-nextjs": "catalog:",
+    "@t3-oss/env-nextjs": "catalog:env",
     "next": "catalog:next14",
     "next-auth": "5.0.0-beta.20",
     "react": "catalog:react18",

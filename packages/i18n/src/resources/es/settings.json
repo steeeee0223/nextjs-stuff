@@ -171,6 +171,13 @@
         "title": "Comenzar la semana el lunes",
         "description": "Esto cambiará el aspecto de todos los calendarios."
       }
+    },
+    "modals": {
+      "language": {
+        "title": "¿Seguro que quieres actualizar el idioma a {{language}}?",
+        "primary": "Actualizar",
+        "secondary": "Cancelar"
+      }
     }
   },
   "workspace-settings": {
@@ -215,7 +222,15 @@
       "danger": {
         "title": "Zona de riesgo",
         "hint": "Más información sobre cómo eliminar espacios de trabajo.",
-        "button": "Eliminar todo el espacio de trabajo"
+        "delete": "Eliminar todo el espacio de trabajo",
+        "leave": "Abandonar el espacio de trabajo"
+      }
+    },
+    "modals": {
+      "leave": {
+        "title": "¿Seguro que quieres salir de este espacio de trabajo?",
+        "primary": "Salir",
+        "secondary": "Cancelar"
       }
     }
   },
@@ -236,6 +251,13 @@
     "upgrade": {
       "title": "Mejora tu plan para crear grupos",
       "description": "Mejora al plan Plus para configurar los grupos y controlar los permisos desde el menú «Compartir»."
+    },
+    "modals": {
+      "reset-link": {
+        "title": "¿Seguro que quieres restablecer el enlace de invitación para todos los miembros del espacio? Ya no podrás utilizar el anterior.",
+        "primary": "Restablecer",
+        "secondary": "Cancelar"
+      }
     }
   },
   "plans": {
@@ -335,7 +357,8 @@
       },
       "invite": {
         "title": "Los miembros no pueden añadir invitados a las páginas",
-        "description": "Tu espacio de trabajo tiene actualmente <Link>{{guests}} invitados</Link>."
+        "description_one": "Tu espacio de trabajo tiene actualmente <Link>{{count}} invitado</Link>.",
+        "description_other": "Tu espacio de trabajo tiene actualmente <Link>{{count}} invitados</Link>."
       },
       "guest": {
         "title": "Permitir que los miembros soliciten que se añadan invitados",

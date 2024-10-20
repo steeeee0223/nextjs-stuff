@@ -184,6 +184,13 @@ interface Resources {
           description: "This will change how all calendars in your app look.";
         };
       };
+      modals: {
+        language: {
+          title: "Are you sure you want to update the language to {{language}}?";
+          primary: "Update";
+          secondary: "Cancel";
+        };
+      };
     };
     "workspace-settings": {
       title: "Settings";
@@ -227,7 +234,15 @@ interface Resources {
         danger: {
           title: "Danger zone";
           hint: "Learn about deleting workspaces.";
-          button: "Delete entire workspace";
+          delete: "Delete entire workspace";
+          leave: "Leave workspace";
+        };
+      };
+      modals: {
+        leave: {
+          title: "Are you sure you want to leave this workspace?";
+          primary: "Leave";
+          secondary: "Cancel";
         };
       };
     };
@@ -248,6 +263,13 @@ interface Resources {
       upgrade: {
         title: "Upgrade to create groups";
         description: "Upgrade to the Plus Plan to set up groups and control permissions from the share menu.";
+      };
+      modals: {
+        "reset-link": {
+          title: "Are you sure you want to reset the invite link for all space members? Your old one will no longer be able to be used.";
+          primary: "Reset";
+          secondary: "Cancel";
+        };
       };
     };
     plans: {
@@ -351,7 +373,8 @@ interface Resources {
         };
         invite: {
           title: "Disable members inviting guests to pages";
-          description: "Your workspace currently has <Link>{{guests}} guests</Link>.";
+          description_one: "Your workspace currently has <Link>{{count}} guest</Link>.";
+          description_other: "Your workspace currently has <Link>{{count}} guests</Link>.";
         };
         guest: {
           title: "Allow members to request adding guests";

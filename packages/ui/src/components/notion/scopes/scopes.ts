@@ -4,7 +4,12 @@ export function getScopes(plan: Plan, role: Role): Set<Scope> {
   const scopes = new Set<Scope>();
 
   if (role === Role.OWNER) {
-    addToSet(scopes, [Scope.MemberRead, Scope.MemberUpdate, Scope.Upgrade]);
+    addToSet(scopes, [
+      Scope.WorkspaceUpdate,
+      Scope.MemberRead,
+      Scope.MemberUpdate,
+      Scope.Upgrade,
+    ]);
 
     if (plan !== Plan.EDUCATION) {
       addToSet(scopes, [Scope.MemberInvite, Scope.MemberAdd]);

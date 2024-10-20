@@ -77,7 +77,7 @@ export const Security = () => {
           description={
             <TextLink
               i18nKey="security.invite.invite.description"
-              values={{ guests: guests.length }}
+              values={{ count: guests.length }}
               onClick={() => setTab("people")}
             />
           }

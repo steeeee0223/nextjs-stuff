@@ -168,6 +168,13 @@
         "title": "Montag als Wochenanfang festlegen",
         "description": "Diese Änderung bezieht sich auf alle Kalender in deiner App."
       }
+    },
+    "modals": {
+      "language": {
+        "title": "Möchtest du die Sprache wirklich zu {{language}} ändern?",
+        "primary": "Aktualisieren",
+        "secondary": "Abbrechen"
+      }
     }
   },
   "workspace-settings": {
@@ -212,7 +219,15 @@
       "danger": {
         "title": "Achtung, Gefahrenzone!",
         "hint": "Informationen zum Löschen von Workspaces",
-        "button": "Gesamten Workspace löschen"
+        "delete": "Gesamten Workspace löschen",
+        "leave": "Workspace verlassen"
+      }
+    },
+    "modals": {
+      "leave": {
+        "title": "Möchtest du diesen Workspace wirklich verlassen?",
+        "primary": "Verlassen",
+        "secondary": "Abbrechen"
       }
     }
   },
@@ -233,6 +248,13 @@
     "upgrade": {
       "title": "Upgrade, um Gruppen zu erstellen",
       "description": "Führe ein Upgrade auf den Plus Plan durch, um Gruppen einzurichten und Berechtigungen über das Menü „Teilen“ zu steuern."
+    },
+    "modals": {
+      "reset-link": {
+        "title": "Möchtest du den Einladungslink für alle Workspace-Mitglieder wirklich zurücksetzen? Der alte kann dann nicht mehr verwendet werden.",
+        "primary": "Zurücksetzen",
+        "secondary": "Abbrechen"
+      }
     }
   },
   "plans": {
@@ -332,7 +354,8 @@
       },
       "invite": {
         "title": "Das Einladen von Gästen durch Mitglieder deaktivieren",
-        "description": "Aktuell befindet sich <Link>{{guests}} Gäste</Link> in deinem Workspace."
+        "description_one": "Aktuell befindet sich <Link>{{count}} Gast</Link> in deinem Workspace.",
+        "description_other": "Aktuell befindet sich <Link>{{count}} Gäste</Link> in deinem Workspace."
       },
       "guest": {
         "title": "Mitglieder können die Aufnahme von Gästen anfragen",

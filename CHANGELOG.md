@@ -4,20 +4,28 @@
 
 ### 🆕 Core Updates
 
+- Migrate repo to commit [`create-t3-turbo:e5620d`](https://github.com/t3-oss/create-t3-turbo/commit/e5620ddc86aa705b96dc9630d889882d152c1764)
 - 🆕 `liveblocks`
   - New package for managing `liveblocks` setups
 - `worxpace`
+  - 🆕 Invite members with email/link
+  - 🆕 Members/guests can leave workspace
   - Fix: collaborative rooms
   - Fix: `<TreeProvider />` causes infinitly re-renders
   - Refactor `/workspace` route due to the error: "Rendered more hooks than during the previous render"
-  - Invite members with email/link
+  - Polish: remove organization selection
+  - Fix: sign-out flow
+  - Fix: move `EdgestoreProvider` to tools group
 - `storybook`
-  - Add stories with `liveblocks`
+  - 🆕 Add live demo playground with `liveblocks`
 - `ui`
-  - Fix people table: avatar in `UserCell`
+  - Fix: no more state inside custom `Select`
+  - Update setting panels:
+    - Fix people table: avatar in `UserCell`
+    - Modals & translations
 - `prisma`
+  - 🆕 Add new collection: `Invitation`
   - Migrate collection: `Workspace`
-  - Add new collection: `Invitation`
 
 ## Version `1.2.0`
 

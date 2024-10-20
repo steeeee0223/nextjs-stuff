@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { Select, type SelectProps } from "@swy/ui/custom";
@@ -12,14 +13,20 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const Template: Story["render"] = ({ value, ...props }) => {
+  const [currentValue, setCurrentValue] = useState(value);
+  return <Select {...props} value={currentValue} onChange={setCurrentValue} />;
+};
+
 export const Default: Story = {
   args: {
     options: {
       on: "On",
       off: "Off",
     },
-    defaultValue: "on",
+    value: "on",
   },
+  render: Template,
 };
 
 const Custom: SelectProps["customDisplay"] = ({ option }) => (
@@ -34,7 +41,8 @@ export const CustomDisplay: Story = {
       on: { label: "On", description: "Turn on notification" },
       off: { label: "Off", description: "Turn on notification" },
     },
-    defaultValue: "on",
+    value: "on",
     customDisplay: Custom,
   },
+  render: Template,
 };

@@ -6,6 +6,7 @@ import { useCopyToClipboard } from "usehooks-ts";
 import { useTranslation } from "@swy/i18n";
 
 import { useModal } from "@/components/custom/modal-provider";
+import { BaseModal } from "@/components/notion/common";
 import * as Icon from "@/components/notion/icons";
 import {
   getGuestColumns,
@@ -22,7 +23,7 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Section, SectionItem, TextLink } from "../_components";
-import { AddMembers, DeleteGuest, DeleteMember, ResetLink } from "../modals";
+import { AddMembers, DeleteGuest, DeleteMember } from "../modals";
 import { useSettings } from "../settings-context";
 import { usePeople } from "./use-people";
 
@@ -38,7 +39,9 @@ export const People = () => {
   /** i18n */
   const { t } = useTranslation("settings");
   const common = t("common", { returnObjects: true });
-  const { title, invite, tabs, upgrade } = t("people", { returnObjects: true });
+  const { title, invite, tabs, upgrade, modals } = t("people", {
+    returnObjects: true,
+  });
   /** Modals */
   const { setOpen } = useModal();
   /** Tables */
@@ -72,7 +75,12 @@ export const People = () => {
     toast.success("Copied link to clipboard");
   };
   const onResetLink = () =>
-    setOpen(<ResetLink onReset={() => startTransition(() => resetLink?.())} />);
+    setOpen(
+      <BaseModal
+        {...modals["reset-link"]}
+        onTrigger={() => startTransition(() => resetLink?.())}
+      />,
+    );
   const onAddMembers = () =>
     setOpen(
       <AddMembers
