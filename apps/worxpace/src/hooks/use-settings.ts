@@ -7,6 +7,7 @@ import useSWRMutation from "swr/mutation";
 import { v4 } from "uuid";
 
 import { useSettingsStore, useWorkspace } from "@swy/notion";
+import { useOrigin } from "@swy/ui/hooks";
 
 import {
   createAccount as $addAccount,
@@ -65,6 +66,7 @@ export const useSettings = (
   info: { clerkId: string; workspaceId: string } | null,
 ) => {
   const settingsStore = useSettingsStore();
+  const origin = useOrigin();
   /** Fetcher */
   const key = info ? { type: "settings" as const, ...info } : null;
   const options = { onError: (e: Error) => toast.error(e.message) };
@@ -73,7 +75,7 @@ export const useSettings = (
     const $account = await account.byClerkId(clerkId);
     const $workspace = await workspace.get(workspaceId);
     if (!$account || !$workspace) throw new Error("Not found!");
-    return toSettingsStore($account, $workspace);
+    return toSettingsStore($account, $workspace, origin);
   });
   /** Mutations */
   const { dispatch } = useWorkspace();
@@ -97,7 +99,7 @@ export const useSettings = (
     await updateWorkspace({ inviteToken });
     settingsStore.update({
       workspace: {
-        inviteLink: `${window.location.origin}/invite/${inviteToken}`,
+        inviteLink: `${origin}/invite/${inviteToken}`,
       },
     });
     toast.message("New link generated");
