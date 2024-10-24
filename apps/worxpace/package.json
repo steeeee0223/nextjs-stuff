@@ -20,7 +20,6 @@
     "@clerk/nextjs": "^5.2.12",
     "@edgestore/react": "^0.1.6",
     "@edgestore/server": "^0.1.6",
-    "@excalidraw/excalidraw": "^0.17.3",
     "@swy/i18n": "workspace:*",
     "@swy/liveblocks": "workspace:*",
     "@swy/notion": "workspace:*",
@@ -35,6 +34,7 @@
     "react-textarea-autosize": "^8.5.3",
     "sonner": "catalog:ui",
     "swr": "^2.2.5",
+    "usehooks-ts": "^2.9.1",
     "yjs": "^13.6.15",
     "zod": "catalog:"
   },

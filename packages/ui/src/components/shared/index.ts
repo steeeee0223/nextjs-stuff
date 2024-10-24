@@ -2,6 +2,7 @@ export * from "./activity-item";
 export * from "./cover";
 export * from "./cover-picker";
 export * from "./crud-item";
+export * from "./excalidraw";
 export * from "./form-errors";
 export * from "./kanban";
 export * from "./hint";

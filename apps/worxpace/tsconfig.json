@@ -5,7 +5,7 @@
     "lib": ["ES2022", "dom", "dom.iterable"],
     "jsx": "preserve",
     "baseUrl": ".",
-    "types": ["../../packages/i18n/src/types/i18next.d.ts"],
+    "types": ["../../packages/i18n/src/types/i18next.d.ts", "./types.d.ts"],
     "paths": { "~/*": ["./src/*"] },
     "plugins": [{ "name": "next" }]
   },

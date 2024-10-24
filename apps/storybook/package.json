@@ -20,7 +20,6 @@
     "@t3-oss/env-core": "catalog:env",
     "lucide-react": "catalog:ui",
     "next": "catalog:next14",
-    "next-themes": "catalog:ui",
     "react": "catalog:react18",
     "react-dom": "catalog:react18",
     "swr": "^2.2.5",
