@@ -1,27 +1,17 @@
-import { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import { lazy, Suspense, useState } from "react";
 
-import { CollaborativeEditor } from "@swy/liveblocks";
 import { WorkspaceProvider } from "@swy/notion";
 import { documents, GROUPS, user, workspaces } from "@swy/notion/mock";
 import { ModalProvider, TreeProvider } from "@swy/ui/shared";
 
-import { liveblocksAuth } from "@/stories/notion/__mock__";
-import { LayoutWithLiveblocks } from "@/stories/notion/workspace-provider/_components";
+import { LayoutWithLiveblocks } from "../notion/workspace-provider/_components";
 
-const meta = {
-  title: "Playground",
-  parameters: {
-    layout: "fullscreen",
-    msw: { handlers: [liveblocksAuth] },
-  },
-} satisfies Meta;
-export default meta;
+const Editor = lazy(() => import("@swy/blocknote/collab"));
 
-type Story = StoryObj<typeof meta>;
-
-const Template: Story["render"] = () => {
+export const NotionWorkspace = () => {
   const [pageId, setPageId] = useState("#");
+  const [content, setContent] = useState<string>();
+
   return (
     <WorkspaceProvider
       user={user}
@@ -38,14 +28,17 @@ const Template: Story["render"] = () => {
           isItemActive={(id) => id === pageId}
         >
           <LayoutWithLiveblocks pageId={pageId}>
-            <CollaborativeEditor />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Editor
+                id={pageId}
+                editable
+                initialContent={content}
+                onChange={setContent}
+              />
+            </Suspense>
           </LayoutWithLiveblocks>
         </TreeProvider>
       </ModalProvider>
     </WorkspaceProvider>
   );
-};
-
-export const Playground: Story = {
-  render: Template,
 };

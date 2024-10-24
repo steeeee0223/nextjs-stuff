@@ -20,7 +20,7 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
   const { page, isLoading, error } = useDocument({ documentId, preview: true });
   /** Block Note Editor */
   const BlockNoteEditor = useMemo(
-    () => dynamic(() => import("~/components/block-editor"), { ssr: false }),
+    () => dynamic(() => import("@swy/blocknote/editor"), { ssr: false }),
     [],
   );
 

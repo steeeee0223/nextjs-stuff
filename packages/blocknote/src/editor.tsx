@@ -3,7 +3,8 @@
 import type { BlockNoteEditor, PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
-import { useTheme } from "next-themes";
+
+import { useTheme } from "@swy/ui/shadcn";
 
 import "@blocknote/mantine/style.css";
 import "@blocknote/core/fonts/inter.css";

@@ -26,7 +26,7 @@ const Editor = ({ document, preview, onUpdate }: EditorProps) => {
   };
   /** Block Note Editor */
   const BlockNoteEditor = useMemo(
-    () => dynamic(() => import("~/components/collab-editor"), { ssr: false }),
+    () => dynamic(() => import("@swy/blocknote/collab"), { ssr: false }),
     [],
   );
 

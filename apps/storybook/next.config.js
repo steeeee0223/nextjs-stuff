@@ -3,7 +3,12 @@ const config = {
   reactStrictMode: true,
 
   /** Enables hot reloading for local packages without a build step */
-  transpilePackages: ["@swy/ui", "@swy/notion", "@swy/liveblocks"],
+  transpilePackages: [
+    "@swy/ui",
+    "@swy/notion",
+    "@swy/liveblocks",
+    "@swy/blocknote",
+  ],
 
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: true },

@@ -187,6 +187,9 @@ importers:
 
   apps/storybook:
     dependencies:
+      '@swy/blocknote':
+        specifier: workspace:*
+        version: link:../../packages/blocknote
       '@swy/liveblocks':
         specifier: workspace:*
         version: link:../../packages/liveblocks
@@ -302,15 +305,6 @@ importers:
 
   apps/worxpace:
     dependencies:
-      '@blocknote/core':
-        specifier: ^0.15.0
-        version: 0.15.11
-      '@blocknote/mantine':
-        specifier: ^0.15.0
-        version: 0.15.11(@tiptap/pm@2.8.0)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@blocknote/react':
-        specifier: ^0.15.0
-        version: 0.15.11(@tiptap/pm@2.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@clerk/nextjs':
         specifier: ^5.2.12
         version: 5.7.5(next@14.2.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -320,6 +314,9 @@ importers:
       '@edgestore/server':
         specifier: ^0.1.6
         version: 0.1.7(@aws-sdk/client-s3@3.675.0)(@aws-sdk/s3-request-presigner@3.675.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(zod@3.23.8)
+      '@swy/blocknote':
+        specifier: workspace:*
+        version: link:../../packages/blocknote
       '@swy/i18n':
         specifier: workspace:*
         version: link:../../packages/i18n
@@ -365,9 +362,6 @@ importers:
       usehooks-ts:
         specifier: ^2.9.1
         version: 2.16.0(react@18.3.1)
-      yjs:
-        specifier: ^13.6.15
-        version: 13.6.20
       zod:
         specifier: 'catalog:'
         version: 3.23.8
@@ -491,6 +485,61 @@ importers:
       '@swy/tsconfig':
         specifier: workspace:*
         version: link:../../tooling/typescript
+      eslint:
+        specifier: 'catalog:'
+        version: 9.13.0(jiti@2.3.3)
+      prettier:
+        specifier: 'catalog:'
+        version: 3.3.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.6.3
+
+  packages/blocknote:
+    dependencies:
+      '@blocknote/core':
+        specifier: ^0.15.0
+        version: 0.15.11
+      '@blocknote/mantine':
+        specifier: ^0.15.0
+        version: 0.15.11(@tiptap/pm@2.8.0)(@types/react@18.3.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@blocknote/react':
+        specifier: ^0.15.0
+        version: 0.15.11(@tiptap/pm@2.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@swy/liveblocks':
+        specifier: workspace:*
+        version: link:../liveblocks
+      '@swy/ui':
+        specifier: workspace:*
+        version: link:../ui
+      react:
+        specifier: catalog:react18
+        version: 18.3.1
+      react-dom:
+        specifier: catalog:react18
+        version: 18.3.1(react@18.3.1)
+      yjs:
+        specifier: ^13.6.15
+        version: 13.6.20
+    devDependencies:
+      '@swy/eslint-config':
+        specifier: workspace:*
+        version: link:../../tooling/eslint
+      '@swy/prettier-config':
+        specifier: workspace:*
+        version: link:../../tooling/prettier
+      '@swy/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      '@types/node':
+        specifier: catalog:node20
+        version: 20.16.13
+      '@types/react':
+        specifier: catalog:react18
+        version: 18.3.11
+      '@types/react-dom':
+        specifier: catalog:react18
+        version: 18.3.1
       eslint:
         specifier: 'catalog:'
         version: 9.13.0(jiti@2.3.3)

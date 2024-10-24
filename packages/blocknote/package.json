@@ -1,0 +1,49 @@
+{
+  "name": "@swy/blocknote",
+  "private": true,
+  "version": "1.4.0",
+  "type": "module",
+  "exports": {
+    "./editor": {
+      "types": "./dist/src/editor.d.ts",
+      "default": "./src/editor.tsx"
+    },
+    "./collab": {
+      "types": "./dist/src/collab-editor.d.ts",
+      "default": "./src/collab-editor.tsx"
+    }
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache .turbo node_modules",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@blocknote/core": "^0.15.0",
+    "@blocknote/mantine": "^0.15.0",
+    "@blocknote/react": "^0.15.0",
+    "@swy/liveblocks": "workspace:*",
+    "@swy/ui": "workspace:*",
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18",
+    "yjs": "^13.6.15"
+  },
+  "devDependencies": {
+    "@swy/eslint-config": "workspace:*",
+    "@swy/prettier-config": "workspace:*",
+    "@swy/tsconfig": "workspace:*",
+    "@types/node": "catalog:node20",
+    "@types/react": "catalog:react18",
+    "@types/react-dom": "catalog:react18",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "catalog:react18"
+  },
+  "prettier": "@swy/prettier-config"
+}

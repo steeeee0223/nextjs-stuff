@@ -1,6 +1,5 @@
 import * as z from "zod";
 
-import { COLORS } from "~/constants/theme";
 import type { Action } from "./types";
 
 /**
@@ -23,10 +22,6 @@ export function parseBool(x?: string | null): boolean | undefined {
     default:
       throw new Error(`Invalid argument: ${x}`);
   }
-}
-
-export function connectionIdToColor(connectionId: number): string {
-  return COLORS[connectionId % COLORS.length]!;
 }
 
 export function createMutationFetcher<Input, Output>(

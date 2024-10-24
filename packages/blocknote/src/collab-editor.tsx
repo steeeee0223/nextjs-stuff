@@ -4,21 +4,22 @@ import { useEffect, useState } from "react";
 import type { PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
-import { useTheme } from "next-themes";
 import * as Y from "yjs";
+
+import { useTheme } from "@swy/ui/shadcn";
 
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";
 import "@blocknote/mantine/style.css";
 
 import { LiveblocksYjsProvider } from "@swy/liveblocks";
+import { idToColor } from "@swy/ui/lib";
 
-import { schema, type CustomEditor } from "~/components/blocknote";
-import { useRoom, useSelf } from "~/hooks";
-import { connectionIdToColor } from "~/lib";
-import { CustomSlashMenu } from "./blocknote";
+import { CustomSlashMenu, schema, type CustomEditor } from "./components";
+import { useRoom, useSelf } from "./lib";
 
 interface EditorProps {
+  id?: string;
   initialContent?: string | null;
   editable?: boolean;
   onChange?: (value: string) => void;
@@ -54,6 +55,7 @@ interface BlockNoteProps extends EditorProps {
 }
 
 function BlockNote({
+  id,
   doc,
   provider,
   initialContent,
@@ -64,29 +66,33 @@ function BlockNote({
   // Get user info from Liveblocks authentication endpoint
   const user = useSelf();
 
-  const editor: CustomEditor = useCreateBlockNote({
-    schema,
-    initialContent: initialContent
-      ? (JSON.parse(initialContent) as PartialBlock[])
-      : undefined,
-    uploadFile: onUpload,
-    collaboration: {
-      provider,
-      // Where to store BlockNote data in the Y.Doc:
-      fragment: doc.getXmlFragment("document-store"),
-      // Information for this user:
-      user: {
-        name: user.name,
-        color: connectionIdToColor(user.name.length),
+  const editor: CustomEditor = useCreateBlockNote(
+    {
+      schema,
+      initialContent: initialContent
+        ? (JSON.parse(initialContent) as PartialBlock[])
+        : undefined,
+      uploadFile: onUpload,
+      collaboration: {
+        provider,
+        // Where to store BlockNote data in the Y.Doc:
+        fragment: doc.getXmlFragment("document-store"),
+        // Information for this user:
+        user: {
+          name: user.name,
+          color: idToColor(user.id),
+        },
       },
     },
-  });
+    [id],
+  );
 
   const { resolvedTheme } = useTheme();
 
   return (
     <div>
       <BlockNoteView
+        id={id}
         editor={editor}
         slashMenu={false}
         editable={editable}
