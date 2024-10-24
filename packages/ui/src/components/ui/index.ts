@@ -1,8 +1,6 @@
 /** Variants */
 export * from "./variants";
 /** UI */
-export * from "./accordion";
-export * from "./alert-dialog";
 export * from "./avatar";
 export * from "./badge";
 export * from "./button";
@@ -19,7 +17,6 @@ export * from "./popover";
 export * from "./resizable";
 export * from "./select";
 export * from "./separator";
-export * from "./sheet";
 export * from "./skeleton";
 export * from "./switch";
 export * from "./table";
@@ -27,6 +24,5 @@ export * from "./tabs";
 export * from "./textarea";
 export * from "./theme";
 export * from "./toast";
-export * from "./toggle";
 export * from "./tooltip";
 export * from "./visually-hidden";

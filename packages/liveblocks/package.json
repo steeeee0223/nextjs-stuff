@@ -27,6 +27,7 @@
     "@liveblocks/react": "catalog:liveblocks",
     "@liveblocks/yjs": "catalog:liveblocks",
     "@slate-yjs/core": "^1.0.2",
+    "@swy/validators": "workspace:*",
     "@udecode/plate": "^39.0.1",
     "@udecode/plate-common": "^39.0.0",
     "@udecode/plate-yjs": "^39.0.0",

@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@swy/liveblocks": "workspace:*",
+    "@swy/notion": "workspace:*",
     "@swy/ui": "workspace:*",
     "@t3-oss/env-core": "catalog:env",
     "lucide-react": "catalog:ui",

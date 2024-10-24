@@ -1,4 +1,6 @@
-import { getRandomUser, getUser } from "./users";
+import { getRandomUser, getUser } from "@swy/notion/mock";
+
+const userId = getRandomUser().id;
 
 /**
  * These utilities are used when deploying an example on liveblocks.io.
@@ -6,7 +8,6 @@ import { getRandomUser, getUser } from "./users";
  */
 export async function getSession(request: Request) {
   const { room } = (await request.json()) as { room: string };
-  const userId = getRandomUser().id;
   const user = getUser(userId);
 
   if (!user) throw Error("User not found");

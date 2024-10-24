@@ -1,12 +1,4 @@
-import { useSidebarLayout } from "@swy/ui/hooks";
-import { cn } from "@swy/ui/lib";
-import { Navbar, PageHeader, PageProvider, Sidebar } from "@swy/ui/notion";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@swy/ui/shadcn";
-
+import { Navbar, PageHeader, PageProvider, Sidebar } from "@swy/notion";
 import {
   mockConnections,
   mockLogs,
@@ -15,7 +7,15 @@ import {
   mockSettings,
   otherUsers,
   user,
-} from "../../__mock__";
+} from "@swy/notion/mock";
+import { useSidebarLayout } from "@swy/ui/hooks";
+import { cn } from "@swy/ui/lib";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@swy/ui/shadcn";
+
 import { useDocuments } from "./use-documents";
 
 interface LayoutProps extends React.PropsWithChildren {

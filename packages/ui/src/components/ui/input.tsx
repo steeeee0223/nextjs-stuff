@@ -2,7 +2,8 @@
 
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@swy/ui/lib";
+
 import { inputVariants, type InputVariants } from "./variants";
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &

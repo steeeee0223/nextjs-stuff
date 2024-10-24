@@ -12,6 +12,7 @@ const config = {
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: [
     "@swy/liveblocks",
+    "@swy/notion",
     "@swy/prisma",
     "@swy/ui",
     "@swy/validators",

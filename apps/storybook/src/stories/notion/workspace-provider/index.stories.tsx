@@ -1,10 +1,10 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { ModalProvider, TreeProvider } from "@swy/ui/custom";
-import { WorkspaceProvider, WorkspaceSwitcher } from "@swy/ui/notion";
+import { WorkspaceProvider, WorkspaceSwitcher } from "@swy/notion";
+import { documents, GROUPS, user, workspaces } from "@swy/notion/mock";
+import { ModalProvider, TreeProvider } from "@swy/ui/shared";
 
-import { documents, GROUPS, user, workspaces } from "../__mock__";
 import { BaseLayout } from "./_components";
 
 const meta = {

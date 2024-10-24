@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-import { useWorkspace } from "@swy/ui/notion";
+import { useWorkspace } from "@swy/notion";
 
 import * as actions from "~/actions";
 import { invitationFetcher, type StrictedInvitationKey } from "~/lib";

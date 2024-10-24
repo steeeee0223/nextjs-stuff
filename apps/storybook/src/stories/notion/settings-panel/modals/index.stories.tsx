@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { ModalProvider, useModal } from "@swy/ui/custom";
 import {
   AddMembers,
   BaseModal,
@@ -10,10 +9,10 @@ import {
   DeleteWorkspace,
   EmailSettings,
   PasswordForm,
-} from "@swy/ui/notion";
+} from "@swy/notion";
+import { mockMemberships, user, workspaces } from "@swy/notion/mock";
 import { Button, type ButtonProps } from "@swy/ui/shadcn";
-
-import { mockMemberships, user, workspaces } from "../../__mock__";
+import { ModalProvider, useModal } from "@swy/ui/shared";
 
 const ModalTrigger = ({
   text,

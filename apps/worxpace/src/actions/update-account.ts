@@ -2,7 +2,7 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { AccountStore } from "@swy/ui/notion";
+import type { AccountStore } from "@swy/notion";
 import { UpdateAccount, type UpdateAccountInput } from "@swy/validators";
 
 import {

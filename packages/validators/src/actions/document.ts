@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { CoverImage, Icon, Membership } from "../objects";
+import { CoverImageObject, Icon, Membership } from "../objects";
 
 export const CreateDocument = z.intersection(
   Membership,
@@ -35,7 +35,7 @@ export const UpdateDocument = z.intersection(
     /** Document Fields */
     id: z.string(),
     icon: Icon.nullable().optional(),
-    coverImage: CoverImage.nullable().optional(),
+    coverImage: CoverImageObject.nullable().optional(),
     title: z.string().optional(),
     content: z.string().nullable().optional(),
     isPublished: z.boolean().optional(),

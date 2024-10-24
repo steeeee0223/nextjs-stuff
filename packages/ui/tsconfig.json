@@ -4,9 +4,8 @@
     "lib": ["ES2022", "dom", "dom.iterable"],
     "jsx": "preserve",
     "rootDir": ".",
-    "types": ["vitest/globals", "../i18n/src/types/i18next.d.ts"],
-    "paths": { "@/*": ["./src/*"] }
+    "types": ["vitest/globals"]
   },
-  "include": ["*.ts", "src", "__test__"],
+  "include": ["*.ts", "src", "__test__", "src/hooks/use-sidebar-layout.ts"],
   "exclude": ["node_modules"]
 }

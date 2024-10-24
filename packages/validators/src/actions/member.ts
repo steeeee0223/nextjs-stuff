@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-import { Membership, Role } from "../objects";
+import { Membership, RoleObject } from "../objects";
 
 export const CreateMembers = z.object({
   workspaceId: z.string(),
   emails: z.array(z.string()),
-  role: Role,
+  role: RoleObject,
   inviteLink: z.string(),
 });
 
@@ -13,7 +13,7 @@ export type CreateMembersInput = z.infer<typeof CreateMembers>;
 
 export const UpdateMember = z.intersection(
   Membership,
-  z.object({ role: Role }),
+  z.object({ role: RoleObject }),
 );
 
 export type UpdateMemberInput = z.infer<typeof UpdateMember>;

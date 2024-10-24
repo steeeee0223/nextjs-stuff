@@ -4,8 +4,8 @@ import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 
-import { Cover, IconBlock } from "@swy/ui/custom";
-import { PageHeader } from "@swy/ui/notion";
+import { PageHeader } from "@swy/notion";
+import { Cover, IconBlock } from "@swy/ui/shared";
 
 import { useDocument } from "~/hooks";
 import { toIconInfo } from "~/lib";

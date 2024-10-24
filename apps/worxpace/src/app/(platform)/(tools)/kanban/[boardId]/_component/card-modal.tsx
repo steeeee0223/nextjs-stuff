@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import { useOnClickOutside } from "usehooks-ts";
 
-import { useKanban } from "@swy/ui/custom";
 import { Dialog, DialogContent } from "@swy/ui/shadcn";
+import { useKanban } from "@swy/ui/shared";
 
 export const CardModal = () => {
   const { activeItem, setActiveItem } = useKanban();

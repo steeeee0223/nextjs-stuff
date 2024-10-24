@@ -8,7 +8,7 @@ import {
   PageProvider,
   type NavbarProps,
   type PageProviderProps,
-} from "@swy/ui/notion";
+} from "@swy/notion";
 
 import {
   useDocument,

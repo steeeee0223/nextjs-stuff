@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { getGuestColumns, GuestsTable, Scope } from "@swy/ui/notion";
-
-import { mockMemberships } from "../__mock__";
+import { getGuestColumns, GuestsTable, Scope } from "@swy/notion";
+import { mockMemberships } from "@swy/notion/mock";
 
 const meta = {
   title: "notion/Data Tables/Guests",

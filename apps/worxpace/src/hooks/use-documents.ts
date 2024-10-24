@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-import type { Page } from "@swy/ui/notion";
+import type { Page } from "@swy/notion";
 
 import {
   archiveDocument,

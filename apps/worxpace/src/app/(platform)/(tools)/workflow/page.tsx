@@ -1,7 +1,8 @@
 "use client";
 
 // import type { Document } from "@swy/prisma";
-import { PageHeader } from "@/components/notion";
+import { PageHeader } from "@swy/notion";
+
 import { usePlatform } from "~/hooks";
 import Workflows from "./_components/workflows";
 

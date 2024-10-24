@@ -2,16 +2,11 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { CollaborativeEditor } from "@swy/liveblocks";
-import { ModalProvider, TreeProvider } from "@swy/ui/custom";
-import { WorkspaceProvider } from "@swy/ui/notion";
+import { WorkspaceProvider } from "@swy/notion";
+import { documents, GROUPS, user, workspaces } from "@swy/notion/mock";
+import { ModalProvider, TreeProvider } from "@swy/ui/shared";
 
-import {
-  documents,
-  GROUPS,
-  liveblocksAuth,
-  user,
-  workspaces,
-} from "@/stories/notion/__mock__";
+import { liveblocksAuth } from "@/stories/notion/__mock__";
 import { LayoutWithLiveblocks } from "@/stories/notion/workspace-provider/_components";
 
 const meta = {

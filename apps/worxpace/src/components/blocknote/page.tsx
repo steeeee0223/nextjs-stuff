@@ -11,8 +11,8 @@ import {
   ReactCustomBlockImplementation,
 } from "@blocknote/react";
 
-import { CRUDItem, type CRUDItemProps } from "@swy/ui/custom";
 import { cn } from "@swy/ui/lib";
+import { CRUDItem, type CRUDItemProps } from "@swy/ui/shared";
 
 import { usePlatform } from "~/hooks";
 

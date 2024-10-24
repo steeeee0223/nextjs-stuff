@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { PlusCircle } from "lucide-react";
 
-import { useWorkspace } from "@swy/ui/notion";
+import { useWorkspace } from "@swy/notion";
 import { Button } from "@swy/ui/shadcn";
 
 import { useDocuments, usePlatform } from "~/hooks";
