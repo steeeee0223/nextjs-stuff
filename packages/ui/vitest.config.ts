@@ -2,10 +2,10 @@
 
 import { fileURLToPath } from "url";
 import react from "@vitejs/plugin-react";
-import { defineConfig, type UserConfig } from "vitest/config";
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  plugins: [react()] as UserConfig["plugins"],
+  plugins: [react()],
   test: {
     globals: true,
     environment: "jsdom",
@@ -14,13 +14,5 @@ export default defineConfig({
       enabled: true,
       reporter: ["text", "json", "html"],
     },
-  },
-  resolve: {
-    alias: [
-      {
-        find: "@",
-        replacement: fileURLToPath(new URL("./src", import.meta.url)),
-      },
-    ],
   },
 });

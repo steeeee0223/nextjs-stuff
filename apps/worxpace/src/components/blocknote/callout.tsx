@@ -9,9 +9,8 @@ import type {
 } from "@blocknote/core";
 import { createReactBlockSpec } from "@blocknote/react";
 
-import { IconBlock, type IconBlockProps, type IconInfo } from "@swy/ui/custom";
-
-import { cn } from "@/lib/utils";
+import { cn } from "@swy/ui/lib";
+import { IconBlock, type IconBlockProps, type IconInfo } from "@swy/ui/shared";
 
 export interface CalloutBlockSpec {
   type: "callout";

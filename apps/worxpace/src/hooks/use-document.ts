@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-import { useTree } from "@swy/ui/custom";
+import { useTree } from "@swy/ui/shared";
 
 import { updateInternalDocument } from "~/actions";
 import {

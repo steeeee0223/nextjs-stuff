@@ -3,11 +3,8 @@
 import { useEffect, useState, type PropsWithChildren } from "react";
 import { useParams } from "next/navigation";
 
-import {
-  WorkspaceProvider as Provider,
-  type User,
-  type Workspace,
-} from "@swy/ui/notion";
+import { WorkspaceProvider as Provider, type Workspace } from "@swy/notion";
+import type { User } from "@swy/validators";
 
 import { useClient, usePlatform, useSetup } from "~/hooks";
 

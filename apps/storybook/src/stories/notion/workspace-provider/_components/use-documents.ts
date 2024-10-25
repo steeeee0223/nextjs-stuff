@@ -2,9 +2,8 @@
 
 import useSWR from "swr";
 
-import { type TreeItem } from "@swy/ui/custom";
-
-import { documents, mockPages } from "../../__mock__";
+import { documents, mockPages } from "@swy/notion/mock";
+import { type TreeItem } from "@swy/ui/shared";
 
 interface DocumentsKey {
   type: "document";

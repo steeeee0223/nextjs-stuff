@@ -2,6 +2,7 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
+import { generateDefaultIcon } from "@swy/notion";
 import type { ENTITY_TYPE } from "@swy/prisma";
 import { CreateDocument, type CreateDocumentInput } from "@swy/validators";
 
@@ -11,7 +12,6 @@ import {
   createMutationFetcher,
   documents,
   fetchClient,
-  generateDefaultIcon,
   toIcon,
   UnauthorizedError,
   type DetailedDocument,

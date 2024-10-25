@@ -6,10 +6,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "types": ["../../packages/i18n/src/types/i18next.d.ts"],
-    "paths": {
-      "~/*": ["./src/*"],
-      "@/*": ["../../packages/ui/src/*"]
-    },
+    "paths": { "~/*": ["./src/*"] },
     "plugins": [{ "name": "next" }]
   },
   "include": [".", ".next/types/**/*.ts"],

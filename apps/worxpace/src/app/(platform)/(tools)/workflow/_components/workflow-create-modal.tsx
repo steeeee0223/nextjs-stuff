@@ -2,7 +2,6 @@
 
 import type { FC, ReactNode } from "react";
 
-import { useModal } from "@swy/ui/custom";
 import {
   Button,
   Drawer,
@@ -14,6 +13,7 @@ import {
   DrawerPortal,
   DrawerTitle,
 } from "@swy/ui/shadcn";
+import { useModal } from "@swy/ui/shared";
 
 export interface WorkflowModalProps {
   title: string;

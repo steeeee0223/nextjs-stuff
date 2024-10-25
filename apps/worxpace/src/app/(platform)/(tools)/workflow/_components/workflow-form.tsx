@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import useSWRMutation from "swr/mutation";
 import { z } from "zod";
 
-import { useModal } from "@swy/ui/custom";
 import {
   Button,
   Card,
@@ -24,6 +23,7 @@ import {
   FormMessage,
   Input,
 } from "@swy/ui/shadcn";
+import { useModal } from "@swy/ui/shared";
 
 import { createDocument } from "~/actions";
 

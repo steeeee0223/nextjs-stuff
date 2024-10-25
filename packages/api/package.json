@@ -21,7 +21,6 @@
   "dependencies": {
     "@swy/auth": "workspace:*",
     "@swy/db": "workspace:*",
-    "@swy/validators": "workspace:*",
     "@trpc/server": "catalog:",
     "superjson": "2.2.1",
     "zod": "catalog:"

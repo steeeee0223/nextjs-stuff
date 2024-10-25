@@ -1,9 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { ModalProvider } from "@swy/ui/custom";
-import { SettingsPanel } from "@swy/ui/notion";
+import { SettingsPanel } from "@swy/notion";
+import {
+  mockConnections,
+  mockMemberships,
+  mockSettings,
+} from "@swy/notion/mock";
+import { ModalProvider } from "@swy/ui/shared";
 
-import { mockConnections, mockMemberships, mockSettings } from "../__mock__";
 import { Settings } from "./settings";
 
 const meta = {

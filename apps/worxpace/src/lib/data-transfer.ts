@@ -1,32 +1,18 @@
 import { format } from "date-fns";
 
-import type { Account, Icon, Membership, Workspace } from "@swy/prisma";
-import type { IconInfo, TreeItem } from "@swy/ui/custom";
-import { Plan, Role } from "@swy/ui/notion";
 import type {
   Page,
   WorkspaceMemberships as PeopleData,
   SettingsStore,
   Workspace as WorkspaceData,
-} from "@swy/ui/notion";
+} from "@swy/notion";
+import { generateDefaultIcon } from "@swy/notion";
+import type { Account, Icon, Membership, Workspace } from "@swy/prisma";
+import type { IconInfo, TreeItem } from "@swy/ui/shared";
+import { Plan, Role } from "@swy/validators";
 
 import type { AccountMemberships, WorkspaceMembership } from "./account";
 import type { DetailedDocument } from "./types";
-
-export function generateDefaultIcon(group?: string): IconInfo {
-  switch (group) {
-    case "document":
-      return { type: "lucide", name: "file" };
-    case "kanban":
-      return { type: "lucide", name: "columns-3" };
-    case "whiteboard":
-      return { type: "lucide", name: "presentation" };
-    case "workflow":
-      return { type: "lucide", name: "git-pull-request-arrow" };
-    default:
-      return { type: "emoji", emoji: " " };
-  }
-}
 
 export function toIconInfo(icon?: Icon | null, defaultIcon?: string): IconInfo {
   if (!icon) return generateDefaultIcon(defaultIcon);

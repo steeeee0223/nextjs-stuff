@@ -3,15 +3,7 @@
 import { Client } from "@liveblocks/client";
 import { createRoomContext as __createRoomContext } from "@liveblocks/react";
 
-/**
- * @deprecated Use the type in notion package
- */
-interface User {
-  id: string;
-  name: string;
-  avatarUrl: string;
-  email: string;
-}
+import type { User } from "@swy/validators";
 
 export const createRoomContext = (client: Client<Liveblocks["UserMeta"]>) => {
   const {

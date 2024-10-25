@@ -3,8 +3,8 @@
 import { toast } from "sonner";
 
 import type { Document } from "@swy/prisma";
-import { CRUDItem, CRUDItemSkeleton } from "@swy/ui/custom";
 import { Label, Switch } from "@swy/ui/shadcn";
+import { CRUDItem, CRUDItemSkeleton } from "@swy/ui/shared";
 
 import { useDocuments, usePlatform } from "~/hooks";
 import { toIconInfo, type WorkflowContent } from "~/lib";

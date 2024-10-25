@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { MyConnections, myConnectionsColumns } from "@swy/ui/notion";
+import { MyConnections, myConnectionsColumns } from "@swy/notion";
 
 const meta = {
   title: "notion/Data Tables/My Connections",

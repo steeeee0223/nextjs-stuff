@@ -5,9 +5,6 @@ import { useRouter } from "next/navigation";
 import { useAuth, useUser } from "@clerk/nextjs";
 
 import { RoomProvider } from "@swy/liveblocks";
-import { useModal } from "@swy/ui/custom";
-import { useSidebarLayout } from "@swy/ui/hooks";
-import { cn } from "@swy/ui/lib";
 import {
   NavbarSkeleton,
   PageHeader,
@@ -15,12 +12,15 @@ import {
   useSettingsStore,
   useWorkspace,
   type SidebarProps,
-} from "@swy/ui/notion";
+} from "@swy/notion";
+import { useSidebarLayout } from "@swy/ui/hooks";
+import { cn } from "@swy/ui/lib";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@swy/ui/shadcn";
+import { useModal } from "@swy/ui/shared";
 
 import {
   useDocuments,

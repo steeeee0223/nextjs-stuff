@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 
-import { PageHeader } from "@swy/ui/notion";
+import { PageHeader } from "@swy/notion";
 
 import { env } from "~/env";
 import { useDocument, useEdgeStore, usePlatform } from "~/hooks";

@@ -2,15 +2,10 @@
 
 import { SettingsIcon } from "lucide-react";
 
-import { useModal } from "@swy/ui/custom";
-import {
-  SettingsPanel,
-  SettingsPanelProps,
-  SettingsStore,
-} from "@swy/ui/notion";
+import { SettingsPanel, SettingsPanelProps, SettingsStore } from "@swy/notion";
+import { mockConnections } from "@swy/notion/mock";
 import { Button, Dialog, DialogContent } from "@swy/ui/shadcn";
-
-import { mockConnections } from "../__mock__";
+import { useModal } from "@swy/ui/shared";
 
 const Panel = () => {
   const { data, isOpen, setClose } = useModal<SettingsStore>();

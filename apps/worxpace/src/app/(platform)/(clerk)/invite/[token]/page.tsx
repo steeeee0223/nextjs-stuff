@@ -3,8 +3,8 @@
 import { useSearchParams } from "next/navigation";
 import { useClerk, useUser } from "@clerk/nextjs";
 
-import { IconBlock, Spinner } from "@swy/ui/custom";
 import { Button } from "@swy/ui/shadcn";
+import { IconBlock, Spinner } from "@swy/ui/shared";
 
 import { useInvitation } from "~/hooks";
 import { parseBool, toIconInfo } from "~/lib";

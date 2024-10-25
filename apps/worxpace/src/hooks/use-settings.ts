@@ -6,7 +6,7 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { v4 } from "uuid";
 
-import { useSettingsStore, useWorkspace } from "@swy/ui/notion";
+import { useSettingsStore, useWorkspace } from "@swy/notion";
 
 import {
   createAccount as $addAccount,

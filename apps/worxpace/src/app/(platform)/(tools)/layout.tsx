@@ -3,7 +3,7 @@
 import { useCallback, useMemo, type PropsWithChildren } from "react";
 import { useParams } from "next/navigation";
 
-import { TreeProvider } from "@swy/ui/custom";
+import { TreeProvider } from "@swy/ui/shared";
 
 import { GROUPS } from "~/constants/site";
 import { EdgeStoreProvider, useDocuments, usePlatform } from "~/hooks";

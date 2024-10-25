@@ -2,8 +2,8 @@
 
 import { PlusSquare } from "lucide-react";
 
-import { useModal } from "@swy/ui/custom";
 import { Button, Separator } from "@swy/ui/shadcn";
+import { useModal } from "@swy/ui/shared";
 
 import WorkflowModal from "./workflow-create-modal";
 import WorkflowForm from "./workflow-form";
