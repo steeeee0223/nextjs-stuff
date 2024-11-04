@@ -15,6 +15,3 @@ runs:
 
     - shell: bash
       run: pnpm install
-
-    - shell: bash
-      run: pnpm -F prisma build

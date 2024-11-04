@@ -1,21 +1,17 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-import { useTree } from "@swy/ui/shared";
-
 import { updateInternalDocument } from "~/actions";
-import {
-  DetailedDocument,
-  documentFetcher,
-  toIconInfo,
-  type DocumentKey,
-} from "~/lib";
+import { DetailedDocument, documentFetcher, type DocumentKey } from "~/lib";
+import { usePlatform } from "./use-platform";
 
 export const useDocument = (info: Omit<DocumentKey, "type"> | null) => {
-  const { dispatch } = useTree();
+  const router = useRouter();
+  const platform = usePlatform();
   /** Fetcher */
   const key: DocumentKey | null = info ? { type: "document", ...info } : null;
   const {
@@ -23,21 +19,20 @@ export const useDocument = (info: Omit<DocumentKey, "type"> | null) => {
     isLoading,
     error,
   } = useSWR<DetailedDocument, Error>(key, documentFetcher, {
-    onSuccess: ({ title, icon }) => console.log(`[swr:page] ${title} - `, icon),
-    onError: (e) => console.log(`[swr:page]: ${e.message}`),
+    onSuccess: (data) => {
+      if (!data.isPublished && data.workspaceId !== platform.workspaceId)
+        platform.update((prev) => ({ ...prev, workspaceId: data.workspaceId }));
+    },
+    onError: (e) => {
+      console.log(`[swr:page]: ${e.message}`);
+      if (info?.preview) router.push("/");
+    },
     revalidateIfStale: true,
     revalidateOnMount: true,
   });
   /** Mutations */
-  const onError = (e: Error) => toast.error(e.message);
   const { trigger: update } = useSWRMutation(key, updateInternalDocument, {
-    onSuccess: (data) => {
-      dispatch({
-        type: "update:item",
-        payload: { ...data, icon: toIconInfo(data.icon), group: data.type },
-      });
-    },
-    onError,
+    onError: (e: Error) => toast.error(e.message),
   });
 
   return { page, isLoading, error, update };

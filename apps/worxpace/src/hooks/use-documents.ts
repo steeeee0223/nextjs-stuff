@@ -14,23 +14,7 @@ import {
   restoreDocument,
   updateDocument,
 } from "~/actions";
-import {
-  fetchUrl,
-  toPage,
-  type DetailedDocument,
-  type DocumentsKey,
-} from "~/lib";
-
-const fetcher = async ({ workspaceId }: DocumentsKey) => {
-  try {
-    return await fetchUrl<DetailedDocument[]>(
-      `/api/documents?workspaceId=${workspaceId}`,
-    );
-  } catch (error) {
-    console.log(error);
-    throw new Error("Error occurred while fetching documents");
-  }
-};
+import { documentsFetcher, toPage, type DetailedDocument } from "~/lib";
 
 export const useDocuments = ({
   workspaceId,
@@ -45,8 +29,8 @@ export const useDocuments = ({
     isLoading,
     error,
     mutate,
-  } = useSWR<DetailedDocument[], Error>(key, fetcher, {
-    onError: (e) => console.log(`[swr:workspace]: ${e.message}`),
+  } = useSWR<DetailedDocument[], Error>(key, documentsFetcher, {
+    onError: (e) => console.log(`[swr:document]: ${e.message}`),
   });
   const fetchPages = async (): Promise<Page[]> => {
     const documents = await mutate();

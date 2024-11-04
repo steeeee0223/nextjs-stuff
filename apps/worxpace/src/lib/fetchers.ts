@@ -7,25 +7,28 @@ import type { Workspace } from "@swy/prisma";
 
 import * as account from "./account";
 import * as documents from "./documents";
-import { NotFound, UnauthorizedError } from "./errors";
+import { UnauthorizedError } from "./errors";
 import { fetchClient } from "./server";
-import type { DocumentKey, InvitationKey, WorkspaceKey } from "./swr";
+import type {
+  DocumentKey,
+  DocumentsKey,
+  InvitationKey,
+  WorkspaceKey,
+} from "./swr";
 import type { DetailedDocument } from "./types";
 import { emailToUsername } from "./utils";
 import * as workspace from "./workspace";
 
 export const documentFetcher: Fetcher<DetailedDocument, DocumentKey> = async ({
-  type,
   documentId,
   preview,
 }) => {
-  console.log(`[swr:${type}] fetching documents`);
   const document = await documents.getById(documentId);
-  if (!document) throw new NotFound();
+  if (!document) throw new Error("Page not exist");
   // Published & not archived
   if (document.isPublished && !document.isArchived) return document;
   // Public, but either archived or not published
-  if (preview) throw new NotFound();
+  if (preview) throw new Error("Preview on unauthorized page");
   // Verify user if not preview
   const { clerkId } = await fetchClient();
   const inWorkspace = await account.isInWorkspace({
@@ -35,6 +38,16 @@ export const documentFetcher: Fetcher<DetailedDocument, DocumentKey> = async ({
   if (!inWorkspace) throw new UnauthorizedError();
   // Return authorized document
   return document;
+};
+
+export const documentsFetcher: Fetcher<
+  DetailedDocument[],
+  DocumentsKey
+> = async ({ workspaceId }) => {
+  const { clerkId } = await fetchClient();
+  const inWorkspace = await account.isInWorkspace({ clerkId, workspaceId });
+  if (!inWorkspace) throw new UnauthorizedError();
+  return await documents.getByWorkspace({ workspaceId });
 };
 
 export const fetchInitialWorkspace: Fetcher<

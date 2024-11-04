@@ -19,10 +19,10 @@
     "clean": "git clean -xdf .cache .turbo node_modules",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --coverage=false",
+    "test:watch": "vitest --coverage=false",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage",
+    "coverage": "vitest run",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {

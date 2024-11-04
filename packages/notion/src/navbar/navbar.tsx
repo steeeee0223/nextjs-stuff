@@ -57,7 +57,10 @@ export const Navbar = forwardRef<HTMLDivElement, NavbarProps>(function Navbar(
             />
             <div className="z-30 flex items-center gap-x-1">
               <Participants />
-              <Publish page={page} />
+              <Publish
+                page={page}
+                onUpdate={(id, isPublished) => onUpdate?.(id, { isPublished })}
+              />
               <History pageId={page.id} fetchLogs={fetchLogs} />
               <Menu page={page} onChangeState={onChangeState} />
             </div>
