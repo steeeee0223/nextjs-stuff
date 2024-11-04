@@ -1,7 +1,7 @@
 {
   "name": "@swy/prisma",
   "private": true,
-  "version": "1.3.0",
+  "version": "1.4.0",
   "type": "module",
   "exports": {
     ".": {
@@ -14,14 +14,15 @@
     "build": "pnpm db:build && tsc",
     "clean": "git clean -xdf .cache .turbo node_modules",
     "db:build": "pnpm db:format && pnpm db:generate",
-    "db:format": "bash ./scripts/prisma.sh format",
-    "db:generate": "bash ./scripts/prisma.sh generate",
-    "db:push": "bash ./scripts/prisma.sh db push --skip-generate",
+    "db:format": "pnpm with-env bash ./scripts/prisma.sh format",
+    "db:generate": "pnpm with-env bash ./scripts/prisma.sh generate",
+    "db:push": "pnpm with-env bash ./scripts/prisma.sh db push --skip-generate",
     "dev": "pnpm dev:worxpace",
-    "dev:worxpace": "prisma studio --schema prisma/worxpace.prisma",
+    "dev:worxpace": "pnpm with-env prisma studio --schema prisma/worxpace.prisma",
     "format": "prettier --check . --ignore-path ../../.gitignore",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false",
+    "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@prisma/client": "catalog:prisma"
@@ -31,6 +32,7 @@
     "@swy/prettier-config": "workspace:*",
     "@swy/tsconfig": "workspace:*",
     "@types/node": "catalog:node20",
+    "dotenv-cli": "catalog:env",
     "eslint": "catalog:",
     "prettier": "catalog:",
     "prisma": "catalog:prisma",

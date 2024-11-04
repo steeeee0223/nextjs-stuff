@@ -2,7 +2,6 @@
 
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
-import { notFound } from "next/navigation";
 
 import { PageHeader } from "@swy/notion";
 import { Cover, IconBlock } from "@swy/ui/shared";
@@ -17,14 +16,13 @@ interface Params {
 }
 
 const DocumentPage = ({ params: { documentId } }: Params) => {
-  const { page, isLoading, error } = useDocument({ documentId, preview: true });
+  const { page, isLoading } = useDocument({ documentId, preview: true });
   /** Block Note Editor */
   const BlockNoteEditor = useMemo(
     () => dynamic(() => import("~/components/block-editor"), { ssr: false }),
     [],
   );
 
-  if (error) return notFound();
   if (!page || isLoading) return <PageHeader.Skeleton />;
   return (
     <div className="bg-main pb-40">

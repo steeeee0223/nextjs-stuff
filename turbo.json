@@ -12,14 +12,8 @@
         ".cache/tsbuildinfo.json",
         ".next/**",
         "!.next/cache/**",
-        "next-env.d.ts",
-        ".expo/**",
-        ".output/**",
-        ".vercel/output/**",
         "dist/**",
-        "coverage/**",
-        "storybook-static/**",
-        ".generated/**"
+        "storybook-static/**"
       ]
     },
     "db:generate": {
@@ -38,15 +32,16 @@
       "outputLogs": "new-only"
     },
     "lint": {
-      "dependsOn": ["^topo", "^build"],
+      "dependsOn": ["^topo", "@swy/prisma#build", "@swy/liveblocks#build"],
       "outputs": [".cache/.eslintcache"]
     },
     "typecheck": {
-      "dependsOn": ["^topo", "^build"],
+      "dependsOn": ["^topo", "@swy/prisma#build", "@swy/liveblocks#build"],
       "outputs": [".cache/tsbuildinfo.json"]
     },
     "coverage": {
-      "dependsOn": ["^topo"]
+      "dependsOn": ["^topo"],
+      "outputs": ["coverage/**"]
     },
     "test": {
       "dependsOn": ["^topo"]

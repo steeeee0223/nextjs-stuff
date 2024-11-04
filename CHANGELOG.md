@@ -1,5 +1,30 @@
 # Changelog
 
+## Version `1.4.0`
+
+### 🆕 Core Updates
+
+- Update `turbo` task dependencies
+- `worxpace`
+  - Fix: page routing & published page
+  - Fix: window origin
+  - Remove all `useTree`'s
+- `ui`
+  - Rename `@swy/ui/custom` → `@swy/ui/shared`
+  - Move `@swy/ui/dnd` → `@swy/ui/shared`
+  - Move `@swy/ui/form` → `@swy/ui/shared`
+  - Remove unused shadcn components
+  - Remove path alias
+- 🆕 `notion`
+  - New package from `@swy/ui/notion`
+  - Mocking data at `@swy/notion/mock`
+- `prisma`
+  - Remove `.env`, use root instead
+- `validators`
+  - Move common types here
+- `eslint`
+  - Upgrade & add rules
+
 ## Version `1.3.0`
 
 ### 🆕 Core Updates

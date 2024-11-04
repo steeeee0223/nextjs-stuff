@@ -12,6 +12,7 @@ import {
 
 import {
   useDocument,
+  useDocuments,
   useEdgeStore,
   useHistory,
   useOthers,
@@ -32,6 +33,7 @@ const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
     const { accountId, workspaceId } = usePlatform();
     const currentUser = useSelf();
     const otherUsers = useOthers();
+    const { fetchPages } = useDocuments({ workspaceId });
     const {
       page: doc,
       isLoading,
@@ -41,34 +43,37 @@ const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
     /** Edgestore */
     const { deleteFile } = useEdgeStore();
     /** Page */
-    const pageProps: PageProviderProps = {
-      isLoading,
-      page: toPage(doc),
-      currentUser,
-      otherUsers,
-      fetchLogs,
-      onChangeState,
-      onUpdate: (id, { icon, coverImage, ...data }) => {
-        // if icon is updated
-        if (icon !== undefined) void deleteFile(toIconInfo(doc?.icon));
-        // if coverImage is updated
-        if (coverImage !== undefined) void deleteFile(doc?.coverImage);
-        void update({
-          id,
-          accountId,
-          workspaceId,
-          icon: !icon ? icon : toIcon(icon),
-          coverImage,
-          ...data,
-          log: true,
-        });
-      },
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    const onUpdate: PageProviderProps["onUpdate"] = async (
+      id,
+      { icon, coverImage, ...data },
+    ) => {
+      // if icon is updated
+      if (icon !== undefined) await deleteFile(toIconInfo(doc?.icon));
+      // if coverImage is updated
+      if (coverImage !== undefined) await deleteFile(doc?.coverImage);
+      await update({
+        id,
+        accountId,
+        workspaceId,
+        icon: !icon ? icon : toIcon(icon),
+        coverImage,
+        ...data,
+        log: true,
+      });
+      if (icon !== undefined) await fetchPages();
     };
 
     return (
       <PageProvider
         className="order-3 flex size-full flex-col overflow-hidden"
-        {...pageProps}
+        isLoading={isLoading}
+        page={toPage(doc)}
+        currentUser={currentUser}
+        otherUsers={otherUsers}
+        fetchLogs={fetchLogs}
+        onChangeState={onChangeState}
+        onUpdate={onUpdate}
       >
         {isLoading ? (
           <NavbarSkeleton />
