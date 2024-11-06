@@ -5,7 +5,6 @@
 import React, { useEffect, useState } from "react";
 import { HelpCircle, Trash, Undo } from "lucide-react";
 import { toast } from "sonner";
-import stableHash from "stable-hash";
 
 import { cn } from "@swy/ui/lib";
 import {
@@ -136,11 +135,7 @@ export const TrashBox = ({
                   )}
                 >
                   <div className="flex items-center gap-x-1 pl-2">
-                    <IconBlock
-                      key={stableHash(icon)}
-                      defaultIcon={icon ?? { type: "emoji", emoji: " " }}
-                      editable={false}
-                    />
+                    <IconBlock icon={icon ?? { type: "text", text: title }} />
                     <span className="truncate">{title}</span>
                   </div>
                   <div className="flex items-center gap-x-1 p-1">

@@ -41,7 +41,6 @@ export default function Page() {
     await createWorkspace({
       createdBy: account.id,
       name: `${name}'s Workspace`,
-      icon: { type: "lucide", src: "coffee", color: "#9F6B53" },
     });
   };
 

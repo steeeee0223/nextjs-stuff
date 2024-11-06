@@ -64,7 +64,6 @@
     "react-resizable-panels": "^2.1.2",
     "react-textarea-autosize": "^8.5.3",
     "sonner": "catalog:ui",
-    "stable-hash": "^0.0.4",
     "tailwind-merge": "^2.5.4",
     "unsplash-js": "^7.0.19",
     "usehooks-ts": "^2.9.1",

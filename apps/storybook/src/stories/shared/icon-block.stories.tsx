@@ -11,28 +11,27 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Emoji: Story = {
   args: {
     size: "md",
-    defaultIcon: { type: "emoji", emoji: "🚀" },
-  },
-};
-export const NonEditable: Story = {
-  args: {
-    size: "md",
-    defaultIcon: { type: "emoji", emoji: "🚀" },
-    editable: false,
+    icon: { type: "emoji", emoji: "🚀" },
   },
 };
 export const Lucide: Story = {
   args: {
     size: "md",
-    defaultIcon: { type: "lucide", name: "badge-euro", color: "#3e9392" },
+    icon: { type: "lucide", name: "badge-euro", color: "#3e9392" },
   },
 };
 export const ImageUrl: Story = {
   args: {
     size: "md",
-    defaultIcon: { type: "file", url: "https://github.com/shadcn.png" },
+    icon: { type: "file", url: "https://github.com/shadcn.png" },
+  },
+};
+export const Text: Story = {
+  args: {
+    size: "md",
+    icon: { type: "text", text: "John" },
   },
 };

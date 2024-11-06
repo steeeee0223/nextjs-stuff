@@ -44,8 +44,7 @@ export default function Page({ params: { token } }: Params) {
         <>
           <div className="flex w-[320px] flex-col items-center gap-4">
             <IconBlock
-              editable={false}
-              defaultIcon={toIconInfo(data.workspace.icon)}
+              icon={toIconInfo(data.workspace.icon, data.workspace.name)}
               size="lg"
             />
             <h1 className="flex w-full flex-col text-center text-xl font-medium">

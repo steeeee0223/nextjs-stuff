@@ -85,7 +85,7 @@ export const useSettings = (
     onSuccess: ({ id, name, icon }) =>
       dispatch({
         type: "update",
-        payload: { id, name, icon: toIconInfo(icon) },
+        payload: { id, name, icon: toIconInfo(icon, name) },
       }),
   });
   const { trigger: deleteAccount } = useSWRMutation(key, $delAccount, options);

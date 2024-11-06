@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronsUpDown } from "lucide-react";
-import stableHash from "stable-hash";
 
 import { cn } from "@swy/ui/lib";
 import {
@@ -13,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@swy/ui/shadcn";
-import { IconBlock } from "@swy/ui/shared";
+import { IconBlock, type IconInfo } from "@swy/ui/shared";
 
 import { useWorkspace } from "../workspace-provider";
 import { HeaderDropdown, WorkspaceList } from "./_components";
@@ -36,6 +35,10 @@ export const WorkspaceSwitcher = ({
   onSelect,
 }: WorkspaceSwitcherProps) => {
   const { user, activeWorkspace, select, dispatch } = useWorkspace();
+  const icon: IconInfo = activeWorkspace?.icon ?? {
+    type: "text",
+    text: activeWorkspace?.name ?? " ",
+  };
   const handleLogout = () => {
     select();
     dispatch({ type: "set", payload: [] });
@@ -57,14 +60,7 @@ export const WorkspaceSwitcher = ({
           )}
         >
           <div className="flex max-w-[150px] items-center gap-x-2">
-            <IconBlock
-              editable={false}
-              size="sm"
-              defaultIcon={
-                activeWorkspace?.icon ?? { type: "emoji", emoji: " " }
-              }
-              key={stableHash(activeWorkspace?.icon)}
-            />
+            <IconBlock size="sm" icon={icon} />
             <span className="overflow-hidden text-ellipsis text-start font-medium text-primary dark:text-primary/80">
               {activeWorkspace?.name}
             </span>

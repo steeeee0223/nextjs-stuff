@@ -3,35 +3,21 @@ import userEvent, { type UserEvent } from "@testing-library/user-event";
 
 import "../../../../__test__/mock/intersection-observer";
 
-import { IconBlock, type IconInfo } from ".";
+import { IconBlock, type IconInfo } from "../icon-block";
+import { IconMenu } from "./icon-menu";
 
-describe("<IconBlock />", () => {
-  it("should render the emoji", () => {
-    const iconInfo: IconInfo = { type: "emoji", emoji: "🚀" };
-    const { getByText } = render(
-      <IconBlock defaultIcon={iconInfo} editable={false} />,
-    );
-    expect(getByText(iconInfo.emoji)).toBeDefined();
-  });
-  // it("should render the image url", async () => {
-  //   const iconInfo: IconInfo = {
-  //     type: "file",
-  //     url: "https://github.com/shadcn.png",
-  //   };
-  //   const ui = render(<IconBlock defaultIcon={iconInfo} />);
-  //   const img = await ui.findByRole("img");
-  //   expect(img).toBeInTheDocument();
-  // });
-});
-
-describe("<IconBlock /> - Menu", () => {
+describe("<IconMenu />", () => {
   let rendered: RenderResult;
   let user: UserEvent;
 
   beforeEach(async () => {
     user = userEvent.setup();
-    const iconInfo: IconInfo = { type: "emoji", emoji: "🚀" };
-    rendered = render(<IconBlock defaultIcon={iconInfo} editable />);
+    const icon: IconInfo = { type: "emoji", emoji: "🚀" };
+    rendered = render(
+      <IconMenu>
+        <IconBlock icon={icon} />
+      </IconMenu>,
+    );
     const display = rendered.getByRole("button");
     await act(() => user.click(display));
   });

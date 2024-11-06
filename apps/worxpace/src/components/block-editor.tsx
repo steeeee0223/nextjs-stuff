@@ -1,9 +1,13 @@
 "use client";
 
-import type { BlockNoteEditor, PartialBlock } from "@blocknote/core";
+import type { PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
-import { useTheme } from "next-themes";
+
+import { useTheme } from "@swy/ui/shadcn";
+
+import { schema, type CustomEditor } from "~/components/blocknote";
+import { CustomSlashMenu } from "./blocknote";
 
 import "@blocknote/mantine/style.css";
 import "@blocknote/core/fonts/inter.css";
@@ -24,7 +28,8 @@ const Editor = ({
 }: EditorProps) => {
   const { resolvedTheme } = useTheme();
 
-  const editor: BlockNoteEditor = useCreateBlockNote({
+  const editor: CustomEditor = useCreateBlockNote({
+    schema,
     initialContent: initialContent
       ? (JSON.parse(initialContent) as PartialBlock[])
       : undefined,
@@ -34,11 +39,14 @@ const Editor = ({
   return (
     <div>
       <BlockNoteView
-        editable={editable}
         editor={editor}
+        slashMenu={false}
+        editable={editable}
         onChange={() => onChange?.(JSON.stringify(editor.document))}
         theme={resolvedTheme === "dark" ? "dark" : "light"}
-      />
+      >
+        <CustomSlashMenu editor={editor} />
+      </BlockNoteView>
     </div>
   );
 };

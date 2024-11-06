@@ -1,16 +1,24 @@
 import type { IconInfo } from "@swy/ui/shared";
 
+/**
+ * @see `constants/color.ts` in `@swy/ui`
+ */
+const defaultColor = "#55534E";
 export function generateDefaultIcon(type?: string): IconInfo {
   switch (type) {
     case "document":
-      return { type: "lucide", name: "file" };
+      return { type: "lucide", name: "file", color: defaultColor };
     case "kanban":
-      return { type: "lucide", name: "columns-3" };
+      return { type: "lucide", name: "columns-3", color: defaultColor };
     case "whiteboard":
-      return { type: "lucide", name: "presentation" };
+      return { type: "lucide", name: "presentation", color: defaultColor };
     case "workflow":
-      return { type: "lucide", name: "git-pull-request-arrow" };
+      return {
+        type: "lucide",
+        name: "git-pull-request-arrow",
+        color: defaultColor,
+      };
     default:
-      return { type: "emoji", emoji: " " };
+      return { type: "text", text: " " };
   }
 }

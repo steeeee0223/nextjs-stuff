@@ -4,7 +4,7 @@ import React from "react";
 
 import { useTranslation } from "@swy/i18n";
 import { Button, Input, Separator, Switch } from "@swy/ui/shadcn";
-import { IconBlock, useModal, type IconInfo } from "@swy/ui/shared";
+import { IconBlock, IconMenu, useModal, type IconInfo } from "@swy/ui/shared";
 
 import { Content, Section, SectionItem, TextLink } from "../_components";
 import { DeleteWorkspace } from "../modals";
@@ -30,7 +30,8 @@ export const Settings2 = () => {
   const onUpdateName = (e: React.ChangeEvent<HTMLInputElement>) =>
     update({ workspace: { name: e.target.value } });
   const onUpdateIcon = (icon: IconInfo) => update({ workspace: { icon } });
-  const onRemoveIcon = () => update({ workspace: { icon: undefined } });
+  const onRemoveIcon = () =>
+    update({ workspace: { icon: { type: "text", text: workspace.name } } });
   const onUploadIcon = async (file: File) => {
     const replaceTargetUrl =
       workspace.icon.type === "file" ? workspace.icon.url : undefined;
@@ -59,13 +60,13 @@ export const Settings2 = () => {
         <Separator className="my-4" />
         <Content {...workspaceSettings.icon}>
           <div className="rounded-md border border-border p-0.5">
-            <IconBlock
-              defaultIcon={workspace.icon}
-              size="lg"
+            <IconMenu
               onSelect={onUpdateIcon}
               onRemove={onRemoveIcon}
               onUpload={onUploadIcon}
-            />
+            >
+              <IconBlock icon={workspace.icon} size="lg" />
+            </IconMenu>
           </div>
         </Content>
       </Section>

@@ -14,9 +14,10 @@ import {
 } from "@swy/ui/shadcn";
 
 const urlSchema = z.object({
-  url: z.string().min(1, {
-    message: "Url should not be empty",
-  }),
+  url: z
+    .string()
+    .min(1, { message: "URL should not be empty" })
+    .url({ message: "Invalid URL" }),
 });
 
 interface UrlFormProps {

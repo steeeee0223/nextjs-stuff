@@ -3,11 +3,17 @@
 "use client";
 
 import React, { forwardRef } from "react";
-import { MoreHorizontal, Plus, Trash } from "lucide-react";
-import stableHash from "stable-hash";
+import {
+  ChevronDown,
+  ChevronRight,
+  MoreHorizontal,
+  Plus,
+  Trash,
+} from "lucide-react";
 
 import { cn } from "@swy/ui/lib";
 import {
+  Button,
   buttonVariants,
   DropdownMenu,
   DropdownMenuContent,
@@ -81,43 +87,27 @@ export const CRUDItem = forwardRef<HTMLDivElement, CRUDItemProps>(function Item(
       role="button"
       style={{ paddingLeft: `${(level + 1) * 12}px` }}
       className={cn(
-        buttonVariants({ variant: "hint" }),
-        "group h-[27px] w-full justify-normal py-1 pr-3 text-secondary dark:text-secondary-dark",
+        buttonVariants({ variant: "subitem" }),
+        "group h-[27px] w-full justify-normal py-1 pr-3 font-medium",
         active && "bg-primary/10 text-primary dark:text-primary/80",
         className,
       )}
     >
       <div className="group/icon">
-        {expandable && (
-          <>
-            <IconBlock
-              className={cn(
-                "hidden shrink-0 text-muted dark:text-muted-dark",
-                expanded && "group-hover/icon:flex",
-              )}
-              defaultIcon={{ type: "lucide", name: "chevron-down" }}
-              editable={false}
-              onClick={handleExpand}
-            />
-            <IconBlock
-              className={cn(
-                "hidden shrink-0 text-muted dark:text-muted-dark",
-                !expanded && "group-hover/icon:flex",
-              )}
-              defaultIcon={{ type: "lucide", name: "chevron-right" }}
-              editable={false}
-              onClick={handleExpand}
-            />
-          </>
-        )}
-        <IconBlock
+        <Button
+          variant="hint"
+          size="icon-sm"
           className={cn(
-            "shrink-0 text-muted dark:text-muted-dark",
-            expandable && "group-hover/icon:hidden",
+            "relative hidden shrink-0 p-0.5",
+            expandable && "group-hover/icon:flex",
           )}
-          key={stableHash(icon)}
-          defaultIcon={icon}
-          editable={false}
+          onClick={handleExpand}
+        >
+          {expanded ? <ChevronDown /> : <ChevronRight />}
+        </Button>
+        <IconBlock
+          className={cn(expandable && "group-hover/icon:hidden")}
+          icon={icon}
         />
       </div>
       <span className="ml-1 truncate">{label}</span>
