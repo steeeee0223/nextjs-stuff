@@ -4,17 +4,23 @@
 
 ### 🆕 Core Updates
 
-- Update `turbo` task dependencies
+- `repo` Update `turbo` task dependencies
 - `worxpace`
   - Fix: page routing & published page
   - Fix: window origin
+  - Fix: workspace default icon
   - Remove all `useTree`'s
+  - Remove API: `/api/documents`
 - `ui`
-  - Rename `@swy/ui/custom` → `@swy/ui/shared`
-  - Move `@swy/ui/dnd` → `@swy/ui/shared`
-  - Move `@swy/ui/form` → `@swy/ui/shared`
+  - Rename & move packages
+    1. `@swy/ui/custom` → `@swy/ui/shared`
+    2. `@swy/ui/dnd` → `@swy/ui/shared`
+    3. `@swy/ui/form` → `@swy/ui/shared`
+  - Refactor components: `IconBlock`
+  - Rename: `IconPicker` → `EmojiPicker`
   - Remove unused shadcn components
   - Remove path alias
+  - Remove `stable-hash`
 - 🆕 `notion`
   - New package from `@swy/ui/notion`
   - Mocking data at `@swy/notion/mock`

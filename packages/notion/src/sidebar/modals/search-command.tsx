@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { ArrowUpDown } from "lucide-react";
 import { toast } from "sonner";
-import stableHash from "stable-hash";
 
 import { cn } from "@swy/ui/lib";
 import {
@@ -103,10 +102,8 @@ export const SearchCommand = ({
                 className="group mx-1.5 flex min-h-9 items-center gap-2 py-2"
               >
                 <IconBlock
-                  key={stableHash(icon)}
-                  defaultIcon={icon ?? generateDefaultIcon(type)}
-                  editable={false}
-                  className="p-0"
+                  icon={icon ?? generateDefaultIcon(type)}
+                  className="leading-[1.2]"
                 />
                 <span className="flex-1 text-sm font-medium">{title}</span>
                 <div className="flex-0 flex h-3 items-center text-xs text-muted dark:text-muted-dark">

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * @reference https://github.com/shadcn-ui/ui/issues/3647
+ * @see https://github.com/shadcn-ui/ui/issues/3647
  */
 import React, { forwardRef, useCallback, useEffect } from "react";
 import { XIcon } from "lucide-react";

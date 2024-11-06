@@ -14,8 +14,8 @@ import {
 } from "@swy/ui/shadcn";
 import { SingleImageDropzone } from "@swy/ui/shared";
 
+import { UrlForm } from "../common";
 import { Unsplash } from "../unsplash";
-import { UrlForm } from "./url-form";
 
 /** Styles */
 const styles = {

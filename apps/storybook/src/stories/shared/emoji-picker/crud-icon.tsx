@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Smile, X } from "lucide-react";
 
 import { Button } from "@swy/ui/shadcn";
-import { IconPicker } from "@swy/ui/shared";
+import { EmojiPicker } from "@swy/ui/shared";
 
 const CrudIcon = () => {
   const [icon, setIcon] = useState("");
@@ -15,9 +15,9 @@ const CrudIcon = () => {
     <div className="group relative pl-[54px]">
       {icon ? (
         <div className="group/icon flex items-center gap-x-2 pt-6">
-          <IconPicker onChange={onUpdateIcon}>
+          <EmojiPicker onChange={onUpdateIcon}>
             <p className="text-6xl transition hover:opacity-75">{icon}</p>
-          </IconPicker>
+          </EmojiPicker>
           <Button
             onClick={onRemoveIcon}
             className="rounded-full text-xs text-muted opacity-0 transition group-hover/icon:opacity-100 dark:text-muted-dark"
@@ -28,12 +28,12 @@ const CrudIcon = () => {
         </div>
       ) : (
         <div className="flex items-center gap-x-2 py-4">
-          <IconPicker asChild onChange={onUpdateIcon}>
+          <EmojiPicker asChild onChange={onUpdateIcon}>
             <Button className="text-xs" variant="hint" size="sm">
               <Smile className="mr-2 size-4" />
               Add icon
             </Button>
-          </IconPicker>
+          </EmojiPicker>
         </div>
       )}
     </div>

@@ -8,7 +8,6 @@ import {
   type KeyboardEvent,
 } from "react";
 import { toast } from "sonner";
-import stableHash from "stable-hash";
 
 import { Button, Input, Skeleton } from "@swy/ui/shadcn";
 import { IconBlock } from "@swy/ui/shared";
@@ -58,12 +57,7 @@ export const Title = ({ editable = true, page, onUpdate }: TitleProps) => {
 
   return (
     <div className="flex items-center gap-x-1">
-      <IconBlock
-        key={stableHash(icon)}
-        defaultIcon={icon}
-        editable={false}
-        className="flex-shrink-0"
-      />
+      <IconBlock icon={icon} />
       {editable && isEditing ? (
         <Input
           ref={inputRef}

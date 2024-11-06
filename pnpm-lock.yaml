@@ -889,9 +889,6 @@ importers:
       sonner:
         specifier: catalog:ui
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      stable-hash:
-        specifier: ^0.0.4
-        version: 0.0.4
       tailwind-merge:
         specifier: ^2.5.4
         version: 2.5.4
@@ -9961,9 +9958,6 @@ packages:
 
   sprintf-js@1.1.3:
     resolution: {integrity: sha512-Oo+0REFV59/rz3gfJNKQiBlwfHaSESl1pcGyABQsnnIfWOFt6JNj5gCog2U6MLZ//IGYD+nA8nI+mTShREReaA==}
-
-  stable-hash@0.0.4:
-    resolution: {integrity: sha512-LjdcbuBeLcdETCrPn9i8AYAZ1eCtu4ECAWtP7UleOiZ9LzVxRzzUZEoZ8zB24nhkQnDWyET0I+3sWokSDS3E7g==}
 
   stackback@0.0.2:
     resolution: {integrity: sha512-1XMJE5fQo1jGH6Y/7ebnwPOBEkIEnT4QF32d5R1+VXdXveM0IBMJt8zfaxX1P3QhVwrYe+576+jkANtSS2mBbw==}
@@ -21594,8 +21588,6 @@ snapshots:
   space-separated-tokens@2.0.2: {}
 
   sprintf-js@1.1.3: {}
-
-  stable-hash@0.0.4: {}
 
   stackback@0.0.2: {}
 

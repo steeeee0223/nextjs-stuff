@@ -39,6 +39,7 @@ export const documents: TreeItem[] = [
     group: "document",
     id: "page5",
     title: "System flowchart",
+    icon: { type: "text", text: "System" },
     parentId: null,
   },
   {
@@ -59,6 +60,23 @@ export const documents: TreeItem[] = [
     id: "page8",
     title: "System flowchart",
     parentId: null,
+  },
+  {
+    group: "document",
+    id: "page9",
+    parentId: "page3",
+    title: "The High Table",
+    icon: {
+      type: "file",
+      url: "https://cdn.iconscout.com/icon/premium/png-256-thumb/bar-table-1447763-1224177.png",
+    },
+  },
+  {
+    group: "document",
+    id: "page10",
+    parentId: "page3",
+    title: "The Continental",
+    icon: { type: "emoji", emoji: "🏠" },
   },
 ];
 

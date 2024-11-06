@@ -1,7 +1,7 @@
 "use client";
 
 import type { PropsWithChildren } from "react";
-import EmojiPicker, { Theme } from "emoji-picker-react";
+import EmojiPickerPrimitive, { Theme } from "emoji-picker-react";
 import { useTheme } from "next-themes";
 
 import { Popover, PopoverContent, PopoverTrigger } from "@swy/ui/shadcn";
@@ -11,16 +11,16 @@ const THEME_MAP = {
   light: Theme.LIGHT,
 };
 
-interface IconPickerProps extends PropsWithChildren {
+interface EmojiPickerProps extends PropsWithChildren {
   asChild?: boolean;
   onChange?: (icon: string) => void;
 }
 
-export const IconPicker = ({
+export const EmojiPicker = ({
   onChange,
   children,
   asChild,
-}: IconPickerProps) => {
+}: EmojiPickerProps) => {
   const { resolvedTheme } = useTheme();
   const currentTheme = (resolvedTheme ?? "light") as keyof typeof THEME_MAP;
   const theme = THEME_MAP[currentTheme];
@@ -29,7 +29,7 @@ export const IconPicker = ({
     <Popover>
       <PopoverTrigger asChild={asChild}>{children}</PopoverTrigger>
       <PopoverContent className="w-full">
-        <EmojiPicker
+        <EmojiPickerPrimitive
           height={350}
           theme={theme}
           onEmojiClick={(data) => onChange?.(data.emoji)}

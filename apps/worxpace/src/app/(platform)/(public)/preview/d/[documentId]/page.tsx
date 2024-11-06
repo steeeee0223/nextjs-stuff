@@ -29,13 +29,7 @@ const DocumentPage = ({ params: { documentId } }: Params) => {
       <Cover preview unsplashAPIKey="" url={page.coverImage?.url ?? null} />
       <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
         <div className="group relative pl-[54px]">
-          {page.icon && (
-            <IconBlock
-              defaultIcon={toIconInfo(page.icon)}
-              editable={false}
-              size="lg"
-            />
-          )}
+          {page.icon && <IconBlock icon={toIconInfo(page.icon)} size="lg" />}
           <div className="flex items-center gap-x-1 py-4 opacity-0 group-hover:opacity-100" />
           <div className="break-words pb-[11.5px] text-5xl font-bold text-[#3F3F3F] outline-none dark:text-[#CFCFCF]">
             {page.title}

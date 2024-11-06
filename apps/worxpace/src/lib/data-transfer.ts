@@ -6,7 +6,6 @@ import type {
   SettingsStore,
   Workspace as WorkspaceData,
 } from "@swy/notion";
-import { generateDefaultIcon } from "@swy/notion";
 import type { Account, Icon, Membership, Workspace } from "@swy/prisma";
 import type { IconInfo, TreeItem } from "@swy/ui/shared";
 import { Plan, Role } from "@swy/validators";
@@ -14,8 +13,8 @@ import { Plan, Role } from "@swy/validators";
 import type { AccountMemberships, WorkspaceMembership } from "./account";
 import type { DetailedDocument } from "./types";
 
-export function toIconInfo(icon?: Icon | null, defaultIcon?: string): IconInfo {
-  if (!icon) return generateDefaultIcon(defaultIcon);
+export function toIconInfo(icon?: Icon | null, fallback?: string): IconInfo {
+  if (!icon) return { type: "text", text: fallback ?? " " };
   const { type, src, color } = icon;
   switch (type) {
     case "emoji":
@@ -27,7 +26,7 @@ export function toIconInfo(icon?: Icon | null, defaultIcon?: string): IconInfo {
   }
 }
 
-export function toIcon(info: IconInfo): Icon {
+export function toIcon(info: IconInfo): Icon | null {
   switch (info.type) {
     case "emoji":
       return { type: info.type, src: info.emoji, color: null };
@@ -35,6 +34,8 @@ export function toIcon(info: IconInfo): Icon {
       return { type: info.type, src: info.name, color: info.color ?? null };
     case "file":
       return { type: info.type, src: info.url, color: null };
+    default:
+      return null;
   }
 }
 
@@ -79,7 +80,7 @@ export function toWorkspaceList(
   return workspaces.map(({ workspace }) => ({
     id: workspace.id,
     name: workspace.name,
-    icon: toIconInfo(workspace.icon),
+    icon: toIconInfo(workspace.icon, workspace.name),
     role: Role[
       workspace.memberships.find(
         (membership) => membership.accountId === accountId,
@@ -104,7 +105,7 @@ export function toSettingsStore(
       id: workspace.id,
       name: workspace.name,
       role: Role[membership!.role],
-      icon: toIconInfo(workspace.icon),
+      icon: toIconInfo(workspace.icon, workspace.name),
       inviteLink: `${origin}/invite/${workspace.inviteToken}`,
       domain: workspace.domain,
       plan: Plan[workspace.plan],

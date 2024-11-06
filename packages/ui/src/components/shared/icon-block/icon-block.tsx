@@ -1,31 +1,17 @@
 "use client";
 
-import { MouseEventHandler, useMemo, useState, useTransition } from "react";
-import dynamic from "next/dynamic";
+import React, { lazy, Suspense, useMemo } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Theme, type EmojiClickData } from "emoji-picker-react";
-import { useTheme } from "next-themes";
-
-import "./styles.css";
+import dynamicIconImports from "lucide-react/dynamicIconImports";
 
 import { cn } from "@swy/ui/lib";
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@swy/ui/shadcn";
+import { Avatar, AvatarFallback, AvatarImage } from "@swy/ui/shadcn";
 
-import IconDisplay from "./display";
-import { useIconBlock } from "./icon-block-context";
-import type { LucideName } from "./index.types";
-import { UrlForm } from "./url-form";
+import { Spinner } from "../spinner";
+import type { IconInfo } from "./types";
+import { getLetter, isEmoji } from "./utils";
 
-const iconBlockVariants = cva("", {
+const iconBlockVariants = cva("shrink-0", {
   variants: {
     size: {
       sm: "size-5 rounded-sm p-0.5 text-sm/4",
@@ -38,138 +24,80 @@ const iconBlockVariants = cva("", {
 });
 
 export interface IconBlockProps extends VariantProps<typeof iconBlockVariants> {
-  editable?: boolean;
   className?: string;
-  /** @method onClick this fires only if `editable` is set to `false` */
-  onClick?: MouseEventHandler<HTMLButtonElement>;
+  icon: IconInfo;
+  fallback?: string;
 }
 
-export const IconBlock = ({
+/**
+ * A block for icon display.
+ */
+export const IconBlock: React.FC<IconBlockProps> = ({
   className,
   size,
-  editable = true,
-  onClick,
-}: IconBlockProps) => {
-  /** Theme */
-  const { resolvedTheme } = useTheme();
-  const theme = resolvedTheme === "dark" ? Theme.DARK : Theme.LIGHT;
-  /** Icon Info */
-  const { currentIcon, setIcon, setColor, remove, upload } = useIconBlock();
-  const handleEmojiSelect = ({ emoji }: EmojiClickData) =>
-    setIcon({ type: "emoji", emoji });
-  const handleLucideSelect = (name: LucideName, color?: string) =>
-    setIcon({ type: "lucide", name, color });
-  const handleUrlSubmit = (url: string) => setIcon({ type: "file", url });
-  /** Upload */
-  const [isPending, startTransition] = useTransition();
-  const [file, setFile] = useState<File>();
-  const handleUpload = (file?: File) => {
-    if (file) {
-      startTransition(() => {
-        setFile(file);
-        upload(file);
-      });
-    }
-    setFile(undefined);
-  };
-  /** UI */
-  const EmojiPicker = useMemo(
-    () => dynamic(() => import("emoji-picker-react"), { ssr: false }),
-    [],
-  );
-  const LucidePicker = useMemo(
-    () => dynamic(() => import("./lucide-picker"), { ssr: false }),
-    [],
-  );
-  const ImageDropzone = useMemo(
-    () =>
-      dynamic(() => import("../single-image-dropzone"), {
-        ssr: false,
-      }),
-    [],
-  );
+  ...props
+}) => {
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="subitem"
-          className={cn(
-            "p-0 disabled:opacity-100",
-            iconBlockVariants({ size }),
-            className,
-          )}
-          disabled={!editable && !onClick}
-          onClick={!editable ? onClick : undefined}
-        >
-          <IconDisplay iconInfo={currentIcon} className="size-full" />
-        </Button>
-      </PopoverTrigger>
-      {editable && (
-        <PopoverContent className="h-[356px] w-[408px]">
-          <Tabs defaultValue="emoji" className="relative my-0.5 w-full">
-            <TabsList>
-              <div className="flex grow">
-                <TabsTrigger value="emoji">Emojis</TabsTrigger>
-                <TabsTrigger value="lucide">Icons</TabsTrigger>
-                <TabsTrigger value="file">Upload</TabsTrigger>
-              </div>
-              <div className="flex grow-0">
-                <Button
-                  onClick={remove}
-                  variant="hint"
-                  size="sm"
-                  className="my-1 p-1"
-                >
-                  Remove
-                </Button>
-              </div>
-            </TabsList>
-            <TabsContent value="emoji" className="p-0 pt-3">
-              <EmojiPicker
-                height="300px"
-                width="406px"
-                theme={theme}
-                skinTonesDisabled
-                onEmojiClick={handleEmojiSelect}
-              />
-            </TabsContent>
-            <TabsContent value="lucide" className="px-5 pb-2 pt-4">
-              <LucidePicker
-                onSelect={handleLucideSelect}
-                onColorChange={setColor}
-              />
-            </TabsContent>
-            <TabsContent value="file" className="px-5 pb-2 pt-4">
-              <UrlForm disabled={isPending} onUrlSubmit={handleUrlSubmit} />
-              <ImageDropzone
-                className="mt-6 w-full"
-                disabled={isPending}
-                value={file}
-                onChange={handleUpload}
-              />
-              <p className="p-4 text-center text-xs text-muted dark:text-muted-dark">
-                Recommended size is 280 × 280 pixels
-              </p>
-            </TabsContent>
-          </Tabs>
-        </PopoverContent>
-      )}
-    </Popover>
+    <Icon {...props} className={cn(iconBlockVariants({ size, className }))} />
   );
 };
 
-IconBlock.Skeleton = function IconSkeleton({
-  className,
-  size,
-}: Pick<IconBlockProps, "size" | "className">) {
-  return (
-    <div
-      className={cn(
-        "shrink-0 justify-center",
-        iconBlockVariants({ size, className }),
-      )}
-    >
-      {" "}
-    </div>
+const LucideIcon: React.FC<{
+  icon: Extract<IconInfo, { type: "lucide" }>;
+  className?: string;
+}> = ({ icon, className }) => {
+  const Lucide = useMemo(
+    () => lazy(dynamicIconImports[icon.name]),
+    [icon.name],
   );
+  return (
+    <Suspense fallback={<Spinner className={className} />}>
+      <Lucide color={icon.color} className={className} aria-label={icon.name} />
+    </Suspense>
+  );
+};
+
+const Icon: React.FC<Omit<IconBlockProps, "size">> = ({
+  className,
+  icon,
+  fallback = " ",
+}) => {
+  switch (icon.type) {
+    case "lucide":
+      return <LucideIcon icon={icon} className={className} />;
+    case "file":
+      return (
+        <Avatar className={className}>
+          <AvatarFallback className="bg-transparent">
+            <Spinner className={className} />
+          </AvatarFallback>
+          <AvatarImage src={icon.url} alt="icon" />
+        </Avatar>
+      );
+    default: {
+      if (icon.type === "emoji" && isEmoji(icon.emoji)) {
+        return (
+          <div
+            className={cn(
+              "text-center text-primary dark:text-primary/80",
+              className,
+            )}
+          >
+            {icon.emoji}
+          </div>
+        );
+      }
+      const letter = getLetter(icon, fallback);
+      return (
+        <div
+          className={cn(
+            "bg-primary/10 text-center text-secondary dark:text-secondary-dark",
+            className,
+          )}
+        >
+          {letter}
+        </div>
+      );
+    }
+  }
 };

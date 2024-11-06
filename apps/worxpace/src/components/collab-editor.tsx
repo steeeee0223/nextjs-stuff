@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import type { PartialBlock } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
-import { useTheme } from "next-themes";
 import * as Y from "yjs";
+
+import { useTheme } from "@swy/ui/shadcn";
 
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/react/style.css";

@@ -4,7 +4,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
-import stableHash from "stable-hash";
 
 import { Badge, DropdownMenuItem } from "@swy/ui/shadcn";
 import { IconBlock } from "@swy/ui/shared";
@@ -112,12 +111,7 @@ export const WorkspaceList = ({ onSelect }: WorkspaceListProps) => {
             <Icon.DragHandle className="block size-3 flex-shrink-0 fill-primary/45" />
           </div>
           <div draggable={false} className="flex items-center">
-            <IconBlock
-              editable={false}
-              size="md"
-              defaultIcon={workspace.icon}
-              key={stableHash(workspace.icon)}
-            />
+            <IconBlock size="md" icon={workspace.icon} />
           </div>
           <Title workspace={workspace} onClick={handleClick} />
           {activeWorkspace?.id === workspace.id && (

@@ -3,10 +3,15 @@
 import { useRef, useState, type ChangeEvent, type KeyboardEvent } from "react";
 import { ImageIcon } from "lucide-react";
 import TextareaAutosize from "react-textarea-autosize";
-import stableHash from "stable-hash";
 
 import { Button, Skeleton } from "@swy/ui/shadcn";
-import { Cover, CoverPicker, IconBlock, type IconInfo } from "@swy/ui/shared";
+import {
+  Cover,
+  CoverPicker,
+  IconBlock,
+  IconMenu,
+  type IconInfo,
+} from "@swy/ui/shared";
 
 import { generateDefaultIcon } from "../common";
 import { PageContextInterface, usePage } from "../page-provider";
@@ -96,15 +101,14 @@ PageHeader.Content = function PageHeaderContent({
       />
       <div className="mx-auto md:max-w-3xl lg:max-w-4xl">
         <div className="group relative pl-[54px]">
-          <IconBlock
-            key={stableHash(icon)}
-            defaultIcon={icon}
-            editable={!preview}
-            size="xl"
+          <IconMenu
+            disabled={preview}
             onRemove={onIconRemove}
             onSelect={onIconSelect}
             onUpload={onIconUpload}
-          />
+          >
+            <IconBlock icon={icon} size="xl" />
+          </IconMenu>
           <div className="flex items-center gap-x-1 py-4 opacity-0 group-hover:opacity-100">
             {!page.coverImage && !preview && (
               <CoverPicker

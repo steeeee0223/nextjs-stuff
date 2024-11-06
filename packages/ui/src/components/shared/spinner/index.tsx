@@ -1,6 +1,7 @@
+import React from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { Loader } from "lucide-react";
+import { Loader, LoaderCircle } from "lucide-react";
 
 import { cn } from "@swy/ui/lib";
 
@@ -19,8 +20,19 @@ const spinnerVariants = cva("animate-spin text-muted dark:text-muted-dark", {
 
 export interface SpinnerProps extends VariantProps<typeof spinnerVariants> {
   className?: string;
+  variants?: "solid" | "dashed";
 }
 
-export const Spinner = ({ className, size }: SpinnerProps) => {
-  return <Loader className={cn(spinnerVariants({ size, className }))} />;
+export const Spinner: React.FC<SpinnerProps> = ({
+  className,
+  size,
+  variants,
+}) => {
+  const Icon = variants === "dashed" ? Loader : LoaderCircle;
+  return (
+    <Icon
+      className={cn(spinnerVariants({ size, className }))}
+      aria-label="spinner"
+    />
+  );
 };
