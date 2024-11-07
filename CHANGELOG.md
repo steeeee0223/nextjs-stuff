@@ -16,7 +16,7 @@
     1. `@swy/ui/custom` → `@swy/ui/shared`
     2. `@swy/ui/dnd` → `@swy/ui/shared`
     3. `@swy/ui/form` → `@swy/ui/shared`
-  - Refactor components: `IconBlock`
+  - Refactor components: `IconBlock`, `Unsplash`
   - Rename: `IconPicker` → `EmojiPicker`
   - Remove unused shadcn components
   - Remove path alias

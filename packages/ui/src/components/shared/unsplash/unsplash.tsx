@@ -1,30 +1,28 @@
 "use client";
 
-import { useState } from "react";
-
 import { cn } from "@swy/ui/lib";
 import { Input } from "@swy/ui/shadcn";
 
 import { Spinner } from "../spinner";
 import { useUnsplash } from "./use-unsplash";
 
-export interface UnsplashPickerProps {
+export interface UnsplashProps {
+  /** @param apiKey - Unsplash Access Key */
+  apiKey: string;
   className?: string;
   onSelect?: (url: string) => void;
 }
 
-export const UnsplashPicker = ({
-  className,
-  onSelect,
-}: UnsplashPickerProps) => {
-  const [query, setQuery] = useState<string>("");
-  const { images, isLoading } = useUnsplash({ query, count: 24 });
+/**
+ * An `Unsplash` image browser
+ */
+export const Unsplash = ({ apiKey, className, onSelect }: UnsplashProps) => {
+  const { images, isLoading, setQuery } = useUnsplash({ apiKey });
 
   return (
     <div className={cn("max-h-[280px] w-full overflow-y-auto p-4", className)}>
       <Input
         id="unsplash"
-        value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for an image..."
       />
