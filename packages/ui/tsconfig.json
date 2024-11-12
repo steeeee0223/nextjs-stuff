@@ -6,6 +6,6 @@
     "rootDir": ".",
     "types": ["vitest/globals"]
   },
-  "include": ["*.ts", "src", "__test__", "src/hooks/use-sidebar-layout.ts"],
+  "include": ["*.ts", "src", "__test__"],
   "exclude": ["node_modules"]
 }
