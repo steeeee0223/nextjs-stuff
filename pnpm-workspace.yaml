@@ -29,9 +29,9 @@ catalogs:
     "@t3-oss/env-nextjs": "^0.11.1"
     "@t3-oss/env-core": "^0.11.1"
   prisma:
-    "prisma": "^5.13.0"
-    "@prisma/client": "^5.13.0"
-    "@prisma/nextjs-monorepo-workaround-plugin": "^5.13.0"
+    "prisma": "^5.22.0"
+    "@prisma/client": "^5.22.0"
+    "@prisma/nextjs-monorepo-workaround-plugin": "^5.22.0"
   vitest:
     "vitest": "^2.0.5"
     "@vitejs/plugin-react": "^4.2.1"
@@ -43,7 +43,7 @@ catalogs:
     "@testing-library/react": "^16.0.0"
     "@testing-library/user-event": "^14.5.2"
   ui:
-    "lucide-react": "^0.445.0"
+    "lucide-react": "^0.456.0"
     "next-themes": "^0.3.0"
     "react-hook-form": "^7.53.0"
     "sonner": "^1.5.0"

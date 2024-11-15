@@ -4,7 +4,9 @@
 
 ### 🆕 Core Updates
 
-- `repo` Update `turbo` task dependencies
+- `repo`
+  - Update `turbo` task dependencies
+  - Upgrade deps: `jiti`, `prisma`, `lucide-react`
 - `worxpace`
   - Fix: page routing & published page
   - Fix: window origin
@@ -26,6 +28,7 @@
   - Mocking data at `@swy/notion/mock`
 - `prisma`
   - Remove `.env`, use root instead
+  - Update config
 - `validators`
   - Move common types here
 - `eslint`
