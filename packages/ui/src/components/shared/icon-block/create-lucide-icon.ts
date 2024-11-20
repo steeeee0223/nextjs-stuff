@@ -9,8 +9,9 @@ import type { LucideName } from "./types";
 /**
  * Create a Lucide icon component
  */
-export const createLucideIcon = (name: LucideName) => {
-  const nodeWithKeys = iconNodes[name].map(([elem, attrs], i) => [
+export const createLucideIcon = (name: string) => {
+  if (!(name in iconNodes)) return () => null;
+  const nodeWithKeys = iconNodes[name as LucideName].map(([elem, attrs], i) => [
     elem,
     { ...attrs, key: `${name}-${i}` },
   ]) as IconNode;

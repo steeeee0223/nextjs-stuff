@@ -18,7 +18,7 @@ import { UrlForm } from "../common";
 import type { IconInfo, LucideName } from "../icon-block";
 import { Spinner } from "../spinner";
 import { EmojiPicker } from "./emoji-picker";
-import { LucidePicker } from "./lucide-picker";
+import { LucidePicker, LucidePicker2 } from "./lucide-picker";
 
 export interface IconMemuProps extends React.PropsWithChildren {
   className?: string;
@@ -43,8 +43,8 @@ export const IconMenu: React.FC<IconMemuProps> = ({
 }) => {
   /** Icon Info */
   const selectEmoji = (emoji: string) => onSelect?.({ type: "emoji", emoji });
-  const selectLucideIcon = (name: LucideName, color?: string) =>
-    onSelect?.({ type: "lucide", name, color });
+  const selectLucideIcon = (name: string, color?: string) =>
+    onSelect?.({ type: "lucide", name: name as LucideName, color });
   const submitUrl = (url: string) => onSelect?.({ type: "file", url });
   /** Upload */
   const [isPending, startTransition] = useTransition();
@@ -73,8 +73,9 @@ export const IconMenu: React.FC<IconMemuProps> = ({
         <Tabs defaultValue="emoji" className="relative my-0.5 w-full">
           <TabsList>
             <div className="flex grow">
-              <TabsTrigger value="emoji">Emojis</TabsTrigger>
+              <TabsTrigger value="emoji">Emoji</TabsTrigger>
               <TabsTrigger value="lucide">Icons</TabsTrigger>
+              <TabsTrigger value="lucide-2">Icons 2</TabsTrigger>
               <TabsTrigger value="file">Upload</TabsTrigger>
             </div>
             <div className="flex grow-0">
@@ -93,6 +94,12 @@ export const IconMenu: React.FC<IconMemuProps> = ({
           </TabsContent>
           <TabsContent value="lucide" className="bg-transparent px-3 pb-2 pt-4">
             <LucidePicker onSelect={selectLucideIcon} />
+          </TabsContent>
+          <TabsContent
+            value="lucide-2"
+            className="bg-transparent px-3 pb-2 pt-4"
+          >
+            <LucidePicker2 onSelect={selectLucideIcon} />
           </TabsContent>
           <TabsContent value="file" className="px-5 pb-2 pt-4">
             <UrlForm disabled={isPending} onUrlSubmit={submitUrl} />
