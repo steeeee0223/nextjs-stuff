@@ -116,7 +116,7 @@ export function EmojiPickerContent({
     <TooltipProvider delayDuration={500}>
       <div
         ref={refs.current.contentRoot}
-        className="notion-scrollbar dark:notion-scrollbar-dark -mr-3 h-[214px] overflow-y-auto overflow-x-hidden"
+        className="-mr-3 h-[214px] overflow-y-auto overflow-x-hidden notion-scrollbar dark:notion-scrollbar-dark"
         data-id="scroll"
       >
         <div ref={refs.current.content} className="h-full">
