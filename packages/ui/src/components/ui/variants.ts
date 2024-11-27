@@ -39,7 +39,7 @@ export const buttonVariants = cva(
 export type ButtonVariants = VariantProps<typeof buttonVariants>;
 
 export const inputVariants = cva(
-  "flex w-full border px-3 py-1 text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full border px-3 py-1 text-sm/[1.2] transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -47,7 +47,7 @@ export const inputVariants = cva(
           "h-7 rounded-sm border-border bg-input/60 text-primary shadow-none placeholder:text-primary/45 dark:bg-input/5 dark:text-primary/80",
         /** @variant search: Inherit styles from `notion` and add padding for the icon */
         search:
-          "relative h-7 rounded-sm border-border bg-input/60 pl-10 text-primary shadow-none placeholder:text-primary/45 dark:bg-input/5 dark:text-primary/80",
+          "relative h-7 rounded-sm border-border bg-input/60 pl-6 text-primary shadow-none placeholder:text-primary/45 dark:bg-input/5 dark:text-primary/80 [&::-webkit-search-cancel-button]:appearance-none",
         shadcn:
           "h-9 rounded-md border-input bg-transparent shadow-sm placeholder:text-muted focus-visible:ring-1 focus-visible:ring-ring dark:text-muted-dark",
       },

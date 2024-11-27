@@ -1,13 +1,13 @@
 "use client";
 
-import React, { lazy, Suspense, useMemo } from "react";
+import React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import dynamicIconImports from "lucide-react/dynamicIconImports";
 
 import { cn } from "@swy/ui/lib";
 import { Avatar, AvatarFallback, AvatarImage } from "@swy/ui/shadcn";
 
 import { Spinner } from "../spinner";
+import { createLucideIcon } from "./create-lucide-icon";
 import type { IconInfo } from "./types";
 import { getLetter, isEmoji } from "./utils";
 
@@ -42,29 +42,18 @@ export const IconBlock: React.FC<IconBlockProps> = ({
   );
 };
 
-const LucideIcon: React.FC<{
-  icon: Extract<IconInfo, { type: "lucide" }>;
-  className?: string;
-}> = ({ icon, className }) => {
-  const Lucide = useMemo(
-    () => lazy(dynamicIconImports[icon.name]),
-    [icon.name],
-  );
-  return (
-    <Suspense fallback={<Spinner className={className} />}>
-      <Lucide color={icon.color} className={className} aria-label={icon.name} />
-    </Suspense>
-  );
-};
-
 const Icon: React.FC<Omit<IconBlockProps, "size">> = ({
   className,
   icon,
   fallback = " ",
 }) => {
   switch (icon.type) {
-    case "lucide":
-      return <LucideIcon icon={icon} className={className} />;
+    case "lucide": {
+      const Icon = createLucideIcon(icon.name);
+      return (
+        <Icon color={icon.color} className={className} aria-label={icon.name} />
+      );
+    }
     case "file":
       return (
         <Avatar className={className}>

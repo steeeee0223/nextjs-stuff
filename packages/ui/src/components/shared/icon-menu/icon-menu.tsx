@@ -1,10 +1,6 @@
 "use client";
 
 import React, { lazy, Suspense, useState, useTransition } from "react";
-import { Theme, type EmojiClickData } from "emoji-picker-react";
-import { useTheme } from "next-themes";
-
-import "./styles.css";
 
 import { cn } from "@swy/ui/lib";
 import {
@@ -18,10 +14,11 @@ import {
   TabsTrigger,
 } from "@swy/ui/shadcn";
 
-import { COLOR } from "../../../constants/colors";
 import { UrlForm } from "../common";
 import type { IconInfo, LucideName } from "../icon-block";
 import { Spinner } from "../spinner";
+import { EmojiPicker } from "./emoji-picker";
+import { LucidePicker } from "./lucide-picker";
 
 export interface IconMemuProps extends React.PropsWithChildren {
   className?: string;
@@ -31,8 +28,6 @@ export interface IconMemuProps extends React.PropsWithChildren {
   onUpload?: (file: File) => void;
 }
 
-const EmojiPicker = lazy(() => import("emoji-picker-react"));
-const LucidePicker = lazy(() => import("./lucide-picker"));
 const ImageDropzone = lazy(() => import("../single-image-dropzone"));
 
 /**
@@ -46,12 +41,8 @@ export const IconMenu: React.FC<IconMemuProps> = ({
   onRemove,
   onUpload,
 }) => {
-  /** Theme */
-  const { resolvedTheme } = useTheme();
-  const theme = resolvedTheme === "dark" ? Theme.DARK : Theme.LIGHT;
   /** Icon Info */
-  const selectEmoji = ({ emoji }: EmojiClickData) =>
-    onSelect?.({ type: "emoji", emoji });
+  const selectEmoji = (emoji: string) => onSelect?.({ type: "emoji", emoji });
   const selectLucideIcon = (name: LucideName, color?: string) =>
     onSelect?.({ type: "lucide", name, color });
   const submitUrl = (url: string) => onSelect?.({ type: "file", url });
@@ -97,21 +88,11 @@ export const IconMenu: React.FC<IconMemuProps> = ({
               </Button>
             </div>
           </TabsList>
-          <TabsContent value="emoji" className="p-0 pt-3">
-            <Suspense fallback={<Loading />}>
-              <EmojiPicker
-                height="300px"
-                width="406px"
-                theme={theme}
-                skinTonesDisabled
-                onEmojiClick={selectEmoji}
-              />
-            </Suspense>
+          <TabsContent value="emoji" className="bg-transparent px-3 pb-2 pt-4">
+            <EmojiPicker onSelect={selectEmoji} />
           </TabsContent>
-          <TabsContent value="lucide" className="px-5 pb-2 pt-4">
-            <Suspense fallback={<Loading />}>
-              <LucidePicker colorPalette={COLOR} onSelect={selectLucideIcon} />
-            </Suspense>
+          <TabsContent value="lucide" className="bg-transparent px-3 pb-2 pt-4">
+            <LucidePicker onSelect={selectLucideIcon} />
           </TabsContent>
           <TabsContent value="file" className="px-5 pb-2 pt-4">
             <UrlForm disabled={isPending} onUrlSubmit={submitUrl} />
