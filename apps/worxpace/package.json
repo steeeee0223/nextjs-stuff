@@ -49,7 +49,7 @@
     "@types/react-dom": "catalog:react18",
     "dotenv-cli": "catalog:env",
     "eslint": "catalog:",
-    "jiti": "^2.3.3",
+    "jiti": "^2.4.0",
     "prettier": "catalog:",
     "tailwindcss": "catalog:",
     "typescript": "catalog:"
