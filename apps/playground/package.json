@@ -1,0 +1,49 @@
+{
+  "name": "@swy/playground",
+  "version": "1.4.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm with-env next build",
+    "clean": "git clean -xdf .next .turbo node_modules",
+    "dev": "pnpm with-env next dev -p 3002",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "start": "pnpm with-env next start",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@swy/i18n": "workspace:*",
+    "@swy/liveblocks": "workspace:*",
+    "@swy/notion": "workspace:*",
+    "@swy/ui": "workspace:*",
+    "@swy/validators": "workspace:*",
+    "@t3-oss/env-nextjs": "catalog:env",
+    "lucide-react": "catalog:ui",
+    "next": "catalog:next14",
+    "react": "catalog:react18",
+    "react-dom": "catalog:react18",
+    "react-textarea-autosize": "^8.5.3",
+    "sonner": "catalog:ui",
+    "swr": "^2.2.5",
+    "yjs": "^13.6.15",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@swy/eslint-config": "workspace:*",
+    "@swy/prettier-config": "workspace:*",
+    "@swy/tailwind-config": "workspace:*",
+    "@swy/tsconfig": "workspace:*",
+    "@types/node": "catalog:node20",
+    "@types/react": "catalog:react18",
+    "@types/react-dom": "catalog:react18",
+    "dotenv-cli": "catalog:env",
+    "eslint": "catalog:",
+    "jiti": "^2.4.0",
+    "prettier": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@swy/prettier-config"
+}
