@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 
-import { cn } from "@swy/ui/lib";
 import {
   Tooltip,
   TooltipContent,
@@ -18,7 +17,6 @@ export interface HintProps extends TooltipContentProps {
 
 export const Hint = ({
   children,
-  className,
   triggerProps,
   description,
   asChild,
@@ -31,11 +29,7 @@ export const Hint = ({
         <TooltipTrigger asChild={asChild} className={triggerProps}>
           {children}
         </TooltipTrigger>
-        <TooltipContent
-          side={side}
-          className={cn("font-medium", className)}
-          {...props}
-        >
+        <TooltipContent side={side} {...props}>
           {description}
         </TooltipContent>
       </Tooltip>

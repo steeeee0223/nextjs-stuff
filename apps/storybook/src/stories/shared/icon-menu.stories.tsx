@@ -12,13 +12,11 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const defaultIcon: IconInfo = { type: "text", text: "S" };
 const Template: Story["render"] = () => {
-  const [icon, setIcon] = useState<IconInfo>({ type: "text", text: "S" });
+  const [icon, setIcon] = useState<IconInfo>(defaultIcon);
   return (
-    <IconMenu
-      onSelect={setIcon}
-      onRemove={() => setIcon({ type: "text", text: " " })}
-    >
+    <IconMenu onSelect={setIcon} onRemove={() => setIcon(defaultIcon)}>
       <IconBlock icon={icon} size="lg" />
     </IconMenu>
   );
