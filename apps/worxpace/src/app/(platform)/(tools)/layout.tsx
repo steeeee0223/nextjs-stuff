@@ -1,17 +1,12 @@
 "use client";
 
-import { useCallback, useMemo, type PropsWithChildren } from "react";
+import React, { useMemo } from "react";
 import { useParams } from "next/navigation";
 
-import { TreeProvider } from "@swy/ui/shared";
-
-import { GROUPS } from "~/constants/site";
-import { EdgeStoreProvider, useDocuments, usePlatform } from "~/hooks";
-import { toTreeItem } from "~/lib";
+import { EdgeStoreProvider } from "~/hooks";
 import WorkspaceLayout from "./_components/workspace-layout";
 
-const ToolsLayout = ({ children }: PropsWithChildren) => {
-  const { toToolsPage, workspaceId } = usePlatform();
+const ToolsLayout = ({ children }: React.PropsWithChildren) => {
   /** Routing */
   const params = useParams<{
     documentId?: string;
@@ -28,21 +23,12 @@ const ToolsLayout = ({ children }: PropsWithChildren) => {
       null,
     [params],
   );
-  const isItemActive = useCallback((id: string) => pageId === id, [pageId]);
-  const { documents } = useDocuments({ workspaceId });
-  const pages = useMemo(() => documents?.map(toTreeItem) ?? [], [documents]);
 
   return (
     <EdgeStoreProvider>
-      <TreeProvider
-        className="flex h-screen bg-main"
-        groups={GROUPS}
-        initialItems={pages}
-        onClickItem={toToolsPage}
-        isItemActive={isItemActive}
-      >
+      <div className="flex h-screen bg-main">
         <WorkspaceLayout pageId={pageId}>{children}</WorkspaceLayout>
-      </TreeProvider>
+      </div>
     </EdgeStoreProvider>
   );
 };

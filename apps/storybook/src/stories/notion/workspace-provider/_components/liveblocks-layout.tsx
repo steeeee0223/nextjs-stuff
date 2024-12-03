@@ -17,33 +17,19 @@ import {
   ResizablePanelGroup,
 } from "@swy/ui/shadcn";
 
-import { useDocuments } from "./use-documents";
+import { usePages } from "./use-pages";
 
 /** Setup Liveblocks */
 const authEndpoint = "/api/liveblocks";
 const client = createClient({ authEndpoint });
 const { useSelf, useOthers } = createRoomContext(client);
 
-interface LayoutProps extends React.PropsWithChildren {
-  pageId: string;
-}
+type LayoutProps = React.PropsWithChildren;
 
-export const LayoutWithLiveblocks = ({ pageId, children }: LayoutProps) => {
-  return (
-    <RoomProvider authEndpoint={authEndpoint} roomId={pageId}>
-      <Layout pageId={pageId}>{children}</Layout>
-    </RoomProvider>
-  );
-};
-
-export const Layout = ({ pageId, children }: LayoutProps) => {
-  const { minSize, ref, collapse, expand, isResizing, isMobile } =
+export const LayoutWithLiveblocks = ({ children }: LayoutProps) => {
+  const { minSize, ref, collapse, expand, isResizing, isMobile, isCollapsed } =
     useSidebarLayout("group", "sidebar", 240);
-  const currentUser = useSelf();
-  const otherUsers = useOthers();
-  const { isLoading, fetchPages } = useDocuments({
-    workspaceId: "workspace-0",
-  });
+  const { pageId, isLoading, fetchPages, selectPage } = usePages("workspace-0");
 
   return (
     <ResizablePanelGroup
@@ -65,6 +51,7 @@ export const Layout = ({ pageId, children }: LayoutProps) => {
           className="w-full"
           isMobile={isMobile}
           collapse={collapse}
+          redirect={selectPage}
           settingsProps={{
             settings: mockSettings,
             onFetchConnections: () => Promise.resolve(mockConnections),
@@ -82,28 +69,49 @@ export const Layout = ({ pageId, children }: LayoutProps) => {
         order={2}
         className={cn(isResizing && "transition-all duration-300 ease-in-out")}
       >
-        <PageProvider
-          className="order-3 flex size-full flex-col overflow-hidden"
-          page={mockPages[pageId]!}
-          currentUser={currentUser}
-          otherUsers={otherUsers}
-          fetchLogs={() => Promise.resolve(mockLogs)}
-        >
-          <Navbar
-            className="w-full"
-            onResetWidth={expand}
-            isCollapsed={ref.current?.isCollapsed()}
-          />
-          <main className="h-full">
-            <PageHeader unsplashAPIKey="UNSPLASH_API_KEY" />
-            {pageId === "#" ? (
-              <div className="px-[54px] text-[32px]">Welcome to WorXpace</div>
-            ) : (
-              children
-            )}
-          </main>
-        </PageProvider>
+        <RoomProvider authEndpoint={authEndpoint} roomId={pageId}>
+          <PageLayout pageId={pageId} isCollapsed={isCollapsed} expand={expand}>
+            {children}
+          </PageLayout>
+        </RoomProvider>
       </ResizablePanel>
     </ResizablePanelGroup>
+  );
+};
+
+export const PageLayout = ({
+  children,
+  pageId,
+  expand,
+  isCollapsed,
+}: LayoutProps & {
+  pageId: string;
+  expand: () => void;
+  isCollapsed?: boolean;
+}) => {
+  const currentUser = useSelf();
+  const otherUsers = useOthers();
+  return (
+    <PageProvider
+      className="order-3 flex size-full flex-col overflow-hidden"
+      page={mockPages[pageId]!}
+      currentUser={currentUser}
+      otherUsers={otherUsers}
+      fetchLogs={() => Promise.resolve(mockLogs)}
+    >
+      <Navbar
+        className="w-full"
+        onResetWidth={expand}
+        isCollapsed={isCollapsed}
+      />
+      <main className="h-full">
+        <PageHeader unsplashAPIKey="UNSPLASH_API_KEY" />
+        {pageId === "#" ? (
+          <div className="px-[54px] text-[32px]">Welcome to WorXpace</div>
+        ) : (
+          children
+        )}
+      </main>
+    </PageProvider>
   );
 };

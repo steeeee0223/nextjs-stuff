@@ -1,10 +1,11 @@
-import type { Page, Workspace } from "@swy/notion";
-import type { Log, TreeItem } from "@swy/ui/shared";
+import type { DocItemData, Page, Workspace } from "@swy/notion";
+import { randomInt } from "@swy/ui/lib";
+import type { Log } from "@swy/ui/shared";
 import { Plan, Role } from "@swy/validators";
 
 import { mockUsers } from "./users";
 
-export const documents: TreeItem[] = [
+export const documents: DocItemData[] = [
   {
     group: "document",
     id: "page1",
@@ -14,12 +15,16 @@ export const documents: TreeItem[] = [
       type: "file",
       url: "https://img.freepik.com/premium-vector/line-art-flag-language-korean-illustration-vector_490632-422.jpg",
     },
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
   {
     group: "document",
     id: "page2",
     title: "Pronunciation",
     parentId: "page1",
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
   {
     group: "document",
@@ -27,6 +32,8 @@ export const documents: TreeItem[] = [
     title: "Study list",
     parentId: null,
     icon: { type: "lucide", name: "book", color: "#CB912F" },
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
   {
     group: "document",
@@ -34,13 +41,16 @@ export const documents: TreeItem[] = [
     title: "My secret document",
     icon: { type: "lucide", name: "book-check", color: "#CB912F" },
     parentId: null,
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
   {
     group: "document",
     id: "page5",
     title: "System flowchart",
-    icon: { type: "text", text: "System" },
     parentId: null,
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
   {
     group: "trash:document",
@@ -48,18 +58,24 @@ export const documents: TreeItem[] = [
     title: "Deprecated documents",
     parentId: null,
     icon: { type: "lucide", name: "book", color: "#337EA9" },
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
   {
     group: "kanban",
     id: "page7",
     title: "TODO List",
     parentId: null,
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
   {
     group: "whiteboard",
     id: "page8",
     title: "System flowchart",
     parentId: null,
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
   {
     group: "document",
@@ -70,6 +86,8 @@ export const documents: TreeItem[] = [
       type: "file",
       url: "https://cdn.iconscout.com/icon/premium/png-256-thumb/bar-table-1447763-1224177.png",
     },
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
   {
     group: "document",
@@ -77,18 +95,9 @@ export const documents: TreeItem[] = [
     parentId: "page3",
     title: "The Continental",
     icon: { type: "emoji", emoji: "🏠" },
+    lastEditedBy: "",
+    lastEditedAt: randomInt(1704067200000, 1730332800000),
   },
-];
-
-export const GROUPS = [
-  "document",
-  "kanban",
-  "whiteboard",
-  "workflow",
-  "trash:document",
-  "trash:kanban",
-  "trash:whiteboard",
-  "trash:workflow",
 ];
 
 export const user = mockUsers[0]!;
@@ -129,7 +138,7 @@ export const workspaces: Workspace[] = [
 
 export const otherUsers = mockUsers.slice(2, 7);
 
-const createPageData = (treeItem: TreeItem): Page => {
+const createPageData = (treeItem: DocItemData): Page => {
   const res = treeItem.group!.split(":");
   return {
     id: treeItem.id,
@@ -140,7 +149,7 @@ const createPageData = (treeItem: TreeItem): Page => {
     coverImage: null,
     isPublished: false,
     createdAt: Date.UTC(2023, 3, 5).toString(),
-    lastEditedAt: Date.UTC(2023, 5, 5).toString(),
+    lastEditedAt: treeItem.lastEditedAt.toString(),
     createdBy: user.name,
     lastEditedBy: user.name,
   };

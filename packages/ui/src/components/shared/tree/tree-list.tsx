@@ -1,81 +1,91 @@
 "use client";
 
-import { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import { cn } from "@swy/ui/lib";
 
-import { CRUDItem as Item, type CRUDItemProps } from "../crud-item";
-import { type IconInfo } from "../icon-block";
-import { useTree } from "./tree-context";
+import type { IconInfo } from "../icon-block";
+import { TreeItem, type TreeItemProps } from "./tree-item";
+import { fromNode, type TreeItemData, type TreeNode } from "./types";
 
-export interface TreeListProps {
-  group: string | null;
-  parentId: string | null;
+interface TreeListProps<T extends TreeItemData> {
+  nodes: TreeNode<T>[];
   level?: number;
   defaultIcon?: IconInfo;
   showEmptyChild?: boolean;
-  onAddItem?: (parentId?: string) => void;
-  onDeleteItem?: CRUDItemProps["onDelete"];
+  Item?: React.FC<TreeItemProps<T>>;
+  selectedId?: string | null;
+  onSelect?: (id: string) => void;
 }
 
-export function TreeList({
-  group = null,
-  parentId = null,
-  level = 0,
-  showEmptyChild = true,
-  defaultIcon,
-  onAddItem,
-  onDeleteItem,
-}: TreeListProps) {
-  const { getChildren, isItemActive, onClickItem } = useTree();
-  const items = getChildren(parentId, group);
+export function TreeList<T extends TreeItemData>(props: TreeListProps<T>) {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const onExpand = (itemId: string) =>
     setExpanded((prev) => ({ ...prev, [itemId]: !prev[itemId] }));
 
-  return (
-    <>
-      {showEmptyChild && (
-        <p
-          style={{ paddingLeft: level ? `${level * 12 + 25}px` : undefined }}
-          className={cn(
-            "hidden pl-4 text-sm font-medium text-muted dark:text-muted-dark",
-            !Object.is(expanded, {}) && "last:block",
-            level === 0 && "hidden",
+  const renderTree = useCallback(
+    (
+      {
+        nodes,
+        level = 0,
+        defaultIcon,
+        showEmptyChild,
+        Item = TreeItem,
+        selectedId,
+        onSelect,
+      }: TreeListProps<T>,
+      expanded: Record<string, boolean>,
+    ) => {
+      return (
+        <>
+          {showEmptyChild && (
+            <p
+              style={{
+                paddingLeft: level ? `${level * 12 + 25}px` : undefined,
+              }}
+              className={cn(
+                "hidden pl-4 text-sm font-medium text-muted dark:text-muted-dark",
+                !Object.is(expanded, {}) && "last:block",
+                level === 0 && "hidden",
+              )}
+            >
+              No pages inside
+            </p>
           )}
-        >
-          No pages inside
-        </p>
-      )}
-      {items.map(({ id, title, icon, group, lastEditedBy, lastEditedAt }) => (
-        <div key={id}>
-          <Item
-            id={id}
-            label={title}
-            icon={icon ?? defaultIcon}
-            onClick={() => onClickItem?.(id, group)}
-            active={isItemActive?.(id, group)}
-            level={level}
-            lastEditedBy={lastEditedBy}
-            lastEditedAt={lastEditedAt}
-            expandable={showEmptyChild}
-            expanded={expanded[id]}
-            onExpand={() => onExpand(id)}
-            onCreate={() => onAddItem?.(id)}
-            onDelete={onDeleteItem}
-          />
-          {expanded[id] && (
-            <TreeList
-              group={group}
-              parentId={id}
-              level={level + 1}
-              showEmptyChild={showEmptyChild}
-              onAddItem={onAddItem}
-              onDeleteItem={onDeleteItem}
-            />
-          )}
-        </div>
-      ))}
-    </>
+          {nodes.map((node) => (
+            <div key={node.id}>
+              {Item({
+                node: fromNode({ ...node, icon: node.icon ?? defaultIcon }),
+                isSelected: selectedId === node.id,
+                onSelect: () => onSelect?.(node.id),
+                level,
+                expandable: true,
+                expanded: expanded[node.id],
+                onExpand: () => onExpand(node.id),
+              })}
+              {expanded[node.id] && (
+                <>
+                  {renderTree(
+                    {
+                      nodes: node.children,
+                      level: level + 1,
+                      showEmptyChild,
+                      defaultIcon,
+                      Item,
+                      selectedId,
+                      onSelect,
+                    },
+                    expanded,
+                  )}
+                </>
+              )}
+            </div>
+          ))}
+        </>
+      );
+    },
+    [],
   );
+
+  return <>{renderTree(props, expanded)}</>;
 }

@@ -30,7 +30,7 @@ import { IconBlock, type IconInfo } from "../icon-block";
 export interface CRUDItemProps {
   className?: string;
   label: string;
-  icon?: IconInfo;
+  icon?: IconInfo | null;
   lastEditedBy?: string;
   lastEditedAt?: string;
   id?: string;
@@ -107,7 +107,7 @@ export const CRUDItem = forwardRef<HTMLDivElement, CRUDItemProps>(function Item(
         </Button>
         <IconBlock
           className={cn(expandable && "group-hover/icon:hidden")}
-          icon={icon}
+          icon={icon ?? { type: "text", text: label }}
         />
       </div>
       <span className="ml-1 truncate">{label}</span>

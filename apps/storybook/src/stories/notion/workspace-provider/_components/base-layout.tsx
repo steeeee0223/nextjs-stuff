@@ -16,18 +16,14 @@ import {
   ResizablePanelGroup,
 } from "@swy/ui/shadcn";
 
-import { useDocuments } from "./use-documents";
+import { usePages } from "./use-pages";
 
-interface LayoutProps extends React.PropsWithChildren {
-  pageId: string;
-}
+type LayoutProps = React.PropsWithChildren;
 
-export const BaseLayout = ({ pageId, children }: LayoutProps) => {
+export const BaseLayout = ({ children }: LayoutProps) => {
   const { minSize, ref, collapse, expand, isResizing, isMobile } =
     useSidebarLayout("group", "sidebar", 240);
-  const { isLoading, fetchPages } = useDocuments({
-    workspaceId: "workspace-0",
-  });
+  const { pageId, isLoading, fetchPages, selectPage } = usePages("workspace-0");
 
   return (
     <ResizablePanelGroup
@@ -49,6 +45,7 @@ export const BaseLayout = ({ pageId, children }: LayoutProps) => {
           className="w-full"
           isMobile={isMobile}
           collapse={collapse}
+          redirect={selectPage}
           settingsProps={{
             settings: mockSettings,
             onFetchConnections: () => Promise.resolve(mockConnections),

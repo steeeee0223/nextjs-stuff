@@ -1,91 +1,73 @@
-/* eslint-disable jsx-a11y/interactive-supports-focus */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useState } from "react";
-import { Plus } from "lucide-react";
+import React from "react";
 
-import { cn } from "@swy/ui/lib";
-import { buttonVariants } from "@swy/ui/shadcn";
 import {
-  Hint,
-  CRUDItemSkeleton as ItemSkeleton,
+  IconInfo,
+  TreeGroup,
+  TreeItem,
   TreeList,
-  type TreeListProps,
+  useTree,
 } from "@swy/ui/shared";
 
-interface DocListProps
-  extends Pick<TreeListProps, "defaultIcon" | "showEmptyChild"> {
+import type { DocItemData } from "../types";
+import { ActionGroup } from "./action-group";
+
+interface DocListProps {
   group: string;
   title: string;
+  defaultIcon?: IconInfo;
   isLoading?: boolean;
-  onCreate?: TreeListProps["onAddItem"];
-  onArchive?: TreeListProps["onDeleteItem"];
+  onSelect: (group: string, id: string) => void;
+  onCreate: (parentId?: string) => void;
+  onArchive: (id: string) => void;
 }
 
-export const DocList = ({
+export const DocList: React.FC<DocListProps> = ({
   group,
   title,
   defaultIcon,
-  showEmptyChild,
   isLoading,
+  onSelect,
   onCreate,
   onArchive,
-}: DocListProps) => {
-  const [openGroup, setOpenGroup] = useState(true);
-  const toggle = () => setOpenGroup((prev) => !prev);
+}) => {
+  const selectedId = useTree((state) => state.selectedId);
+  const selectNode = useTree((state) => state.select);
+  const getNodes = useTree((state) => state.getNodes<DocItemData>);
+
+  const select = (id: string) => {
+    selectNode(id);
+    onSelect(group, id);
+  };
 
   return (
-    <div>
-      <div className="group flex items-center px-3 py-1">
-        <div className="grow">
-          <Hint asChild side="top" description="Click to hide section">
-            <div
-              role="button"
-              onClick={toggle}
-              className={cn(
-                buttonVariants({ variant: "hint", size: "xs" }),
-                "py-0.5 font-semibold",
-              )}
-            >
-              {title}
-            </div>
-          </Hint>
-        </div>
-        <Hint side="right" description={`Add a ${group}`} asChild>
-          <div
-            role="button"
-            onClick={() => onCreate?.()}
-            className={cn(
-              buttonVariants({
-                variant: "hint",
-                className:
-                  "ml-auto size-auto p-0.5 opacity-0 group-hover:opacity-100",
-              }),
-            )}
+    <TreeGroup
+      title={title}
+      description={`Add a ${group}`}
+      isLoading={isLoading}
+      onCreate={() => onCreate()}
+    >
+      <TreeList
+        nodes={getNodes(group)}
+        defaultIcon={defaultIcon}
+        showEmptyChild={group === "document"}
+        selectedId={selectedId}
+        onSelect={select}
+        Item={({ node, ...props }) => (
+          <TreeItem
+            {...props}
+            node={node}
+            className="group"
+            expandable={group === "document"}
           >
-            <Plus className="size-4" />
-          </div>
-        </Hint>
-      </div>
-      {isLoading ? (
-        <>
-          <div className="mt-2">
-            {Array.from([0, 1, 0, 1, 1]).map((level, i) => (
-              <ItemSkeleton key={i} level={level} />
-            ))}
-          </div>
-        </>
-      ) : (
-        openGroup && (
-          <TreeList
-            group={group}
-            parentId={null}
-            defaultIcon={defaultIcon}
-            showEmptyChild={showEmptyChild}
-            onAddItem={onCreate}
-            onDeleteItem={onArchive}
-          />
-        )
-      )}
-    </div>
+            <ActionGroup
+              lastEditedBy={node.lastEditedBy}
+              lastEditedAt={node.lastEditedAt}
+              onCreate={() => onCreate(node.id)}
+              onDelete={() => onArchive(node.id)}
+            />
+          </TreeItem>
+        )}
+      />
+    </TreeGroup>
   );
 };

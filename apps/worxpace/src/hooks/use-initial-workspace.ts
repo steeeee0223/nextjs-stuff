@@ -7,7 +7,7 @@ import { fetchInitialWorkspace, WorkspaceKey } from "~/lib";
 import { usePlatform } from "./use-platform";
 
 export const useInitialWorkspace = () => {
-  const { clerkId, workspaceId, update } = usePlatform();
+  const { clerkId, workspaceId } = usePlatform();
   /** Routing */
   const router = useRouter();
   /** Initial Workspace */
@@ -16,12 +16,13 @@ export const useInitialWorkspace = () => {
       ? null
       : { type: "workspace", clerkId };
   const { mutate } = useSWR(key, fetchInitialWorkspace, {
-    onSuccess: ({ workspaceId, path }) => {
+    onSuccess: ({ path }) => {
       console.log(
         `[useInitialWorkspace] init workspace success, redirect to ${path}`,
       );
       router.push(path);
-      if (workspaceId) update((prev) => ({ ...prev, workspaceId }));
+      // TODO check if this is needed
+      // if (workspaceId) update((prev) => ({ ...prev, workspaceId }));
     },
     onError: (e: Error) =>
       console.log(`[useInitialWorkspace] Unexpected error: ${e.name}`),

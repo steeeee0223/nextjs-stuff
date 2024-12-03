@@ -1,9 +1,8 @@
-import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { WorkspaceProvider, WorkspaceSwitcher } from "@swy/notion";
-import { documents, GROUPS, user, workspaces } from "@swy/notion/mock";
-import { ModalProvider, TreeProvider } from "@swy/ui/shared";
+import { user, workspaces } from "@swy/notion/mock";
+import { ModalProvider } from "@swy/ui/shared";
 
 import { BaseLayout } from "./_components";
 
@@ -26,25 +25,6 @@ export const Swticher: Story = {
   parameters: { layout: "centered" },
 };
 
-const Template: Story["render"] = ({ children, ...props }) => {
-  const [pageId, setPageId] = useState("#");
-  return (
-    <WorkspaceProvider {...props}>
-      <ModalProvider>
-        <TreeProvider
-          className="flex h-screen bg-main"
-          groups={GROUPS}
-          initialItems={documents}
-          onClickItem={setPageId}
-          isItemActive={(id) => id === pageId}
-        >
-          <BaseLayout pageId={pageId}>{children}</BaseLayout>
-        </TreeProvider>
-      </ModalProvider>
-    </WorkspaceProvider>
-  );
-};
-
 export const WorkspaceLayout: Story = {
   args: {
     user,
@@ -53,6 +33,16 @@ export const WorkspaceLayout: Story = {
     className: "h-full",
     children: <div className="p-[54px]">Hi!</div>,
   },
-  render: Template,
   parameters: { layout: "fullscreen" },
+  render: ({ children, ...props }) => {
+    return (
+      <WorkspaceProvider {...props}>
+        <ModalProvider>
+          <div className="flex h-screen bg-main">
+            <BaseLayout>{children}</BaseLayout>
+          </div>
+        </ModalProvider>
+      </WorkspaceProvider>
+    );
+  },
 };
