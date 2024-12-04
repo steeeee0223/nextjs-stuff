@@ -11,6 +11,7 @@
   - Fix: page routing & published page
   - Fix: window origin
   - Fix: workspace default icon
+  - Optimize: documents query
   - Remove all `useTree`'s
   - Remove API: `/api/documents`
 - `ui`

@@ -3,7 +3,7 @@
 import type { MutationFetcher } from "swr/mutation";
 
 import { generateDefaultIcon } from "@swy/notion";
-import type { ENTITY_TYPE } from "@swy/prisma";
+import type { Document, ENTITY_TYPE } from "@swy/prisma";
 import { CreateDocument, type CreateDocumentInput } from "@swy/validators";
 
 import {
@@ -14,7 +14,6 @@ import {
   fetchClient,
   toIcon,
   UnauthorizedError,
-  type DetailedDocument,
   type DocumentsKey,
 } from "~/lib";
 
@@ -43,7 +42,7 @@ const handler = createMutationFetcher(
 );
 
 export const createDocument: MutationFetcher<
-  DetailedDocument,
+  Document,
   DocumentsKey,
   CreateDocumentInput
 > = ({ workspaceId }, data) => handler(workspaceId, data);

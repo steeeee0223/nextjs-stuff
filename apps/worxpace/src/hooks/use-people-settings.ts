@@ -4,31 +4,44 @@ import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-import {
-  addMembers as $addMembers,
-  deleteMember as $delMember,
-  updateMember as $updMember,
-} from "~/actions";
-import { membership, toPeopleData } from "~/lib";
+import * as actions from "~/actions";
+import { membership, toPeopleData, type MembershipsMap } from "~/lib";
 
 export const usePeopleSettings = (
   info: { clerkId: string; workspaceId: string } | null,
 ) => {
   /** Fetcher */
   const key = info ? { type: "settings:people" as const, ...info } : null;
-  const { mutate: fetchMemberships } = useSWR(key, async ({ workspaceId }) => {
-    const members = await membership.get(workspaceId);
-    return toPeopleData(members);
-  });
+  const { data, mutate: fetchMemberships } = useSWR(key, ({ workspaceId }) =>
+    membership.get(workspaceId),
+  );
   /** Mutations */
   const options = { onError: (e: Error) => toast.error(e.message) };
-  const { trigger: addMembers } = useSWRMutation(key, $addMembers, options);
-  const { trigger: updateMember } = useSWRMutation(key, $updMember, options);
-  const { trigger: deleteMember } = useSWRMutation(key, $delMember, options);
+  const { trigger: addMembers } = useSWRMutation(
+    key,
+    actions.addMembers,
+    options,
+  );
+  const { trigger: updateMember } = useSWRMutation(
+    key,
+    actions.updateMember,
+    options,
+  );
+  const { trigger: deleteMember } = useSWRMutation(
+    key,
+    actions.deleteMember,
+    options,
+  );
 
   return {
-    fetchMemberships: async () =>
-      (await fetchMemberships()) ?? { members: [], guests: [] },
+    memberships: data?.reduce<MembershipsMap>(
+      (acc, membership) => ({ ...acc, [membership.accountId]: membership }),
+      {},
+    ),
+    fetchMemberships: async () => {
+      const members = await fetchMemberships();
+      return members ? toPeopleData(members) : { members: [], guests: [] };
+    },
     addMembers,
     updateMember,
     deleteMember,

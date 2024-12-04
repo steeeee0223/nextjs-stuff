@@ -1,6 +1,6 @@
 import type { MutationFetcher } from "swr/mutation";
 
-import type { Account, Document, Workspace } from "@swy/prisma";
+import type { Account, Membership } from "@swy/prisma";
 import type { UpdateDocumentInput } from "@swy/validators";
 
 export interface Client {
@@ -24,12 +24,8 @@ export interface WorkflowContent {
   isPublished: boolean;
 }
 
-export type DetailedDocument = Document & {
-  workspace: Workspace;
-  createdBy: Account;
-  updatedBy: Account;
-};
-
 export type UpdateDocumentHandler = (
   data: Omit<UpdateDocumentInput, "accountId" | "workspaceId">,
 ) => Promise<void>;
+
+export type MembershipsMap = Record<string, Membership & { account: Account }>;

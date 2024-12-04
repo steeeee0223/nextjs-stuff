@@ -55,7 +55,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
   const { edgestore } = useEdgeStore();
   const store = useSettingsStore();
   const { isLoading, fetchPages, create, archive, restore, remove } =
-    useDocuments({ workspaceId });
+    useDocuments({ clerkId, workspaceId });
   const {
     settings,
     updateAccount,
