@@ -14,8 +14,6 @@ import {
 import { cn } from "@swy/ui/lib";
 import { CRUDItem, type CRUDItemProps } from "@swy/ui/shared";
 
-import { usePlatform } from "~/hooks";
-
 export interface PageBlockSpec {
   type: "page";
   content: "none";
@@ -34,13 +32,12 @@ const PageBlock: ReactCustomBlockImplementation<
   /** Meta */
   const { backgroundColor, pageId } = props.block.props;
   /** Item */
-  const { toToolsPage } = usePlatform();
   const item: CRUDItemProps = {
     expandable: false,
     id: pageId,
     level: 0,
     label: "Untitled",
-    onClick: () => toToolsPage(pageId, "document"),
+    onClick: () => console.log(`go to ${pageId}`),
   };
 
   return (

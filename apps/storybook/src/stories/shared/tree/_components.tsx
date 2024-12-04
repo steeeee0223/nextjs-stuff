@@ -1,34 +1,24 @@
 "use client";
 
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { v4 as uuidv4 } from "uuid";
 
 import {
   CRUDItem,
-  CRUDItemSkeleton,
+  TreeGroup,
   TreeList,
-  TreeProvider,
   useTree,
-  type TreeProviderProps,
+  type TreeItemData,
 } from "@swy/ui/shared";
 
-import { delay } from "./utils";
+import { delay } from "@/lib/utils";
 
-export const AddItem = ({ group }: { group?: string }) => {
-  const { dispatch } = useTree();
+export const AddItem = ({ group }: { group: string }) => {
+  const addNode = useTree((state) => state.add);
   const handleCreate = () =>
-    dispatch({
-      type: "add",
-      payload: [
-        {
-          id: uuidv4(),
-          parentId: null,
-          title: "New Page",
-          group: group ?? null,
-        },
-      ],
-    });
+    addNode({ id: uuidv4(), parentId: null, title: "New Page", group });
 
   return (
     <CRUDItem
@@ -39,67 +29,79 @@ export const AddItem = ({ group }: { group?: string }) => {
   );
 };
 
-export const TreeItems = ({
-  group,
-  title,
-}: {
-  group?: string;
-  title?: string;
-}) => {
-  const { isLoading, dispatch } = useTree();
-  const onAddItem = (parentId?: string) =>
-    dispatch({
-      type: "add",
-      payload: [
-        {
-          id: uuidv4(),
-          parentId: parentId ?? null,
-          title: "New Page",
-          group: group ?? null,
-        },
-      ],
-    });
-  const onDeleteItem = (id: string) =>
-    dispatch({ type: "delete", payload: [id] });
+export const WithInitialItems = ({
+  initialItems,
+  isLoading,
+  children,
+}: React.PropsWithChildren<{
+  initialItems?: TreeItemData[];
+  isLoading?: boolean;
+}>) => {
+  const setNodes = useTree((state) => state.set);
+  useEffect(() => {
+    if (isLoading || !initialItems) return;
+    setNodes(initialItems);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialItems, isLoading]);
+
+  return <div className="w-60 rounded-sm bg-sidebar p-4">{children}</div>;
+};
+
+/**
+ * An integrated Tree view, with create and delete operations
+ */
+export const TreeView: React.FC<{
+  group: string;
+  title: string;
+  isLoading?: boolean;
+}> = ({ group, title, isLoading }) => {
+  const addNode = useTree((state) => state.add);
+  const deleteNode = useTree((state) => state.delete);
+  const getNodes = useTree((state) => state.getNodes);
+  const selectedId = useTree((state) => state.selectedId);
+  const selectNode = useTree((state) => state.select);
+
+  const onCreate = (parentId: string | null) =>
+    addNode({ id: uuidv4(), parentId, title: "New Page", group });
+  const onDelete = (id: string) => deleteNode(id);
   return (
-    <div className="mt-4">
-      {title && (
-        <span className="ml-4 text-xs font-semibold text-muted dark:text-muted-dark">
-          {title}
-        </span>
-      )}
-      {isLoading ? (
-        <>
-          <div className="mt-4">
-            {Array.from([0, 1, 0, 1, 1]).map((level, i) => (
-              <CRUDItemSkeleton key={i} level={level} />
-            ))}
-          </div>
-        </>
-      ) : (
-        <TreeList
-          showEmptyChild
-          group={group ?? null}
-          parentId={null}
-          onAddItem={onAddItem}
-          onDeleteItem={onDeleteItem}
-        />
-      )}
-    </div>
+    <TreeGroup
+      title={title}
+      description="Add a file"
+      isLoading={isLoading}
+      onCreate={() => onCreate(null)}
+    >
+      <TreeList
+        showEmptyChild
+        nodes={getNodes(group)}
+        selectedId={selectedId}
+        onSelect={selectNode}
+        Item={({ node, isSelected, onSelect, ...props }) => (
+          <CRUDItem
+            {...props}
+            id={node.id}
+            label={node.title}
+            icon={node.icon}
+            active={isSelected}
+            onClick={onSelect}
+            onCreate={() => onCreate(node.id)}
+            onDelete={onDelete}
+          />
+        )}
+      />
+    </TreeGroup>
   );
 };
 
 const AddWithSWR = () => {
-  const { dispatch } = useTree();
+  const addNode = useTree((state) => state.add);
   const { trigger } = useSWRMutation(
     `ui:tree`,
     async () => {
       await delay(1000);
-      return { id: uuidv4(), title: "Untitled", group: null, parentId: null };
+      return { id: uuidv4(), title: "Untitled", group: "swr", parentId: null };
     },
-    {
-      onSuccess: (data) => dispatch({ type: "add", payload: [data] }),
-    },
+    { onSuccess: addNode },
   );
   return (
     <CRUDItem
@@ -110,16 +112,12 @@ const AddWithSWR = () => {
   );
 };
 
-export const Provider = ({ children, className }: TreeProviderProps) => {
+export const Provider = ({ children }: React.PropsWithChildren) => {
   const { data, isLoading } = useSWR(`ui:tree`, () => []);
   return (
-    <TreeProvider
-      className={className}
-      isLoading={isLoading}
-      initialItems={data}
-    >
+    <WithInitialItems initialItems={data} isLoading={isLoading}>
       <AddWithSWR />
       {children}
-    </TreeProvider>
+    </WithInitialItems>
   );
 };

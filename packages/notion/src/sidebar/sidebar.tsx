@@ -14,8 +14,8 @@ import { cn } from "@swy/ui/lib";
 import { Button, useTheme } from "@swy/ui/shadcn";
 import { Hint, useModal } from "@swy/ui/shared";
 
-import { SettingsPanelProps } from "../settings-panel";
-import { Page } from "../types";
+import type { SettingsPanelProps } from "../settings-panel";
+import type { Page } from "../types";
 import {
   WorkspaceSwitcher,
   type WorkspaceSwitcherProps,
@@ -138,26 +138,28 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(function Sidebar(
           isLoading={pages.isLoading}
           group="document"
           title="Document"
+          defaultIcon={{ type: "lucide", name: "file-text" }}
+          onSelect={(group, id) => redirect?.(`/${group}/${id}`)}
           onCreate={(parentId) => pages.onCreate?.("document", parentId)}
-          onArchive={pages.onArchive}
+          onArchive={(id) => pages.onArchive?.(id)}
         />
         <DocList
           isLoading={pages.isLoading}
           group="kanban"
           title="Kanban"
           defaultIcon={{ type: "lucide", name: "columns-3" }}
-          showEmptyChild={false}
+          onSelect={(group, id) => redirect?.(`/${group}/${id}`)}
           onCreate={(parentId) => pages.onCreate?.("kanban", parentId)}
-          onArchive={pages.onArchive}
+          onArchive={(id) => pages.onArchive?.(id)}
         />
         <DocList
           isLoading={pages.isLoading}
           group="whiteboard"
           title="Whiteboard"
           defaultIcon={{ type: "lucide", name: "presentation" }}
-          showEmptyChild={false}
+          onSelect={(group, id) => redirect?.(`/${group}/${id}`)}
           onCreate={(parentId) => pages.onCreate?.("whiteboard", parentId)}
-          onArchive={pages.onArchive}
+          onArchive={(id) => pages.onArchive?.(id)}
         />
         <TrashBox
           isOpen={trashOpen}

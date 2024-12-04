@@ -31,6 +31,7 @@
     "@swy/ui": "workspace:*",
     "@swy/validators": "workspace:*",
     "@tanstack/react-table": "^8.19.3",
+    "date-fns": "^3.6.0",
     "lucide-react": "catalog:ui",
     "react": "catalog:react18",
     "react-dom": "catalog:react18",

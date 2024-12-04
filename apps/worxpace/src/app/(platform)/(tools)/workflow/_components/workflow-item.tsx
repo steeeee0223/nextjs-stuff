@@ -1,12 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import type { Document } from "@swy/prisma";
 import { Label, Switch } from "@swy/ui/shadcn";
 import { CRUDItem, CRUDItemSkeleton } from "@swy/ui/shared";
 
-import { useDocuments, usePlatform } from "~/hooks";
+import { useDocuments } from "~/hooks";
 import { toIconInfo, type WorkflowContent } from "~/lib";
 
 interface WorkflowItemProps {
@@ -20,10 +21,10 @@ const WorkflowItem = ({
   workspaceId,
   workflow,
 }: WorkflowItemProps) => {
+  const router = useRouter();
   const { id, title, icon, content: $content } = workflow;
   const content = JSON.parse($content!) as WorkflowContent;
   /** Actions */
-  const { toToolsPage } = usePlatform();
   const { archive, update } = useDocuments({ workspaceId });
   const onPublishFlow = async (id: string, publish: boolean) => {
     const newContent = JSON.stringify({ ...content, isPublished: publish });
@@ -48,7 +49,7 @@ const WorkflowItem = ({
         id={id}
         expandable={false}
         icon={toIconInfo(icon)}
-        onClick={() => toToolsPage(id, "workflow")}
+        onClick={() => router.push(`/workflow/${id}`)}
         onDelete={onArchive}
       />
       <div className="flex h-8 cursor-pointer items-center gap-2 px-2 hover:bg-primary/5">

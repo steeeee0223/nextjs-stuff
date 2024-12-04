@@ -1,13 +1,14 @@
 import { format } from "date-fns";
 
 import type {
+  DocItemData,
   Page,
   WorkspaceMemberships as PeopleData,
   SettingsStore,
   Workspace as WorkspaceData,
 } from "@swy/notion";
 import type { Account, Icon, Membership, Workspace } from "@swy/prisma";
-import type { IconInfo, TreeItem } from "@swy/ui/shared";
+import type { IconInfo } from "@swy/ui/shared";
 import { Plan, Role } from "@swy/validators";
 
 import type { AccountMemberships, WorkspaceMembership } from "./account";
@@ -43,7 +44,7 @@ export function toDateString(date: Date | string | number): string {
   return format(new Date(date), "MMM d, yyyy 'at' h:mm a");
 }
 
-export function toTreeItem(doc: DetailedDocument): TreeItem {
+export function toDocItem(doc: DetailedDocument): DocItemData {
   return {
     id: doc.id,
     title: doc.title,
@@ -51,7 +52,7 @@ export function toTreeItem(doc: DetailedDocument): TreeItem {
     icon: toIconInfo(doc.icon),
     group: doc.isArchived ? `trash:${doc.type}` : doc.type,
     lastEditedBy: doc.updatedBy.preferredName,
-    lastEditedAt: toDateString(doc.updatedAt),
+    lastEditedAt: doc.updatedAt.getMilliseconds(),
   };
 }
 

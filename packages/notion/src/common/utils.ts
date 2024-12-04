@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 import type { IconInfo } from "@swy/ui/shared";
 
 /**
@@ -21,4 +23,8 @@ export function generateDefaultIcon(type?: string): IconInfo {
     default:
       return { type: "text", text: " " };
   }
+}
+
+export function toDateString(date: Date | string | number): string {
+  return format(new Date(date), "MMM d, yyyy 'at' h:mm a");
 }
