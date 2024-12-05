@@ -5,8 +5,10 @@ import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
+import type { Document } from "@swy/prisma";
+
 import { updateInternalDocument } from "~/actions";
-import { DetailedDocument, documentFetcher, type DocumentKey } from "~/lib";
+import { documentFetcher, type DocumentKey } from "~/lib";
 import { usePlatform } from "./use-platform";
 
 export const useDocument = (info: Omit<DocumentKey, "type"> | null) => {
@@ -18,7 +20,7 @@ export const useDocument = (info: Omit<DocumentKey, "type"> | null) => {
     data: page,
     isLoading,
     error,
-  } = useSWR<DetailedDocument, Error>(key, documentFetcher, {
+  } = useSWR<Document, Error>(key, documentFetcher, {
     onSuccess: (data) => {
       if (!data.isPublished && data.workspaceId !== platform.workspaceId)
         platform.update((prev) => ({ ...prev, workspaceId: data.workspaceId }));

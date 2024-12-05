@@ -3,7 +3,7 @@
 import { currentUser } from "@clerk/nextjs/server";
 import type { Fetcher } from "swr";
 
-import type { Workspace } from "@swy/prisma";
+import type { Document, Workspace } from "@swy/prisma";
 
 import * as account from "./account";
 import * as documents from "./documents";
@@ -15,11 +15,10 @@ import type {
   InvitationKey,
   WorkspaceKey,
 } from "./swr";
-import type { DetailedDocument } from "./types";
 import { emailToUsername } from "./utils";
 import * as workspace from "./workspace";
 
-export const documentFetcher: Fetcher<DetailedDocument, DocumentKey> = async ({
+export const documentFetcher: Fetcher<Document, DocumentKey> = async ({
   documentId,
   preview,
 }) => {
@@ -40,10 +39,9 @@ export const documentFetcher: Fetcher<DetailedDocument, DocumentKey> = async ({
   return document;
 };
 
-export const documentsFetcher: Fetcher<
-  DetailedDocument[],
-  DocumentsKey
-> = async ({ workspaceId }) => {
+export const documentsFetcher: Fetcher<Document[], DocumentsKey> = async ({
+  workspaceId,
+}) => {
   const { clerkId } = await fetchClient();
   const inWorkspace = await account.isInWorkspace({ clerkId, workspaceId });
   if (!inWorkspace) throw new UnauthorizedError();

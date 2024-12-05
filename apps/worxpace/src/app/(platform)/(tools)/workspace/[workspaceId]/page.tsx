@@ -14,8 +14,8 @@ interface Params {
 
 const Workspace = ({ params: { workspaceId } }: Params) => {
   const { activeWorkspace } = useWorkspace();
-  const { accountId } = usePlatform();
-  const { create } = useDocuments({ workspaceId });
+  const { clerkId, accountId } = usePlatform();
+  const { create } = useDocuments({ clerkId, workspaceId });
   /** Action */
   const onSubmit = () =>
     void create({

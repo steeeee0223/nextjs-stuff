@@ -9,19 +9,16 @@ import type {
   UpdateDocumentInput,
 } from "@swy/validators";
 
-import type { DetailedDocument } from "./types";
-
 type Action = "ARCHIVE" | "RESTORE";
 const UPDATE: Record<Action, Partial<Document>> = {
   ARCHIVE: { isArchived: true },
   RESTORE: { isArchived: false },
 };
-const include = { workspace: true, createdBy: true, updatedBy: true };
 
 export const create = async ({
   accountId,
   ...data
-}: CreateDocumentInput & Pick<Document, "icon">): Promise<DetailedDocument> =>
+}: CreateDocumentInput & Pick<Document, "icon">): Promise<Document> =>
   await db.document.create({
     data: {
       ...data,
@@ -30,22 +27,18 @@ export const create = async ({
       createdId: accountId,
       updatedId: accountId,
     },
-    include,
   });
 
-export const getById = async (
-  documentId: string,
-): Promise<DetailedDocument | null> =>
-  await db.document.findUnique({ where: { id: documentId }, include });
+export const getById = async (documentId: string): Promise<Document | null> =>
+  await db.document.findUnique({ where: { id: documentId } });
 
 export const getByWorkspace = async (where: {
   workspaceId: string;
   isArchived?: boolean;
-}): Promise<DetailedDocument[]> =>
+}): Promise<Document[]> =>
   await db.document.findMany({
     where,
     orderBy: { createdAt: "desc" },
-    include,
   });
 
 const updateChildrenState = async (
@@ -64,12 +57,11 @@ export const archive = async ({
   accountId,
   workspaceId,
   id,
-}: DeleteDocumentInput): Promise<Modified<DetailedDocument>> => {
+}: DeleteDocumentInput): Promise<Modified<Document>> => {
   const modifiedIds = [id];
   const item = await db.document.update({
     where: { id },
     data: { ...UPDATE.ARCHIVE, updatedId: accountId },
-    include,
   });
   await updateChildrenState("ARCHIVE", { workspaceId, parentId: id }, (ids) =>
     modifiedIds.push(...ids),
@@ -81,7 +73,7 @@ export const restore = async ({
   accountId,
   workspaceId,
   id,
-}: DeleteDocumentInput): Promise<Modified<DetailedDocument>> => {
+}: DeleteDocumentInput): Promise<Modified<Document>> => {
   let item;
   const modifiedIds = [id];
   /** Restore `id`
@@ -97,7 +89,6 @@ export const restore = async ({
     data: item.parent?.isArchived
       ? { parentId: null, isArchived: false, updatedId: accountId }
       : { ...UPDATE.RESTORE, updatedId: accountId },
-    include,
   });
   /** Restore all its children */
   await updateChildrenState("RESTORE", { workspaceId, parentId: id }, (ids) =>
@@ -111,11 +102,10 @@ export const update = async ({
   workspaceId,
   id,
   ...updateData
-}: Omit<UpdateDocumentInput, "log">): Promise<DetailedDocument> =>
+}: Omit<UpdateDocumentInput, "log">): Promise<Document> =>
   await db.document.update({
     where: { workspaceId, id },
     data: { ...updateData, updatedId: accountId },
-    include,
   });
 
 const removeChildren = async (

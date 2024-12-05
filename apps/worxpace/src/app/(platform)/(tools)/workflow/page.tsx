@@ -7,7 +7,7 @@ import { usePlatform } from "~/hooks";
 import Workflows from "./_components/workflows";
 
 const Page = () => {
-  const { accountId, workspaceId } = usePlatform();
+  const { clerkId, accountId, workspaceId } = usePlatform();
   // const page = {
   //   workspaceId,
   //   id: `workflow:${workspaceId}`,
@@ -23,7 +23,11 @@ const Page = () => {
   return (
     <div className="pb-40">
       <PageHeader preview />
-      <Workflows accountId={accountId} workspaceId={workspaceId} />
+      <Workflows
+        clerkId={clerkId}
+        accountId={accountId}
+        workspaceId={workspaceId}
+      />
     </div>
   );
 };

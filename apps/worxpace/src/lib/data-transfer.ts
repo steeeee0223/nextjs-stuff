@@ -7,12 +7,18 @@ import type {
   SettingsStore,
   Workspace as WorkspaceData,
 } from "@swy/notion";
-import type { Account, Icon, Membership, Workspace } from "@swy/prisma";
+import type {
+  Account,
+  Document,
+  Icon,
+  Membership,
+  Workspace,
+} from "@swy/prisma";
 import type { IconInfo } from "@swy/ui/shared";
 import { Plan, Role } from "@swy/validators";
 
 import type { AccountMemberships, WorkspaceMembership } from "./account";
-import type { DetailedDocument } from "./types";
+import type { MembershipsMap } from "./types";
 
 export function toIconInfo(icon?: Icon | null, fallback?: string): IconInfo {
   if (!icon) return { type: "text", text: fallback ?? " " };
@@ -44,19 +50,32 @@ export function toDateString(date: Date | string | number): string {
   return format(new Date(date), "MMM d, yyyy 'at' h:mm a");
 }
 
-export function toDocItem(doc: DetailedDocument): DocItemData {
+function accountIdToName(
+  accountId: string,
+  memberships: MembershipsMap,
+): string {
+  return memberships[accountId]?.account.preferredName ?? "User";
+}
+
+export function toDocItem(
+  doc: Document,
+  memberships: MembershipsMap = {},
+): DocItemData {
   return {
     id: doc.id,
     title: doc.title,
     parentId: doc.parentId,
     icon: toIconInfo(doc.icon),
     group: doc.isArchived ? `trash:${doc.type}` : doc.type,
-    lastEditedBy: doc.updatedBy.preferredName,
+    lastEditedBy: accountIdToName(doc.updatedId, memberships),
     lastEditedAt: doc.updatedAt.getMilliseconds(),
   };
 }
 
-export function toPage(doc?: DetailedDocument): Page | null {
+export function toPage(
+  doc?: Document,
+  memberships: MembershipsMap = {},
+): Page | null {
   return doc
     ? {
         id: doc.id,
@@ -66,8 +85,8 @@ export function toPage(doc?: DetailedDocument): Page | null {
         isPublished: doc.isPublished,
         icon: toIconInfo(doc.icon),
         coverImage: doc.coverImage,
-        createdBy: doc.createdBy.preferredName,
-        lastEditedBy: doc.updatedBy.preferredName,
+        createdBy: accountIdToName(doc.createdId, memberships),
+        lastEditedBy: accountIdToName(doc.updatedId, memberships),
         createdAt: toDateString(doc.createdAt),
         lastEditedAt: toDateString(doc.updatedAt),
       }

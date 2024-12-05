@@ -2,7 +2,7 @@
 
 import type { MutationFetcher } from "swr/mutation";
 
-import type { ENTITY_TYPE } from "@swy/prisma";
+import type { Document, ENTITY_TYPE } from "@swy/prisma";
 import { UpdateDocument, type UpdateDocumentInput } from "@swy/validators";
 
 import {
@@ -12,7 +12,6 @@ import {
   documents,
   fetchClient,
   UnauthorizedError,
-  type DetailedDocument,
   type DocumentKey,
   type DocumentsKey,
 } from "~/lib";
@@ -44,12 +43,12 @@ const handler = createMutationFetcher(UpdateDocument, async (_key, { arg }) => {
 });
 
 export const updateDocument: MutationFetcher<
-  DetailedDocument,
+  Document,
   DocumentsKey,
   UpdateDocumentInput
 > = ({ workspaceId }, data) => handler(workspaceId, data);
 export const updateInternalDocument: MutationFetcher<
-  DetailedDocument,
+  Document,
   DocumentKey,
   UpdateDocumentInput
 > = ({ documentId }, data) => handler(documentId, data);

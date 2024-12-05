@@ -5,12 +5,13 @@ import TableHeader from "./table-header";
 import WorkflowItem from "./workflow-item";
 
 interface WorkflowsProps {
+  clerkId: string;
   accountId: string;
   workspaceId: string;
 }
 
-const Workflows = ({ accountId, workspaceId }: WorkflowsProps) => {
-  const { documents, isLoading } = useDocuments({ workspaceId });
+const Workflows = ({ clerkId, accountId, workspaceId }: WorkflowsProps) => {
+  const { documents, isLoading } = useDocuments({ clerkId, workspaceId });
   const workflows = documents?.filter(
     ({ type, isArchived }) => type === "workflow" && !isArchived,
   );
@@ -24,6 +25,7 @@ const Workflows = ({ accountId, workspaceId }: WorkflowsProps) => {
           : workflows.map((workflow) => (
               <WorkflowItem
                 key={workflow.id}
+                clerkId={clerkId}
                 accountId={accountId}
                 workspaceId={workspaceId}
                 workflow={workflow}

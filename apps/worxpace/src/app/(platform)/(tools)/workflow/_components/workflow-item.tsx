@@ -11,12 +11,14 @@ import { useDocuments } from "~/hooks";
 import { toIconInfo, type WorkflowContent } from "~/lib";
 
 interface WorkflowItemProps {
+  clerkId: string;
   accountId: string;
   workspaceId: string;
   workflow: Document;
 }
 
 const WorkflowItem = ({
+  clerkId,
   accountId,
   workspaceId,
   workflow,
@@ -25,7 +27,7 @@ const WorkflowItem = ({
   const { id, title, icon, content: $content } = workflow;
   const content = JSON.parse($content!) as WorkflowContent;
   /** Actions */
-  const { archive, update } = useDocuments({ workspaceId });
+  const { archive, update } = useDocuments({ clerkId, workspaceId });
   const onPublishFlow = async (id: string, publish: boolean) => {
     const newContent = JSON.stringify({ ...content, isPublished: publish });
     await update({

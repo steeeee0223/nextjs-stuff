@@ -16,6 +16,7 @@ import {
   useEdgeStore,
   useHistory,
   useOthers,
+  usePeopleSettings,
   usePlatform,
   useSelf,
 } from "~/hooks";
@@ -30,10 +31,11 @@ interface PageLayoutProps
 
 const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
   ({ children, pageId, onChangeState, ...navProps }, ref) => {
-    const { accountId, workspaceId } = usePlatform();
+    const { accountId, workspaceId, clerkId } = usePlatform();
     const currentUser = useSelf();
     const otherUsers = useOthers();
-    const { fetchPages } = useDocuments({ workspaceId });
+    const { fetchPages } = useDocuments({ clerkId, workspaceId });
+    const { memberships } = usePeopleSettings({ clerkId, workspaceId });
     const {
       page: doc,
       isLoading,
@@ -68,7 +70,7 @@ const PageLayout = forwardRef<HTMLDivElement, PageLayoutProps>(
       <PageProvider
         className="order-3 flex size-full flex-col overflow-hidden"
         isLoading={isLoading}
-        page={toPage(doc)}
+        page={toPage(doc, memberships)}
         currentUser={currentUser}
         otherUsers={otherUsers}
         fetchLogs={fetchLogs}
