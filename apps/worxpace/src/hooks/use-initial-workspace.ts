@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
-import { fetchInitialWorkspace, WorkspaceKey } from "~/lib";
+import { fetchInitialWorkspace, type WorkspaceKey } from "~/lib";
 import { usePlatform } from "./use-platform";
 
 export const useInitialWorkspace = () => {
@@ -12,9 +12,7 @@ export const useInitialWorkspace = () => {
   const router = useRouter();
   /** Initial Workspace */
   const key: WorkspaceKey | null =
-    clerkId === "" || workspaceId !== ""
-      ? null
-      : { type: "workspace", clerkId };
+    !clerkId || workspaceId !== "" ? null : { type: "workspace", clerkId };
   const { mutate } = useSWR(key, fetchInitialWorkspace, {
     onSuccess: ({ path }) => {
       console.log(

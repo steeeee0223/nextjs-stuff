@@ -6,7 +6,7 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { v4 } from "uuid";
 
-import { useSettingsStore, useWorkspace } from "@swy/notion";
+import { usePlatformStore, useSettingsStore } from "@swy/notion";
 import { useOrigin } from "@swy/ui/hooks";
 
 import {
@@ -26,11 +26,14 @@ import {
   workspace,
   type SettingsKey,
 } from "~/lib";
-import { usePlatform } from "./use-platform";
+
+// import { usePlatform } from "./use-platform";
 
 export const useSetup = ({ clerkId }: { clerkId: string }) => {
   const router = useRouter();
-  const { update } = usePlatform();
+  // const { update } = usePlatform();
+  const setClerkId = usePlatformStore((state) => state.setClerkId);
+  const setUser = usePlatformStore((state) => state.setUser);
   /** Fetcher */
   const key: SettingsKey = { type: "settings", clerkId };
   const { data, isLoading, mutate } = useSWR(key, async ({ clerkId }) => {
@@ -42,12 +45,15 @@ export const useSetup = ({ clerkId }: { clerkId: string }) => {
   /** Mutations */
   const onError = (e: Error) => toast.error(e.message);
   const { trigger: createAccount } = useSWRMutation(key, $addAccount, {
-    onSuccess: ({ id }) =>
-      update((prev) => ({ ...prev, clerkId, accountId: id })),
+    onSuccess: ({ id, name, email, avatarUrl }) => {
+      // update((prev) => ({ ...prev, clerkId, accountId: id })),
+      setClerkId(clerkId);
+      setUser({ id, name, email, avatarUrl });
+    },
   });
   const { trigger: createWorkspace } = useSWRMutation(key, $addWorkspace, {
     onSuccess: ({ id }) => {
-      update((prev) => ({ ...prev, workspaceId: id }));
+      // update((prev) => ({ ...prev, workspaceId: id }));
       router.push(`/workspace/${id}`);
     },
     onError,
@@ -67,6 +73,8 @@ export const useSettings = (
 ) => {
   const settingsStore = useSettingsStore();
   const origin = useOrigin();
+  const _updateWorkspace = usePlatformStore((state) => state.updateWorkspace);
+  const _deleteWorkspace = usePlatformStore((state) => state.deleteWorkspace);
   /** Fetcher */
   const key = info ? { type: "settings" as const, ...info } : null;
   const options = { onError: (e: Error) => toast.error(e.message) };
@@ -78,20 +86,16 @@ export const useSettings = (
     return toSettingsStore($account, $workspace, origin);
   });
   /** Mutations */
-  const { dispatch } = useWorkspace();
   const { trigger: updateAccount } = useSWRMutation(key, $updAccount, options);
   const { trigger: updateWorkspace } = useSWRMutation(key, $updWorkspace, {
     ...options,
     onSuccess: ({ id, name, icon }) =>
-      dispatch({
-        type: "update",
-        payload: { id, name, icon: toIconInfo(icon, name) },
-      }),
+      _updateWorkspace(id, { name, icon: toIconInfo(icon, name) }),
   });
   const { trigger: deleteAccount } = useSWRMutation(key, $delAccount, options);
   const { trigger: deleteWorkspace } = useSWRMutation(key, $delWorkspace, {
     ...options,
-    onSuccess: ({ id }) => dispatch({ type: "delete", payload: [id] }),
+    onSuccess: ({ id }) => _deleteWorkspace(id),
   });
 
   const resetLink = async () => {

@@ -6,10 +6,9 @@ import { toast } from "sonner";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
-import { useWorkspace } from "@swy/notion";
-
 import * as actions from "~/actions";
 import { invitationFetcher, type StrictedInvitationKey } from "~/lib";
+import { usePlatform } from "./use-platform";
 
 interface UseInvitationOptions {
   token: string;
@@ -18,7 +17,7 @@ interface UseInvitationOptions {
 
 export const useInvitation = ({ token, clerkId }: UseInvitationOptions) => {
   const router = useRouter();
-  const { select } = useWorkspace();
+  const { switchWorkspace } = usePlatform();
   /** SWR */
   const key = { type: "invitation" as const, token, clerkId };
   const options = { onError: (e: Error) => toast.error(e.message) };
@@ -31,10 +30,10 @@ export const useInvitation = ({ token, clerkId }: UseInvitationOptions) => {
   /** Handlers */
   const redirect = useCallback(
     (workspaceId: string) => {
-      select(workspaceId);
+      switchWorkspace(workspaceId);
       router.push(`/workspace/${workspaceId}`);
     },
-    [router, select],
+    [router, switchWorkspace],
   );
   const joinWorkspace = async (withClerkTicket?: boolean) => {
     if (data?.accountId) {

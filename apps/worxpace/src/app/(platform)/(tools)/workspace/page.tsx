@@ -11,8 +11,7 @@ const Workspace = () => {
     initialize().catch((e) =>
       console.log(`[/workspace] Unexpected error: ${e}`),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [initialize]);
 
   return null;
 };

@@ -8,9 +8,10 @@ import { RoomProvider } from "@swy/liveblocks";
 import {
   NavbarSkeleton,
   PageHeader,
-  Sidebar,
+  Sidebar2,
+  usePlatformStore,
   useSettingsStore,
-  useWorkspace,
+  WorkspaceSwitcher2,
   type SidebarProps,
 } from "@swy/notion";
 import { useSidebarLayout } from "@swy/ui/hooks";
@@ -20,7 +21,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@swy/ui/shadcn";
-import { useModal, useTree } from "@swy/ui/shared";
+import { useModal } from "@swy/ui/shared";
 
 import {
   useDocuments,
@@ -43,9 +44,9 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
 }) => {
   const router = useRouter();
   const { setClose } = useModal();
-  const { clerkId, accountId, workspaceId, ...platform } = usePlatform();
-  const { activeWorkspace, select } = useWorkspace();
-  const setNodes = useTree((state) => state.set);
+  const { clerkId, accountId, workspaceId, account, workspace, ...platform } =
+    usePlatform();
+  const workspaces = usePlatformStore((state) => state.workspaces);
   /** Clerk */
   const { signOut } = useAuth();
   const { user } = useUser();
@@ -64,9 +65,9 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
     deleteAccount,
     deleteWorkspace,
     resetLink,
-  } = useSettings(activeWorkspace ? { clerkId, workspaceId } : null);
+  } = useSettings(workspaceId ? { clerkId, workspaceId } : null);
   const { fetchMemberships, addMembers, updateMember, deleteMember } =
-    usePeopleSettings(activeWorkspace ? { clerkId, workspaceId } : null);
+    usePeopleSettings(workspaceId ? { clerkId, workspaceId } : null);
   const { fetchData } = useSetup({ clerkId });
   const sidebarProps: SidebarProps = {
     redirect: (path) => router.push(path),
@@ -87,20 +88,18 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
       },
       onDeleteAccount: ({ accountId }) =>
         void deleteAccount({ id: accountId, clerkId }).then(async () => {
-          select();
+          platform.reset();
           await signOut(() => {
-            platform.reset();
             store.reset();
             router.push("/select-role");
           });
         }),
-      onDeleteWorkspace: (id) => {
-        void deleteWorkspace({ id });
-        select();
-        platform.update((prev) => ({ ...prev, workspaceId: "" }));
-        store.reset();
-        router.push("/select-role");
-      },
+      onDeleteWorkspace: (id) =>
+        void deleteWorkspace({ id }).then(() => {
+          platform.leave(id);
+          store.reset();
+          router.push("/select-role");
+        }),
       onResetLink: () => void resetLink(),
       onConnectAccount: async (strategy) => {
         if (strategy === "slack") {
@@ -147,7 +146,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
         void deleteMember({ accountId: userId, workspaceId });
         if (userId === accountId) {
           setClose();
-          platform.update((prev) => ({ ...prev, workspaceId: "" }));
+          platform.leave(workspaceId);
           store.reset();
           router.push("/workspace");
         }
@@ -170,15 +169,14 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
     },
     workspaceHandlers: {
       onSelect: (id) => {
-        platform.update((prev) => ({ ...prev, workspaceId: id }));
-        setNodes([]);
+        platform.switchWorkspace(id);
+        // platform.update((prev) => ({ ...prev, workspaceId: id }));
         store.reset();
         router.push(`/workspace/${id}`);
       },
       onCreateWorkspace: () => router.push("/onboarding"),
       onLogout: () => {
         platform.reset();
-        setNodes([]);
         store.reset();
         void signOut(() => router.push("/select-role"));
       },
@@ -189,6 +187,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
     id: string,
     action: "archive" | "restore" | "delete",
   ) => {
+    if (!workspaceId) return;
     switch (action) {
       case "archive":
         void archive({ id, accountId, workspaceId });
@@ -218,11 +217,19 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
         collapsible
         order={1}
       >
-        <Sidebar
+        <Sidebar2
           className="w-full"
           isMobile={isMobile}
           collapse={collapse}
           {...sidebarProps}
+          WorkspaceSwitcher={
+            <WorkspaceSwitcher2
+              user={account}
+              activeWorkspace={workspace}
+              workspaces={Object.values(workspaces)}
+              {...sidebarProps.workspaceHandlers}
+            />
+          }
         />
       </ResizablePanel>
       <ResizableHandle />

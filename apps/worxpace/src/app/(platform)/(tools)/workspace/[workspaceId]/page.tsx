@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { PlusCircle } from "lucide-react";
 
-import { useWorkspace } from "@swy/notion";
 import { Button } from "@swy/ui/shadcn";
 
 import { useDocuments, usePlatform } from "~/hooks";
@@ -13,8 +12,7 @@ interface Params {
 }
 
 const Workspace = ({ params: { workspaceId } }: Params) => {
-  const { activeWorkspace } = useWorkspace();
-  const { clerkId, accountId } = usePlatform();
+  const { clerkId, accountId, workspace } = usePlatform();
   const { create } = useDocuments({ clerkId, workspaceId });
   /** Action */
   const onSubmit = () =>
@@ -43,7 +41,7 @@ const Workspace = ({ params: { workspaceId } }: Params) => {
         className="hidden dark:block"
       />
       <h2 className="text-lg font-medium">
-        Welcome to {activeWorkspace?.name ?? "WorXpace"}
+        Welcome to {workspace.name || "WorXpace"}
       </h2>
       <form action={onSubmit}>
         <Button type="submit">

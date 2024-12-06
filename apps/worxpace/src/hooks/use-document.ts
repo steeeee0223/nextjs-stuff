@@ -23,7 +23,8 @@ export const useDocument = (info: Omit<DocumentKey, "type"> | null) => {
   } = useSWR<Document, Error>(key, documentFetcher, {
     onSuccess: (data) => {
       if (!data.isPublished && data.workspaceId !== platform.workspaceId)
-        platform.update((prev) => ({ ...prev, workspaceId: data.workspaceId }));
+        platform.switchWorkspace(data.workspaceId);
+      // platform.update((prev) => ({ ...prev, workspaceId: data.workspaceId }));
     },
     onError: (e) => {
       console.log(`[swr:page]: ${e.message}`);
