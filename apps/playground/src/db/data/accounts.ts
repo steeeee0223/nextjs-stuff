@@ -1,4 +1,4 @@
-import { AccountModel } from "./types";
+import type { AccountModel } from "../types";
 
 export enum _USER {
   U1 = "a97f4e50-0b72-44f4-a95a-aba319534af5",

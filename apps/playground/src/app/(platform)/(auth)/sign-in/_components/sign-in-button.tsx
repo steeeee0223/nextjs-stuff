@@ -6,14 +6,20 @@ import { Button } from "@swy/ui/shadcn";
 interface SignInButtonProps {
   name: string;
   avatarUrl: string;
+  onClick: () => void;
 }
 
 export const SignInButton: React.FC<SignInButtonProps> = ({
   name,
   avatarUrl,
+  onClick,
 }) => {
   return (
-    <Button variant="hint" className="flex h-fit w-full justify-between">
+    <Button
+      variant="hint"
+      className="flex h-fit w-full justify-between"
+      onClick={onClick}
+    >
       <div className="flex w-full items-center gap-2.5">
         <div className="relative flex-shrink-0">
           <Image
