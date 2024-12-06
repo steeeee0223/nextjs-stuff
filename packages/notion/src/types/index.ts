@@ -41,11 +41,11 @@ export interface Page {
   isArchived: boolean;
   coverImage: CoverImage | null;
   icon: IconInfo | null;
-  // parentId: string | null;
+  parentId: string | null;
   // content: string | null;
   isPublished: boolean;
-  createdAt: string;
-  lastEditedAt: string;
+  createdAt: number; // timestamp in 'ms'
+  lastEditedAt: number; // timestamp in 'ms'
   createdBy: string;
   lastEditedBy: string;
 }

@@ -5,6 +5,9 @@ import { Plan, Role } from "@swy/validators";
 
 import { mockUsers } from "./users";
 
+const getRandomTs = () =>
+  randomInt(Date.UTC(2024, 1, 1), Date.UTC(2024, 10, 31));
+
 export const documents: DocItemData[] = [
   {
     group: "document",
@@ -16,7 +19,7 @@ export const documents: DocItemData[] = [
       url: "https://img.freepik.com/premium-vector/line-art-flag-language-korean-illustration-vector_490632-422.jpg",
     },
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
   {
     group: "document",
@@ -24,7 +27,7 @@ export const documents: DocItemData[] = [
     title: "Pronunciation",
     parentId: "page1",
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
   {
     group: "document",
@@ -33,7 +36,7 @@ export const documents: DocItemData[] = [
     parentId: null,
     icon: { type: "lucide", name: "book", color: "#CB912F" },
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
   {
     group: "document",
@@ -42,7 +45,7 @@ export const documents: DocItemData[] = [
     icon: { type: "lucide", name: "book-check", color: "#CB912F" },
     parentId: null,
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
   {
     group: "document",
@@ -50,7 +53,7 @@ export const documents: DocItemData[] = [
     title: "System flowchart",
     parentId: null,
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
   {
     group: "trash:document",
@@ -59,7 +62,7 @@ export const documents: DocItemData[] = [
     parentId: null,
     icon: { type: "lucide", name: "book", color: "#337EA9" },
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
   {
     group: "kanban",
@@ -67,7 +70,7 @@ export const documents: DocItemData[] = [
     title: "TODO List",
     parentId: null,
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
   {
     group: "whiteboard",
@@ -75,7 +78,7 @@ export const documents: DocItemData[] = [
     title: "System flowchart",
     parentId: null,
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
   {
     group: "document",
@@ -87,7 +90,7 @@ export const documents: DocItemData[] = [
       url: "https://cdn.iconscout.com/icon/premium/png-256-thumb/bar-table-1447763-1224177.png",
     },
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
   {
     group: "document",
@@ -96,7 +99,7 @@ export const documents: DocItemData[] = [
     title: "The Continental",
     icon: { type: "emoji", emoji: "🏠" },
     lastEditedBy: "",
-    lastEditedAt: randomInt(1704067200000, 1730332800000),
+    lastEditedAt: getRandomTs(),
   },
 ];
 
@@ -138,18 +141,19 @@ export const workspaces: Workspace[] = [
 
 export const otherUsers = mockUsers.slice(2, 7);
 
-const createPageData = (treeItem: DocItemData): Page => {
-  const res = treeItem.group!.split(":");
+const createPageData = (item: DocItemData): Page => {
+  const res = item.group!.split(":");
   return {
-    id: treeItem.id,
-    type: res.length > 1 ? res[1]! : treeItem.group!,
-    title: treeItem.title,
-    icon: treeItem.icon ?? null,
+    id: item.id,
+    parentId: item.parentId ?? null,
+    type: res.length > 1 ? res[1]! : item.group!,
+    title: item.title,
+    icon: item.icon ?? null,
     isArchived: res.length > 1,
     coverImage: null,
     isPublished: false,
-    createdAt: Date.UTC(2023, 3, 5).toString(),
-    lastEditedAt: treeItem.lastEditedAt.toString(),
+    createdAt: Date.UTC(2023, 3, 5),
+    lastEditedAt: item.lastEditedAt,
     createdBy: user.name,
     lastEditedBy: user.name,
   };

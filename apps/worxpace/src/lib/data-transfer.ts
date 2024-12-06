@@ -1,5 +1,3 @@
-import { format } from "date-fns";
-
 import type {
   DocItemData,
   Page,
@@ -46,10 +44,6 @@ export function toIcon(info: IconInfo): Icon | null {
   }
 }
 
-export function toDateString(date: Date | string | number): string {
-  return format(new Date(date), "MMM d, yyyy 'at' h:mm a");
-}
-
 function accountIdToName(
   accountId: string,
   memberships: MembershipsMap,
@@ -68,7 +62,7 @@ export function toDocItem(
     icon: toIconInfo(doc.icon),
     group: doc.isArchived ? `trash:${doc.type}` : doc.type,
     lastEditedBy: accountIdToName(doc.updatedId, memberships),
-    lastEditedAt: doc.updatedAt.getMilliseconds(),
+    lastEditedAt: doc.updatedAt.getUTCMilliseconds(),
   };
 }
 
@@ -79,6 +73,7 @@ export function toPage(
   return doc
     ? {
         id: doc.id,
+        parentId: doc.parentId,
         title: doc.title,
         type: doc.type,
         isArchived: doc.isArchived,
@@ -87,8 +82,8 @@ export function toPage(
         coverImage: doc.coverImage,
         createdBy: accountIdToName(doc.createdId, memberships),
         lastEditedBy: accountIdToName(doc.updatedId, memberships),
-        createdAt: toDateString(doc.createdAt),
-        lastEditedAt: toDateString(doc.updatedAt),
+        createdAt: doc.createdAt.getUTCMilliseconds(),
+        lastEditedAt: doc.updatedAt.getUTCMilliseconds(),
       }
     : null;
 }
