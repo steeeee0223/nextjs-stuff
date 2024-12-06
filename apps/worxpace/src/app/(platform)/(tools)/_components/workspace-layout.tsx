@@ -20,7 +20,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@swy/ui/shadcn";
-import { useModal } from "@swy/ui/shared";
+import { useModal, useTree } from "@swy/ui/shared";
 
 import {
   useDocuments,
@@ -45,6 +45,7 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
   const { setClose } = useModal();
   const { clerkId, accountId, workspaceId, ...platform } = usePlatform();
   const { activeWorkspace, select } = useWorkspace();
+  const setNodes = useTree((state) => state.set);
   /** Clerk */
   const { signOut } = useAuth();
   const { user } = useUser();
@@ -170,12 +171,14 @@ const WorkspaceLayout: React.FC<WorkspaceLayoutProps> = ({
     workspaceHandlers: {
       onSelect: (id) => {
         platform.update((prev) => ({ ...prev, workspaceId: id }));
+        setNodes([]);
         store.reset();
         router.push(`/workspace/${id}`);
       },
       onCreateWorkspace: () => router.push("/onboarding"),
       onLogout: () => {
         platform.reset();
+        setNodes([]);
         store.reset();
         void signOut(() => router.push("/select-role"));
       },
