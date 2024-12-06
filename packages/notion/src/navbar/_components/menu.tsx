@@ -13,6 +13,7 @@ import {
 } from "@swy/ui/shadcn";
 import { Hint } from "@swy/ui/shared";
 
+import { toDateString } from "../../common";
 import type { PageContextInterface } from "../../page-provider";
 import type { Page } from "../../types";
 
@@ -44,7 +45,7 @@ export const Menu = ({ page, onChangeState }: MenuProps) => {
         <DropdownMenuSeparator />
         <div className="flex flex-col items-center px-2 py-1 text-xs text-muted dark:text-muted-dark">
           <div className="w-full">Last edited by: {page.lastEditedBy}</div>
-          <div className="w-full">{page.lastEditedAt}</div>
+          <div className="w-full">{toDateString(page.lastEditedAt)}</div>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

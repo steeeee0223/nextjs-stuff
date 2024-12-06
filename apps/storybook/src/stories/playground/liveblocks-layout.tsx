@@ -1,7 +1,14 @@
 import React from "react";
 
 import { createClient, createRoomContext, RoomProvider } from "@swy/liveblocks";
-import { Navbar, PageHeader, PageProvider, Sidebar } from "@swy/notion";
+import {
+  Navbar,
+  PageHeader,
+  PageProvider,
+  Sidebar2,
+  usePlatformStore,
+  WorkspaceSwitcher2,
+} from "@swy/notion";
 import {
   mockConnections,
   mockLogs,
@@ -29,7 +36,15 @@ type LayoutProps = React.PropsWithChildren;
 export const LayoutWithLiveblocks = ({ children }: LayoutProps) => {
   const { minSize, ref, collapse, expand, isResizing, isMobile, isCollapsed } =
     useSidebarLayout("group", "sidebar", 240);
-  const { pageId, isLoading, fetchPages, selectPage } = usePages("workspace-0");
+  /** Bound stores */
+  const activeWorkspace = usePlatformStore((state) => state.activeWorkspace);
+  const workspaces = usePlatformStore((state) => state.workspaces);
+  const user = usePlatformStore((state) => state.user);
+  const setActiveWorkspace = usePlatformStore(
+    (state) => state.setActiveWorkspace,
+  );
+  const { pageId, isLoading, fetchPages, selectPage } =
+    usePages(activeWorkspace);
 
   return (
     <ResizablePanelGroup
@@ -47,7 +62,7 @@ export const LayoutWithLiveblocks = ({ children }: LayoutProps) => {
         collapsible
         order={1}
       >
-        <Sidebar
+        <Sidebar2
           className="w-full"
           isMobile={isMobile}
           collapse={collapse}
@@ -57,11 +72,15 @@ export const LayoutWithLiveblocks = ({ children }: LayoutProps) => {
             onFetchConnections: () => Promise.resolve(mockConnections),
             onFetchMemberships: () => Promise.resolve(mockMemberships),
           }}
-          pageHandlers={{
-            isLoading,
-            fetchPages,
-          }}
-          workspaceHandlers={{}}
+          pageHandlers={{ isLoading, fetchPages }}
+          WorkspaceSwitcher={
+            <WorkspaceSwitcher2
+              user={user!}
+              activeWorkspace={workspaces[activeWorkspace!]!}
+              workspaces={Object.values(workspaces)}
+              onSelect={setActiveWorkspace}
+            />
+          }
         />
       </ResizablePanel>
       <ResizableHandle />

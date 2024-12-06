@@ -7,6 +7,8 @@
 - `repo`
   - Update `turbo` task dependencies
   - Upgrade deps: `jiti`, `prisma`, `lucide-react`
+- `storybook`
+  - Update playground
 - `worxpace`
   - Fix: page routing & published page
   - Fix: window origin
@@ -27,6 +29,8 @@
 - 🆕 `notion`
   - New package from `@swy/ui/notion`
   - Mocking data at `@swy/notion/mock`
+  - Refactor global states (but currently **NOT** apply to `worxpace`)
+  - Deprecated components: `Sidebar`, `WorkspaceProvider`, `WorkspaceSwitcher`
 - `prisma`
   - Remove `.env`, use root instead
   - Update config
