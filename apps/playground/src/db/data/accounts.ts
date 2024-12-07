@@ -45,3 +45,9 @@ export const accounts: Record<string, AccountModel> = {
   //   updatedAt: Date.UTC(2024, 1, 1),
   // },
 };
+
+export const githubAccounts: Record<string, string> = {
+  [_USER.U1]: "steeeee0223",
+  [_USER.U2]: "pong1013",
+  [_USER.U3]: "itschiaming",
+};

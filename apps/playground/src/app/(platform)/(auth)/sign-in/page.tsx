@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { usePlatformStore } from "@swy/notion";
 import { IconBlock } from "@swy/ui/shared";
 
-import { accounts } from "~/db/data/accounts";
+import { accounts, githubAccounts } from "~/db";
 import { useAppActions, useAppState, useMockDB } from "~/hooks";
 import { SignInButton } from "./_components/sign-in-button";
 
@@ -50,6 +50,7 @@ export default function Page() {
             <SignInButton
               name={name}
               avatarUrl={avatarUrl}
+              githubAccount={githubAccounts[id]!}
               onClick={() => login(id)}
             />
           ))}
