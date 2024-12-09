@@ -65,6 +65,11 @@ export const useMockDB = () => {
       ),
     [db.memberships, db.workspaces],
   );
+  const findWorkspace = useCallback(
+    (workspaceId: string) =>
+      actions.findWorkspace({ workspaces: db.workspaces }, workspaceId),
+    [db.workspaces],
+  );
 
   return {
     setupDB,
@@ -73,5 +78,6 @@ export const useMockDB = () => {
     /** fetchers */
     findAccount,
     findAccountMemberships,
+    findWorkspace,
   };
 };

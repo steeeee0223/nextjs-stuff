@@ -33,3 +33,11 @@ export const findAccountMemberships = async (
   });
   return await Promise.resolve(ws);
 };
+
+export const findWorkspace = async (
+  db: Pick<MockDB, "workspaces">,
+  workspaceId: string,
+) => {
+  await delay(500);
+  return await Promise.resolve(db.workspaces[workspaceId] ?? null);
+};
