@@ -53,9 +53,11 @@ export const createWorkspaceSlice: StateCreator<
       },
     })),
   deleteWorkspace: (workspaceId) =>
-    set(({ workspaces }) => {
+    set(({ workspaces, activeWorkspace }) => {
       delete workspaces[workspaceId];
-      return { workspaces };
+      return activeWorkspace === workspaceId
+        ? { workspaces, activeWorkspace: null }
+        : { workspaces };
     }),
   resetWorkspaces: () => set(initialState),
 });
