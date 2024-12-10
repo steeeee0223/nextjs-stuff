@@ -1,4 +1,4 @@
-import { AccountModel } from "./types";
+import type { AccountModel } from "../types";
 
 export enum _USER {
   U1 = "a97f4e50-0b72-44f4-a95a-aba319534af5",
@@ -44,4 +44,10 @@ export const accounts: Record<string, AccountModel> = {
   //   preferredName: "John Wick",
   //   updatedAt: Date.UTC(2024, 1, 1),
   // },
+};
+
+export const githubAccounts: Record<string, string> = {
+  [_USER.U1]: "steeeee0223",
+  [_USER.U2]: "pong1013",
+  [_USER.U3]: "itschiaming",
 };

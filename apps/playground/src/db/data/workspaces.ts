@@ -1,7 +1,7 @@
 import { Plan } from "@swy/validators";
 
+import type { WorkspaceModel } from "../types";
 import { _USER } from "./accounts";
-import type { WorkspaceModel } from "./types";
 
 export enum _WORKSPACE {
   W1 = "f12d4c5b-2d3b-4d2b-aef3-8f7319c5d481",
