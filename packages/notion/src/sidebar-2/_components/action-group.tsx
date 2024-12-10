@@ -1,5 +1,14 @@
 import React from "react";
-import { MoreHorizontal, Plus, Trash } from "lucide-react";
+import {
+  ArrowUpRight,
+  Copy,
+  Link,
+  MoreHorizontal,
+  Plus,
+  SquarePen,
+  Star,
+  Trash,
+} from "lucide-react";
 
 import {
   Button,
@@ -50,9 +59,34 @@ export const ActionGroup: React.FC<ActionGroupProps> = ({
           forceMount
           onClick={(e) => e.stopPropagation()}
         >
-          <DropdownMenuItem onClick={onDelete}>
+          <DropdownMenuItem>
+            <Star className="mr-2 size-4" />
+            Add to Favorites
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <Link className="mr-2 size-4" />
+            Copy link
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Copy className="mr-2 size-4" />
+            Duplicate
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <SquarePen className="mr-2 size-4" />
+            Rename
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={onDelete}
+            className="group/trash hover:text-red"
+          >
             <Trash className="mr-2 size-4" />
-            Delete
+            Move to Trash
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <ArrowUpRight className="mr-2 size-4" />
+            Open in new tab
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <div className="flex flex-col items-center px-2 py-1 text-xs text-muted dark:text-muted-dark">
