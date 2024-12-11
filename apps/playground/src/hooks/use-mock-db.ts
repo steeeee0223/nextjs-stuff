@@ -41,7 +41,48 @@ export const useMockDB = () => {
         });
         ok = true;
       } catch (error) {
-        console.error("update db error", error);
+        console.error(`[db:${collection}] update error`, error);
+      }
+      return Promise.resolve(ok);
+    },
+    [update],
+  );
+  const deleteFromDB = useCallback(
+    async <
+      K extends keyof MockDB,
+      T = MockDB[K] extends Record<string, infer V>
+        ? V
+        : MockDB[K] extends (infer U)[]
+          ? U
+          : never,
+    >(
+      collection: K,
+      where: (item: T) => boolean,
+    ) => {
+      await delay(500);
+      let ok = false;
+      try {
+        update((prev) => {
+          const storeType = determineType(prev[collection]);
+          if (storeType === "else") return prev;
+          if (storeType === "object") {
+            const coll = prev[collection] as Record<string, T>;
+            const items = Object.entries(coll).filter(([, item]) =>
+              where(item),
+            );
+            items.forEach(([id]) => delete coll[id]);
+            return { ...prev, [collection]: coll };
+          }
+          return {
+            ...prev,
+            [collection]: (prev[collection] as T[]).filter(
+              (item) => !where(item),
+            ),
+          };
+        });
+        ok = true;
+      } catch (error) {
+        console.error(`[db:${collection}] delete error`, error);
       }
       return Promise.resolve(ok);
     },
@@ -78,6 +119,7 @@ export const useMockDB = () => {
   return {
     setupDB,
     updateDB,
+    deleteFromDB,
     resetDB,
     /** fetchers */
     findAccount,

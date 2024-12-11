@@ -79,7 +79,7 @@ export default function Page() {
       role: mem.role,
     });
     console.log(`create success, redirecting to ${wid}`);
-    selectWorkspace(w.id);
+    selectWorkspace(accountId, w.id);
   };
 
   useEffect(() => {

@@ -2,10 +2,15 @@
 
 import { SidebarProps, usePlatformStore, useSettingsStore } from "@swy/notion";
 
+import { useMockDB } from "./use-mock-db";
+
 export const useSidebarData = (): Pick<
   SidebarProps,
   "settingsProps" | "pageHandlers"
 > => {
+  /** DB */
+  const { deleteFromDB } = useMockDB();
+  /** Store */
   const settings = useSettingsStore((state) => ({
     account: state.account,
     workspace: state.workspace,
@@ -18,10 +23,13 @@ export const useSidebarData = (): Pick<
     settingsProps: {
       settings,
       onUpdate: updateSettings,
-      onDeleteWorkspace: (id) => {
-        deleteWorkspace(id);
-        resetSettings();
-      },
+      onDeleteWorkspace: (id) =>
+        void deleteFromDB("workspaces", (w) => w.id === id).then((ok) => {
+          if (ok) {
+            deleteWorkspace(id);
+            resetSettings();
+          }
+        }),
     },
     pageHandlers: {},
   };
