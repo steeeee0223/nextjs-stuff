@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import {
   Navbar,
   PageProvider,
-  SettingsStore,
   Sidebar2,
   usePlatformStore,
   WorkspaceSwitcher2,
@@ -19,8 +18,9 @@ import {
   ResizablePanelGroup,
 } from "@swy/ui/shadcn";
 
-import { fallbackUser } from "~/constants";
+import { fallbackUser, fallbackWorkspace } from "~/constants";
 import { useAppActions, useAppState } from "~/hooks";
+import { useSidebarData } from "~/hooks/use-sidebar-data";
 
 export default function CoreLayout({ children }: React.PropsWithChildren) {
   const router = useRouter();
@@ -32,6 +32,8 @@ export default function CoreLayout({ children }: React.PropsWithChildren) {
   const user = usePlatformStore((state) => state.user);
   const workspaces = usePlatformStore((state) => state.workspaces);
   const activeWorkspace = usePlatformStore((state) => state.activeWorkspace);
+
+  const sidebarProps = useSidebarData();
 
   useEffect(() => {
     if (!isSignedIn || !activeWorkspace) router.push("/sign-in");
@@ -60,17 +62,15 @@ export default function CoreLayout({ children }: React.PropsWithChildren) {
             className="w-full"
             isMobile={isMobile}
             collapse={collapse}
-            settingsProps={{
-              // TODO fix this
-              settings: {} as SettingsStore,
-            }}
-            pageHandlers={{}}
+            {...sidebarProps}
             WorkspaceSwitcher={
               <WorkspaceSwitcher2
                 user={user ?? fallbackUser}
                 workspaces={Object.values(workspaces)}
-                activeWorkspace={workspaces[activeWorkspace]!}
-                onSelect={selectWorkspace}
+                activeWorkspace={
+                  workspaces[activeWorkspace] ?? fallbackWorkspace
+                }
+                onSelect={(wid) => selectWorkspace(user?.id ?? "", wid)}
                 onCreateWorkspace={goToOnboarding}
                 onLogout={logout}
               />

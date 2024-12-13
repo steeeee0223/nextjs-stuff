@@ -12,3 +12,14 @@ export const mockDB: MockDB = {
   workspaces,
   memberships,
 };
+
+export type Model<K extends keyof MockDB> =
+  MockDB[K] extends Record<string, infer V>
+    ? V extends object
+      ? V
+      : never
+    : MockDB[K] extends (infer U)[]
+      ? U extends object
+        ? U
+        : never
+      : never;

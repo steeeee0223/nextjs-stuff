@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 
-import { usePlatformStore } from "@swy/notion";
+import { usePlatformStore, useSettingsStore } from "@swy/notion";
 import { IconBlock } from "@swy/ui/shared";
 
 import { accounts, githubAccounts } from "~/db";
@@ -17,6 +17,7 @@ export default function Page() {
   /** Store */
   const setUser = usePlatformStore((state) => state.setUser);
   const setWorkspaces = usePlatformStore((state) => state.setWorkspaces);
+  const updateSettings = useSettingsStore((state) => state.update);
   const login = async (userId: string) => {
     const u = await findAccount(userId);
     if (!u) return router.push("/sign-in");
@@ -28,11 +29,12 @@ export default function Page() {
       email: u.email,
       avatarUrl: u.avatarUrl,
     });
+    updateSettings({ account: u });
     signIn(userId);
     const workspaces = await findAccountMemberships(userId);
     if (workspaces.length === 0) return goToOnboarding();
     setWorkspaces(workspaces);
-    selectWorkspace(workspaces[0]!.id);
+    selectWorkspace(userId, workspaces[0]!.id);
   };
 
   return (

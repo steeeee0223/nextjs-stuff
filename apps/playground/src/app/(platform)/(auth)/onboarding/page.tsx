@@ -37,7 +37,7 @@ const data: Omit<CardProps, "checked">[] = [
 export default function Page() {
   const [checked, setChecked] = useState(-1);
   const router = useRouter();
-  const { updateDB } = useMockDB();
+  const { addToDB } = useMockDB();
   const [isSignedIn, accountId] = useAppState((state) => [
     state.isSignedIn,
     state.userId,
@@ -61,7 +61,7 @@ export default function Page() {
       icon: { type: "text", text: "N" },
       lastEditedAt: Date.now(),
     };
-    await updateDB("workspaces", { [wid]: w });
+    await addToDB("workspaces", { [wid]: w });
     const mem = {
       id: v4(),
       accountId,
@@ -69,7 +69,7 @@ export default function Page() {
       joinedAt: Date.now(),
       role: Role.OWNER,
     };
-    await updateDB("memberships", [mem]);
+    await addToDB("memberships", [mem]);
     addWorkspace({
       id: wid,
       name: w.name,
@@ -79,7 +79,7 @@ export default function Page() {
       role: mem.role,
     });
     console.log(`create success, redirecting to ${wid}`);
-    selectWorkspace(w.id);
+    selectWorkspace(accountId, w.id);
   };
 
   useEffect(() => {

@@ -33,3 +33,17 @@ export const findAccountMemberships = async (
   });
   return await Promise.resolve(ws);
 };
+
+export const findWorkspace = async (
+  db: Pick<MockDB, "workspaces" | "memberships">,
+  accountId: string,
+  workspaceId: string,
+) => {
+  await delay(500);
+  const ws = db.workspaces[workspaceId];
+  const mem = db.memberships.find(
+    (mem) => mem.accountId === accountId && mem.workspaceId === workspaceId,
+  );
+  if (!ws || !mem) return await Promise.resolve(null);
+  return await Promise.resolve({ ...ws, role: mem.role });
+};

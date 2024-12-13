@@ -1,5 +1,6 @@
+import { Workspace } from "@swy/notion";
 import type { IconInfo } from "@swy/ui/shared";
-import { type User } from "@swy/validators";
+import { Plan, Role, type User } from "@swy/validators";
 
 export const fallbackIcon: IconInfo = { type: "text", text: "W" };
 export const fallbackUser: User = {
@@ -9,11 +10,11 @@ export const fallbackUser: User = {
   avatarUrl: "",
 };
 
-// export const fallbackWorkspace: Workspace = {
-//   id: "",
-//   role: Role.GUEST,
-//   name: "",
-//   icon: fallbackIcon,
-//   members: 0,
-//   plan: Plan.FREE,
-// };
+export const fallbackWorkspace: Workspace = {
+  id: "",
+  role: Role.GUEST,
+  name: "",
+  icon: fallbackIcon,
+  members: 0,
+  plan: Plan.FREE,
+};
