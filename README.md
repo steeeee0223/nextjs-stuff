@@ -1,15 +1,16 @@
 # Nextjs Stuff
 
-[![](./docs/img/landing.png)](https://storybook.steeeee0223.vercel.app/iframe.html?globals=&args=&id=playground--playground)
+[![](./docs/img/landing.png)](https://worxpace-playground.vercel.app)
 
 ### Apps
 
 - [Steeeee WorXpace](https://worxpace.steeeee0223.vercel.app/)
+- [WorXpace Template](https://worxpace-playground.vercel.app)
 - [Component Storybook](https://storybook.steeeee0223.vercel.app/)
 
 ### Features & Demo
 
-[Live Demo](https://storybook.steeeee0223.vercel.app/iframe.html?globals=&args=&id=playground--playground)
+[Client-Side Demo](https://worxpace-playground.vercel.app)
 
 - 🤑 Custom notion-style rich text editor
 - 🪧 Custom kanban board
