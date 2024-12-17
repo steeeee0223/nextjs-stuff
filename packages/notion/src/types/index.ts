@@ -42,10 +42,15 @@ export interface Page {
   coverImage: CoverImage | null;
   icon: IconInfo | null;
   parentId: string | null;
-  // content: string | null;
   isPublished: boolean;
+  isFavorite: boolean;
+  url?: string; // page link, starting with `/`
   createdAt: number; // timestamp in 'ms'
   lastEditedAt: number; // timestamp in 'ms'
   createdBy: string;
   lastEditedBy: string;
 }
+
+export type UpdatePageParams = Partial<
+  Pick<Page, "title" | "icon" | "isFavorite" | "isArchived">
+>;

@@ -2,9 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { HelpCircle, Trash, Undo } from "lucide-react";
-import { toast } from "sonner";
 
 import { cn } from "@swy/ui/lib";
 import {
@@ -18,14 +17,14 @@ import {
 import { Hint, IconBlock, useModal } from "@swy/ui/shared";
 
 import { BaseModal } from "../../common";
-import type { Page } from "../../types";
+import { selectPages, usePlatformStore } from "../../slices";
+import { useFilter } from "../use-filter";
 import { HintItem } from "./hint-item";
 
 interface TrashBoxProps {
   isOpen: boolean;
   isMobile?: boolean;
   onOpenChange: (open: boolean) => void;
-  fetchPages?: () => Promise<Page[]>;
   onRestore?: (id: string) => void;
   onDelete?: (id: string) => void;
   onSelect?: (id: string, type: string) => void;
@@ -34,31 +33,17 @@ interface TrashBoxProps {
 export const TrashBox = ({
   isOpen,
   onOpenChange,
-  fetchPages,
   onRestore,
   onDelete,
   onSelect,
 }: TrashBoxProps) => {
   const { setOpen } = useModal();
+  const pages = usePlatformStore((state) => selectPages(state, true));
+  const { filteredItems, updateSearch } = useFilter(pages);
   /** Select */
-  const [pages, setPages] = useState<Page[]>([]);
   const handleSelect = (id: string, type: string) => {
     onSelect?.(id, type);
     onOpenChange(false);
-  };
-  /** Filter */
-  const [input, setInput] = useState("");
-  const [filteredItems, setFilteredItems] = useState<Page[] | null>(null);
-  const updateFilteredItems = (input: string) => {
-    const v = input.trim().toLowerCase();
-    const result = pages.filter((page) => page.title.toLowerCase().includes(v));
-    setFilteredItems(
-      v.length > 0 ? (result.length > 0 ? result : null) : pages,
-    );
-  };
-  const onInputChange = (input: string) => {
-    setInput(input);
-    updateFilteredItems(input);
   };
   /** Docs Actions */
   const handleRestore = (
@@ -80,15 +65,9 @@ export const TrashBox = ({
     );
   };
 
-  useEffect(() => {
-    void fetchPages?.()
-      .then((data) => {
-        const pages = data.filter((page) => page.isArchived);
-        setPages(pages);
-        setFilteredItems(pages);
-      })
-      .catch(() => toast.message("Error while fetching pages"));
-  }, [fetchPages]);
+  // useEffect(() => {
+  //   setFilteredItems(pages);
+  // }, [pages]);
 
   return (
     <Popover open={isOpen} onOpenChange={onOpenChange}>
@@ -109,8 +88,8 @@ export const TrashBox = ({
       >
         <div className="flex w-full items-center px-3 py-2.5">
           <Input
-            value={input}
-            onChange={(e) => onInputChange(e.target.value)}
+            // value={search}
+            onChange={(e) => updateSearch(e.target.value)}
             placeholder="Search pages in Trash"
           />
         </div>

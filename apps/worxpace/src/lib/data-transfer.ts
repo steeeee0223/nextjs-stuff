@@ -61,6 +61,7 @@ export function toDocItem(
     parentId: doc.parentId,
     icon: toIconInfo(doc.icon),
     group: doc.isArchived ? `trash:${doc.type}` : doc.type,
+    isFavorite: false,
     lastEditedBy: accountIdToName(doc.updatedId, memberships),
     lastEditedAt: doc.updatedAt.getUTCMilliseconds(),
   };
@@ -80,6 +81,7 @@ export function toPage(
         isPublished: doc.isPublished,
         icon: toIconInfo(doc.icon),
         coverImage: doc.coverImage,
+        isFavorite: false,
         createdBy: accountIdToName(doc.createdId, memberships),
         lastEditedBy: accountIdToName(doc.updatedId, memberships),
         createdAt: doc.createdAt.getUTCMilliseconds(),

@@ -9,7 +9,7 @@ import { Hint } from "../hint";
 
 interface TreeGroupProps extends React.PropsWithChildren {
   title: string;
-  description: string;
+  description?: string;
   className?: string;
   isLoading?: boolean;
   onCreate?: () => void;
@@ -41,16 +41,18 @@ export const TreeGroup = ({
             </Button>
           </Hint>
         </div>
-        <Hint side="right" description={description} asChild>
-          <Button
-            variant="hint"
-            size="xs"
-            onClick={onCreate}
-            className="ml-auto size-auto p-0.5 opacity-0 group-hover:opacity-100"
-          >
-            <Plus className="size-4" />
-          </Button>
-        </Hint>
+        {description && (
+          <Hint side="right" description={description} asChild>
+            <Button
+              variant="hint"
+              size="xs"
+              onClick={onCreate}
+              className="ml-auto size-auto p-0.5 opacity-0 group-hover:opacity-100"
+            >
+              <Plus className="size-4" />
+            </Button>
+          </Hint>
+        )}
       </div>
       {isLoading ? (
         <>

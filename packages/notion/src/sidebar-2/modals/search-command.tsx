@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ArrowUpDown } from "lucide-react";
-import { toast } from "sonner";
 
 import { cn } from "@swy/ui/lib";
 import {
@@ -17,57 +16,32 @@ import {
 import { IconBlock, useModal } from "@swy/ui/shared";
 
 import { generateDefaultIcon, Icon, toDateString } from "../../common";
-import type { Page } from "../../types";
+import { selectPages, usePlatformStore } from "../../slices";
+import { useFilter } from "../use-filter";
 
 interface SearchCommandProps {
   workspaceName: string;
-  fetchPages?: () => Promise<Page[]>;
   onSelect?: (id: string, group: string) => void;
   onOpenTrash?: (open: boolean) => void;
 }
 
 export const SearchCommand: React.FC<SearchCommandProps> = ({
   workspaceName,
-  fetchPages,
   onSelect,
   onOpenTrash,
 }) => {
-  /** Search */
   const { isOpen, setClose } = useModal();
+  const pages = usePlatformStore((state) => selectPages(state, false));
+  const { filteredItems, updateSearch } = useFilter(pages);
+  /** Search */
   const jumpToTrash = () => {
     setClose();
     onOpenTrash?.(true);
   };
-  /** Select */
-  const [pages, setPages] = useState<Page[]>([]);
   const handleSelect = (id: string, group: string) => {
     onSelect?.(id, group);
     setClose();
   };
-  /** Filter */
-  const [input, setInput] = useState("");
-  const [filteredItems, setFilteredItems] = useState<Page[] | null>(null);
-  const updateFilteredItems = (input: string) => {
-    const v = input.trim().toLowerCase();
-    const result = pages.filter((page) => page.title.toLowerCase().includes(v));
-    setFilteredItems(
-      v.length > 0 ? (result.length > 0 ? result : null) : pages,
-    );
-  };
-  const onInputChange = (input: string) => {
-    setInput(input);
-    updateFilteredItems(input);
-  };
-
-  useEffect(() => {
-    void fetchPages?.()
-      .then((data) => {
-        const pages = data.filter((page) => !page.isArchived);
-        setPages(pages);
-        setFilteredItems(pages);
-      })
-      .catch(() => toast.message("Error while fetching pages"));
-  }, [fetchPages]);
 
   return (
     <CommandDialog
@@ -79,8 +53,8 @@ export const SearchCommand: React.FC<SearchCommandProps> = ({
       <div className="z-10 flex h-12 w-full flex-shrink-0 flex-grow-0 overflow-hidden border-b bg-transparent px-1">
         <Input
           variant="search"
-          value={input}
-          onChange={(e) => onInputChange(e.target.value)}
+          // value={input}
+          onChange={(e) => updateSearch(e.target.value)}
           placeholder={`Search in ${workspaceName}...`}
           className="h-full w-full min-w-0 border-none bg-transparent text-lg/[27px] dark:bg-transparent"
         />

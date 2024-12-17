@@ -69,7 +69,7 @@ const ActivePlan = ({ activePlan, canUpgrade }: ActivePlanProps) => {
           >
             <div className="flex flex-col gap-1.5">
               <CardTitle className="relative flex items-center gap-1 self-stretch text-sm tracking-[-0.1px]">
-                <Icon.Star /> {active.ai.title}
+                <Icon.Sparkle /> {active.ai.title}
               </CardTitle>
               <div className="text-xs text-[#787774]">
                 {active.ai.description}
