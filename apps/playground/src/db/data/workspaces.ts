@@ -1,7 +1,7 @@
 import { Plan } from "@swy/validators";
 
+import type { WorkspaceModel } from "../types";
 import { _USER } from "./accounts";
-import type { WorkspaceModel } from "./types";
 
 export enum _WORKSPACE {
   W1 = "f12d4c5b-2d3b-4d2b-aef3-8f7319c5d481",
@@ -16,7 +16,7 @@ export const workspaces: Record<string, WorkspaceModel> = {
     id: _WORKSPACE.W1,
     name: "Alpha Workspace",
     icon: { type: "emoji", emoji: "🚀" },
-    domain: "alphaworkspace.com",
+    domain: "alpha-workspace.com",
     plan: Plan.FREE,
     inviteToken: _WORKSPACE.W1,
     createdBy: _USER.U1,
@@ -26,7 +26,7 @@ export const workspaces: Record<string, WorkspaceModel> = {
     id: _WORKSPACE.W2,
     name: "Beta Labs",
     icon: { type: "lucide", name: "goal", color: "#D44C47" },
-    domain: "betalabs.org",
+    domain: "beta-labs.org",
     plan: Plan.EDUCATION,
     inviteToken: _WORKSPACE.W2,
     createdBy: _USER.U3,
@@ -36,7 +36,7 @@ export const workspaces: Record<string, WorkspaceModel> = {
     id: _WORKSPACE.W3,
     name: "Gamma Studio",
     icon: { type: "emoji", emoji: "🎨" },
-    domain: "gammastudio.net",
+    domain: "gamma-studio.net",
     plan: Plan.PLUS,
     inviteToken: _WORKSPACE.W3,
     createdBy: _USER.U1,
@@ -46,7 +46,7 @@ export const workspaces: Record<string, WorkspaceModel> = {
     id: _WORKSPACE.W4,
     name: "Delta Group",
     icon: { type: "text", text: "D" },
-    domain: "deltagroup.com",
+    domain: "delta-group.com",
     plan: Plan.BUSINESS,
     inviteToken: _WORKSPACE.W4,
     createdBy: _USER.U2,
@@ -56,7 +56,7 @@ export const workspaces: Record<string, WorkspaceModel> = {
     id: _WORKSPACE.W5,
     name: "Epsilon Enterprises",
     icon: null,
-    domain: "epsilonent.com",
+    domain: "epsilon-ent.com",
     plan: Plan.ENTERPRISE,
     inviteToken: _WORKSPACE.W5,
     createdBy: _USER.U2,

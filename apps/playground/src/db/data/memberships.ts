@@ -1,7 +1,7 @@
 import { Role } from "@swy/validators";
 
+import type { MembershipModel } from "../types";
 import { _USER } from "./accounts";
-import type { MembershipModel } from "./types";
 import { _WORKSPACE } from "./workspaces";
 
 export const memberships: MembershipModel[] = [
