@@ -20,6 +20,7 @@ export const documents: DocItemData[] = [
     },
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: false,
   },
   {
     group: "document",
@@ -28,6 +29,7 @@ export const documents: DocItemData[] = [
     parentId: "page1",
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: false,
   },
   {
     group: "document",
@@ -37,6 +39,7 @@ export const documents: DocItemData[] = [
     icon: { type: "lucide", name: "book", color: "#CB912F" },
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: true,
   },
   {
     group: "document",
@@ -46,6 +49,7 @@ export const documents: DocItemData[] = [
     parentId: null,
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: false,
   },
   {
     group: "document",
@@ -54,6 +58,7 @@ export const documents: DocItemData[] = [
     parentId: null,
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: false,
   },
   {
     group: "trash:document",
@@ -63,6 +68,7 @@ export const documents: DocItemData[] = [
     icon: { type: "lucide", name: "book", color: "#337EA9" },
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: false,
   },
   {
     group: "kanban",
@@ -71,6 +77,7 @@ export const documents: DocItemData[] = [
     parentId: null,
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: false,
   },
   {
     group: "whiteboard",
@@ -79,6 +86,7 @@ export const documents: DocItemData[] = [
     parentId: null,
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: false,
   },
   {
     group: "document",
@@ -91,6 +99,7 @@ export const documents: DocItemData[] = [
     },
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: false,
   },
   {
     group: "document",
@@ -100,6 +109,7 @@ export const documents: DocItemData[] = [
     icon: { type: "emoji", emoji: "🏠" },
     lastEditedBy: "",
     lastEditedAt: getRandomTs(),
+    isFavorite: false,
   },
 ];
 
@@ -150,6 +160,7 @@ const createPageData = (item: DocItemData): Page => {
     title: item.title,
     icon: item.icon ?? null,
     isArchived: res.length > 1,
+    isFavorite: item.isFavorite,
     coverImage: null,
     isPublished: false,
     createdAt: Date.UTC(2023, 3, 5),

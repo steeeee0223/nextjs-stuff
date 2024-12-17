@@ -43,7 +43,7 @@ export const LayoutWithLiveblocks = ({ children }: LayoutProps) => {
   const setActiveWorkspace = usePlatformStore(
     (state) => state.setActiveWorkspace,
   );
-  const { pageId, isLoading, fetchPages, selectPage } =
+  const { pageId, isLoading, selectPage, updatePage, deletePage } =
     usePages(activeWorkspace);
 
   return (
@@ -72,7 +72,11 @@ export const LayoutWithLiveblocks = ({ children }: LayoutProps) => {
             onFetchConnections: () => Promise.resolve(mockConnections),
             onFetchMemberships: () => Promise.resolve(mockMemberships),
           }}
-          pageHandlers={{ isLoading, fetchPages }}
+          pageHandlers={{
+            isLoading,
+            onUpdate: updatePage,
+            onDelete: deletePage,
+          }}
           WorkspaceSwitcher={
             <WorkspaceSwitcher2
               user={user!}

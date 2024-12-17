@@ -8,9 +8,9 @@ import { createUserSlice, type UserSlice } from "./account";
 import { createPageSlice, type PageSlice } from "./page";
 import { createWorkspaceSlice, type WorkspaceSlice } from "./workspace";
 
-type Store = UserSlice & WorkspaceSlice & PageSlice;
+export type PlatformStore = UserSlice & WorkspaceSlice & PageSlice;
 
-const useStore = create<Store, [["zustand/persist", unknown]]>(
+const useStore = create<PlatformStore, [["zustand/persist", unknown]]>(
   persist(
     (...a) => ({
       ...createUserSlice(...a),
@@ -21,5 +21,5 @@ const useStore = create<Store, [["zustand/persist", unknown]]>(
   ),
 );
 
-export const usePlatformStore = <T>(selector: (state: Store) => T) =>
+export const usePlatformStore = <T>(selector: (state: PlatformStore) => T) =>
   useStore<T>(useShallow(selector));

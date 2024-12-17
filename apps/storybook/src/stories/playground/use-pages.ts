@@ -14,17 +14,24 @@ export const usePages = (workspaceId: string | null) => {
   const activePage = usePlatformStore((state) => state.activePage);
   const setActivePage = usePlatformStore((state) => state.setActivePage);
   const setPages = usePlatformStore((state) => state.setPages);
+  const updatePage = usePlatformStore((state) => state.updatePage);
+  const deletePage = usePlatformStore((state) => state.deletePage);
 
   const { isLoading } = useSWR<Page[], Error>(workspaceId, fetcher, {
     onSuccess: (data) => setPages(data),
     onError: (e) => console.log(`[swr:workspace]: ${e.message}`),
   });
-  const fetchPages = () => Promise.resolve(Object.values(mockPages));
   const selectPage = (path: string) => {
     const [, , id] = path.split("/");
     if (!id) return;
     setActivePage(id);
   };
 
-  return { pageId: activePage ?? "#", isLoading, fetchPages, selectPage };
+  return {
+    pageId: activePage ?? "#",
+    isLoading,
+    selectPage,
+    updatePage,
+    deletePage,
+  };
 };

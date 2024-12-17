@@ -13,7 +13,15 @@ interface PageActions {
   updatePage: (
     pageId: string,
     data: Partial<
-      Pick<Page, "title" | "icon" | "isArchived" | "isPublished" | "coverImage">
+      Pick<
+        Page,
+        | "title"
+        | "icon"
+        | "isArchived"
+        | "isPublished"
+        | "coverImage"
+        | "isFavorite"
+      >
     >,
   ) => void;
   deletePage: (pageId: string) => void;

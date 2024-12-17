@@ -15,9 +15,15 @@ import { Button, useTheme } from "@swy/ui/shadcn";
 import { Hint, useModal } from "@swy/ui/shared";
 
 import type { SettingsPanelProps } from "../settings-panel";
-import type { Page } from "../types";
-import { DocList, HintItem, TrashBox } from "./_components";
+import type { UpdatePageParams } from "../types";
+import { DocList, FavoriteList, HintItem, TrashBox } from "./_components";
 import { SearchCommand, SettingsModal } from "./modals";
+
+const GROUPS = {
+  document: "Document",
+  kanban: "Kanban",
+  whiteboard: "Whiteboard",
+} as const;
 
 interface SidebarProps {
   className?: string;
@@ -27,11 +33,10 @@ interface SidebarProps {
   settingsProps: SettingsPanelProps;
   pageHandlers: {
     isLoading?: boolean;
-    fetchPages?: () => Promise<Page[]>;
     onCreate?: (type: string, parentId?: string) => void;
-    onArchive?: (id: string) => void;
-    onRestore?: (id: string) => void;
+    onDuplicate?: (id: string) => void;
     onDelete?: (id: string) => void;
+    onUpdate?: (id: string, data: UpdatePageParams) => void;
   };
   WorkspaceSwitcher: React.ReactNode;
 }
@@ -60,7 +65,6 @@ export const Sidebar2 = forwardRef<HTMLElement, SidebarProps>(function Sidebar(
     setOpen(
       <SearchCommand
         workspaceName={settingsProps.settings.workspace.name}
-        fetchPages={pages.fetchPages}
         onSelect={(id, group) => redirect?.(`/${group}/${id}`)}
         onOpenTrash={setTrashOpen}
       />,
@@ -131,39 +135,30 @@ export const Sidebar2 = forwardRef<HTMLElement, SidebarProps>(function Sidebar(
         />
       </div>
       <div className="mt-4 flex w-full flex-col gap-y-4">
-        <DocList
+        <FavoriteList
           isLoading={pages.isLoading}
-          group="document"
-          title="Document"
-          defaultIcon={{ type: "lucide", name: "file-text" }}
-          onSelect={(group, id) => redirect?.(`/${group}/${id}`)}
-          onCreate={(parentId) => pages.onCreate?.("document", parentId)}
-          onArchive={(id) => pages.onArchive?.(id)}
+          redirect={redirect}
+          onCreate={pages.onCreate}
+          onDuplicate={pages.onDuplicate}
+          onUpdate={pages.onUpdate}
         />
-        <DocList
-          isLoading={pages.isLoading}
-          group="kanban"
-          title="Kanban"
-          defaultIcon={{ type: "lucide", name: "columns-3" }}
-          onSelect={(group, id) => redirect?.(`/${group}/${id}`)}
-          onCreate={(parentId) => pages.onCreate?.("kanban", parentId)}
-          onArchive={(id) => pages.onArchive?.(id)}
-        />
-        <DocList
-          isLoading={pages.isLoading}
-          group="whiteboard"
-          title="Whiteboard"
-          defaultIcon={{ type: "lucide", name: "presentation" }}
-          onSelect={(group, id) => redirect?.(`/${group}/${id}`)}
-          onCreate={(parentId) => pages.onCreate?.("whiteboard", parentId)}
-          onArchive={(id) => pages.onArchive?.(id)}
-        />
+        {Object.entries(GROUPS).map(([group, title]) => (
+          <DocList
+            key={group}
+            isLoading={pages.isLoading}
+            group={group}
+            title={title}
+            redirect={redirect}
+            onCreate={pages.onCreate}
+            onDuplicate={pages.onDuplicate}
+            onUpdate={pages.onUpdate}
+          />
+        ))}
         <TrashBox
           isOpen={trashOpen}
           onOpenChange={setTrashOpen}
-          fetchPages={pages.fetchPages}
           onSelect={(id, group) => redirect?.(`/${group}/${id}`)}
-          onRestore={pages.onRestore}
+          onRestore={(id) => pages.onUpdate?.(id, { isArchived: false })}
           onDelete={pages.onDelete}
         />
       </div>

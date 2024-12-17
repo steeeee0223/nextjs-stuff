@@ -6,25 +6,20 @@ import { useOrigin } from "@swy/ui/hooks";
 import { TreeGroup, TreeItem, TreeList } from "@swy/ui/shared";
 
 import { generateDefaultIcon } from "../../common";
-import { usePlatformStore } from "../../slices";
-import { selectTreeGroup } from "../../slices/selectors";
-import type { UpdatePageParams } from "../../types";
+import { selectFavorites, usePlatformStore } from "../../slices";
+import type { Page, UpdatePageParams } from "../../types";
 import { ActionGroup } from "./action-group";
 import { MenuType } from "./types";
 
-interface DocListProps {
-  group: string;
-  title: string;
+interface FavoriteListProps {
   isLoading?: boolean;
   redirect?: (url: string) => void;
-  onCreate?: (group: string, parentId?: string) => void;
+  onCreate?: (group: string, parentId: string) => void;
   onDuplicate?: (id: string) => void;
   onUpdate?: (id: string, data: UpdatePageParams) => void;
 }
 
-export const DocList: React.FC<DocListProps> = ({
-  group,
-  title,
+export const FavoriteList: React.FC<FavoriteListProps> = ({
   isLoading,
   redirect,
   onCreate,
@@ -32,46 +27,39 @@ export const DocList: React.FC<DocListProps> = ({
   onUpdate,
 }) => {
   const origin = useOrigin();
-  const defaultIcon = generateDefaultIcon(group);
 
-  const nodes = usePlatformStore((state) => selectTreeGroup(state, group));
+  const nodes = usePlatformStore((state) => selectFavorites(state));
   const activePage = usePlatformStore((state) => state.activePage);
   const setActivePage = usePlatformStore((state) => state.setActivePage);
 
-  const select = (id: string, url?: string) => {
-    setActivePage(id);
-    redirect?.(url ?? "#");
+  const select = (node: Page) => {
+    setActivePage(node.id);
+    redirect?.(node.url ?? "#");
   };
 
   return (
-    <TreeGroup
-      title={title}
-      description={`Add a ${group}`}
-      isLoading={isLoading}
-      onCreate={() => onCreate?.(group)}
-    >
+    <TreeGroup title="Favorites" isLoading={isLoading}>
       <TreeList
         nodes={nodes}
-        defaultIcon={defaultIcon}
-        showEmptyChild={group === "document"}
+        defaultIcon={{ type: "lucide", name: "file" }}
         selectedId={activePage}
         Item={({ node, ...props }) => (
           <TreeItem
             {...props}
             node={node}
-            onSelect={() => select(node.id, node.url)}
             className="group"
-            expandable={group === "document"}
+            onSelect={() => select(node)}
+            expandable={node.type === "document"}
           >
             <ActionGroup
-              type={MenuType.Normal}
+              type={node.isFavorite ? MenuType.Favorites : MenuType.Normal}
               title={node.title}
-              icon={node.icon ?? defaultIcon}
+              icon={node.icon ?? generateDefaultIcon(node.type)}
               pageLink={node.url ? `${origin}/${node.url}` : "#"}
               isFavorite={node.isFavorite}
               lastEditedBy={node.lastEditedBy}
               lastEditedAt={node.lastEditedAt}
-              onCreate={() => onCreate?.(group, node.id)}
+              onCreate={() => onCreate?.(node.type, node.id)}
               onDuplicate={() => onDuplicate?.(node.id)}
               onUpdate={(data) => onUpdate?.(node.id, data)}
             />
