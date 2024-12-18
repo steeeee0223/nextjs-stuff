@@ -1,0 +1,18 @@
+{
+  "extends": "@swy/tsconfig/internal-package.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "lib": ["ES2022", "dom", "dom.iterable"],
+    "baseUrl": ".",
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
