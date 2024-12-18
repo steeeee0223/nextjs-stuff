@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .transition-background {
+    transition: background 200ms ease-out;
+  }
+  .cursor-webkit-grab {
+    cursor: -webkit-grab;
+  }
+}
