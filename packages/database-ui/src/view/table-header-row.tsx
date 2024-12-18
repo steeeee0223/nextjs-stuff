@@ -1,10 +1,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import "./view.css";
 
+import React from "react";
+
 import * as Icon from "./icons";
 import { ActionCell, TableHeaderCell } from "./table-header-cells";
+import { Column } from "./types";
 
-export const TableHeaderRow = () => {
+interface TableHeaderRowProps {
+  cols: Column[];
+}
+
+export const TableHeaderRow: React.FC<TableHeaderRowProps> = ({ cols }) => {
   return (
     <div
       // key="notion-table-view-header-row"
@@ -28,28 +35,25 @@ export const TableHeaderRow = () => {
         </div>
       </div>
       <div className="m-0 inline-flex">
-        <TableHeaderCell
-          type="title"
-          title="Name"
-          icon={<Icon.TypesTitle />}
-          width="216px"
-        />
-        <TableHeaderCell
-          type="text"
-          title="desc"
-          icon={<Icon.TypesText />}
-          width="100px"
-        />
-        <TableHeaderCell
-          type="checkbox"
-          title="Done"
-          icon={<Icon.TypesCheckbox />}
-          width="90px"
-        />
+        {cols
+          .slice()
+          .sort((c1, c2) => c1.colId - c2.colId)
+          .map(({ colId, ...props }) => (
+            <TableHeaderCell key={colId} {...props} />
+          ))}
       </div>
 
-      <ActionCell icon={<Icon.Plus />} />
-      <ActionCell icon={<Icon.Dots />} className="grow" />
+      <ActionCell
+        icon={
+          <Icon.Plus className="block h-full w-3 shrink-0 fill-primary/45" />
+        }
+      />
+      <ActionCell
+        icon={
+          <Icon.Dots className="block h-full w-3 shrink-0 fill-primary/45" />
+        }
+        className="grow"
+      />
     </div>
   );
 };

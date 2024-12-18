@@ -3,10 +3,16 @@
 @tailwind utilities;
 
 @layer utilities {
-  .transition-background {
+  .transition-background-in {
+    transition: background 20ms ease-in;
+  }
+  .transition-background-out {
     transition: background 200ms ease-out;
   }
   .cursor-webkit-grab {
     cursor: -webkit-grab;
+  }
+  .word-break {
+    word-break: break-word;
   }
 }

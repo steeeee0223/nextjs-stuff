@@ -29,7 +29,7 @@ export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
           <div
             role="button"
             tabIndex={0}
-            className="transition-background flex h-full w-full cursor-pointer select-none items-center px-2"
+            className="transition-background-in flex h-full w-full cursor-pointer select-none items-center px-2"
           >
             <div className="flex min-w-0 flex-auto items-center text-sm/[1.2]">
               <div className="mr-1 grid items-center justify-center">
@@ -44,7 +44,7 @@ export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
         </div>
 
         <div className="absolute right-0 z-10 w-0 grow-0">
-          <div className="transition-background -ml-1.5 -mt-0.5 h-[34px] w-[5px] cursor-col-resize bg-blue/80" />
+          <div className="transition-background-out -ml-1.5 -mt-0.5 h-[34px] w-[5px] cursor-col-resize bg-blue/80" />
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@ export const TableHeaderCell: React.FC<TableHeaderCellProps> = ({
 const DragHandle = () => {
   return (
     <div className="col-start-1 row-start-1 opacity-0 transition-opacity duration-150">
-      <div className="transition-background flex h-6 w-[18px] shrink-0 items-center justify-center">
+      <div className="transition-background-in flex h-6 w-[18px] shrink-0 items-center justify-center">
         <Icon.DragHandle />
       </div>
     </div>
