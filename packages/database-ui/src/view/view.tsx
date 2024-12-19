@@ -64,31 +64,33 @@ export const View = () => {
           </div>
         </div>
 
-        <div className="isolation: auto; relative min-w-[708px]">
+        <div className="relative isolation-auto min-w-[708px]">
+          {/* Drag and Fill handle */}
           <div
             key="notion-table-view-drag-and-fill-handle"
             className="relative z-[850] flex"
           >
-            <div className="w-[calc(100% - 64px)] flex">
+            <div className="flex w-[calc(100%-64px)]">
               <div className="left-[32px]">
                 <div className="absolute left-[210px]">
-                  <div className="pointer-events: auto; cursor: ns-resize; absolute left-0 top-[26px] h-[15px] w-[10px]"></div>
+                  <div className="pointer-events-auto absolute left-0 top-[26px] h-[15px] w-[10px] cursor-ns-resize" />
 
-                  <div className="border: 2px solid rgba(35, 131, 226, 0.57); transition: 0.2s; border-radius: 50%; cursor: ns-resize; absolute left-0 top-[28px] size-[9px] transform bg-white"></div>
+                  <div className="absolute left-0 top-7 size-[9px] transform cursor-ns-resize rounded-full border-2 border-blue/60 bg-white duration-200" />
                 </div>
               </div>
             </div>
           </div>
-
+          {/* Header bottom border */}
           <div>
             <div
               data-block-id="15f35e0f-492c-8003-9976-f8ae747a6aeb"
-              key="notion-selectable notion-collection_view-block"
-            ></div>
+              // key="notion-selectable notion-collection_view-block"
+              // I impl. this
+              className="flex w-full border-b border-b-border-cell"
+            />
           </div>
 
           {/* Row 1 */}
-          {/* "15f35e0f-492c-804c-9534-d615e3925074" */}
           <TableRow
             blockId="15f35e0f-492c-804c-9534-d615e3925074"
             rowId={0}
@@ -124,7 +126,7 @@ export const View = () => {
           key="notion-table-view-add-row"
           className="transition-background-in flex h-[33px] w-full cursor-pointer select-none items-center bg-white pl-2 leading-5"
         >
-          <span className="transition: opacity 0.2s; sticky left-10 inline-flex items-center text-sm text-muted opacity-100 dark:text-muted-dark">
+          <span className="sticky left-10 inline-flex items-center text-sm text-muted opacity-100 transition-opacity duration-200 dark:text-muted-dark">
             <Icon.Plus className="ml-[1px] mr-[7px] block size-[14px] shrink-0 fill-primary/35" />
             New page
           </span>
@@ -137,7 +139,7 @@ export const View = () => {
         >
           <div className="flex pr-[32px]">
             <div className="flex">
-              <div className="left-[calc]32px + -1 * var(--sticky-horizontal-offset, 0px)); sticky z-[830] flex bg-white" />
+              <div className="left-[calc(32px + -1 * var(--sticky-horizontal-offset, 0px))] sticky z-[830] flex bg-white" />
               <div className="flex w-[216px]">
                 <div
                   role="button"

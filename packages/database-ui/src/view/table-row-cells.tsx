@@ -1,10 +1,18 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 import * as Icon from "./icons";
 
 import "./view.css";
 
 import { Property } from "./types";
+
+enum CellMode {
+  Normal = "normal",
+  Edit = "edit",
+  Select = "select",
+}
 
 interface TableRowCellProps {
   type: Property;
@@ -21,12 +29,14 @@ export const TableRowCell: React.FC<TableRowCellProps> = ({
   value,
   width,
 }) => {
+  const [mode, setMode] = useState<CellMode>(CellMode.Normal);
+
   return (
     <div
       key="notion-table-view-cell"
       data-row-index={rowId}
       data-col-index={colId}
-      className="relative flex h-full border-r border-r-border-cell"
+      className="group/cell relative flex h-full border-r border-r-border-cell"
       style={{ width }}
     >
       <div className="flex h-full overflow-x-clip" style={{ width }}>
@@ -35,12 +45,19 @@ export const TableRowCell: React.FC<TableRowCellProps> = ({
           tabIndex={0}
           data-testid="property-value"
           className="transition-background-in relative block min-h-8 w-full cursor-pointer select-none overflow-clip whitespace-normal px-2 py-[5px] text-sm"
+          // TODO
+          onPointerDown={() =>
+            setMode((prev) =>
+              prev === CellMode.Normal ? CellMode.Select : CellMode.Normal,
+            )
+          }
         >
           <DataCell type={type} value={value} />
         </div>
       </div>
-
-      <div className="box-shadow: rgba(35, 131, 226, 0.57) 0px 0px 0px 2px inset, rgba(35, 131, 226, 0.35) 0px 0px 0px 1px inset; pointer-events-none absolute left-0 top-0 z-[840] h-full w-full rounded-[3px] bg-blue/5"></div>
+      {mode === CellMode.Select && (
+        <div className="shadow-cell pointer-events-none absolute left-0 top-0 z-[840] h-full w-full rounded-[3px] bg-blue/5" />
+      )}
     </div>
   );
 };
@@ -52,10 +69,36 @@ const DataCell: React.FC<Pick<TableRowCellProps, "type" | "value">> = ({
   switch (type) {
     case "title":
       return (
-        <span className="word-break background-image: linear-gradient(to right, rgba(55, 53, 47, 0.16) 0%, rgba(55, 53, 47, 0.16) 100%); background-repeat: repeat-x; background-position: 0px 100%; background-size: 100% 1px; mr-[5px] inline whitespace-pre-wrap font-medium leading-[1.5]">
-          {value}
-        </span>
+        <>
+          <div className="pointer-events-none absolute left-0 right-0 top-1 z-[20] mx-1 my-0 flex justify-end">
+            <div
+              key="quickActionContainer"
+              className="pointer-events-auto sticky right-1 flex"
+            >
+              <div>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Open in side peek"
+                  className="transition-background-in cell-open inline-flex h-6 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-md bg-white fill-secondary px-1.5 text-xs/[1.2] font-medium uppercase tracking-[0.5px] text-secondary dark:fill-secondary-dark dark:text-secondary-dark"
+                >
+                  <Icon.PeekModeSide className="mr-1.5 block size-[14px] shrink-0 fill-secondary text-secondary dark:fill-secondary-dark dark:text-secondary-dark" />
+                  Open
+                </div>
+              </div>
+            </div>
+          </div>
+          <span className="word-break title-cell-bg-img mr-[5px] inline whitespace-pre-wrap font-medium leading-[1.5]">
+            {value}
+          </span>
+        </>
       );
+    // return (
+    //   // when not hovering
+    //   <span className="word-break title-cell-bg-img mr-[5px] inline whitespace-pre-wrap font-medium leading-[1.5]">
+    //     {value}
+    //   </span>
+    // );
     case "text":
       return (
         <div className="word-break whitespace-pre-wrap leading-[1.5]">
@@ -67,14 +110,14 @@ const DataCell: React.FC<Pick<TableRowCellProps, "type" | "value">> = ({
         <div className="max-w-full">
           <div
             key="pseudoHover pseudoActive"
-            className="flex-shrink: 0; flex-grow: 0; align-items: center; justify-content: center; transition-background-out border-radius: 3px; --pseudoHover--background: rgba(55,53,47,.06); --pseudoActive--background: rgba(55,53,47,.16); relative flex h-[16px] w-[16px]"
+            className="transition-background-out --pseudoHover--background: rgba(55,53,47,.06); --pseudoActive--background: rgba(55,53,47,.16); relative flex size-4 shrink-0 grow-0 items-center justify-center rounded-[3px]"
           >
             <div aria-hidden="true">
               <Icon.RoundedSquareCheckbox />
             </div>
             <input
               type="checkbox"
-              className="opacity: 0; cursor: pointer; absolute left-0 top-0 h-[16px] w-[16px]"
+              className="absolute left-0 top-0 size-4 cursor-pointer opacity-0"
             />
           </div>
         </div>

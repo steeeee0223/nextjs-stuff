@@ -20,7 +20,7 @@ export const TableRow: React.FC<TableRowProps> = ({ blockId, rowId, data }) => {
     <div
       data-block-id={blockId}
       // key="notion-selectable notion-page-block notion-collection-item"
-      className="h-[calc(100% + 2px)] flex"
+      className="h-[calc(100% + 2px)] group flex"
     >
       <div
         // key="notion-table-view-row"
@@ -28,15 +28,16 @@ export const TableRow: React.FC<TableRowProps> = ({ blockId, rowId, data }) => {
         className="flex w-full border-b border-b-border-cell"
       >
         <div className="flex">
-          <div className="left-[calc(32px + -1 * var(--sticky-horizontal-offset, 0px))] sticky z-[850] flex">
-            <div className="absolute -left-0.5">
-              <div className="ease h-full border-b-border-cell opacity-0 transition-opacity delay-0 duration-200">
+          {/* Hover checkbox */}
+          <div className="sticky left-[calc(32px-1*var(--sticky-horizontal-offset))] z-[850] flex">
+            <div className="absolute -left-8">
+              <div className="ease h-full border-b-border-cell opacity-0 transition-opacity delay-0 duration-200 group-hover:opacity-60 group-hover:hover:opacity-100">
                 <div className="h-full">
-                  <label className="ease z-[10] flex h-full cursor-pointer items-start justify-center opacity-0 transition-opacity delay-0 duration-200">
+                  <label className="ease z-[10] flex h-full cursor-pointer items-start justify-center opacity-0 transition-opacity delay-0 duration-200 group-hover:opacity-60 group-hover:hover:opacity-100">
                     <div className="flex h-[31px] w-8 items-center justify-center">
                       <input
                         type="checkbox"
-                        className="relative right-0.5 h-[14px] w-[14px] cursor-pointer accent-blue"
+                        className="relative right-0.5 size-[14px] cursor-pointer accent-blue"
                       />
                     </div>
                   </label>
