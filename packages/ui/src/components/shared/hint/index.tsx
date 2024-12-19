@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import React from "react";
 
 import {
   Tooltip,
@@ -11,7 +11,7 @@ import {
 export interface HintProps extends TooltipContentProps {
   /** @property triggerProps modifies the `className` of `TooltipTrigger`  */
   triggerProps?: string;
-  children: ReactNode;
+  children: React.ReactNode;
   description: string;
 }
 
