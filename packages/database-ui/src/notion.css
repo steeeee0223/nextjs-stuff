@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .notion-page-content {
+    @apply relative block min-h-0 w-full overflow-visible;
+  }
+}
