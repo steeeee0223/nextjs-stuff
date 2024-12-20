@@ -41,7 +41,7 @@ export const TableView = () => {
       key="notion-table-view"
       // No need: pl-[96px] pr-[96px]
       className="relative float-left min-w-full select-none pb-0 lining-nums tabular-nums"
-      style={{paddingLeft: `${paddingX}px`, paddingRight: `${paddingX}px`}}
+      style={{ paddingLeft: `${paddingX}px`, paddingRight: `${paddingX}px` }}
     >
       <div className="absolute z-[9990] w-full" />
       <div className="pointer-events-none mt-0 h-0" />
