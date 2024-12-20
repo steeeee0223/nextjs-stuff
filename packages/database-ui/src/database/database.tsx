@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { DatabaseIcon, Ellipsis, Plus } from "lucide-react";
 
 import {
@@ -10,12 +9,10 @@ import {
 } from "@swy/ui/shadcn";
 
 import { ButtonGroup } from "./button-group";
-import { createTableColumns, DataTable, tableRows } from "./table";
+import { TableView } from "../table-view";
+import { ViewWrapper } from "./view-wrapper";
 
 export const Database = () => {
-  const columns = useMemo(() => createTableColumns(), []);
-  const data = tableRows;
-
   return (
     <Tabs
       defaultValue="members"
@@ -50,7 +47,9 @@ export const Database = () => {
         </div>
       </div>
       <TabsContent value="members" className="mt-0">
-        <DataTable columns={columns} data={data} />
+        <ViewWrapper>
+        <TableView/>
+        </ViewWrapper>
       </TabsContent>
     </Tabs>
   );

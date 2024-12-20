@@ -34,6 +34,7 @@ export default {
         border: {
           DEFAULT: "rgba(var(--primary) / 0.10)",
           button: "rgba(var(--primary) / 0.15)",
+          cell: "rgb(233, 233, 231)",
         },
         icon: {
           DEFAULT: "rgba(var(--primary) / 0.85)",
