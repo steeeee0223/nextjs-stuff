@@ -8,8 +8,8 @@ import {
   TabsTrigger,
 } from "@swy/ui/shadcn";
 
-import { ButtonGroup } from "./button-group";
 import { TableView } from "../table-view";
+import { ButtonGroup } from "./button-group";
 import { ViewWrapper } from "./view-wrapper";
 
 export const Database = () => {
@@ -48,7 +48,7 @@ export const Database = () => {
       </div>
       <TabsContent value="members" className="mt-0">
         <ViewWrapper>
-        <TableView/>
+          <TableView />
         </ViewWrapper>
       </TabsContent>
     </Tabs>
