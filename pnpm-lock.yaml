@@ -594,9 +594,6 @@ importers:
 
   packages/database-ui:
     dependencies:
-      '@swy/notion':
-        specifier: workspace:*
-        version: link:../notion
       '@swy/ui':
         specifier: workspace:*
         version: link:../ui

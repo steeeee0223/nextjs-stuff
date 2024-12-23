@@ -5,11 +5,7 @@ import baseConfig from "@swy/tailwind-config";
 
 const config = {
   darkMode: ["class"],
-  content: [
-    ...baseConfig.content,
-    "../notion/src/**/*.{ts,tsx}",
-    "../ui/src/**/*.{ts,tsx}",
-  ],
+  content: [...baseConfig.content, "../ui/src/**/*.{ts,tsx}"],
   presets: [baseConfig],
   theme: {
     extend: {

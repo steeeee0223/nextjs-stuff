@@ -13,7 +13,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@swy/notion": "workspace:*",
     "@swy/ui": "workspace:*",
     "lucide-react": "catalog:ui",
     "react": "catalog:react18",
