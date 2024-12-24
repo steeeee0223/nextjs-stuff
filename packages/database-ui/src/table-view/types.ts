@@ -9,3 +9,7 @@ export interface Column {
   icon: React.ReactNode;
   width?: string;
 }
+
+export type CellDataType =
+  | { type: "title" | "text"; value: string }
+  | { type: "checkbox" };
