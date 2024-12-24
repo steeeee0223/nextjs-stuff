@@ -9,7 +9,8 @@ import "./view.css";
 import { Hint, useModal } from "@swy/ui/shared";
 
 import { CellActionPopover } from "../examples/cell-action-provider";
-import { Property } from "./types";
+import { CellTrigger, TextInputPopover } from "./cells";
+import { CellDataType, Property } from "./types";
 
 enum CellMode {
   Normal = "normal",
@@ -38,7 +39,7 @@ export const TableRowCell: React.FC<TableRowCellProps> = ({
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (type === "checkbox") return;
     const rect = e.currentTarget.getBoundingClientRect();
-    console.log(rect)
+    console.log(rect);
     setOpen(
       <CellActionPopover
         type={type}
@@ -60,7 +61,6 @@ export const TableRowCell: React.FC<TableRowCellProps> = ({
         <div
           role="button"
           tabIndex={0}
-          data-testid="property-value"
           className="transition-background-in relative block min-h-8 w-full cursor-pointer select-none overflow-clip whitespace-normal px-2 py-[5px] text-sm"
           // TODO
           onPointerDown={onPointerDown}
@@ -73,6 +73,53 @@ export const TableRowCell: React.FC<TableRowCellProps> = ({
       )}
     </div>
   );
+};
+
+const renderCell = (data: CellDataType) => {
+  switch (data.type) {
+    case "title":
+      return (
+        <TextInputPopover value={data.value}>
+          <CellTrigger
+            onPointerDown={(e) =>
+              console.log(e.currentTarget.getBoundingClientRect())
+            }
+          >
+            <div className="pointer-events-none absolute left-0 right-0 top-1 z-20 mx-1 my-0 hidden justify-end group-hover/row:flex">
+              <div
+                key="quickActionContainer"
+                className="pointer-events-auto sticky right-1 flex"
+              >
+                <div>
+                  <Hint
+                    asChild
+                    description="Open in side peek"
+                    side="top"
+                    className="z-[9990]"
+                  >
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Open in side peek"
+                      className="transition-background-in cell-open inline-flex h-6 cursor-pointer select-none items-center justify-center whitespace-nowrap rounded-md bg-white fill-secondary px-1.5 text-xs/[1.2] font-medium uppercase tracking-[0.5px] text-secondary group-hover/row:hover:bg-[#EFEFEE] dark:fill-secondary-dark dark:text-secondary-dark"
+                    >
+                      <Icon.PeekModeSide className="mr-1.5 block size-[14px] shrink-0 fill-secondary text-secondary dark:fill-secondary-dark dark:text-secondary-dark" />
+                      Open
+                    </div>
+                  </Hint>
+                </div>
+              </div>
+            </div>
+            <span className="word-break title-cell-bg-img mr-[5px] inline whitespace-pre-wrap font-medium leading-[1.5]">
+              {data.value}
+            </span>
+          </CellTrigger>
+        </TextInputPopover>
+      );
+
+    default:
+      break;
+  }
 };
 
 const DataCell: React.FC<Pick<TableRowCellProps, "type" | "value">> = ({
