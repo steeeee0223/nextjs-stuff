@@ -35,4 +35,8 @@ export const notionPlugin: PluginCreator = (api) => {
       },
     },
   });
+  api.addVariant(
+    "radix-popper-wrapper",
+    "& [data-radix-popper-content-wrapper]",
+  );
 };
